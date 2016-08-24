@@ -1,7 +1,6 @@
 package com.dtrade.service;
 
 import com.dtrade.model.diamond.Diamond;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
