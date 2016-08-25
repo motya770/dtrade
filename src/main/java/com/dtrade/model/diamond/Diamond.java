@@ -21,6 +21,8 @@ public class Diamond {
 
     private BigDecimal price;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private DiamondType diamondType;
 
     private BigDecimal carats;
@@ -29,8 +31,8 @@ public class Diamond {
 
     //private List<>
 
-    //Diamond Name	Price	Type	Carats	Clarity	Pic
-
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private DiamondStatus diamondStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)

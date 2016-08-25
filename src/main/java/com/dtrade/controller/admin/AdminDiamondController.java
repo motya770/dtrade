@@ -20,6 +20,11 @@ public class AdminDiamondController {
     @Autowired
     private DiamondRepository diamondRepository;
 
+    @RequestMapping(value = "/new-entity", method = RequestMethod.GET)
+    public String newEntity(){
+        return "admin/diamond/create";
+    }
+
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(Model model){
         Diamond diamond = new Diamond();
