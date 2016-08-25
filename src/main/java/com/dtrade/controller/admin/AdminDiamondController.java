@@ -14,7 +14,7 @@ import java.util.List;
  * Created by kudelin on 8/24/16.
  */
 @Controller
-@RequestMapping(value = "/admin/diamonds")
+@RequestMapping(value = "/admin/diamond")
 public class AdminDiamondController {
 
     @Autowired
@@ -24,12 +24,20 @@ public class AdminDiamondController {
     public String create(Model model){
         Diamond diamond = new Diamond();
         model.addAttribute(diamond);
-        return "admin/diamonds/list";
+        return "admin/diamond/list";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model){
         List<Diamond> diamonds = diamondRepository.findAll();
-        return "admin/diamonds/list";
+        return "admin/diamond/list";
     }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test(Model model){
+        ///List<Diamond> diamonds = diamondRepository.findAll();
+        return "test";
+    }
+
+
 }

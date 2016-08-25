@@ -17,8 +17,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
+        //test
+        System.out.println("23e");
+        http.
+                authorizeRequests()
+                .anyRequest().permitAll();
+        /*
                 .antMatchers("/", "/home").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -28,6 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
+                */
     }
 
     @Autowired
