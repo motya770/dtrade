@@ -18,8 +18,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //test
-        System.out.println("23e");
-        http.
+
+        http.csrf().disable().
                 authorizeRequests()
                 .anyRequest().permitAll();
         /*

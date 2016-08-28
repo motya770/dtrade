@@ -31,6 +31,8 @@ public class Account extends User {
 
     private String password;
 
+    private boolean enabled;
+
     public Account(String mail, String password){
         super(mail, password, Arrays.asList(ROLE_ACCOUNT));
     }

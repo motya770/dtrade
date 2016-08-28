@@ -9,4 +9,7 @@ import java.util.List;
  */
 public interface IDiamondService {
     List<Diamond> getOwned();
+
+    Diamond create(Diamond diamond);
+
 }

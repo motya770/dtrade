@@ -1,6 +1,6 @@
 <#include "/admin/header.ftl">
 
-    <h1>list6</h1>
+    <h1>Diamonds</h1>
     <div class="table-responsive">
         <table class="table">
             <tbody>
