@@ -1,8 +1,6 @@
 package com.dtrade.service.impl;
 
-import com.dtrade.model.account.Account;
 import com.dtrade.model.activity.Activity;
-import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.repository.activity.ActivityRepository;
 import com.dtrade.service.IActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,6 @@ public class ActivityService implements IActivityService {
     public List<Activity> findAll() {
         return activityRepository.findAll();
     }
-
 
 
 }

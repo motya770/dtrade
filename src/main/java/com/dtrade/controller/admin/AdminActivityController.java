@@ -20,7 +20,7 @@ public class AdminActivityController {
     private IActivityService activityService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Activity> list(){
-       return activityService.findAll();
+    public List<Activity> list() {
+        return activityService.findAll();
     }
 }

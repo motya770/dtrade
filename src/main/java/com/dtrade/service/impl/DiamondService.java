@@ -9,7 +9,6 @@ import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.List;
 
@@ -35,11 +34,11 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
-    public List<Diamond> getOwned(){
+    public List<Diamond> getOwned() {
 
         Account account = accountService.getCurrentAccount();
 
-        if(account == null){
+        if (account == null) {
             return null;
         }
 

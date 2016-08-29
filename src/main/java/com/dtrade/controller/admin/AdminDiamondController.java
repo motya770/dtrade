@@ -1,7 +1,6 @@
 package com.dtrade.controller.admin;
 
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.model.diamond.DiamondType;
 import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.IDiamondService;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,13 +29,13 @@ public class AdminDiamondController {
     private IDiamondService diamondService;
 
     @RequestMapping(value = "/new-entity", method = RequestMethod.GET)
-    public String newEntity(@ModelAttribute Diamond diamond, Model model){
+    public String newEntity(@ModelAttribute Diamond diamond, Model model) {
         model.addAttribute("diamondTypes", Stream.of(DiamondType.values()).collect(Collectors.toMap(DiamondType::name, DiamondType::name)));
         return "admin/diamond/create";
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(Diamond diamond, Model model){
+    public String create(Diamond diamond, Model model) {
         //Diamond diamond = new Diamond();
         Diamond saved = diamondService.create(diamond);
         model.addAttribute(saved);
@@ -45,7 +43,7 @@ public class AdminDiamondController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model){
+    public String list(Model model) {
         List<Diamond> diamonds = diamondRepository.findAll();
         model.addAttribute("diamonds", diamonds);
         System.out.println("d: " + diamonds.size());
@@ -53,7 +51,7 @@ public class AdminDiamondController {
     }
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String test(Model model){
+    public String test(Model model) {
         ///List<Diamond> diamonds = diamondRepository.findAll();
         return "test";
     }

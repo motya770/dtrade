@@ -5,7 +5,7 @@
 <h1>Create Diamond</h1>
 <div style="width: 500px;">
     <form method="post" action="/admin/diamond/create">
-        <@spring.bind "diamond"/>
+    <@spring.bind "diamond"/>
 
         <div class="form-group">
             <label for="name">Name</label>
@@ -18,7 +18,7 @@
 
         <div class="radio">
 
-            <@spring.formRadioButtons "diamond.diamondType", diamondTypes, ""/><br><br>
+        <@spring.formRadioButtons "diamond.diamondType", diamondTypes, ""/><br><br>
 
         </div>
 
@@ -29,7 +29,7 @@
 
         <div class="form-group">
             <label for="clarity">Clarity</label>
-            <input type="number" class="form-control"  id="clarity" name="clarity" placeholder="clarity">
+            <input type="number" class="form-control" id="clarity" name="clarity" placeholder="clarity">
         </div>
 
         <button type="submit" class="btn btn-default">Submit</button>

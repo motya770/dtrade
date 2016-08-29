@@ -51,14 +51,12 @@ public class Account extends User {
 
     private String phone;
 
-    public Account(String mail, String password){
+    public Account(String mail, String password) {
         super(mail, password, Arrays.asList(ROLE_ACCOUNT));
 
         this.mail = mail;
         this.password = password;
     }
-
-
 
 
 }

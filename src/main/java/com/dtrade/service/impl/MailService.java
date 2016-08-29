@@ -2,13 +2,10 @@ package com.dtrade.service.impl;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.service.IMailService;
-
 import com.dtrade.service.ITemplateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -58,54 +55,54 @@ public class MailService implements IMailService {
     public void sendRegistrationMail(Account account) {
 
         //Runnable runnable = () -> {
-            String RECIPIENT = account.getMail();
+        String RECIPIENT = account.getMail();
 
-            String[] to = {RECIPIENT}; // list of recipient email addresses
-            String subject = "Регистрация в UnityOptions.";
-            String body = templateService.getRegistrationMail(account);
+        String[] to = {RECIPIENT}; // list of recipient email addresses
+        String subject = "Регистрация в UnityOptions.";
+        String body = templateService.getRegistrationMail(account);
 
-            Session session = Session.getDefaultInstance(props);
-            MimeMessage message = new MimeMessage(session);
+        Session session = Session.getDefaultInstance(props);
+        MimeMessage message = new MimeMessage(session);
 
-            try {
-                message.setFrom(new InternetAddress(from));
-                InternetAddress[] toAddress = new InternetAddress[to.length];
+        try {
+            message.setFrom(new InternetAddress(from));
+            InternetAddress[] toAddress = new InternetAddress[to.length];
 
-                // To get the array of addresses
-                for (int i = 0; i < to.length; i++) {
-                    toAddress[i] = new InternetAddress(to[i]);
-                }
-
-                for (int i = 0; i < toAddress.length; i++) {
-                    message.addRecipient(Message.RecipientType.TO, toAddress[i]);
-                }
-
-                System.out.println(body);
-                Multipart mp = new MimeMultipart();
-
-                MimeBodyPart textPart = new MimeBodyPart();
-                textPart.setText("", "utf-8");
-
-                MimeBodyPart htmlPart = new MimeBodyPart();
-                htmlPart.setContent(body, "text/html; charset=utf-8");
-
-                mp.addBodyPart(textPart);
-                mp.addBodyPart(htmlPart);
-                message.setContent(mp);
-
-                message.setSubject(subject);
-                ///message.setText(body, null, "html");
-                Transport transport = session.getTransport("smtp");
-                transport.connect(host, from, pass);
-                transport.sendMessage(message, message.getAllRecipients());
-                transport.close();
-            } catch (AddressException ae) {
-                logger.error("{}", ae);
-                ae.printStackTrace();
-            } catch (MessagingException me) {
-                logger.error("{}", me);
-                me.printStackTrace();
+            // To get the array of addresses
+            for (int i = 0; i < to.length; i++) {
+                toAddress[i] = new InternetAddress(to[i]);
             }
+
+            for (int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
+
+            System.out.println(body);
+            Multipart mp = new MimeMultipart();
+
+            MimeBodyPart textPart = new MimeBodyPart();
+            textPart.setText("", "utf-8");
+
+            MimeBodyPart htmlPart = new MimeBodyPart();
+            htmlPart.setContent(body, "text/html; charset=utf-8");
+
+            mp.addBodyPart(textPart);
+            mp.addBodyPart(htmlPart);
+            message.setContent(mp);
+
+            message.setSubject(subject);
+            ///message.setText(body, null, "html");
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        } catch (AddressException ae) {
+            logger.error("{}", ae);
+            ae.printStackTrace();
+        } catch (MessagingException me) {
+            logger.error("{}", me);
+            me.printStackTrace();
+        }
         //};
 
         //taskExecutor.execute(runnable);

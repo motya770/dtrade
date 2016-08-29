@@ -21,26 +21,26 @@ public class AdminAccountController {
     private IAccountService accountService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Account> list(){
+    public List<Account> list() {
         return accountService.findAll();
     }
 
     @RequestMapping(value = "/disable", method = RequestMethod.GET)
-    public String disable(Model model, Long accountId){
-        Account account =  accountService.disable(accountId);
+    public String disable(Model model, Long accountId) {
+        Account account = accountService.disable(accountId);
         model.addAttribute(account);
         return "/admin/account/show";
     }
 
     @RequestMapping(value = "/enable", method = RequestMethod.GET)
-    public String enable(Model model, Long accountId){
-        Account account=  accountService.enable(accountId);
+    public String enable(Model model, Long accountId) {
+        Account account = accountService.enable(accountId);
         model.addAttribute(account);
         return "/admin/account/show";
     }
 
     @RequestMapping(value = "/show", method = RequestMethod.GET)
-    public Account show(Long accountId){
+    public Account show(Long accountId) {
         return accountService.find(accountId);
     }
 }

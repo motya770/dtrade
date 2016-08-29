@@ -23,17 +23,17 @@ public class DiamondController {
     private IDiamondService diamondService;
 
     @RequestMapping(value = "/available")
-    public List<Diamond> getAvailableDiamonds(){
+    public List<Diamond> getAvailableDiamonds() {
         return diamondRepository.getAvailable();
     }
 
     @RequestMapping(value = "/owned")
-    public List<Diamond> getOwned(){
+    public List<Diamond> getOwned() {
         return diamondService.getOwned();
 
     }
 
-    public List<Diamond> getSale(){
+    public List<Diamond> getSale() {
         return diamondRepository.getSale();
     }
 }

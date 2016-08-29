@@ -1,4 +1,3 @@
-
 <div>
     <ul>
         <li><a href="/admin/diamond/list">Diamonds</a></li>

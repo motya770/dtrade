@@ -5,31 +5,19 @@ import com.dtrade.model.account.Account;
 import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IMailService;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
-import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -71,7 +59,7 @@ public class AccountService implements IAccountService, UserDetailsService {
         return (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    private Account changeEnablement(Long accountId, boolean enabled){
+    private Account changeEnablement(Long accountId, boolean enabled) {
         Account account = accountRepository.findOne(accountId);
         account.setEnabled(enabled);
         accountRepository.save(account);
@@ -93,7 +81,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         Account account = accountRepository.findAccountByGuidAndConfirmed(guid, false);
 
-        if(account==null){
+        if (account == null) {
             throw new TradeException("Account with this guid " + guid + " not found (or already confirmed)!");
         }
 
@@ -107,7 +95,7 @@ public class AccountService implements IAccountService, UserDetailsService {
     public Account cancelRegistration(String guid) throws TradeException {
         Account account = accountRepository.findAccountByGuidAndConfirmed(guid, false);
 
-        if(account==null){
+        if (account == null) {
             throw new TradeException("Account with this guid " + guid + " not found (or already confirmed)!");
         }
 
@@ -161,7 +149,7 @@ public class AccountService implements IAccountService, UserDetailsService {
         if (addedValue != null) {
             // Hibernate.initialize(account);
             BigDecimal balance = rereadAccount.getBalance().add(addedValue);
-            balance  = balance.setScale(2, BigDecimal.ROUND_HALF_UP);
+            balance = balance.setScale(2, BigDecimal.ROUND_HALF_UP);
             rereadAccount.setBalance(balance);
 
             accountRepository.save(rereadAccount);

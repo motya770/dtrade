@@ -11,9 +11,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.io.StringWriter;
-import java.util.Map;
 
 /**
  * Created by matvei on 6/7/15.
@@ -21,7 +19,7 @@ import java.util.Map;
 @Service
 public class TemplateService implements ITemplateService {
 
-    private static final String DOMAIN_HOST  = "DOMAIN_HOST";
+    private static final String DOMAIN_HOST = "DOMAIN_HOST";
 
 //    @Resource(name="generalSettings")
 //    private Map<String, String> generalSettings;
@@ -52,7 +50,7 @@ public class TemplateService implements ITemplateService {
         String domainHost = environment.getProperty(DOMAIN_HOST);
 
         context.setVariable("linkConfirm",
-                domainHost +  "/accounts/mail-response?response=confirm&guid=" + account.getGuid());
+                domainHost + "/accounts/mail-response?response=confirm&guid=" + account.getGuid());
         context.setVariable("linkCancel", domainHost + "/accounts/mail-response?response=cancel&guid=" + account.getGuid());
 
         engine.process("registration", context, writer);

@@ -1,12 +1,11 @@
 package com.dtrade.controller;
 
+import com.dtrade.exception.TradeException;
+import com.dtrade.model.account.Account;
+import com.dtrade.service.IAccountService;
+import com.dtrade.service.ITuringService;
+import com.dtrade.utils.UtilsHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.goptions.bp.exceptions.GOptionsException;
-import com.goptions.bp.model.account.Account;
-import com.goptions.bp.model.currency.Currency;
-import com.goptions.bp.service.IAccountService;
-import com.goptions.bp.service.ITuringService;
-import com.goptions.bp.utils.UtilsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-//@RestController
 @Controller
 @RequestMapping(value = "/accounts")
 public class AccountController {
@@ -56,9 +52,9 @@ public class AccountController {
 
     @RequestMapping(value = "/confirm-registration", method = RequestMethod.POST)
     @ResponseBody
-    public Account confirmRegistration(@RequestParam String guid) throws GOptionsException {
-        if(StringUtils.isEmpty(guid)){
-            throw new GOptionsException("Guid can't be empty");
+    public Account confirmRegistration(@RequestParam String guid) throws TradeException {
+        if (StringUtils.isEmpty(guid)) {
+            throw new TradeException("Guid can't be empty");
         }
 
         return accountService.confirmRegistration(guid);
@@ -66,72 +62,42 @@ public class AccountController {
 
     @RequestMapping(value = "/cancel-registration", method = RequestMethod.POST)
     @ResponseBody
-    public Account cancelRegistration(@RequestParam String guid) throws GOptionsException {
-        if(StringUtils.isEmpty(guid)){
-            throw new GOptionsException("Guid can't be empty");
+    public Account cancelRegistration(@RequestParam String guid) throws TradeException {
+        if (StringUtils.isEmpty(guid)) {
+            throw new TradeException("Guid can't be empty");
         }
 
         return accountService.cancelRegistration(guid);
     }
 
-    @ResponseBody
-    public Account updateAccount() {
-        //TODO add update account functionality
-        return null;
-    }
 
-    @RequestMapping(value = "/create-demo", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> createDemoAccount(@RequestParam String login,
-                                                 @RequestParam String pwd,
-                                                 @RequestParam String phone,
-                                                 @RequestParam String currency,
-                                                 @RequestParam(value = "g-recaptcha-response") String recaptchaResponse,
-                                                 HttpServletRequest request
-    ) throws Exception {
-
-        //TODO save mail phone country
-        validateCredentials(login, pwd, phone, currency);
-
-        turingService.check(recaptchaResponse, request.getRemoteAddr());
-
-        Account account = accountService.createDemoAccount(login, pwd, phone, currency);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("account", account);
-        response.put("redirect", "/platform");
-
-        return response;
-    }
-
-    public void validateCredentials(String login, String pwd, String phone, String currency) throws GOptionsException {
-        if (login.length() < 6) {
-            throw new GOptionsException("Login should be 6 numbers at least");
+    public void validateCredentials(String login, String pwd, String phone, String currency) throws TradeException {
+        if (login.length() < 8) {
+            throw new TradeException("Login should be 8 numbers at least");
         }
 
         //login and email are the same thing
         if (!UtilsHelper.isValidEmailAddress(login)) {
-            throw new GOptionsException("Email is not valid!");
+            throw new TradeException("Email is not valid!");
         }
 
         if (pwd.length() < 8) {
-            throw new GOptionsException("Password should be 8 numbers at least");
+            throw new TradeException("Password should be 8 numbers at least");
         }
 
         if (phone.length() < 6) {
-            throw new GOptionsException("Phone should be at least 6 signs.");
+            throw new TradeException("Phone should be at least 6 signs.");
         }
 
-        Currency.valueOf(currency);
     }
 
     @RequestMapping(value = "/get-current", method = RequestMethod.POST)
     @ResponseBody
     public Object getCurrentAccount() throws IOException {
         if (accountService.getCurrentAccount() != null) {
-            Account account = accountService.getCurrentAccount().getAccount();
-            if(account!=null) {
-                return accountService.read(account.getId());
+            Account account = accountService.getCurrentAccount();
+            if (account != null) {
+                return accountService.find(account.getId());
             }
         }
         return mapper.readTree("{\"account\" : \"empty\"}");
