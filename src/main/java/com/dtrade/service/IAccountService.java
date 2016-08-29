@@ -1,6 +1,9 @@
 package com.dtrade.service;
 
+import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+
+import java.math.BigDecimal;
 import java.util.*;
 /**
  * Created by kudelin on 8/24/16.
@@ -17,5 +20,16 @@ public interface IAccountService {
 
     Account find(Long accountId);
 
+    void create(Account account);
+
+    Account confirmRegistration(String guid) throws TradeException;
+
+    Account cancelRegistration(String guid) throws TradeException;
+
+    Account createRealAccount(String login, String pwd, String phone, String currency) throws TradeException;
+
+    void save(Account account);
+
+    void updateBalance(Account account, BigDecimal addedValue);
 
 }
