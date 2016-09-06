@@ -52,6 +52,6 @@ public class QuotesService implements IQuotesService {
 
     @Override
     public List<Quote> getRangeQuotes(Diamond diamond, Long start, Long end) throws TradeException {
-        return null;
+        return quoteRepository.getRangeQuotes(diamond.getId(), start, end);
     }
 }

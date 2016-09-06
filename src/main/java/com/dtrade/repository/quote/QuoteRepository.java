@@ -15,6 +15,6 @@ import java.util.List;
 @Repository
 public interface QuoteRepository extends JpaRepository<Quote, Long> {
 
-    @Query("select q from Quote q where q.diamond.id = :diamond.id and time >= :start_time and time <= :end_time ")
-    List<Quote> getRangeQuotes(@Param("diamond") Diamond diamond, @Param("start_time") Long start, @Param("end_time") Long end);
+    @Query("select q from Quote q where q.diamond.id = :diamond and time >= :start_time and time <= :end_time ")
+    List<Quote> getRangeQuotes(@Param("diamond") Long diamondId, @Param("start_time") Long start, @Param("end_time") Long end);
 }

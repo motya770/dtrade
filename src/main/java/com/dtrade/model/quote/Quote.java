@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 
 
 @Data
-@Entity(name = "quote")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Entity
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Quote  {
 
     public static final String F_TIME = "time";
@@ -21,7 +21,7 @@ public class Quote  {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Diamond diamond;
 
     @Column(precision = 12, scale = 5)

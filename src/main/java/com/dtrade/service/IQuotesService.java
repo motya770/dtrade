@@ -16,6 +16,9 @@ import java.util.Map;
  */
 public interface IQuotesService {
 
+
+    //void generateQuotes();
+
     void create(Quote quote);
 
     void create(Diamond diamond, BigDecimal value, Long time);

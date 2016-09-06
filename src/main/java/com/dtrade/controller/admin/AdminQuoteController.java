@@ -37,6 +37,6 @@ public class AdminQuoteController {
 
         Page<Quote> quotes = quotesService.getPagedQuotes(pageNumber, pageSize, sorting);
         model.addAttribute(quotes);
-        return "admin/quote/history";
+        return "admin/quote/list";
     }
 }
