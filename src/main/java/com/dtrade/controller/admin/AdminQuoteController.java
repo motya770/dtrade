@@ -29,7 +29,7 @@ public class AdminQuoteController {
                           Model model) throws TradeException{
 
         Page<Quote> quotes = quotesService.getPagedQuotes(pageNumber, pageSize, sorting);
-        model.addAttribute(quotes);
+        model.addAttribute("quotes", quotes);
         return "admin/quote/list";
     }
 }
