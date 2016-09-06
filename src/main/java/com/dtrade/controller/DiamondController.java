@@ -13,7 +13,7 @@ import java.util.List;
  * Created by kudelin on 8/24/16.
  */
 @RestController
-@RequestMapping(value = "/diamonds")
+@RequestMapping(value = "/diamond")
 public class DiamondController {
 
     @Autowired
@@ -33,6 +33,7 @@ public class DiamondController {
 
     }
 
+    @RequestMapping(value = "/sale")
     public List<Diamond> getSale() {
         return diamondRepository.getSale();
     }

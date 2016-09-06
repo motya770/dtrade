@@ -15,6 +15,8 @@
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
+    <script src="/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
+
     <script src="/content/js/index.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
@@ -53,7 +55,7 @@
      <div class="row">
 
 
-         <div ng-controller="DiamondListController">
+         <div ng-controller="AvailableController as vm">
              <div class="left-sidebar pull-left">
                  <div class="row">
                      <div class="table-header-blue">
@@ -75,7 +77,7 @@
                          <tbody>
 
 
-                         <tr ng-repeat="diamond in diamonds">
+                         <tr ng-repeat="diamond in vm.availableDiamonds">
                                      <td>{{diamond.id}}</td>
                                      <td>{{diamond.name}}</td>
                                      <td>{{diamond.price}} $</td>
@@ -113,16 +115,9 @@
                     <div>
                         Do You want to buy Kings Diamons (09923)?
                     </div>
-                    <!--
-                    <a class="button green arrow" href="#"><span>Price higher</span></a>
-                    -->
+
                     <div class="price">PRICE: <span>25 502.00 $</span></div>
                     <a class="button black" href="/">BUY</a>
-
-                    <!--
-                    <a class="button red arrow arrow-bottom" href="#"><span>Price lower</span></a>
-                    -->
-
 
                     <div>
                         Do You want to sell Amarillo Starlight (1245)?
@@ -133,13 +128,7 @@
                         <input value="4800" type="text" class="btn">4 800</input>
                         <button class="btn">+</button>
                     </div>
-                    <a class="button black" href="/">TRY TO SELL</a>
-                    <!--
-                    <div class="return">
-                        <span>Return:</span>
-                        <span>$0.00 (83%)In the money</span>
-                        <span>$0.00 (0%)Out of the money</span>
-                    </div>-->
+                    <a class="button black" href="/">OPEN FOR A SALE</a>
                 </div>
 
                 <div class="pull-right clearfix graph-block">
@@ -147,94 +136,78 @@
                         <a class="pull-left" href="/">Technical analysis</a>
                         <span class="date pull-right">Mar 26 2015    11:06:19</span>
                     </div>
-                    <img src="../static/content/image/graf.png" alt=""/>
+                    <img src="/content/image/graf.png" alt=""/>
                 </div>
                 <div class="row">
                     <a class="after-graph pull-right" href="/">Trade History</a>
                 </div>
 
 
-                <div style="margin-top:20px;">Owned diamonds</div>
-                <table class="table-striped big-table table-bordered statistic" >
-                    <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Name</th>
-                        <th>Buy Price</th>
-                        <th>Buy Date</th>
-                        <th>Market Price</th>
-                        <th>Type</th>
-                        <th>Carats</th>
-                        <th>Clarity</th>
+                <div ng-controller="OwnedController in vm">
+                    <div style="margin-top:20px;">Owned diamonds</div>
+                    <table class="table-striped big-table table-bordered statistic" >
+                        <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Name</th>
+                            <th>Buy Price</th>
+                            <th>Buy Date</th>
+                            <th>Market Price</th>
+                            <th>Type</th>
+                            <th>Carats</th>
+                            <th>Clarity</th>
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                         <td>1245</td>
-                         <td>Amarillo Starlight</td>
-                         <td>4 500 $</td>
-                         <td>26 june 16</td>
-                         <td>4 800 $</td>
-                         <td>Emirald</td>
-                         <td>25</td>
-                         <td>0.10</td>
-                    </tr>
-                    <tr>
-                         <td>2344</td>
-                         <td>Eureka Diamond</td>
-                         <td>10 500 $</td>
-                         <td>08 aug 15</td>
-                         <td>4 800 $</td>
-                         <td>Emirald</td>
-                         <td>80</td>
-                         <td>0.04</td>
-                    </tr>
-                    <tr>
-                         <td>83671</td>
-                         <td>Summer winne</td>
-                         <td>4 500 $</td>
-                         <td>10 jan 16</td>
-                         <td>8 100 $</td>
-                         <td>Heart</td>
-                         <td>65</td>
-                         <td>0.16</td>
-                    </tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="diamond in vm.ownedDiamonds">
+                             <td>{{diamond.id}}</td>
+                             <td>{{diamond.name}}</td>
+                             <td> $</td>
+                             <td>26 june 16</td>
+                             <td>{{diamond.price}} $</td>
+                             <td>{{diamond.diamondType}}</td>
+                             <td>{{diamond.carats}}</td>
+                             <td>{{diamond.clarity}}</td>
+                        </tr>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
 
-                <div style="margin-top:20px;">Diamonds for the sale</div>
-                <table class="table-striped big-table table-bordered statistic">
 
-                    <thead>
-                    <tr>
-                        <th>Number</th>
-                        <th>Name</th>
-                        <th>Buy Price</th>
-                        <th>Buy Date</th>
-                        <th>Sell Price</th>
-                        <th>Type</th>
-                        <th>Carats</th>
-                        <th>Clarity</th>
-                        <th>Status</th>
+                <div ng-controller="SaleController as vm">
+                    <div style="margin-top:20px;">Diamonds for the sale</div>
+                    <table class="table-striped big-table table-bordered statistic">
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                         <td>1245</td>
-                         <td>Amarillo Starlight</td>
-                         <td>4 500 $</td>
-                         <td>26 june 16</td>
-                         <td>4 800 $</td>
-                         <td>Emirald</td>
-                         <td>25</td>
-                         <td>0.10</td>
-                         <td>Not sold</td>
-                    </tr>
-                    </tbody>
-                </table>
+                        <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Name</th>
+                            <th>Buy Price</th>
+                            <th>Buy Date</th>
+                            <th>Sell Price</th>
+                            <th>Type</th>
+                            <th>Carats</th>
+                            <th>Clarity</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="diamond in vm.saleDiamonds">
+                             <td>{{diamond.id}}</td>
+                             <td>{{diamond.name}}</td>
+                             <td>$</td>
+                             <td></td>
+                             <td>$</td>
+                             <td>{{diamond.diamondType}}</td>
+                             <td>{{diamond.carats}}</td>
+                             <td>{{diamond.clarity}}</td>
+                             <td>{{diamond.status}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
          </div>
      </div>

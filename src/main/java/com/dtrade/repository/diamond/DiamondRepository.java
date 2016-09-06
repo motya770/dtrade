@@ -14,7 +14,8 @@ import java.util.List;
 @Repository
 public interface DiamondRepository extends JpaRepository<Diamond, Long> {
 
-    @Query("select d from Diamond d where diamondStatus = 'AVAILABLE' ")
+    //@Query("select d from Diamond d where diamondStatus = 'AVAILABLE' ")
+    @Query("select d from Diamond d ")
     List<Diamond> getAvailable();
 
     @Query("select d from Diamond d ")
