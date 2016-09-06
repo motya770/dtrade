@@ -1,6 +1,5 @@
 package com.dtrade.repository.quote;
 
-import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -2,8 +2,6 @@ package com.dtrade.model.quote;
 
 import com.dtrade.model.diamond.Diamond;
 import lombok.Data;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
