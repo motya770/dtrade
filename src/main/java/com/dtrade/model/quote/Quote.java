@@ -1,6 +1,7 @@
 package com.dtrade.model.quote;
 
 import com.dtrade.model.diamond.Diamond;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Quote  {
     @GeneratedValue
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Diamond diamond;
 

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,10 +26,10 @@ public class GraphController {
     @Autowired
     private IQuotesService quotesService;
 
-    @RequestMapping(value = "/get-quotes")
+    @RequestMapping(value = "/get-quotes", method = RequestMethod.GET)
     public List<Quote> getRangeQuotes(@RequestParam(required = true) Diamond diamond,
-                                      @RequestParam(required = true) Long openTime,
-                                      @RequestParam(required = true) Long closeTime
+                                      @RequestParam(required = false) Long openTime,
+                                      @RequestParam(required = false) Long closeTime
     ) throws TradeException {
 
         long start = System.currentTimeMillis();

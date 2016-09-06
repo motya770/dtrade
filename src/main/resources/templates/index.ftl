@@ -18,13 +18,19 @@
     <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 
+
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
     <script src="/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
 
-    <script src="/bower_components/highcharts/hightstock.js" type="text/javascript"></script>
-    <script src="/bower_components/highcharts-ng/hightcharts-ng.js" type="text/javascript"></script>
+
+    <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
+    <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js" type="text/javascript"></script>
+
 
     <script src="/content/js/index.js"></script>
+    <!--
+    <script src="/content/js/test.js"></script>
+    -->
 
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 
@@ -139,6 +145,7 @@
                 </div>
 
 
+                <!--
                 <div ng-controller="GraphController as vm">
                     <div class="pull-right clearfix graph-block">
                         <div class="graph-header">
@@ -148,15 +155,15 @@
                         <img src="/content/image/graf.png" alt=""/>
                     </div>
                 </div>
+                -->
 
 
-                <div ng-app="myapp">
-                    <div ng-controller="myctrl">
+                <div ng-controller="myctrl">
                         <div class="row">
                             <highchart id="chart1" config="chartConfig" class="span10"></highchart>
                         </div>
-                    </div>
                 </div>
+
 
 
                 <div class="row">

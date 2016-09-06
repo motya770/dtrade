@@ -1,3 +1,5 @@
+
+
 /**
  * highcharts-ng
  * @version v0.0.12 - 2016-08-07
@@ -254,22 +256,22 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
                 if (s.visible !== undefined && chartSeries.visible !== s.visible) {
                   chartSeries.setVisible(s.visible, false);
                 }
-                
+
                 // Make sure the current series index can be accessed in seriesOld
                 if (idx < seriesOld.length) {
                   var sOld = seriesOld[idx];
                   var sCopy = angular.copy(sOld);
-                  
+
                   // Get the latest data point from the new series
                   var ptNew = s.data[s.data.length - 1];
-                  
+
                   // Check if the new and old series are identical with the latest data point added
                   // If so, call addPoint without shifting
                   sCopy.data.push(ptNew);
                   if (angular.equals(sCopy, s)) {
                     chartSeries.addPoint(ptNew, false);
                   }
-                  
+
                   // Check if the data change was a push and shift operation
                   // If so, call addPoint WITH shifting
                   else {

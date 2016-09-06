@@ -23,6 +23,8 @@ import java.util.List;
 @Transactional(value = "transactionManager")
 public class QuotesService implements IQuotesService {
 
+    private static long max_history =  2 *  30 *  24 *  60 * 60 * 1_000;
+
     @Autowired
     private QuoteRepository quoteRepository;
 
@@ -51,6 +53,12 @@ public class QuotesService implements IQuotesService {
 
     @Override
     public List<Quote> getRangeQuotes(Diamond diamond, Long start, Long end) throws TradeException {
+        if(end==null){
+            end = System.currentTimeMillis();
+        }
+        if(start==null){
+            start = end - max_history;
+        }
         return quoteRepository.getRangeQuotes(diamond.getId(), start, end);
     }
 }
