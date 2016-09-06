@@ -10,12 +10,19 @@
     <link rel="stylesheet" href="/content/css/style.css"/>
     <link rel="stylesheet" href="/content/css/diamond.css"/>
 
+    <!--
+    <script src="/resources/js/hightstock/highstock.js"></script>
+    <script src="/resources/js/hightstock/theme.js"></script>
+    -->
 
     <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
     <script src="/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
+
+    <script src="/bower_components/highcharts/hightstock.js" type="text/javascript"></script>
+    <script src="/bower_components/highcharts-ng/hightcharts-ng.js" type="text/javascript"></script>
 
     <script src="/content/js/index.js"></script>
 
@@ -131,13 +138,27 @@
                     <a class="button black" href="/">OPEN FOR A SALE</a>
                 </div>
 
-                <div class="pull-right clearfix graph-block">
-                    <div class="graph-header">
-                        <a class="pull-left" href="/">Technical analysis</a>
-                        <span class="date pull-right">Mar 26 2015    11:06:19</span>
+
+                <div ng-controller="GraphController as vm">
+                    <div class="pull-right clearfix graph-block">
+                        <div class="graph-header">
+                            <a class="pull-left" href="/">Technical analysis</a>
+                            <span class="date pull-right">Mar 26 2015    11:06:19</span>
+                        </div>
+                        <img src="/content/image/graf.png" alt=""/>
                     </div>
-                    <img src="/content/image/graf.png" alt=""/>
                 </div>
+
+
+                <div ng-app="myapp">
+                    <div ng-controller="myctrl">
+                        <div class="row">
+                            <highchart id="chart1" config="chartConfig" class="span10"></highchart>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="row">
                     <a class="after-graph pull-right" href="/">Trade History</a>
                 </div>
