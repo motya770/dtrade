@@ -74,18 +74,32 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
     };
 
     var self = this;
-    $http.get('/graph/get-quotes?diamond=1').then(function(response) {
-        var data = response.data;
+    var diamondId = 1;
+    var getChartData = function(diamondId){
+        $http.get('/graph/get-quotes?diamond=' + diamondId).then(function(response) {
+            var data = response.data;
 
-        var formattedData = [data.length + 1];
+            console.log("l:" + data.length)
+            var formattedData = [data.length + 1];
 
-        for (var i in data) {
-            var point = new Array(2);
-            point[0] = data[i].time;
-            point[1] = data[i].value;
-            formattedData[i] = point;
-        }
+            for (var i in data) {
+                var point = new Array(2);
+                point[0] = data[i].time;
+                point[1] = data[i].value;
+                formattedData[i] = point;
+            }
 
-        pushToChart(formattedData);
+            pushToChart(formattedData);
+        });
+    };
+
+    getChartData(diamondId);
+
+    $scope.$on('buyDiamondChoosed', function (event, arg) {
+        getChartData(arg.id);
+    });
+
+    $scope.$on('sellDiamondChoosed', function (event, arg) {
+        getChartData(arg.id);
     });
 });

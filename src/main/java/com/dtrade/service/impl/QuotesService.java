@@ -59,6 +59,6 @@ public class QuotesService implements IQuotesService {
         if(start==null){
             start = end - max_history;
         }
-        return quoteRepository.getRangeQuotes(diamond.getId(), start, end);
+        return quoteRepository.getRangeQuotes(diamond.getId(), start, end, new PageRequest(0, 100));
     }
 }
