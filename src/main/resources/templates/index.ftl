@@ -90,7 +90,7 @@
                          <tbody>
 
 
-                         <tr ng-repeat="diamond in vm.availableDiamonds">
+                         <tr ng-repeat="diamond in vm.availableDiamonds" ng-click="chooseAvailableDiamond(diamond)">
                                      <td>{{diamond.id}}</td>
                                      <td>{{diamond.name}}</td>
                                      <td>{{diamond.price}} $</td>
@@ -124,24 +124,27 @@
 
          <div class="content pull-left">
             <div class="row content-two-column">
-                <div class="pull-left button-block">
-                    <div>
-                        Do You want to buy Kings Diamons (09923)?
-                    </div>
 
-                    <div class="price">PRICE: <span>25 502.00 $</span></div>
-                    <a class="button black" href="/">BUY</a>
+                <div ng-controller="BidderController as vm">
+                    <div class="pull-left button-block">
+                        <div>
+                            Do You want to buy {{vm.buyDiamond.name}} ({{vm.buyDiamond.id}})?
+                        </div>
 
-                    <div>
-                        Do You want to sell Amarillo Starlight (1245)?
-                    </div>
+                        <div class="price">PRICE: <span>{{vm.buyDiamond.price}} $</span></div>
+                        <a class="button black" href="/">BUY</a>
 
-                    <div class="btn-group size">
-                        <button class="btn">-</button>
-                        <input value="4800" type="text" class="btn">4 800</input>
-                        <button class="btn">+</button>
+                        <div>
+                            Do You want to sell {{vm.sellDiamond.name}} ({{vm.sellDiamond.id}})?
+                        </div>
+
+                        <div class="btn-group size">
+                            <button class="btn">-</button>
+                            <input value="4800" type="text" class="btn">{{vm.sellDiamond.price}}</input>
+                            <button class="btn">+</button>
+                        </div>
+                        <a class="button black" href="/">OPEN FOR A SALE</a>
                     </div>
-                    <a class="button black" href="/">OPEN FOR A SALE</a>
                 </div>
 
 
@@ -157,8 +160,7 @@
                 </div>
                 -->
 
-
-                <div ng-controller="myctrl">
+                <div ng-controller="ChartController">
                         <div class="row">
                             <highchart id="chart1" config="chartConfig" class="span10"></highchart>
                         </div>
@@ -171,7 +173,7 @@
                 </div>
 
 
-                <div ng-controller="OwnedController in vm">
+                <div ng-controller="OwnedController as vm">
                     <div style="margin-top:20px;">Owned diamonds</div>
                     <table class="table-striped big-table table-bordered statistic" >
                         <thead>
@@ -188,7 +190,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="diamond in vm.ownedDiamonds">
+                        <tr ng-repeat="diamond in vm.ownedDiamonds" ng-click="chooseOwnedDiamond(diamond)">
                              <td>{{diamond.id}}</td>
                              <td>{{diamond.name}}</td>
                              <td> $</td>

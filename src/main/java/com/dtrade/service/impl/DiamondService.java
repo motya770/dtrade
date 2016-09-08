@@ -36,12 +36,14 @@ public class DiamondService implements IDiamondService {
     @Override
     public List<Diamond> getOwned() {
 
-        Account account = accountService.getCurrentAccount();
+        //Account account = accountService.getCurrentAccount();
+        //Account account = new Account();
+        //TODO fix
+        //account.setId(0L);
+        //if (account == null) {
+          //  return null;
+       // }
 
-        if (account == null) {
-            return null;
-        }
-
-        return diamondRepository.getOwned(account.getId());
+        return diamondRepository.getOwned();//(null);
     }
 }

@@ -30,7 +30,6 @@ public class DiamondController {
     @RequestMapping(value = "/owned")
     public List<Diamond> getOwned() {
         return diamondService.getOwned();
-
     }
 
     @RequestMapping(value = "/sale")

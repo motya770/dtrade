@@ -21,6 +21,7 @@ public interface DiamondRepository extends JpaRepository<Diamond, Long> {
     @Query("select d from Diamond d ")
     List<Diamond> getSale();
 
-    @Query("select d from Diamond d where diamondStatus = 'OWNDED' and account.id = :accountId")
-    List<Diamond> getOwned(@Param("accountId") Long accountId);
+    @Query("select d from Diamond d ")
+    //@Query("select d from Diamond d where diamondStatus = 'OWNDED' and account.id = :accountId")
+    List<Diamond> getOwned(); //@Param("accountId") Long accountId);
 }

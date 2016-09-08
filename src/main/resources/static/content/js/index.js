@@ -2,19 +2,27 @@
 var diamondApp = angular.module('diamondApp', ["highcharts-ng"]);
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
-diamondApp.controller('AvailableController', function AvailableController($scope, $http) {
+diamondApp.controller('AvailableController', function AvailableController($scope, $http, $rootScope) {
     var self = this;
+    $scope.chooseAvailableDiamond = function(diamond){
+        $rootScope.$broadcast('buyDiamondChoosed', diamond);
+    }
+
     $http.get('/diamond/available').then(function(response) {
         self.availableDiamonds = response.data;
     });
 });
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
-diamondApp.controller('OwnedController', function OwnedController($scope, $http) {
+diamondApp.controller('OwnedController', function OwnedController($scope, $http, $rootScope) {
     var self = this;
     $http.get('/diamond/owned').then(function(response) {
         self.ownedDiamonds = response.data;
     });
+
+    $scope.chooseOwnedDiamond = function(diamond){
+        $rootScope.$broadcast('sellDiamondChoosed', diamond);
+    }
 });
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
@@ -25,7 +33,19 @@ diamondApp.controller('SaleController', function SaleController($scope, $http) {
     });
 });
 
-diamondApp.controller('myctrl', function ($scope, $timeout, $http) {
+diamondApp.controller("BidderController", function BidderController($scope, $rootScope){
+    var self= this;
+
+    $scope.$on('buyDiamondChoosed', function (event, arg) {
+        self.buyDiamond = arg;
+    });
+
+    $scope.$on('sellDiamondChoosed', function (event, arg) {
+        self.sellDiamond = arg;
+    });
+});
+
+diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
     $scope.chartConfig = {
         options: {
             chart: {
@@ -52,8 +72,6 @@ diamondApp.controller('myctrl', function ($scope, $timeout, $http) {
             }
         );
     };
-
-    //pushToChart(data);
 
     var self = this;
     $http.get('/graph/get-quotes?diamond=1').then(function(response) {
