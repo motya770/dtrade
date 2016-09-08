@@ -132,7 +132,11 @@
                         </div>
 
                         <div class="price">PRICE: <span>{{vm.buyDiamond.price}} $</span></div>
-                        <a class="button black" href="/">BUY</a>
+                        <button class="button black" ng-click="buyDiamond(vm.buyDiamond)">BUY</button>
+
+                        <!--
+                        <a class="button black" href="/" ng-click="buyDiamond(vm.buyDiamond)">BUY</a>
+                        -->
 
                         <div>
                             Do You want to sell {{vm.sellDiamond.name}} ({{vm.sellDiamond.id}})?
@@ -143,29 +147,26 @@
                             <input value="4800" type="text" class="btn">{{vm.sellDiamond.price}}</input>
                             <button class="btn">+</button>
                         </div>
-                        <a class="button black" href="/">OPEN FOR A SALE</a>
+
+                        <button class="button black" ng-click="sellDiamond(vm.sellDiamond)">OPEN FOR A SALE</button>
+                        <!--
+                        <a class="button black" href="/" ng-click="sellDiamond(vm.sellDiamond)">OPEN FOR A SALE</a>
+                        -->
                     </div>
                 </div>
 
-
-                <!--
-                <div ng-controller="GraphController as vm">
-                    <div class="pull-right clearfix graph-block">
+                <div class="pull-right clearfix graph-block">
                         <div class="graph-header">
                             <a class="pull-left" href="/">Technical analysis</a>
                             <span class="date pull-right">Mar 26 2015    11:06:19</span>
                         </div>
-                        <img src="/content/image/graf.png" alt=""/>
-                    </div>
-                </div>
-                -->
 
-                <div ng-controller="ChartController">
-                        <div class="row">
-                            <highchart id="chart1" config="chartConfig" class="span10"></highchart>
+                        <div ng-controller="ChartController as vm">
+                            <div class="row">
+                                <highchart id="chart1" config="chartConfig" class="span10"></highchart>
+                            </div>
                         </div>
                 </div>
-
 
 
                 <div class="row">

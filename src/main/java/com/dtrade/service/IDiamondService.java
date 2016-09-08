@@ -12,4 +12,7 @@ public interface IDiamondService {
 
     Diamond create(Diamond diamond);
 
+    Diamond buy(Diamond diamond);
+
+    Diamond sell(Diamond diamond);
 }

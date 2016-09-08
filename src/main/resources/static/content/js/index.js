@@ -33,8 +33,20 @@ diamondApp.controller('SaleController', function SaleController($scope, $http) {
     });
 });
 
-diamondApp.controller("BidderController", function BidderController($scope, $rootScope){
+diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http){
     var self= this;
+
+    $scope.buyDiamond = function(diamond){
+        $http.post("/diamond/buy", diamond).then(function(responce){
+            console.log("buy: " + responce);
+        });
+    };
+
+    $scope.sellDiamond = function(diamond){
+        $http.post("/diamond/sell", diamond).then(function(responce){
+            console.log("sell: " + responce);
+        });
+    };
 
     $scope.$on('buyDiamondChoosed', function (event, arg) {
         self.buyDiamond = arg;
@@ -62,6 +74,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
         title: {
             text: 'Diamond Price'
         },
+
         useHighStocks: true
     }
 

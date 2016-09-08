@@ -26,6 +26,18 @@ public class DiamondService implements IDiamondService {
     private IAccountService accountService;
 
     @Override
+    public Diamond buy(Diamond diamond) {
+        // FIXME: 9/8/16
+        return diamond;
+    }
+
+    @Override
+    public Diamond sell(Diamond diamond) {
+        // FIXME: 9/8/16
+        return diamond;
+    }
+
+    @Override
     public Diamond create(Diamond diamond) {
         //Diamond diamond = new Diamond();
         diamond.setDiamondStatus(DiamondStatus.PREPARED);
