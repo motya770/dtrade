@@ -50,6 +50,8 @@
 </head>
 <body>
 
+
+
  <div class="container tro">
      <div class="row header pull-left">
          <a href="/">
@@ -243,6 +245,27 @@
          </div>
      </div>
 
+     <div ng-controller="RegisterController as vm">
+         <form novalidate class="simple-form">
+
+             E-mail: <input type="text" ng-model="user.email" /><br />
+             Phone: <input type="text" ng-model="user.phone" /><br />
+             Password: <input type="pwd" ng-model="user.pwd" /><br />
+             <!--
+             Capcha: <input type="pwd" ng-model="user.captcha" /><br />
+             -->
+
+             <!--
+             <div id="Recaptcha"></div>
+              -->
+
+             <input type="button" ng-click="reset()" value="Reset" />
+             <input type="submit" ng-click="update(user)" value="Save" />
+         </form>
+         <pre>user = {{user | json}}</pre>
+         <pre>master = {{master | json}}</pre>
+     </div>
+
      <div class="row footer pull-left">
         <div class="row footer-top">
             <a href="/">
@@ -266,5 +289,15 @@
      </div>
  </div>
  <script src="/content/js/main.js"></script>
+
+
+ <!--
+ <script src="//www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit" async defer></script>
+ <script type="text/javascript">
+     var CaptchaCallback = function () {
+         grecaptcha.render('Recaptcha', {'sitekey': '6LeIRwUTAAAAAIYGH56PGrgIZj-nyJ8As2_BiiwM'});
+     };
+ </script>
+-->
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.dtrade.controller;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.account.RegistrationAccount;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.ITuringService;
 import com.dtrade.utils.UtilsHelper;
@@ -11,10 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -35,19 +33,17 @@ public class AccountController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public Account register(@RequestParam String login,
-                            @RequestParam String pwd,
-                            @RequestParam String phone,
-                            @RequestParam(value = "g-recaptcha-response") String recaptchaResponse,
-                            @RequestParam String currency,
+    public Account register(@RequestBody RegistrationAccount account,
                             HttpServletRequest request
     ) throws Exception {
         //TODO save mail phone country
-        validateCredentials(login, pwd, phone, currency);
+        validateCredentials(account.getEmail(), account.getPwd(), account.getPhone());
 
-        turingService.check(recaptchaResponse, request.getRemoteAddr());
 
-        return accountService.createRealAccount(login, pwd, phone, currency);
+        //TODO return this thing
+        //turingService.check(account.getCaptcha(), request.getRemoteAddr());
+
+        return accountService.createRealAccount(account.getEmail(), account.getPwd(), account.getPhone(), null);
     }
 
     @RequestMapping(value = "/confirm-registration", method = RequestMethod.POST)
@@ -71,13 +67,9 @@ public class AccountController {
     }
 
 
-    public void validateCredentials(String login, String pwd, String phone, String currency) throws TradeException {
-        if (login.length() < 8) {
-            throw new TradeException("Login should be 8 numbers at least");
-        }
+    public void validateCredentials(String email, String pwd, String phone) throws TradeException {
 
-        //login and email are the same thing
-        if (!UtilsHelper.isValidEmailAddress(login)) {
+        if (!UtilsHelper.isValidEmailAddress(email)) {
             throw new TradeException("Email is not valid!");
         }
 

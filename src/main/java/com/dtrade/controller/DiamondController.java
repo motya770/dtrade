@@ -1,5 +1,6 @@
 package com.dtrade.controller;
 
+import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.IDiamondService;
@@ -24,7 +25,7 @@ public class DiamondController {
     private IDiamondService diamondService;
 
     @RequestMapping(value = "/buy")
-    public Diamond buy(@RequestBody Diamond diamond){
+    public Diamond buy(@RequestBody Diamond diamond) throws TradeException{
         return diamondService.buy(diamond);
     }
 
