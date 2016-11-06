@@ -135,10 +135,16 @@ diamondApp.controller('RegisterController', ['$scope', '$http', function($scope,
                 //$scope.data = response.data;
             });
         };
+}]);
 
-        $scope.reset = function() {
-            $scope.user = angular.copy($scope.master);
-        };
 
-        $scope.reset();
+diamondApp.controller('LoginController', ['$scope', '$http', function($scope, $http) {
+    $scope.master = {};
+
+    $scope.update = function(user) {
+
+        $http.post('/accounts/register', user).then(function(response){
+            debugger;
+        });
+    };
 }]);

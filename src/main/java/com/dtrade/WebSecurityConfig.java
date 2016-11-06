@@ -18,25 +18,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //test
 
         http.csrf().disable().
                 authorizeRequests()
-                .anyRequest().permitAll();
-        /*
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/bower_components/**").permitAll()
+                .antMatchers("/content/**").permitAll()
+                .antMatchers("/resources/**").permitAll()
+                .antMatchers("/diamond/**").permitAll()
+                .antMatchers("/account/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
-                */
+                .and().formLogin().defaultSuccessUrl("/")
+                .loginPage("/login").permitAll()
+                .and().logout().permitAll().logoutSuccessUrl("/");
+
     }
 
     @Bean
