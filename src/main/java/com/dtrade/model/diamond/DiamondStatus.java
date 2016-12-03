@@ -5,5 +5,6 @@ package com.dtrade.model.diamond;
  */
 public enum DiamondStatus {
 
-    PREPARED, AVAILABLE, OWNED, WITHDRAWN
+    CREATED, ENLISTED, ACQUIRED, CASHED_OUT, DELIVERED
+
 }

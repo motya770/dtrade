@@ -1,7 +1,7 @@
 package com.dtrade.controller.admin;
 
-import com.dtrade.model.activity.Activity;
-import com.dtrade.service.IActivityService;
+import com.dtrade.model.diamondactivity.DiamondActivity;
+import com.dtrade.service.IDiamondActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +14,13 @@ import java.util.List;
  */
 @Controller
 @RequestMapping(value = "/admin/activity")
-public class AdminActivityController {
+public class AdminDiamondActivityController {
 
     @Autowired
-    private IActivityService activityService;
+    private IDiamondActivityService diamondActivityService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Activity> list() {
-        return activityService.findAll();
+    public List<DiamondActivity> list() {
+        return diamondActivityService.findAll();
     }
 }

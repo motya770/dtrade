@@ -24,4 +24,5 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
         logger.debug("Application started!");
         quotesSimulator.produce();
     }
+
 }

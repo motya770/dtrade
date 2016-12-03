@@ -1,4 +1,4 @@
-package com.dtrade.model.activity;
+package com.dtrade.model.diamondactivity;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  */
 @Data
 @Entity
-public class Activity {
+public class DiamondActivity {
 
     @Id
     @GeneratedValue
@@ -30,5 +30,7 @@ public class Activity {
     private BigDecimal sum;
 
     private Long date;
+
+
 
 }

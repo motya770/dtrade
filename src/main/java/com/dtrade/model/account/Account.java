@@ -1,14 +1,19 @@
 package com.dtrade.model.account;
 
+import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.diamond.Diamond;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,7 +22,7 @@ import java.util.List;
  */
 @Data
 @Entity
-public class Account extends User  {
+public class Account implements UserDetails {
 
     private static SimpleGrantedAuthority ROLE_ACCOUNT = new SimpleGrantedAuthority("ROLE_ACCOUNT");
     private static SimpleGrantedAuthority ROLE_ADMIN = new SimpleGrantedAuthority("ROLE_ADMIN");
@@ -31,8 +36,13 @@ public class Account extends User  {
     @GeneratedValue
     private Long id;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<Diamond> ownedDiamonds;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    private List<BalanceActivity> balanceActivities;
 
     private String mail;
 
@@ -52,11 +62,45 @@ public class Account extends User  {
 
     private String phone;
 
-    public Account(String mail, String password) {
-        super(mail, password, Arrays.asList(ROLE_ACCOUNT));
+    public Account(){
 
+    }
+
+
+    public Account(String mail, String password) {
         this.mail = mail;
         this.password = password;
     }
 
+    @Override
+    public String getUsername() {
+        return mail;
+    }
+
+    @Override
+    public Collection<GrantedAuthority> getAuthorities() {
+        return Arrays.asList(ROLE_ACCOUNT);
+    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled(){
+        //TODO see enabled field
+        return true;
+    }
 }

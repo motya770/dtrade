@@ -138,13 +138,29 @@ diamondApp.controller('RegisterController', ['$scope', '$http', function($scope,
 }]);
 
 
+diamondApp.controller('AccountController', ['$scope', '$http', function($scope, $http) {
+
+    var self = this;
+    $http.post('/accounts/get-current').then(function(response){
+        self.user = response.data;
+
+        console.log(self.user);
+    });
+
+}]);
+
+
+/*
 diamondApp.controller('LoginController', ['$scope', '$http', function($scope, $http) {
     $scope.master = {};
 
-    $scope.update = function(user) {
+    $scope.login = function(user) {
 
-        $http.post('/accounts/register', user).then(function(response){
-            debugger;
+        $http.get('/accounts/get-current', user).then(function(response){
+
+            console.log(response);
+
         });
     };
-}]);
+}]);*/
+

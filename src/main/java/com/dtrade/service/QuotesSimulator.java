@@ -35,7 +35,7 @@ public class QuotesSimulator {
 
                             quotesService.create(diamond, price, timestamp);
                         });
-                        Thread.sleep(1500);
+                        Thread.sleep(60_500);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

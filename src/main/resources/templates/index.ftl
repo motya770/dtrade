@@ -51,6 +51,24 @@
 <body>
 
 
+<div>
+    <span>Current Account</span>
+    <div ng-controller="AccountController as vm">
+        <div>{{vm.user.mail}}</div>
+    </div>
+
+
+    <div>
+        <form action="/login" method="post">
+            <input type="text" name="username" /><br/>
+            <input type="text" name="password"><br/>
+            <input type="submit" value="Login"/>
+        </form>
+    </div>
+
+</div>
+
+
 
  <div class="container tro">
      <div class="row header pull-left">
@@ -254,7 +272,6 @@
              <!--
              Capcha: <input type="pwd" ng-model="user.captcha" /><br />
              -->
-
              <!--
              <div id="Recaptcha"></div>
               -->
@@ -265,6 +282,18 @@
          <pre>user = {{user | json}}</pre>
          <pre>master = {{master | json}}</pre>
      </div>
+
+
+     <!--
+     <div ng-controller="LoginController as vm">
+         <form novalidate class="simple-form">
+             E-mail: <input type="text" ng-model="user.email" /><br />
+             Password: <input type="pwd" ng-model="user.pwd" /><br />
+             <input type="submit"  value="Login" />
+         </form>
+     </div>
+       -->
+
 
      <div class="row footer pull-left">
         <div class="row footer-top">
@@ -288,6 +317,10 @@
          </div>
      </div>
  </div>
+
+
+
+
  <script src="/content/js/main.js"></script>
 
 

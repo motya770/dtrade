@@ -2,11 +2,11 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
-import com.dtrade.model.activity.Activity;
+import com.dtrade.model.diamondactivity.DiamondActivity;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.repository.account.AccountRepository;
-import com.dtrade.repository.activity.ActivityRepository;
+import com.dtrade.repository.diamondactivity.DiamondActivityRepository;
 import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
@@ -28,7 +28,7 @@ public class DiamondService implements IDiamondService {
     private DiamondRepository diamondRepository;
 
     @Autowired
-    private ActivityRepository activityRepository;
+    private DiamondActivityRepository diamondActivityRepository;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -51,17 +51,18 @@ public class DiamondService implements IDiamondService {
 
         account.getBalance().subtract(diamond.getPrice());
 
-        Activity activity = new Activity();
+        DiamondActivity activity = new DiamondActivity();
         activity.setBuyer(account);
         activity.setDate(System.currentTimeMillis());
         activity.setDiamond(diamond);
         activity.setSeller(diamond.getAccount());
         activity.setSum(diamond.getPrice());
 
+        diamond.setDiamondStatus(DiamondStatus.ACQUIRED);
         diamond.setAccount(account);
 
         accountRepository.save(account);
-        activityRepository.save(activity);
+        diamondActivityRepository.save(activity);
         diamond = diamondRepository.save(diamond);
 
         return diamond;
@@ -76,7 +77,7 @@ public class DiamondService implements IDiamondService {
     @Override
     public Diamond create(Diamond diamond) {
         //Diamond diamond = new Diamond();
-        diamond.setDiamondStatus(DiamondStatus.PREPARED);
+        diamond.setDiamondStatus(DiamondStatus.ENLISTED);
         diamondRepository.save(diamond);
         return diamond;
     }

@@ -56,7 +56,13 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public Account getCurrentAccount() {
-        return (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof Account){
+            return (Account) principal;
+        }
+
+        return null;
     }
 
     private Account changeEnablement(Long accountId, boolean enabled) {
@@ -73,7 +79,8 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
-        return accountRepository.findByMail(mail);
+        UserDetails account = accountRepository.findByMail(mail);
+        return account;
     }
 
     @Override
