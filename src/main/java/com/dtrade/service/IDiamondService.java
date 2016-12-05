@@ -9,13 +9,17 @@ import java.util.List;
  * Created by kudelin on 8/24/16.
  */
 public interface IDiamondService {
-    List<Diamond> getOwned();
 
 
+    List<Diamond> getMyDiamondsOwned();
+
+    List<Diamond> getMyDiamondsForSale();
+
+    List<Diamond> getAvailable();
 
     Diamond create(Diamond diamond);
 
-    Diamond buy(Diamond diamond)  throws TradeException;
+    Diamond buyDiamond(Diamond diamond)  throws TradeException;
 
-    Diamond sell(Diamond diamond);
+    Diamond sellDiamond(Diamond diamond);
 }

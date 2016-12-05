@@ -21,4 +21,7 @@ public class BalanceActivity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
+    @Enumerated(EnumType.STRING)
+    private BalanceActivityType balanceActivityType;
+
 }

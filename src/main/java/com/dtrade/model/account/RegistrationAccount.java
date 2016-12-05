@@ -1,8 +1,6 @@
 package com.dtrade.model.account;
 
 import lombok.Data;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Created by kudelin on 11/6/16.

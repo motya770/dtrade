@@ -2,7 +2,6 @@ package com.dtrade.controller;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,34 +17,32 @@ import java.util.List;
 @RequestMapping(value = "/diamond")
 public class DiamondController {
 
-    @Autowired
-    private DiamondRepository diamondRepository;
 
     @Autowired
     private IDiamondService diamondService;
 
-    @RequestMapping(value = "/buy")
-    public Diamond buy(@RequestBody Diamond diamond) throws TradeException{
-        return diamondService.buy(diamond);
+    @RequestMapping(value = "/buy-diamond")
+    public Diamond buyDiamond(@RequestBody Diamond diamond) throws TradeException{
+        return diamondService.buyDiamond(diamond);
     }
 
-    @RequestMapping(value = "/sell")
-    public Diamond sell(@RequestBody Diamond diamond){
-        return diamondService.sell(diamond);
+    @RequestMapping(value = "/sell-diamond")
+    public Diamond sellDiamond(@RequestBody Diamond diamond){
+        return diamondService.sellDiamond(diamond);
     }
 
     @RequestMapping(value = "/available")
     public List<Diamond> getAvailableDiamonds() {
-        return diamondRepository.getAvailable();
+        return diamondService.getAvailable();
     }
 
-    @RequestMapping(value = "/owned")
-    public List<Diamond> getOwned() {
-        return diamondService.getOwned();
+    @RequestMapping(value = "/my-diamonds-owned")
+    public List<Diamond> getMyDiamondsOwned() {
+        return diamondService.getMyDiamondsOwned();
     }
 
-    @RequestMapping(value = "/sale")
-    public List<Diamond> getSale() {
-        return diamondRepository.getSale();
+    @RequestMapping(value = "/my-diamonds-for-sale")
+    public List<Diamond> getMyDiamondsForSale() {
+        return diamondService.getMyDiamondsForSale();
     }
 }

@@ -2,12 +2,12 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
-import com.dtrade.model.diamondactivity.DiamondActivity;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondStatus;
+import com.dtrade.model.diamondactivity.DiamondActivity;
 import com.dtrade.repository.account.AccountRepository;
-import com.dtrade.repository.diamondactivity.DiamondActivityRepository;
 import com.dtrade.repository.diamond.DiamondRepository;
+import com.dtrade.repository.diamondactivity.DiamondActivityRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class DiamondService implements IDiamondService {
     private IAccountService accountService;
 
     @Override
-    public Diamond buy(Diamond diamond) throws TradeException {
+    public Diamond buyDiamond(Diamond diamond) throws TradeException {
 
         Account account = accountService.getCurrentAccount();
         if(account==null){
@@ -69,7 +69,7 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
-    public Diamond sell(Diamond diamond) {
+    public Diamond sellDiamond(Diamond diamond) {
         // FIXME: 9/8/16
         return diamond;
     }
@@ -82,14 +82,25 @@ public class DiamondService implements IDiamondService {
         return diamond;
     }
 
+
     @Override
-    public List<Diamond> getOwned() {
+    public List<Diamond> getAvailable() {
+        return diamondRepository.getAvailable();
+    }
+
+    @Override
+    public List<Diamond> getMyDiamondsForSale() {
+        return diamondRepository.getMyDiamondsForSale();
+    }
+
+    @Override
+    public List<Diamond> getMyDiamondsOwned() {
 
         Account account = accountService.getCurrentAccount();
         if(account == null){
             return null;
         }
 
-        return diamondRepository.getOwned(account.getId());
+        return diamondRepository.getMyDiamondsOwned(account.getId());
     }
 }

@@ -1,9 +1,11 @@
 package com.dtrade.model.diamond;
 
 import com.dtrade.model.account.Account;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -11,7 +13,7 @@ import java.math.BigDecimal;
  */
 @Data
 @Entity
-public class Diamond {
+public class Diamond implements Serializable {
 
     @Id
     @GeneratedValue
@@ -35,7 +37,12 @@ public class Diamond {
     @Enumerated(EnumType.STRING)
     private DiamondStatus diamondStatus;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
+    @Override
+    public String toString(){
+        return "account: {id:" + id +  "}";
+    }
 }
