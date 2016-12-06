@@ -27,7 +27,7 @@ public class DiamondActivity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Diamond diamond;
 
-    private BigDecimal sum;
+    private BigDecimal amount;
 
     private Long date;
 

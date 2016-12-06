@@ -154,7 +154,7 @@ public class AccountService implements IAccountService, UserDetailsService {
         Account rereadAccount = find(account.getId());
 
         if (addedValue != null) {
-            // Hibernate.initialize(account);
+
             BigDecimal balance = rereadAccount.getBalance().add(addedValue);
             balance = balance.setScale(2, BigDecimal.ROUND_HALF_UP);
             rereadAccount.setBalance(balance);

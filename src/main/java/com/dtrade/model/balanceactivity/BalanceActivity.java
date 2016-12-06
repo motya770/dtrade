@@ -4,6 +4,7 @@ import com.dtrade.model.account.Account;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * Created by kudelin on 12/3/16.
@@ -23,5 +24,7 @@ public class BalanceActivity {
 
     @Enumerated(EnumType.STRING)
     private BalanceActivityType balanceActivityType;
+
+    private BigDecimal amount;
 
 }

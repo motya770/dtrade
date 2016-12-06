@@ -9,8 +9,11 @@ import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.repository.diamondactivity.DiamondActivityRepository;
 import com.dtrade.service.IAccountService;
+import com.dtrade.service.IBalanceActivityService;
+import com.dtrade.service.IDiamondActivityService;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,41 +31,27 @@ public class DiamondService implements IDiamondService {
     private DiamondRepository diamondRepository;
 
     @Autowired
-    private DiamondActivityRepository diamondActivityRepository;
-
-    @Autowired
-    private AccountRepository accountRepository;
+    private IDiamondActivityService diamondActivityService;
 
     @Autowired
     private IAccountService accountService;
 
+    @Autowired
+    private IBalanceActivityService balanceActivityService;
+
     @Override
     public Diamond buyDiamond(Diamond diamond) throws TradeException {
 
-        Account account = accountService.getCurrentAccount();
-        if(account==null){
+        Account from = accountService.getCurrentAccount();
+        if(from==null){
             throw new TradeException("You should be logged in.");
         }
 
-        BigDecimal balance = account.getBalance();
-        if(balance.doubleValue() < diamond.getPrice().doubleValue()){
-            throw new TradeException("Not enought money for this operation.");
-        }
-
-        account.getBalance().subtract(diamond.getPrice());
-
-        DiamondActivity activity = new DiamondActivity();
-        activity.setBuyer(account);
-        activity.setDate(System.currentTimeMillis());
-        activity.setDiamond(diamond);
-        activity.setSeller(diamond.getAccount());
-        activity.setSum(diamond.getPrice());
+        balanceActivityService.createBalanceActivity(from, diamond);
+        diamondActivityService.createDiamondActivity(from, diamond);
 
         diamond.setDiamondStatus(DiamondStatus.ACQUIRED);
-        diamond.setAccount(account);
-
-        accountRepository.save(account);
-        diamondActivityRepository.save(activity);
+        diamond.setAccount(from);
         diamond = diamondRepository.save(diamond);
 
         return diamond;
@@ -78,9 +67,10 @@ public class DiamondService implements IDiamondService {
     public Diamond create(Diamond diamond) {
         //Diamond diamond = new Diamond();
         diamond.setDiamondStatus(DiamondStatus.ENLISTED);
-        diamondRepository.save(diamond);
+        diamond = diamondRepository.save(diamond);
         return diamond;
     }
+
 
 
     @Override
