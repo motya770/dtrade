@@ -2,7 +2,9 @@ package com.dtrade.service;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -21,5 +23,5 @@ public interface IDiamondService {
 
     Diamond buyDiamond(Diamond diamond)  throws TradeException;
 
-    Diamond sellDiamond(Diamond diamond);
+    Diamond openForSaleDiamond(Long diamondId, BigDecimal price) throws TradeException;
 }

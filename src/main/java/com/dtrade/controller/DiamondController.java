@@ -6,8 +6,10 @@ import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -26,9 +28,9 @@ public class DiamondController {
         return diamondService.buyDiamond(diamond);
     }
 
-    @RequestMapping(value = "/sell-diamond")
-    public Diamond sellDiamond(@RequestBody Diamond diamond){
-        return diamondService.sellDiamond(diamond);
+    @RequestMapping(value = "/open-for-sale-diamond")
+    public Diamond openForSaleDiamond(@RequestParam Long diamondId, @RequestParam BigDecimal price) throws TradeException{
+        return diamondService.openForSaleDiamond(diamondId, price);
     }
 
     @RequestMapping(value = "/available")

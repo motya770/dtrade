@@ -170,7 +170,7 @@
 
                         <button class="button black" ng-click="sellDiamond(vm.sellDiamond)">OPEN FOR A SALE</button>
                         <!--
-                        <a class="button black" href="/" ng-click="sellDiamond(vm.sellDiamond)">OPEN FOR A SALE</a>
+                        <a class="button black" href="/" ng-click="openForSaleDiamond(vm.openForSaleDiamond)">OPEN FOR A SALE</a>
                         -->
                     </div>
                 </div>

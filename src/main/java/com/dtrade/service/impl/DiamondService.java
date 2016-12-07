@@ -58,8 +58,23 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
-    public Diamond sellDiamond(Diamond diamond) {
-        // FIXME: 9/8/16
+    public Diamond openForSaleDiamond(Long diamondId, BigDecimal price) throws TradeException {
+
+        Diamond diamond  = diamondRepository.findOne(diamondId);
+        if(!diamond.getAccount().equals(accountService.getCurrentAccount())){
+            throw new TradeException("The diamond doesn't belong to this user");
+        }
+
+        DiamondStatus diamondStatus = diamond.getDiamondStatus();
+        if(diamondStatus != DiamondStatus.ACQUIRED){
+            throw new TradeException("Diamond status is " + diamondStatus.name() + " but should be " + DiamondStatus.ACQUIRED);
+        }
+
+        diamond.setDiamondStatus(DiamondStatus.ENLISTED);
+        diamond.setPrice(price);
+
+        diamond = diamondRepository.save(diamond);
+
         return diamond;
     }
 
