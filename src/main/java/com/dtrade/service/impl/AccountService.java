@@ -54,6 +54,15 @@ public class AccountService implements IAccountService, UserDetailsService {
         return changeEnablement(accountId, false);
     }
 
+
+    @Override
+    public void checkCurrentAccount(Account account) throws TradeException {
+        Account currentAccount = getStrictlyLoggedAccount();
+        if(account.getId().equals(account)){
+            throw new TradeException("Passed account is not current");
+        }
+    }
+
     @Override
     public Account getStrictlyLoggedAccount() throws TradeException {
         Account account = this.getCurrentAccount();

@@ -36,4 +36,12 @@ public class Offering implements Serializable {
     @NotNull
     private BigDecimal price;
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private OfferingType offeringType;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private OfferingStatus offeringStatus;
+
 }

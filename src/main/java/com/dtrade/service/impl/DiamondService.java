@@ -35,10 +35,11 @@ public class DiamondService implements IDiamondService {
     @Autowired
     private IBalanceActivityService balanceActivityService;
 
-    private void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException{
+    @Override
+    public void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException{
 
         if(!account.equals(diamond.getAccount())){
-            throw new TradeException("You don't own this diamond");
+            throw new TradeException("This diamond doesn't belong to account");
         }
     }
 
@@ -87,6 +88,11 @@ public class DiamondService implements IDiamondService {
         diamond.setDiamondStatus(DiamondStatus.ENLISTED);
         diamond = diamondRepository.save(diamond);
         return diamond;
+    }
+
+    @Override
+    public Diamond find(Long diamondId) {
+        return diamondRepository.findOne(diamondId);
     }
 
     @Override

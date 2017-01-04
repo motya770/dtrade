@@ -1,6 +1,7 @@
 package com.dtrade.service;
 
 import com.dtrade.exception.TradeException;
+import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +14,9 @@ import java.util.List;
  */
 public interface IDiamondService {
 
+    void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException;
+
+    Diamond find(Long diamondId);
 
     BigDecimal calculateScore();
 
@@ -29,8 +33,4 @@ public interface IDiamondService {
     Diamond buyDiamond(Diamond diamond, BigDecimal price)  throws TradeException;
 
     Diamond openForSale(Diamond diamond, BigDecimal price) throws TradeException;
-
-   // Diamond sellDiamond(Diamond diamond, BigDecimal price) throws TradeException;
-
-   // Diamond openForSaleDiamond(Long diamondId, BigDecimal price) throws TradeException;
 }

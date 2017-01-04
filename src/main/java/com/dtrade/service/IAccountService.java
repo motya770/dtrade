@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface IAccountService {
 
+    void checkCurrentAccount(Account account) throws TradeException;
+
     Account getCurrentAccount();
 
     Account getStrictlyLoggedAccount() throws TradeException;
