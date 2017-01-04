@@ -24,8 +24,17 @@ public class Quote  {
     @ManyToOne(fetch = FetchType.LAZY)
     private Diamond diamond;
 
+    //@Column(precision = 12, scale = 5)
+    //private BigDecimal value;
+
     @Column(precision = 12, scale = 5)
-    private BigDecimal value;
+    private BigDecimal ask;
+
+    @Column(precision = 12, scale = 5)
+    private BigDecimal bid;
 
     private Long time;
+
+    @Enumerated(EnumType.STRING)
+    private QuoteType quoteType;
 }

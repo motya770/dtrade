@@ -18,11 +18,12 @@ public interface IQuotesService {
 
     //void generateQuotes();
 
-    void create(Quote quote);
+    Quote create(Quote quote);
 
-    void create(Diamond diamond, BigDecimal value, Long time);
+    Quote create(Diamond diamond, BigDecimal ask, BigDecimal bid, Long time);
 
     Page<Quote> getPagedQuotes(Integer pageNumber, Integer pageSize, Sort sorting) throws TradeException;
 
     List<Quote> getRangeQuotes(Diamond diamond, Long start, Long end) throws TradeException;
+
 }

@@ -5,6 +5,7 @@ import com.dtrade.model.diamond.Diamond;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -27,10 +28,11 @@ public class DiamondActivity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Diamond diamond;
 
-    private BigDecimal amount;
+    private BigDecimal price;
 
     private Long date;
 
-
-
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private DiamondActivityType diamondActivityType;
 }

@@ -46,6 +46,8 @@ public class Diamond implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
+    private BigDecimal score;
+
     @Override
     public String toString(){
         return "account: {id:" + id +  "}";

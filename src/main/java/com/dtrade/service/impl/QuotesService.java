@@ -29,17 +29,18 @@ public class QuotesService implements IQuotesService {
     private QuoteRepository quoteRepository;
 
     @Override
-    public void create(Quote quote) {
-        quoteRepository.save(quote);
+    public Quote create(Quote quote) {
+         return quoteRepository.save(quote);
     }
 
     @Override
-    public void create(Diamond diamond, BigDecimal value, Long time) {
+    public Quote create(Diamond diamond, BigDecimal ask, BigDecimal bid, Long time) {
         Quote quote = new Quote();
-        quote.setValue(value);
+        quote.setAsk(ask);
+        quote.setBid(bid);
         quote.setTime(time);
         quote.setDiamond(diamond);
-        create(quote);
+        return create(quote);
     }
 
     @Override

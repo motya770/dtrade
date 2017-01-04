@@ -13,7 +13,8 @@ public interface IDiamondActivityService {
 
     List<DiamondActivity> findAll();
 
-    void createDiamondActivity(Account from, Diamond diamond);
+    void createTradeActivity(Account from, Diamond diamond);
 
+    void openForSaleActivity(Account from, Diamond diamond);
 
 }

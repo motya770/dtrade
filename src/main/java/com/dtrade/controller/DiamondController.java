@@ -24,13 +24,13 @@ public class DiamondController {
     private IDiamondService diamondService;
 
     @RequestMapping(value = "/buy-diamond")
-    public Diamond buyDiamond(@RequestBody Diamond diamond) throws TradeException{
-        return diamondService.buyDiamond(diamond);
+    public Diamond buyDiamond(@RequestBody Diamond diamond, @RequestParam BigDecimal price) throws TradeException{
+        return diamondService.buyDiamond(diamond, price);
     }
 
     @RequestMapping(value = "/open-for-sale-diamond")
-    public Diamond openForSaleDiamond(@RequestParam Long diamondId, @RequestParam BigDecimal price) throws TradeException{
-        return diamondService.openForSaleDiamond(diamondId, price);
+    public Diamond openForSaleDiamond(@RequestBody Diamond diamond, @RequestParam BigDecimal price) throws TradeException{
+        return diamondService.openForSale(diamond, price);
     }
 
     @RequestMapping(value = "/available")

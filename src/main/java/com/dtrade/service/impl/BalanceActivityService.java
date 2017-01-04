@@ -29,14 +29,14 @@ public class BalanceActivityService implements IBalanceActivityService {
     private IAccountService accountService;
 
     @Override
-    public void createBalanceActivity(Account from, Diamond diamond) throws TradeException{
+    public void createBalanceActivity(Account from, Diamond diamond, BigDecimal price) throws TradeException{
 
         BigDecimal balance = from.getBalance();
         if(balance.doubleValue() < diamond.getPrice().doubleValue()){
             throw new TradeException("Not enough money for this operation.");
         }
 
-        BigDecimal moneyToTake = diamond.getPrice().multiply(new BigDecimal(-1));
+        BigDecimal moneyToTake = price.multiply(new BigDecimal(-1));
         accountService.updateBalance(from, moneyToTake);
 
         Account to = diamond.getAccount();

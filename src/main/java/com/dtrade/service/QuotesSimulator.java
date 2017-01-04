@@ -51,7 +51,7 @@ public class QuotesSimulator {
                                 BigDecimal price = value.setScale(2, BigDecimal.ROUND_DOWN);
                                 Long timestamp = System.currentTimeMillis();
 
-                                quotesService.create(diamond, price, timestamp);
+                               // quotesService.create(diamond, price, timestamp);
                             });
                             Thread.sleep(60_500);
                         } catch (Exception e) {

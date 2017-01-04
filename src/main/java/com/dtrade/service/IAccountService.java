@@ -13,6 +13,8 @@ public interface IAccountService {
 
     Account getCurrentAccount();
 
+    Account getStrictlyLoggedAccount() throws TradeException;
+
     Account enable(Long accountId);
 
     Account disable(Long accountId);

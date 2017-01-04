@@ -4,16 +4,12 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondStatus;
-import com.dtrade.model.diamondactivity.DiamondActivity;
-import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.repository.diamond.DiamondRepository;
-import com.dtrade.repository.diamondactivity.DiamondActivityRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
 import com.dtrade.service.IDiamondActivityService;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,16 +35,22 @@ public class DiamondService implements IDiamondService {
     @Autowired
     private IBalanceActivityService balanceActivityService;
 
-    @Override
-    public Diamond buyDiamond(Diamond diamond) throws TradeException {
+    private void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException{
 
-        Account from = accountService.getCurrentAccount();
-        if(from==null){
-            throw new TradeException("You should be logged in.");
+        if(!account.equals(diamond.getAccount())){
+            throw new TradeException("You don't own this diamond");
         }
+    }
 
-        balanceActivityService.createBalanceActivity(from, diamond);
-        diamondActivityService.createDiamondActivity(from, diamond);
+    @Override
+    public Diamond buyDiamond(Diamond diamond, BigDecimal price) throws TradeException {
+
+        Account from = accountService.getStrictlyLoggedAccount();
+
+        checkDiamondOwnship(from, diamond);
+
+        balanceActivityService.createBalanceActivity(from, diamond, price);
+        diamondActivityService.createTradeActivity(from, diamond);
 
         diamond.setDiamondStatus(DiamondStatus.ACQUIRED);
         diamond.setAccount(from);
@@ -58,24 +60,25 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
-    public Diamond openForSaleDiamond(Long diamondId, BigDecimal price) throws TradeException {
+    public Diamond openForSale(Diamond diamond, BigDecimal price) throws TradeException {
 
-        Diamond diamond  = diamondRepository.findOne(diamondId);
-        if(!diamond.getAccount().equals(accountService.getCurrentAccount())){
-            throw new TradeException("The diamond doesn't belong to this user");
-        }
+       //TODO reread diamond
 
-        DiamondStatus diamondStatus = diamond.getDiamondStatus();
-        if(diamondStatus != DiamondStatus.ACQUIRED){
-            throw new TradeException("Diamond status is " + diamondStatus.name() + " but should be " + DiamondStatus.ACQUIRED);
-        }
+       Account account = accountService.getStrictlyLoggedAccount();
+       checkDiamondOwnship(account, diamond);
 
-        diamond.setDiamondStatus(DiamondStatus.ENLISTED);
-        diamond.setPrice(price);
+       DiamondStatus status = diamond.getDiamondStatus();
+       if(!status.equals(DiamondStatus.ACQUIRED)){
+           throw new TradeException("Diamond in status " + status + " but should be " + DiamondStatus.ACQUIRED);
+       }
 
-        diamond = diamondRepository.save(diamond);
+       diamond.setDiamondStatus(DiamondStatus.ENLISTED);
+       diamond.setPrice(price);
 
-        return diamond;
+       diamond = diamondRepository.save(diamond);
+       diamondActivityService.openForSaleActivity(account, diamond);
+
+       return diamond;
     }
 
     @Override
@@ -86,7 +89,10 @@ public class DiamondService implements IDiamondService {
         return diamond;
     }
 
-
+    @Override
+    public List<Diamond> getAllAvailable() {
+        return diamondRepository.getAllAvailable();
+    }
 
     @Override
     public List<Diamond> getAvailable() {
@@ -96,6 +102,12 @@ public class DiamondService implements IDiamondService {
     @Override
     public List<Diamond> getMyDiamondsForSale() {
         return diamondRepository.getMyDiamondsForSale();
+    }
+
+
+    @Override
+    public BigDecimal calculateScore() {
+        return null;
     }
 
     @Override

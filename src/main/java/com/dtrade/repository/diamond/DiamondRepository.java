@@ -20,6 +20,10 @@ public interface DiamondRepository extends JpaRepository<Diamond, Long> {
     @Query("select d from Diamond d ")
     List<Diamond> getAvailable();
 
+    @Query("select d from Diamond d where diamondStatus = 'ENLISTED'")
+    List<Diamond> getAllAvailable();
+
+
     @Query("select d from Diamond d ")
     List<Diamond> getMyDiamondsForSale();
 

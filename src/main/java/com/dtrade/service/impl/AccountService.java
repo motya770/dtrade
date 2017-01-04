@@ -55,6 +55,15 @@ public class AccountService implements IAccountService, UserDetailsService {
     }
 
     @Override
+    public Account getStrictlyLoggedAccount() throws TradeException {
+        Account account = this.getCurrentAccount();
+        if(account==null){
+            throw new TradeException("You should be logged in.");
+        }
+        return account;
+    }
+
+    @Override
     public Account getCurrentAccount() {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
