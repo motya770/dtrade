@@ -10,11 +10,12 @@ import com.dtrade.repository.offering.OfferringRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IOfferingService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.math.BigDecimal;
+
 
 /**
  * Created by kudelin on 1/4/17.
@@ -31,7 +32,6 @@ public class OfferingService implements IOfferingService {
 
     @Autowired
     private IDiamondService diamondService;
-
 
     @Override
     public Offering createOffering(Long fromAccountId, Long toAccountId, Long diamondId, BigDecimal price) throws TradeException {
@@ -52,6 +52,11 @@ public class OfferingService implements IOfferingService {
         offering.setDiamond(diamond);
         offering.setOfferingType(OfferingType.ONE_DAY);
         offering.setOfferingStatus(OfferingStatus.MADE);
+
+//        offerringRepository.getPreviousLiveOfferingsForDiamond(diamond, offering)
+//                .forEach((CheckedFunction<Offering>) o-> {
+//            this.cancelOffering(o.getId(), o.getBuyer().getId());
+//        });
 
         return offerringRepository.save(offering);
     }

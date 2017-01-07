@@ -47,4 +47,6 @@ public class Offering implements Serializable {
     @NotNull
     private Long createDate;
 
+    @Column(columnDefinition = "boolean default true")
+    private boolean cancelPrevious;
 }
