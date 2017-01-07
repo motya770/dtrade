@@ -5,6 +5,6 @@ package com.dtrade.model.offering;
  */
 public enum OfferingStatus {
 
-    MADE, ACCEPTED, REJECTED
+    MADE, ACCEPTED, REJECTED, CANCELED
 
 }

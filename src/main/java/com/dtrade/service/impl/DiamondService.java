@@ -38,23 +38,45 @@ public class DiamondService implements IDiamondService {
     @Override
     public void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException{
 
-        if(!account.equals(diamond.getAccount())){
-            throw new TradeException("This diamond doesn't belong to account");
+        if(!account.equals(diamond.getOwner())){
+            throw new TradeException("This diamond doesn't belong to owner");
         }
     }
 
     @Override
-    public Diamond buyDiamond(Diamond diamond, BigDecimal price) throws TradeException {
+    public void preBuyDiamond(Diamond diamond, Long buyerId, Long sellerId, BigDecimal price) throws TradeException {
+        Account buyer = accountService.find(buyerId);
+        Account seller = accountService.find(sellerId);
+        diamond = diamondRepository.findOne(diamond.getId());
 
-        Account from = accountService.getStrictlyLoggedAccount();
+        buyDiamond(diamond, buyer, seller, price);
+    }
 
-        checkDiamondOwnship(from, diamond);
+    @Override
+    public Diamond buyDiamond(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException {
 
-        balanceActivityService.createBalanceActivity(from, diamond, price);
-        diamondActivityService.createTradeActivity(from, diamond);
+        accountService.checkCurrentAccount(buyer);
+        checkDiamondOwnship(seller, diamond);
+
+        return performTrade(diamond, buyer, seller, price);
+    }
+
+    @Override
+    public Diamond sellDiamond(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException {
+
+        accountService.checkCurrentAccount(seller);
+        checkDiamondOwnship(seller, diamond);
+
+        return performTrade(diamond, buyer, seller, price);
+    }
+
+    private Diamond performTrade(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException{
+
+        balanceActivityService.createBalanceActivity(buyer, seller, diamond, price);
+        diamondActivityService.createTradeActivity(buyer, seller, diamond);
 
         diamond.setDiamondStatus(DiamondStatus.ACQUIRED);
-        diamond.setAccount(from);
+        diamond.setOwner(buyer);
         diamond = diamondRepository.save(diamond);
 
         return diamond;
@@ -63,7 +85,7 @@ public class DiamondService implements IDiamondService {
     @Override
     public Diamond openForSale(Diamond diamond, BigDecimal price) throws TradeException {
 
-       //TODO reread diamond
+       diamond  = diamondRepository.findOne(diamond.getId());
 
        Account account = accountService.getStrictlyLoggedAccount();
        checkDiamondOwnship(account, diamond);

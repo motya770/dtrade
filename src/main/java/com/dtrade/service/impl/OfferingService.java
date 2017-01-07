@@ -11,7 +11,6 @@ import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IOfferingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +32,6 @@ public class OfferingService implements IOfferingService {
     @Autowired
     private IDiamondService diamondService;
 
-    @Autowired
-    private IOfferingService offeringService;
 
     @Override
     public Offering createOffering(Long fromAccountId, Long toAccountId, Long diamondId, BigDecimal price) throws TradeException {
@@ -49,8 +46,8 @@ public class OfferingService implements IOfferingService {
         diamondService.checkDiamondOwnship(toAccount, diamond);
 
         Offering offering = new Offering();
-        offering.setFrom(fromAccount);
-        offering.setTo(toAccount);
+        offering.setSeller(fromAccount);
+        offering.setBuyer(toAccount);
         offering.setPrice(price);
         offering.setDiamond(diamond);
         offering.setOfferingType(OfferingType.ONE_DAY);
@@ -63,28 +60,61 @@ public class OfferingService implements IOfferingService {
     public Offering acceptOffering(Long offeringId, Long accountId) throws TradeException{
 
         Account account = accountService.find(accountId);
+        Offering offering = offerringRepository.findOne(offeringId);
+
+        checkOffering(offering, account, true);
+
+
+        offering.setOfferingStatus(OfferingStatus.ACCEPTED);
+        offering = offerringRepository.save(offering);
+
+        diamondService.sellDiamond(offering.getDiamond(), offering.getBuyer(), offering.getSeller(), offering.getPrice());
+
+        return offering;
+    }
+
+
+    private void checkOffering(Offering offering, Account account, boolean toAccount) throws TradeException{
 
         accountService.checkCurrentAccount(account);
 
-        Offering offering = offerringRepository.findOne(offeringId);
+        Account myAccount = toAccount ?  offering.getBuyer() : offering.getSeller();
 
-        if(!offering.getTo().equals(account)){
-            throw new TradeException("This offering don't belong to this account");
+        if (!myAccount.equals(account)){
+            throw new TradeException("This offering don't belong buyer this owner");
         }
 
-        //TODO add sell functionality
-        return null;
+        if(!offering.getOfferingStatus().equals(OfferingStatus.MADE)){
+            throw new TradeException("You can reject only new offering");
+        }
+
+        Long creationDate = offering.getCreateDate();
+        Long duration = offering.getOfferingType().getDuration();
+        if((creationDate + duration) < System.currentTimeMillis()){
+            throw new TradeException("Offering type is expired");
+        }
     }
 
     @Override
     public  Offering rejectOffering(Long offeringId, Long accountId) throws TradeException
     {
-        return null;
-    }
+        Account account = accountService.find(accountId);
+        Offering offering = offerringRepository.findOne(offeringId);
 
+        checkOffering(offering, account, true);
+
+        offering.setOfferingStatus(OfferingStatus.REJECTED);
+        return offerringRepository.save(offering);
+    }
 
     @Override
     public Offering cancelOffering(Long offeringId, Long accountId) throws TradeException{
-        return null;
+        Account account = accountService.find(accountId);
+        Offering offering = offerringRepository.findOne(offeringId);
+
+        checkOffering(offering, account, false);
+
+        offering.setOfferingStatus(OfferingStatus.CANCELED);
+        return offerringRepository.save(offering);
     }
 }

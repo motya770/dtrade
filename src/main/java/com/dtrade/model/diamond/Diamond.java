@@ -44,12 +44,12 @@ public class Diamond implements Serializable {
     @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    private Account account;
+    private Account owner;
 
     private BigDecimal score;
 
     @Override
     public String toString(){
-        return "account: {id:" + id +  "}";
+        return "owner: {id:" + id +  "}";
     }
 }

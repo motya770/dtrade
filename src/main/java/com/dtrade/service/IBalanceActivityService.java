@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public interface IBalanceActivityService {
 
 
-    void createBalanceActivity(Account from, Diamond diamond, BigDecimal price) throws TradeException;
+    void createBalanceActivity(Account buyer, Account seller, Diamond diamond, BigDecimal price) throws TradeException;
 
 
 }

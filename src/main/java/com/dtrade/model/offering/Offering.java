@@ -23,11 +23,11 @@ public class Offering implements Serializable {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    private Account from;
+    private Account seller;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    private Account to;
+    private Account buyer;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,5 +43,8 @@ public class Offering implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     private OfferingStatus offeringStatus;
+
+    @NotNull
+    private Long createDate;
 
 }

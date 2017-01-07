@@ -1,5 +1,6 @@
 package com.dtrade.service;
 
+import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamondactivity.DiamondActivity;
@@ -13,7 +14,7 @@ public interface IDiamondActivityService {
 
     List<DiamondActivity> findAll();
 
-    void createTradeActivity(Account from, Diamond diamond);
+    void createTradeActivity(Account buyer, Account seller, Diamond diamond) throws TradeException;
 
     void openForSaleActivity(Account from, Diamond diamond);
 
