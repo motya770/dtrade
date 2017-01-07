@@ -44,12 +44,12 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
-    public void preBuyDiamond(Diamond diamond, Long buyerId, Long sellerId, BigDecimal price) throws TradeException {
+    public Diamond preBuyDiamond(Diamond diamond, Long buyerId, Long sellerId, BigDecimal price) throws TradeException {
         Account buyer = accountService.find(buyerId);
         Account seller = accountService.find(sellerId);
         diamond = diamondRepository.findOne(diamond.getId());
 
-        buyDiamond(diamond, buyer, seller, price);
+        return buyDiamond(diamond, buyer, seller, price);
     }
 
     @Override

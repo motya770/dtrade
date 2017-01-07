@@ -19,13 +19,13 @@ import java.util.List;
 @RequestMapping(value = "/diamond")
 public class DiamondController {
 
-
     @Autowired
     private IDiamondService diamondService;
 
     @RequestMapping(value = "/buy-diamond")
-    public Diamond buyDiamond(@RequestBody Diamond diamond, @RequestParam BigDecimal price) throws TradeException{
-        return diamondService.buyDiamond(diamond, price);
+    public Diamond buyDiamond(@RequestBody Diamond diamond, @RequestParam Long buyerId,
+                              @RequestParam Long sellerId, @RequestParam BigDecimal price) throws TradeException{
+        return diamondService.preBuyDiamond(diamond, buyerId, sellerId, price);
     }
 
     @RequestMapping(value = "/open-for-sale-diamond")
