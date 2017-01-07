@@ -44,7 +44,7 @@ public class Diamond implements Serializable {
     @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    private Account owner;
+    private Account account;
 
     private BigDecimal score;
 

@@ -38,7 +38,7 @@ public class DiamondService implements IDiamondService {
     @Override
     public void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException{
 
-        if(!account.equals(diamond.getOwner())){
+        if(!account.equals(diamond.getAccount())){
             throw new TradeException("This diamond doesn't belong to owner");
         }
     }
@@ -56,8 +56,6 @@ public class DiamondService implements IDiamondService {
     public Diamond buyDiamond(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException {
 
         accountService.checkCurrentAccount(buyer);
-        checkDiamondOwnship(seller, diamond);
-
         return performTrade(diamond, buyer, seller, price);
     }
 
@@ -65,18 +63,18 @@ public class DiamondService implements IDiamondService {
     public Diamond sellDiamond(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException {
 
         accountService.checkCurrentAccount(seller);
-        checkDiamondOwnship(seller, diamond);
-
         return performTrade(diamond, buyer, seller, price);
     }
 
     private Diamond performTrade(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException{
 
+        checkDiamondOwnship(seller, diamond);
+
         balanceActivityService.createBalanceActivity(buyer, seller, diamond, price);
         diamondActivityService.createTradeActivity(buyer, seller, diamond);
 
         diamond.setDiamondStatus(DiamondStatus.ACQUIRED);
-        diamond.setOwner(buyer);
+        diamond.setAccount(buyer);
         diamond = diamondRepository.save(diamond);
 
         return diamond;
