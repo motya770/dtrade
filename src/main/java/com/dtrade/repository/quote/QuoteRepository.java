@@ -1,6 +1,7 @@
 package com.dtrade.repository.quote;
 
 import com.dtrade.model.quote.Quote;
+import com.dtrade.model.quote.QuoteType;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,8 +16,10 @@ import java.util.List;
 @Repository
 public interface QuoteRepository extends JpaRepository<Quote, Long> {
 
-    @Query("select q from Quote q where q.diamond.id = :diamond and time >= :start_time and time <= :end_time")
-    List<Quote> getRangeQuotes(@Param("diamond") Long diamondId, @Param("start_time") Long start, @Param("end_time") Long end, Pageable pageable);
-
+    @Query("select q from Quote q where q.diamond.id = :diamond and" +
+            " time >= :start_time and time <= :end_time " +
+            "and quoteType=:quote_type")
+    List<Quote> getRangeQuotes(@Param("diamond") Long diamondId, @Param("start_time") Long start,
+                               @Param("end_time") Long end, @Param("quote_type") QuoteType quoteType, Pageable pageable);
 
 }

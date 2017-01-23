@@ -5,10 +5,7 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.repository.diamond.DiamondRepository;
-import com.dtrade.service.IAccountService;
-import com.dtrade.service.IBalanceActivityService;
-import com.dtrade.service.IDiamondActivityService;
-import com.dtrade.service.IDiamondService;
+import com.dtrade.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +31,10 @@ public class DiamondService implements IDiamondService {
 
     @Autowired
     private IBalanceActivityService balanceActivityService;
+
+
+    @Autowired
+    private IQuotesService quotesService;
 
     @Override
     public void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException{
@@ -69,6 +70,8 @@ public class DiamondService implements IDiamondService {
     private Diamond performTrade(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException{
 
         checkDiamondOwnship(seller, diamond);
+
+        quotesService.create(diamond, price, System.currentTimeMillis());
 
         balanceActivityService.createBalanceActivity(buyer, seller, diamond, price);
         diamondActivityService.createTradeActivity(buyer, seller, diamond);

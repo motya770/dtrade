@@ -3,8 +3,10 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
+import com.dtrade.model.quote.QuoteType;
 import com.dtrade.repository.quote.QuoteRepository;
 import com.dtrade.service.IQuotesService;
+import com.sun.org.apache.xpath.internal.operations.Quo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,6 +42,17 @@ public class QuotesService implements IQuotesService {
         quote.setBid(bid);
         quote.setTime(time);
         quote.setDiamond(diamond);
+        quote.setQuoteType(QuoteType.SCORE_QUOTE);
+        return create(quote);
+    }
+
+    @Override
+    public Quote create(Diamond diamond, BigDecimal price,  Long time) {
+        Quote quote = new Quote();
+        quote.setPrice(price);
+        quote.setTime(time);
+        quote.setDiamond(diamond);
+        quote.setQuoteType(QuoteType.ACTION_QUOTE);
         return create(quote);
     }
 
@@ -60,6 +73,6 @@ public class QuotesService implements IQuotesService {
         if(start==null){
             start = end - max_history;
         }
-        return quoteRepository.getRangeQuotes(diamond.getId(), start, end, new PageRequest(0, 100));
+        return quoteRepository.getRangeQuotes(diamond.getId(), start, end, QuoteType.ACTION_QUOTE, new PageRequest(0, 100));
     }
 }

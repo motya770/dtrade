@@ -33,6 +33,9 @@ public class Quote  {
     @Column(precision = 12, scale = 5)
     private BigDecimal bid;
 
+    @Column(precision = 12, scale = 5)
+    private BigDecimal price;
+
     private Long time;
 
     @Enumerated(EnumType.STRING)

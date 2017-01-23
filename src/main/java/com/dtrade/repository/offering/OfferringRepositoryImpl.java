@@ -23,8 +23,14 @@ public class OfferringRepositoryImpl implements OfferringRepositoryCustom {
 
     @Override
     public List<Offering> getPreviousLiveOfferingsForDiamond(Diamond diamond, Offering offering) {
-        TypedQuery<Offering> query =
-                entityManager.createQuery("SELECT o FROM Offerring o", Offering.class);
-        return query.getResultList();
+       TypedQuery<Offering> query =
+                entityManager.createQuery("SELECT c FROM Offering c " +
+                        "where c.diamond = :diamond and c.offeringType = :offeringType " , Offering.class);
+
+       query.setParameter("diamond", diamond);
+       query.setParameter("offeringType", offering.getOfferingType());
+       //query.setParameter("currentTime", System.currentTimeMillis());
+
+       return query.getResultList();
     }
 }
