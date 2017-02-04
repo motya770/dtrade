@@ -18,7 +18,7 @@ public interface IDiamondService {
 
     Diamond find(Long diamondId);
 
-    BigDecimal calculateScore();
+    BigDecimal calculateScore(Diamond diamond);
 
     List<Diamond> getMyDiamondsOwned();
 

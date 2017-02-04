@@ -23,12 +23,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable().
                 authorizeRequests()
+                .antMatchers("/admin/**").permitAll()//TODO change
+                .antMatchers("/accounts/register").permitAll()
                 .antMatchers("/bower_components/**").permitAll()
                 .antMatchers("/content/**").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/diamond/**").permitAll()
                 .antMatchers("/account/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and().formLogin().defaultSuccessUrl("/")
                 .loginPage("/login").permitAll()
                 .and().logout().permitAll().logoutSuccessUrl("/");

@@ -39,5 +39,3 @@
 <#include "/admin/footer.ftl">
 
 
-
-

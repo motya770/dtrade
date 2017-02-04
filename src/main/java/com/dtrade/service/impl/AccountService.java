@@ -58,13 +58,13 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Override
     public void checkCurrentAccount(Account account) throws TradeException {
         Account currentAccount = getStrictlyLoggedAccount();
-        if(account.getId().equals(account)){
+        if(account.equals(currentAccount)){
             throw new TradeException("Passed account is not current");
         }
     }
 
     @Override
-    public Account getStrictlyLoggedAccount() throws TradeException {
+    public Account getStrictlyLoggedAccount()  {
         Account account = this.getCurrentAccount();
         if(account==null){
             throw new TradeException("You should be logged in.");

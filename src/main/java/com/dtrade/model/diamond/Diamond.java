@@ -34,8 +34,6 @@ public class Diamond implements Serializable {
 
     private BigDecimal clarity;
 
-    //private List<>
-
     @NotNull
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

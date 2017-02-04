@@ -15,7 +15,7 @@ public interface IAccountService {
 
     Account getCurrentAccount();
 
-    Account getStrictlyLoggedAccount() throws TradeException;
+    Account getStrictlyLoggedAccount();
 
     Account enable(Long accountId);
 

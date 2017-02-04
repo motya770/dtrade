@@ -4,12 +4,17 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondStatus;
+import com.dtrade.model.diamond.DiamondType;
 import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -109,6 +114,7 @@ public class DiamondService implements IDiamondService {
     public Diamond create(Diamond diamond) {
         //Diamond diamond = new Diamond();
         diamond.setDiamondStatus(DiamondStatus.ENLISTED);
+        diamond.setAccount(accountService.getStrictlyLoggedAccount());
         diamond = diamondRepository.save(diamond);
         return diamond;
     }
@@ -133,10 +139,18 @@ public class DiamondService implements IDiamondService {
         return diamondRepository.getMyDiamondsForSale();
     }
 
-
     @Override
-    public BigDecimal calculateScore() {
-        return null;
+    public BigDecimal calculateScore(Diamond diamond) {
+
+        //TODO write formula for scoring
+
+         //DiamondType diamondType = diamond.getDiamondType();
+
+         BigDecimal carats = diamond.getCarats();
+
+         BigDecimal clarity = diamond.getClarity();
+
+         return  carats.multiply(clarity);
     }
 
     @Override

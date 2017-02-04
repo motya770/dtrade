@@ -44,6 +44,7 @@ public class Account implements UserDetails {
 
     private String mail;
 
+    @JsonIgnore
     private String password;
 
     private boolean enabled;
@@ -75,6 +76,7 @@ public class Account implements UserDetails {
         return mail;
     }
 
+    @JsonIgnore
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         return Arrays.asList(ROLE_ACCOUNT);
