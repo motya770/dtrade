@@ -9,11 +9,11 @@
 
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="name">
+            <input type="text" class="form-control" id="name" name="name" placeholder="name" value="${diamond.name}">
         </div>
         <div class="form-group">
             <label for="name">Price</label>
-            <input type="number" class="form-control" name="price" id="price" placeholder="price">
+            <input type="number" class="form-control" name="price" id="price" placeholder="price" value="${diamond.price}">
         </div>
 
         <div class="radio">

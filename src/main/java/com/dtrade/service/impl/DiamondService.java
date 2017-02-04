@@ -8,6 +8,8 @@ import com.dtrade.model.diamond.DiamondType;
 import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +42,12 @@ public class DiamondService implements IDiamondService {
 
     @Autowired
     private IQuotesService quotesService;
+
+    @Override
+    public void update(Diamond diamond) {
+        checkDiamondOwnship(accountService.getStrictlyLoggedAccount(), diamond);
+        diamondRepository.save(diamond);
+    }
 
     @Override
     public void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException{
@@ -122,6 +130,12 @@ public class DiamondService implements IDiamondService {
     @Override
     public Diamond find(Long diamondId) {
         return diamondRepository.findOne(diamondId);
+    }
+
+    @Override
+    public Page<Diamond> getAllDiamonds() {
+        return null;
+        // /return diamondRepository
     }
 
     @Override

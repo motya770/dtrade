@@ -3,8 +3,10 @@ package com.dtrade.service;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
  * Created by kudelin on 8/24/16.
  */
 public interface IDiamondService {
+
+    void update(Diamond diamond);
 
     void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException;
 
@@ -27,6 +31,8 @@ public interface IDiamondService {
     List<Diamond> getAvailable();
 
     List<Diamond> getAllAvailable();
+
+    Page<Diamond> getAllDiamonds();
 
     Diamond create(Diamond diamond);
 

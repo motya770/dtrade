@@ -7,7 +7,7 @@
         <#if diamonds??>
             <#list diamonds as diamond>
             <tr>
-                <td>${diamond.id}</td>
+                <td> <a href="/admin/diamond/edit?id=${diamond.id}"> ${diamond.id}</a></td>
                 <td>${diamond.name}</td>
                 <td>${diamond.price}</td>
                 <td>${diamond.diamondType}</td>

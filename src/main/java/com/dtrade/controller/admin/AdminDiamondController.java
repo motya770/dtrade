@@ -22,8 +22,8 @@ import java.util.stream.Stream;
 @RequestMapping(value = "/admin/diamond")
 public class AdminDiamondController {
 
-    @Autowired
-    private DiamondRepository diamondRepository;
+    //@Autowired
+    //private DiamondRepository diamondRepository;
 
     @Autowired
     private IDiamondService diamondService;
@@ -31,8 +31,19 @@ public class AdminDiamondController {
     @RequestMapping(value = "/new-entity", method = RequestMethod.GET)
     public String newEntity(@ModelAttribute Diamond diamond, Model model) {
         model.addAttribute("diamondTypes", Stream.of(DiamondType.values()).collect(Collectors.toMap(DiamondType::name, DiamondType::name)));
-        return "admin/diamond/create";
+        return "admin/diamond/edit";
     }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String edit(Long diamondId, Model model) {
+
+        model.addAttribute("diamondTypes", Stream.of(DiamondType.values()).collect(Collectors.toMap(DiamondType::name, DiamondType::name)));
+        model.addAttribute("diamond",  diamondService.find(diamondId));
+
+        return "admin/diamond/edit";
+    }
+
+
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(Diamond diamond, Model model) {
@@ -44,7 +55,7 @@ public class AdminDiamondController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
-        List<Diamond> diamonds = diamondRepository.findAll();
+        List<Diamond> diamonds = diamondService.f;
         model.addAttribute("diamonds", diamonds);
         System.out.println("d: " + diamonds.size());
         return "admin/diamond/list";
