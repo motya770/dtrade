@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,8 +35,8 @@ public class AdminDiamondController {
         return "admin/diamond/edit";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String edit(Long diamondId, Model model) {
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String edit(@RequestParam(value = "id")  Long diamondId, Model model) {
 
         model.addAttribute("diamondTypes", Stream.of(DiamondType.values()).collect(Collectors.toMap(DiamondType::name, DiamondType::name)));
         model.addAttribute("diamond",  diamondService.find(diamondId));
@@ -43,19 +44,22 @@ public class AdminDiamondController {
         return "admin/diamond/edit";
     }
 
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String save(Diamond diamond, Model model) {
 
+        if(diamond.getId()==null) {
+            diamondService.create(diamond);
+        }else{
+            diamondService.update(diamond);
+        }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(Diamond diamond, Model model) {
-        //Diamond diamond = new Diamond();
-        Diamond saved = diamondService.create(diamond);
-        model.addAttribute(saved);
+        //model.addAttribute(saved);
         return "redirect:/admin/diamond/list";
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
-        List<Diamond> diamonds = diamondService.f;
+        List<Diamond> diamonds = diamondService.getAllDiamonds().getContent();
         model.addAttribute("diamonds", diamonds);
         System.out.println("d: " + diamonds.size());
         return "admin/diamond/list";
