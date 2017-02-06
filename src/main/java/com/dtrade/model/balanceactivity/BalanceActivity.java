@@ -4,6 +4,7 @@ import com.dtrade.model.account.Account;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -14,17 +15,24 @@ import java.math.BigDecimal;
 @Data
 public class BalanceActivity {
 
-
     @GeneratedValue
     @Id
     private Long id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private BalanceActivityType balanceActivityType;
 
+    @NotNull
     private BigDecimal amount;
+
+    @NotNull
+    private Long date;
+
+
 
 }
