@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,8 +22,10 @@ public class AdminAccountController {
     private IAccountService accountService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public List<Account> list() {
-        return accountService.findAll();
+    public String list(Model model) {
+        List<Account> accounts = accountService.findAll();
+        model.addAttribute("accounts", accounts);
+        return "/admin/account/list";
     }
 
     @RequestMapping(value = "/disable", method = RequestMethod.GET)
@@ -32,15 +35,17 @@ public class AdminAccountController {
         return "/admin/account/show";
     }
 
+    @RequestMapping(value = "/show", method = RequestMethod.GET)
+    public String show(@RequestParam(value = "id") Long accountId, Model model)  {
+        Account account = accountService.find(accountId);
+        model.addAttribute(account);
+        return "/admin/account/show";
+    }
+
     @RequestMapping(value = "/enable", method = RequestMethod.GET)
     public String enable(Model model, Long accountId) {
         Account account = accountService.enable(accountId);
         model.addAttribute(account);
         return "/admin/account/show";
-    }
-
-    @RequestMapping(value = "/show", method = RequestMethod.GET)
-    public Account show(Long accountId) {
-        return accountService.find(accountId);
     }
 }

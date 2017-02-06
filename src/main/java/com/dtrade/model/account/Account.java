@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
@@ -57,6 +58,7 @@ public class Account implements UserDetails {
 
     private boolean blocked;
 
+    @NotNull
     private BigDecimal balance;
 
     private String phone;

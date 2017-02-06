@@ -23,9 +23,6 @@ import java.util.stream.Stream;
 @RequestMapping(value = "/admin/diamond")
 public class AdminDiamondController {
 
-    //@Autowired
-    //private DiamondRepository diamondRepository;
-
     @Autowired
     private IDiamondService diamondService;
 
