@@ -46,6 +46,10 @@ public class DiamondService implements IDiamondService {
 
     @Override
     public void update(Diamond diamond) {
+
+        //Account account = accountService.find(diamond.getAccount().getId());
+        //diamond.setAccount(account);
+
         checkDiamondOwnship(accountService.getStrictlyLoggedAccount(), diamond);
         diamondRepository.save(diamond);
     }
@@ -53,7 +57,7 @@ public class DiamondService implements IDiamondService {
     @Override
     public void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException{
 
-        if(!account.equals(diamond.getAccount())){
+        if(!account.getId().equals(diamond.getAccount().getId())){
             throw new TradeException("This diamond doesn't belong to owner");
         }
     }
