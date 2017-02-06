@@ -17,8 +17,7 @@
                 <td><a href="/admin/account/show?id=${activity.account.id}"> ${activity.account.mail}</a></td>
                 <td>${activity.balanceActivityType}</td>
                 <td>${activity.amount}</td>
-                <td>${activity.date}</td>
-
+                <td>${activity.date?number_to_datetime}</td>
             </tr>
             </#list>
         </#if>
