@@ -4,6 +4,15 @@
 <div class="table-responsive">
     <table class="table">
         <tbody>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Carats</th>
+            <th>Clarity</th>
+        </tr>
         <#if diamonds??>
             <#list diamonds as diamond>
             <tr>
@@ -11,6 +20,7 @@
                 <td>${diamond.name}</td>
                 <td>${diamond.price}</td>
                 <td>${diamond.diamondType}</td>
+                <td>${diamond.diamondStatus}</td>
                 <td>${diamond.carats}</td>
                 <td>${diamond.clarity}</td>
             </tr>
