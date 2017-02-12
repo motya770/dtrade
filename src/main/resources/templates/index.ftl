@@ -55,6 +55,7 @@
     <span>Current Account</span>
     <div ng-controller="AccountController as vm">
         <div>{{vm.user.mail}}</div>
+        <div>{{vm.user.balance}}</div>
     </div>
 
 
@@ -152,7 +153,7 @@
                         </div>
 
                         <div class="price">PRICE: <span>{{vm.buyDiamond.price}} $</span></div>
-                        <button class="button black" ng-click="buyDiamond(vm.buyDiamond)">BUY</button>
+                        <button class="button black" ng-click="buyDiamond(vm.buyDiamond, vm.currentAccount)">BUY</button>
 
                         <!--
                         <a class="button black" href="/" ng-click="buyDiamond(vm.buyDiamond)">BUY</a>

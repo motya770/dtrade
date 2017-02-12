@@ -149,6 +149,9 @@ public class AccountService implements IAccountService, UserDetailsService {
         pwd = passwordEncoder.encodePassword(pwd, null);
         Account account = new Account(mail, pwd);
 
+
+        //TODO make 0 balance
+        account.setBalance(new BigDecimal("10000.0"));
         account.setPhone(phone);
         account.setGuid(UUID.randomUUID().toString());
 

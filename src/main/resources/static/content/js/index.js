@@ -33,13 +33,22 @@ diamondApp.controller('SaleController', function SaleController($scope, $http) {
     });
 });
 
-diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http){
+diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http, AccountService){
     var self= this;
 
-    $scope.buyDiamond = function(diamond){
-        $http.post("/diamond/buy", diamond).then(function(responce){
-            console.log("buy: " + responce);
-        });
+   // @RequestBody Diamond diamond, @RequestParam Long buyerId,
+    // @RequestParam Long sellerId, @RequestParam BigDecimal price
+
+    AccountService.currentAccount().then(function (currentAccount) {
+        self.currentAccount = currentAccount;
+    });
+
+    $scope.buyDiamond = function(diamond, currentAccount){
+
+            $http.post("/diamond/buy?buyerId=" + currentAccount.id
+                + "&price=" + diamond.price, diamond).then(function(responce){
+                console.log("buy: " + responce);
+            });
     };
 
     $scope.sellDiamond = function(diamond){
@@ -56,6 +65,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
         self.sellDiamond = arg;
     });
 });
+
 
 diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
     $scope.chartConfig = {
@@ -138,15 +148,68 @@ diamondApp.controller('RegisterController', ['$scope', '$http', function($scope,
 }]);
 
 
-diamondApp.controller('AccountController', ['$scope', '$http', function($scope, $http) {
+diamondApp.factory( 'AccountService', ["$http", function($http) {
 
     var self = this;
-    $http.post('/accounts/get-current').then(function(response){
-        self.user = response.data;
+    var currentAccount;
 
-        console.log(self.user);
+    if(currentAccount!=null) {
+        return {
+            currentAccount: function () {
+                return  currentAccount;
+            }
+        }
+    }else{
+        return{
+            currentAccount: function () {
+                return $http.post('/accounts/get-current').then(function(response){
+                    currentAccount = response.data;
+                    return currentAccount;
+                });
+            }
+        }
+    }
+
+    // return {
+    //
+    //     currentAccount: function() {
+    //
+    //         if(currentAccount==null){
+    //             $http.post('/accounts/get-current').then(function(response){
+    //                 self.user = response.data;
+    //             });
+    //         }
+    //
+    //         return currentAccount;
+    //     }
+    //
+    // };
+}]);
+
+
+// diamondApp.factory('AccountService', function($http) {
+//
+//      return {
+//          user: self.user
+//      }
+// });
+
+// app.controller( 'MainCtrl', function( $scope, AuthService ) {
+//     $scope.$watch( AuthService.isLoggedIn, function ( isLoggedIn ) {
+//         $scope.isLoggedIn = isLoggedIn;
+//         $scope.currentUser = AuthService.currentUser();
+//     });
+// });
+
+diamondApp.controller('AccountController', ['$scope', "$http", "AccountService", function($scope, $http, AccountService) {
+    var self = this;
+    AccountService.currentAccount().then(function (user) {
+        self.user = user;
     });
-
+    // $http.post('/accounts/get-current').then(function(response){
+    //     self.user = response.data;
+    //     //$scope["currentAccount"] = self.user;
+    // });
 }]);
 
 

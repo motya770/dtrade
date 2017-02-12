@@ -22,13 +22,13 @@ public class DiamondController {
     @Autowired
     private IDiamondService diamondService;
 
-    @RequestMapping(value = "/buy-diamond")
+    @RequestMapping(value = "/buy")
     public Diamond buyDiamond(@RequestBody Diamond diamond, @RequestParam Long buyerId,
-                              @RequestParam Long sellerId, @RequestParam BigDecimal price) throws TradeException{
-        return diamondService.preBuyDiamond(diamond, buyerId, sellerId, price);
+                              @RequestParam BigDecimal price) throws TradeException{
+        return diamondService.preBuyDiamond(diamond, buyerId, price);
     }
 
-    @RequestMapping(value = "/open-for-sale-diamond")
+    @RequestMapping(value = "/open-for-sale")
     public Diamond openForSaleDiamond(@RequestBody Diamond diamond, @RequestParam BigDecimal price) throws TradeException{
         return diamondService.openForSale(diamond, price);
     }
@@ -38,12 +38,12 @@ public class DiamondController {
         return diamondService.getAvailable();
     }
 
-    @RequestMapping(value = "/my-diamonds-owned")
+    @RequestMapping(value = "/my-owned")
     public List<Diamond> getMyDiamondsOwned() {
         return diamondService.getMyDiamondsOwned();
     }
 
-    @RequestMapping(value = "/my-diamonds-for-sale")
+    @RequestMapping(value = "/my-for-sale")
     public List<Diamond> getMyDiamondsForSale() {
         return diamondService.getMyDiamondsForSale();
     }

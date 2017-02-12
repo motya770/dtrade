@@ -36,7 +36,7 @@ public interface IDiamondService {
 
     Diamond create(Diamond diamond);
 
-    Diamond preBuyDiamond(Diamond diamond, Long buyerId, Long sellerId, BigDecimal price) throws TradeException;
+    Diamond preBuyDiamond(Diamond diamond, Long buyerId, BigDecimal price) throws TradeException;
 
     Diamond buyDiamond(Diamond diamond, Account buyer, Account seller, BigDecimal price)  throws TradeException;
 

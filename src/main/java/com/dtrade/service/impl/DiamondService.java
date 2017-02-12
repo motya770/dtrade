@@ -46,10 +46,6 @@ public class DiamondService implements IDiamondService {
 
     @Override
     public void update(Diamond diamond) {
-
-        //Account account = accountService.find(diamond.getAccount().getId());
-        //diamond.setAccount(account);
-
         checkDiamondOwnship(accountService.getStrictlyLoggedAccount(), diamond);
         diamondRepository.save(diamond);
     }
@@ -63,9 +59,12 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
-    public Diamond preBuyDiamond(Diamond diamond, Long buyerId, Long sellerId, BigDecimal price) throws TradeException {
+    public Diamond preBuyDiamond(Diamond diamond, Long buyerId, BigDecimal price) throws TradeException {
+
+        diamond = diamondRepository.findOne(diamond.getId());
+
         Account buyer = accountService.find(buyerId);
-        Account seller = accountService.find(sellerId);
+        Account seller = accountService.find(diamond.getAccount().getId());
         diamond = diamondRepository.findOne(diamond.getId());
 
         return buyDiamond(diamond, buyer, seller, price);
@@ -85,9 +84,17 @@ public class DiamondService implements IDiamondService {
         return performTrade(diamond, buyer, seller, price);
     }
 
+    private void checkDiamondPrice(Diamond diamond, BigDecimal price){
+
+        if(diamond.getPrice().compareTo(price) != 0){
+            throw new TradeException("Proposed price and diamond price is not equal!");
+        }
+    }
+
     private Diamond performTrade(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException{
 
         checkDiamondOwnship(seller, diamond);
+        checkDiamondPrice(diamond, price);
 
         quotesService.create(diamond, price, System.currentTimeMillis());
 
