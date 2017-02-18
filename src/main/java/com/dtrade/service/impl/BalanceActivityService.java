@@ -51,11 +51,13 @@ public class BalanceActivityService implements IBalanceActivityService {
         buyerActivity.setBalanceActivityType(BalanceActivityType.BUY);
         buyerActivity.setAccount(buyer);
         buyerActivity.setAmount(moneyToTake);
+        buyerActivity.setCreateDate(System.currentTimeMillis());
 
         BalanceActivity sellerActivity = new BalanceActivity();
         sellerActivity.setBalanceActivityType(BalanceActivityType.SELL);
         sellerActivity.setAccount(seller);
         sellerActivity.setAmount(moneyToGive);
+        sellerActivity.setCreateDate(System.currentTimeMillis());
 
         balanceActivityRepository.save(sellerActivity);
         balanceActivityRepository.save(buyerActivity);

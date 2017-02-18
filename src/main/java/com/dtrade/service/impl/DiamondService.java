@@ -161,7 +161,7 @@ public class DiamondService implements IDiamondService {
 
     @Override
     public List<Diamond> getMyDiamondsForSale() {
-        return diamondRepository.getMyDiamondsForSale();
+        return diamondRepository.getMyDiamondsForSale(accountService.getStrictlyLoggedAccount().getId());
     }
 
     @Override

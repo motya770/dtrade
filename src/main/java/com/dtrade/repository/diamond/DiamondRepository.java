@@ -1,5 +1,6 @@
 package com.dtrade.repository.diamond;
 
+import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,17 +18,16 @@ import java.util.List;
 public interface DiamondRepository extends JpaRepository<Diamond, Long> {
 
     //@Query("select d from Diamond d where diamondStatus = 'AVAILABLE' ")
-    @Query("select d from Diamond d ")
+    @Query("select d from Diamond d where diamondStatus = 'ENLISTED' ")
     List<Diamond> getAvailable();
 
     @Query("select d from Diamond d where diamondStatus = 'ENLISTED'")
     List<Diamond> getAllAvailable();
 
-
-    @Query("select d from Diamond d ")
-    List<Diamond> getMyDiamondsForSale();
+    @Query("select d from Diamond d where diamondStatus = 'ENLISTED' and account.id = :accountId ")
+    List<Diamond> getMyDiamondsForSale(@Param("accountId") Long accountId);
 
     //@Query("select d from Diamond d ")
-    @Query("select d from Diamond d where diamondStatus = 'OWNDED' and account.id = :accountId")
+    @Query("select d from Diamond d where diamondStatus = 'ACQUIRED' and account.id = :accountId")
     List<Diamond> getMyDiamondsOwned(@Param("accountId") Long accountId);
 }

@@ -16,7 +16,7 @@ diamondApp.controller('AvailableController', function AvailableController($scope
 // Define the `PhoneListController` controller on the `phonecatApp` module
 diamondApp.controller('OwnedController', function OwnedController($scope, $http, $rootScope) {
     var self = this;
-    $http.get('/diamond/owned').then(function(response) {
+    $http.get('/diamond/my-owned').then(function(response) {
         self.ownedDiamonds = response.data;
     });
 
@@ -28,16 +28,13 @@ diamondApp.controller('OwnedController', function OwnedController($scope, $http,
 // Define the `PhoneListController` controller on the `phonecatApp` module
 diamondApp.controller('SaleController', function SaleController($scope, $http) {
     var self = this;
-    $http.get('/diamond/sale').then(function(response) {
+    $http.get('/diamond/my-for-sale').then(function(response) {
         self.saleDiamonds = response.data;
     });
 });
 
 diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http, AccountService){
     var self= this;
-
-   // @RequestBody Diamond diamond, @RequestParam Long buyerId,
-    // @RequestParam Long sellerId, @RequestParam BigDecimal price
 
     AccountService.currentAccount().then(function (currentAccount) {
         self.currentAccount = currentAccount;
@@ -51,8 +48,9 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
             });
     };
 
-    $scope.sellDiamond = function(diamond){
-        $http.post("/diamond/sell", diamond).then(function(responce){
+    $scope.sellDiamond = function(diamond, currentAccount){
+
+        $http.post("/diamond/open-for-sale?byuerId=" + currentAccount.id + "&price=" + diamond.price, diamond).then(function(responce){
             console.log("sell: " + responce);
         });
     };

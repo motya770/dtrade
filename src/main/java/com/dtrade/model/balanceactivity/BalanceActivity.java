@@ -31,8 +31,6 @@ public class BalanceActivity {
     private BigDecimal amount;
 
     @NotNull
-    private Long date;
-
-
+    private Long createDate;
 
 }
