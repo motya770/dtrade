@@ -243,6 +243,7 @@
                             <th>Carats</th>
                             <th>Clarity</th>
                             <th>Status</th>
+                            <th>Cancel</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -256,6 +257,7 @@
                              <td>{{diamond.carats}}</td>
                              <td>{{diamond.clarity}}</td>
                              <td>{{diamond.status}}</td>
+                            <td><button ng-click="hideFromSale(diamond)"></button></td>
                         </tr>
                         </tbody>
                     </table>

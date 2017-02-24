@@ -131,6 +131,28 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
+    public Diamond hideFromSale(Diamond diamond) {
+
+        diamond = diamondRepository.findOne(diamond.getId());
+
+        Account account = accountService.getStrictlyLoggedAccount();
+        checkDiamondOwnship(account, diamond);
+
+        DiamondStatus status = diamond.getDiamondStatus();
+
+        if(!status.equals(DiamondStatus.ENLISTED)){
+            throw new TradeException("Diamond in status " + status + " but should be " + DiamondStatus.ENLISTED);
+        }
+
+        diamond.setDiamondStatus(DiamondStatus.ACQUIRED);
+        diamond = diamondRepository.save(diamond);
+
+        diamondActivityService.hideFromSaleActivity(account, diamond);
+
+        return diamond;
+    }
+
+    @Override
     public Diamond create(Diamond diamond) {
         //Diamond diamond = new Diamond();
         diamond.setDiamondStatus(DiamondStatus.ENLISTED);

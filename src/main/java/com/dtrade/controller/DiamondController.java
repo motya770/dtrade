@@ -28,6 +28,13 @@ public class DiamondController {
         return diamondService.preBuyDiamond(diamond, buyerId, price);
     }
 
+
+    @RequestMapping(value = "/hide-from-sale")
+    public Diamond hideFromSale(@RequestBody Diamond diamond) throws TradeException{
+        return diamondService.hideFromSale(diamond);
+    }
+
+
     @RequestMapping(value = "/open-for-sale")
     public Diamond openForSaleDiamond(@RequestBody Diamond diamond, @RequestParam BigDecimal price) throws TradeException{
         return diamondService.openForSale(diamond, price);

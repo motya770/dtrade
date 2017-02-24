@@ -18,6 +18,9 @@ public interface IDiamondService {
 
     void update(Diamond diamond);
 
+
+
+
     void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException;
 
     Diamond find(Long diamondId);
@@ -43,4 +46,6 @@ public interface IDiamondService {
     Diamond sellDiamond(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException;
 
     Diamond openForSale(Diamond diamond, BigDecimal price) throws TradeException;
+
+    Diamond hideFromSale(Diamond diamond);
 }

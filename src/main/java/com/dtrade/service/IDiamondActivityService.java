@@ -18,4 +18,6 @@ public interface IDiamondActivityService {
 
     void openForSaleActivity(Account from, Diamond diamond);
 
+    void hideFromSaleActivity(Account from, Diamond diamond);
+
 }

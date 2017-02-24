@@ -14,11 +14,16 @@ diamondApp.controller('AvailableController', function AvailableController($scope
 });
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
-diamondApp.controller('OwnedController', function OwnedController($scope, $http, $rootScope) {
+diamondApp.controller('OwnedController', function OwnedController($scope, $http, $rootScope, MyDiamondsService) {
     var self = this;
-    $http.get('/diamond/my-owned').then(function(response) {
-        self.ownedDiamonds = response.data;
+
+    MyDiamondsService.getOwnedDiamonds().then(function (data) {
+        self.ownedDiamonds = data;
     });
+
+    // $http.get('/diamond/my-owned').then(function(response) {
+    //     self.ownedDiamonds = response.data;
+    // });
 
     $scope.chooseOwnedDiamond = function(diamond){
         $rootScope.$broadcast('sellDiamondChoosed', diamond);
@@ -26,14 +31,88 @@ diamondApp.controller('OwnedController', function OwnedController($scope, $http,
 });
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
-diamondApp.controller('SaleController', function SaleController($scope, $http) {
-    var self = this;
-    $http.get('/diamond/my-for-sale').then(function(response) {
-        self.saleDiamonds = response.data;
-    });
+diamondApp.controller('SaleController', function SaleController($scope, $http, MyDiamondsService) {
+        var self = this;
+
+        MyDiamondsService.getForSaleDiamonds().then(function (data) {
+            self.saleDiamonds = data;
+        });
+
+        $scope.hideFromSale = function (diamond) {
+            $http.post("/diamond/hide-from-sale", diamond).then(function (responce) {
+                var diamond = responce.data;
+                MyDiamondsService.hideFromSale(diamond);
+            });
+        }
 });
 
-diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http, AccountService){
+// diamondApp.service("SaleService", function () {
+//
+//
+//
+// });
+
+
+function arrayObjectIndexOf(arr, obj){
+    for(var i = 0; i < arr.length; i++){
+        if(angular.equals(arr[i], obj)){
+            return i;
+        }
+    };
+    return -1;
+}
+
+diamondApp.service('MyDiamondsService', function($http, $q){
+    var ownedDiamonds = [];
+    var saleDiamonds = [];
+
+    var hideFromSale = function(diamond) {
+        saleDiamonds.splice(arrayObjectIndexOf(saleDiamonds, diamond),1);
+        ownedDiamonds.push(diamond);
+    };
+
+    var addForSale = function (diamond) {
+        saleDiamonds.push(diamond);
+        ownedDiamonds.splice(arrayObjectIndexOf(ownedDiamonds, diamond),1);
+    };
+
+    var addOwned = function (diamond) {
+        ownedDiamonds.push(diamond);
+    };
+
+    var getOwnedDiamonds = function() {
+          if (ownedDiamonds != null && ownedDiamonds.length != 0) {
+              return $q.resolve(ownedDiamonds)
+          }else{
+             return $http.get('/diamond/my-owned').then(function(response) {
+                 ownedDiamonds = response.data;
+                 return ownedDiamonds;
+             });
+         }
+    };
+
+    var getForSaleDiamonds = function() {
+        if (saleDiamonds != null && saleDiamonds.length != 0) {
+            return $q.resolve(saleDiamonds)
+        }else{
+            return $http.get('/diamond/my-for-sale').then(function (response) {
+                saleDiamonds = response.data;
+                return saleDiamonds;
+            });
+        }
+    };
+
+    return {
+        hideFromSale: hideFromSale,
+        getOwnedDiamonds: getOwnedDiamonds,
+        getForSaleDiamonds: getForSaleDiamonds,
+        addForSale: addForSale,
+        addOwned: addOwned
+    };
+});
+
+
+diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http, AccountService, MyDiamondsService){
     var self= this;
 
     AccountService.currentAccount().then(function (currentAccount) {
@@ -44,14 +123,22 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
 
             $http.post("/diamond/buy?buyerId=" + currentAccount.id
                 + "&price=" + diamond.price, diamond).then(function(responce){
-                console.log("buy: " + responce);
+
+                MyDiamondsService.addOwned(responce.data);
+
+                //console.log("buy: " + responce);
+                // responce.data;
+               // $scope.saleDiamonds.push(responce.data);
             });
     };
 
     $scope.sellDiamond = function(diamond, currentAccount){
 
         $http.post("/diamond/open-for-sale?byuerId=" + currentAccount.id + "&price=" + diamond.price, diamond).then(function(responce){
+
             console.log("sell: " + responce);
+            MyDiamondsService.addForSale(responce.data);
+
         });
     };
 

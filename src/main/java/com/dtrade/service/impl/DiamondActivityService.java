@@ -57,6 +57,18 @@ public class DiamondActivityService implements IDiamondActivityService {
     }
 
     @Override
+    public void hideFromSaleActivity(Account from, Diamond diamond) {
+        DiamondActivity activity = new DiamondActivity();
+        activity.setBuyer(null);
+        activity.setSeller(from);
+        activity.setDiamond(diamond);
+        activity.setPrice(diamond.getPrice());
+        activity.setDiamondActivityType(DiamondActivityType.HIDE_FROM_SALE_ACTIVITY);
+
+        diamondActivityRepository.save(activity);
+    }
+
+    @Override
     public List<DiamondActivity> findAll() {
         return diamondActivityRepository.findAll();
     }
