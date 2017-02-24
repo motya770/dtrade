@@ -46,18 +46,16 @@ diamondApp.controller('SaleController', function SaleController($scope, $http, M
         }
 });
 
-// diamondApp.service("SaleService", function () {
-//
-//
-//
-// });
-
-
 function arrayObjectIndexOf(arr, obj){
     for(var i = 0; i < arr.length; i++){
-        if(angular.equals(arr[i], obj)){
+
+        if(arr[i].id == obj.id){
             return i;
         }
+
+        // if(angular.equals(arr[i], obj)){
+        //     return i;
+        // }
     };
     return -1;
 }
