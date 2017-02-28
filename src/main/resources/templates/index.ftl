@@ -101,13 +101,15 @@
                          <thead>
 
                          <tr>
-                             <th>Number {{5+3}}</th>
+                             <th>Number</th>
                              <th>Diamond Name</th>
                              <th>Price</th>
                              <th>Type</th>
                              <th>Carats</th>
                              <th>Clarity</th>
+                             <!--
                              <th>Pic</th>
+                             -->
                          </tr>
                          </thead>
                          <tbody>
@@ -120,7 +122,9 @@
                                      <td>{{diamond.diamondType}}</td>
                                      <td>{{diamond.carats}}</td>
                                      <td>{{diamond.clarity}}</td>
+                             <!--
                                      <td> <a class="fancybox" rel="group" href="../static/content/image/real_diamond.png"><img src="../static/content/image/diamond.png" alt="" /></a></td>
+                               -->
                          </tr>
 
 
@@ -132,7 +136,9 @@
                              <td>Emirald</td>
                              <td>50</td>
                              <td>0.34</td>
+                             <!--
                              <td> <img src="../static/content/image/diamond.png" /> </td>
+                             -->
                          </tr>
 
                          <tr class="options-closed">
