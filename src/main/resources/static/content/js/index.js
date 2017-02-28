@@ -191,7 +191,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
             for (var i in data) {
                 var point = new Array(2);
                 point[0] = data[i].time;
-                point[1] = data[i].value;
+                point[1] = data[i].price;
                 formattedData[i] = point;
             }
 

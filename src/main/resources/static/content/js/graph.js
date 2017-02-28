@@ -1,14 +1,14 @@
 // Define the `phonecatApp` module
-var diamondApp = angular.module('diamondApp', []);
+//var diamondApp = angular.module('diamondApp', []);
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
 diamondApp.controller('GraphController', function GraphController($scope, $http) {
 
     var self = this;
 
-    var setQuotes = function(){};
+    //var setQuotes = function(){};
 
-    var init = function(){
+    var init = function(formattedData){
         var data = [];
         $('#graph-container').highcharts('StockChart', {
             rangeSelector: {
@@ -19,7 +19,7 @@ diamondApp.controller('GraphController', function GraphController($scope, $http)
             },
             series: [{
                 name: 'AAPL',
-                data: data,
+                data: formattedData,
                 tooltip: {
                     valueDecimals: 2
                 }
@@ -27,13 +27,30 @@ diamondApp.controller('GraphController', function GraphController($scope, $http)
         });
     };
 
-    init();
+
 
     $http.get('/graph/get-quotes').then(function(response) {
         self.quotes = response.data;
+
+        // Create the chart
+        var data = response.data;
+        var formattedData = [data.length + 1];
+
+        for (var i in data) {
+            var point = new Array(2);
+            //console.log(data[i].time + " " + new Date(data[i].time));
+            point[0] = data[i].time;
+            point[1] = data[i].price;
+            formattedData[i] = point;
+
+        }
+
+        init(formattedData);
     });
 });
 
+
+/*
 
 var Graph = {
     _graph: null,
@@ -261,4 +278,4 @@ var Graph = {
 
         Graph._loadGraphData(assetExternalId, bidStartTime, tradeTime, closeTime, false, positions, isShortTerm, pipSize);
     }
-}
+}*/

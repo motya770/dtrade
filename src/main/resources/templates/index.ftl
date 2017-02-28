@@ -28,6 +28,8 @@
 
 
     <script src="/content/js/index.js"></script>
+
+
     <!--
     <script src="/content/js/test.js"></script>
     -->
@@ -165,9 +167,10 @@
 
                         <div class="btn-group size">
                             <button class="btn">-</button>
-                            <input value="4800" type="text" class="btn">{{vm.sellDiamond.price}}</input>
+                            <input ng-model="vm.sellDiamond.price" value="{{vm.sellDiamond.price}}" type="text" class="btn"/>
                             <button class="btn">+</button>
                         </div>
+
 
                         <button class="button black" ng-click="sellDiamond(vm.sellDiamond, vm.currentAccount)">OPEN FOR A SALE</button>
                         <!--
@@ -175,6 +178,8 @@
                         -->
                     </div>
                 </div>
+
+
 
                 <div class="pull-right clearfix graph-block">
                         <div class="graph-header">

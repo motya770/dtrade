@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 
@@ -38,6 +39,7 @@ public class Quote  {
 
     private Long time;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private QuoteType quoteType;
 }

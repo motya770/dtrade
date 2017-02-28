@@ -112,6 +112,7 @@ public class DiamondService implements IDiamondService {
     public Diamond openForSale(Diamond diamond, BigDecimal price) throws TradeException {
 
        diamond  = diamondRepository.findOne(diamond.getId());
+       //BigDecimal bid = diamond.getPrice();
 
        Account account = accountService.getStrictlyLoggedAccount();
        checkDiamondOwnship(account, diamond);
@@ -126,6 +127,9 @@ public class DiamondService implements IDiamondService {
 
        diamond = diamondRepository.save(diamond);
        diamondActivityService.openForSaleActivity(account, diamond);
+
+       //BigDecimal ask = price;
+       quotesService.create(diamond, price, System.currentTimeMillis());
 
        return diamond;
     }
