@@ -6,6 +6,7 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamondactivity.DiamondActivity;
 import com.dtrade.model.diamondactivity.DiamondActivityType;
 import com.dtrade.repository.diamondactivity.DiamondActivityRepository;
+import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondActivityService;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class DiamondActivityService implements IDiamondActivityService {
 
     @Autowired
     private IDiamondService diamondService;
+
+    @Autowired
+    private IAccountService accountService;
 
     @Override
     public void createTradeActivity(Account buyer, Account seller, Diamond diamond) throws TradeException {
@@ -66,6 +70,12 @@ public class DiamondActivityService implements IDiamondActivityService {
         activity.setDiamondActivityType(DiamondActivityType.HIDE_FROM_SALE_ACTIVITY);
 
         diamondActivityRepository.save(activity);
+    }
+
+    @Override
+    public List<DiamondActivity> getAccountDiamondActivities() {
+        Account account = accountService.getStrictlyLoggedAccount();
+        return diamondActivityRepository.getAccountDiamondActivities(account);
     }
 
     @Override

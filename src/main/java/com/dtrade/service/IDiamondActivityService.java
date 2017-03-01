@@ -20,4 +20,6 @@ public interface IDiamondActivityService {
 
     void hideFromSaleActivity(Account from, Diamond diamond);
 
+    List<DiamondActivity> getAccountDiamondActivities();
+
 }

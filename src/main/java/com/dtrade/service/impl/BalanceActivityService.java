@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by kudelin on 12/4/16.
@@ -30,6 +31,12 @@ public class BalanceActivityService implements IBalanceActivityService {
 
     @Autowired
     private IDiamondService diamondService;
+
+    @Override
+    public List<BalanceActivity> getAccountBalanceActivities() {
+        Account account = accountService.getStrictlyLoggedAccount();
+        return balanceActivityRepository.findByAccount(account);
+    }
 
     @Override
     public void createBalanceActivity(Account buyer, Account seller,  Diamond diamond, BigDecimal price) throws TradeException{

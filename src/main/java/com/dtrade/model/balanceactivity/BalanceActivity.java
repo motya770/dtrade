@@ -1,6 +1,7 @@
 package com.dtrade.model.balanceactivity;
 
 import com.dtrade.model.account.Account;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class BalanceActivity {
     @Id
     private Long id;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
