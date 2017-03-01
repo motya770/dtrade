@@ -778,3 +778,8 @@ a.button.black:hover {
 .tro table.statistic tr.options-closed td:first-child {
     font-family: PFDinTextPro-Regular;
 }
+
+
+.sell-block {
+    margin-top: 40px;
+}

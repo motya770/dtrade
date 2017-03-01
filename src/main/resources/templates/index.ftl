@@ -156,32 +156,37 @@
 
                 <div ng-controller="BidderController as vm">
                     <div class="pull-left button-block">
-                        <div>
-                            Do You want to buy {{vm.buyDiamond.name}} ({{vm.buyDiamond.id}})?
+                        <div class="buy-block">
+                            <div>
+                                Do You want to buy {{vm.buyDiamond.name}} ({{vm.buyDiamond.id}})?
+                            </div>
+
+                            <div class="price">PRICE: <span>{{vm.buyDiamond.price}} $</span></div>
+                            <!--
+                            <button class="button black" ng-click="buyDiamond(vm.buyDiamond, vm.currentAccount)">BUY</button>
+                            -->
+
+                            <a class="button black" href="#" ng-click="$event.preventDefault(); buyDiamond(vm.buyDiamond, vm.currentAccount)">BUY</a>
+
                         </div>
 
-                        <div class="price">PRICE: <span>{{vm.buyDiamond.price}} $</span></div>
-                        <button class="button black" ng-click="buyDiamond(vm.buyDiamond, vm.currentAccount)">BUY</button>
+                        <div class="sell-block" ng-show="vm.sellDiamond">
+                            <div>
+                                Open {{vm.sellDiamond.name}} ({{vm.sellDiamond.id}}) For Sale?
+                            </div>
 
-                        <!--
-                        <a class="button black" href="/" ng-click="buyDiamond(vm.buyDiamond)">BUY</a>
-                        -->
+                            <div class="btn-group size">
+                                <button class="btn">-</button>
+                                <input ng-model="vm.sellDiamond.price" value="{{vm.sellDiamond.price}}" type="text" class="btn"/>
+                                <button class="btn">+</button>
+                            </div>
 
-                        <div>
-                            Do You want to sell {{vm.sellDiamond.name}} ({{vm.sellDiamond.id}})?
+                            <!--
+                            <button class="button black" ng-click="sellDiamond(vm.sellDiamond, vm.currentAccount)">OPEN FOR A SALE</button>
+                            -->
+                            <a href="#" class="button black" ng-click="$event.preventDefault(); sellDiamond(vm.sellDiamond, vm.currentAccount)">SALE</a>
+
                         </div>
-
-                        <div class="btn-group size">
-                            <button class="btn">-</button>
-                            <input ng-model="vm.sellDiamond.price" value="{{vm.sellDiamond.price}}" type="text" class="btn"/>
-                            <button class="btn">+</button>
-                        </div>
-
-
-                        <button class="button black" ng-click="sellDiamond(vm.sellDiamond, vm.currentAccount)">OPEN FOR A SALE</button>
-                        <!--
-                        <a class="button black" href="/" ng-click="openForSaleDiamond(vm.openForSaleDiamond)">OPEN FOR A SALE</a>
-                        -->
                     </div>
                 </div>
 
@@ -258,7 +263,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="diamond in vm.saleDiamonds">
+                        <tr ng-repeat="diamond in vm.saleDiamonds" ng-click="chooseOpenForSale(diamond)">
                              <td>{{diamond.id}}</td>
                              <td>{{diamond.name}}</td>
                              <td>$</td>
@@ -331,9 +336,6 @@
          </div>
      </div>
  </div>
-
-
-
 
  <script src="/content/js/main.js"></script>
 

@@ -26,12 +26,12 @@ diamondApp.controller('OwnedController', function OwnedController($scope, $http,
     // });
 
     $scope.chooseOwnedDiamond = function(diamond){
-        $rootScope.$broadcast('sellDiamondChoosed', diamond);
+        $rootScope.$broadcast('ownedDiamondChoosed', diamond);
     }
 });
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
-diamondApp.controller('SaleController', function SaleController($scope, $http, MyDiamondsService) {
+diamondApp.controller('SaleController', function SaleController($scope, $http, $rootScope, MyDiamondsService) {
         var self = this;
 
         MyDiamondsService.getForSaleDiamonds().then(function (data) {
@@ -44,6 +44,12 @@ diamondApp.controller('SaleController', function SaleController($scope, $http, M
                 MyDiamondsService.hideFromSale(diamond);
             });
         }
+
+    $scope.chooseOpenForSale = function(diamond){
+        $rootScope.$broadcast('openForSaleDiamondChoosed', diamond);
+    }
+
+
 });
 
 function arrayObjectIndexOf(arr, obj){
@@ -144,9 +150,16 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
         self.buyDiamond = arg;
     });
 
-    $scope.$on('sellDiamondChoosed', function (event, arg) {
+    $scope.$on('ownedDiamondChoosed', function (event, arg) {
         self.sellDiamond = arg;
     });
+
+    $scope.$on('openForSaleDiamondChoosed', function (event, arg) {
+        self.sellDiamond = null;
+    });
+
+
+
 });
 
 
@@ -205,7 +218,11 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
         getChartData(arg.id);
     });
 
-    $scope.$on('sellDiamondChoosed', function (event, arg) {
+    $scope.$on('ownedDiamondChoosed', function (event, arg) {
+        getChartData(arg.id);
+    });
+
+    $scope.$on('openForSaleDiamondChoosed', function (event, arg) {
         getChartData(arg.id);
     });
 });
