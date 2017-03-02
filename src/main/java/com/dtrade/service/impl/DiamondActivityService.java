@@ -56,6 +56,7 @@ public class DiamondActivityService implements IDiamondActivityService {
         activity.setDiamond(diamond);
         activity.setPrice(diamond.getPrice());
         activity.setDiamondActivityType(DiamondActivityType.OPEN_FOR_SALE_ACTIVITY);
+        activity.setDate(System.currentTimeMillis());
 
         diamondActivityRepository.save(activity);
     }
@@ -68,6 +69,7 @@ public class DiamondActivityService implements IDiamondActivityService {
         activity.setDiamond(diamond);
         activity.setPrice(diamond.getPrice());
         activity.setDiamondActivityType(DiamondActivityType.HIDE_FROM_SALE_ACTIVITY);
+        activity.setDate(System.currentTimeMillis());
 
         diamondActivityRepository.save(activity);
     }
