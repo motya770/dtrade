@@ -25,11 +25,15 @@ public class DiamondActivity {
     @ManyToOne(fetch = FetchType.EAGER)
     private Account buyer;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     private Diamond diamond;
 
+    @NotNull
     private BigDecimal price;
 
+
+    @NotNull
     private Long date;
 
     @NotNull

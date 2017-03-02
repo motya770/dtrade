@@ -5,38 +5,63 @@
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
     <script src="/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
-
     <script src="/content/js/customer.js"></script>
-
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 
 <body>
 
 <h4>Customer</h4>
-<div ng-controller="CustomerController as vm">
+    <div ng-controller="CustomerController as vm">
+        <div><h3>Diamond Activity</h3></div>
 
-    <div><h3>Diamond Activity</h3></div>
-    <div ng-repeat="diamondActivity in vm.diamondActivities">
-        <span>{{diamondActivity.id}}</span>
-        <span>{{diamondActivity.seller.mail}}</span>
-        <span>{{diamondActivity.buyer.mail}}</span>
-        <span>{{diamondActivity.diamond.id}}</span>
-        <span>{{diamondActivity.diamond.name}}</span>
-        <span>{{diamondActivity.price}}</span>
-        <span>{{diamondActivity.date}}</span>
-        <span>{{diamondActivity.diamondActivityType}}</span>
-    </div>
+        <table class="table" class="table-responsive">
+            <tr>
+                <th>Activity Id</th>
+                <th>Seller mail</th>
+                <th>Buyer mail</th>
+                <th>Diamond Id</th>
+                <th>Diamond Name</th>
+                <th>Price</th>
+                <th>Date</th>
+                <th>Activity Type</th>
+            </tr>
 
-    <div style="margin-top: 100px;"><h3>Balance Activity</h3></div>
-    <div ng-repeat="balanceActivity in vm.balanceActivities">
-        <span>{{balanceActivity.id}}</span>
-        <span>{{balanceActivity.account.mail}}</span>
-        <span>{{balanceActivity.balanceActivityType}}</span>
-        <span>{{balanceActivity.amount}}</span>
-        <span>{{balanceActivity.createDate}}</span>
-    </div>
-</div>
+            <tbody>
+
+                    <tr ng-repeat="diamondActivity in vm.diamondActivities">
+                            <td>{{diamondActivity.id}}</td>
+                            <td>{{diamondActivity.seller.mail}}</td>
+                            <td>{{diamondActivity.buyer.mail}}</td>
+                            <td>{{diamondActivity.diamond.id}}</td>
+                            <td>{{diamondActivity.diamond.name}}</td>
+                            <td>{{diamondActivity.price}}</td>
+                            <td>{{diamondActivity.date | date}}</td>
+                            <td>{{diamondActivity.diamondActivityType}}</td>
+                    </tr>
+
+            </tbody>
+        </table>
+
+
+        <div style="margin-top: 100px;"><h3>Balance Activity</h3></div>
+        <table class="table" class="table-responsive">
+            <tr>
+                <th>Activity Id</th>
+                <th>Balance Activity Type</th>
+                <th>Amount</th>
+                <th>createDate</th>
+            </tr>
+            <tbody>
+            <tr ng-repeat="balanceActivity in vm.balanceActivities">
+                <td>{{balanceActivity.id}}</td>
+                <td>{{balanceActivity.balanceActivityType}}</td>
+                <td>{{balanceActivity.amount}}</td>
+                <td>{{balanceActivity.createDate |  date : format : timezone}}</td>
+            </tr>
+            </tbody>
+        </div>
+
 
 </body>
 </html>
