@@ -2,6 +2,7 @@ package com.dtrade.repository.offering;
 
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.offering.Offering;
+
 import java.util.List;
 
 /**

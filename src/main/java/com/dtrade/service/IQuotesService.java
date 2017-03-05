@@ -4,7 +4,6 @@ package com.dtrade.service;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
-import com.dtrade.model.quote.QuoteType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 
@@ -18,6 +17,8 @@ public interface IQuotesService {
 
 
     //void generateQuotes();
+
+    Quote createCategoryQuote(BigDecimal score, BigDecimal avarage);
 
     Quote create(Quote quote);
 

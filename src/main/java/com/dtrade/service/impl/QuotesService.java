@@ -6,7 +6,6 @@ import com.dtrade.model.quote.Quote;
 import com.dtrade.model.quote.QuoteType;
 import com.dtrade.repository.quote.QuoteRepository;
 import com.dtrade.service.IQuotesService;
-import com.sun.org.apache.xpath.internal.operations.Quo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -54,6 +53,11 @@ public class QuotesService implements IQuotesService {
         quote.setDiamond(diamond);
         quote.setQuoteType(QuoteType.ACTION_QUOTE);
         return create(quote);
+    }
+
+    @Override
+    public Quote createCategoryQuote(BigDecimal score, BigDecimal avarage) {
+        return null;
     }
 
     @Override

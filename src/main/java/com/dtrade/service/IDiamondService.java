@@ -4,9 +4,6 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import org.springframework.data.domain.Page;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,14 +15,9 @@ public interface IDiamondService {
 
     void update(Diamond diamond);
 
-
-
-
     void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException;
 
     Diamond find(Long diamondId);
-
-    BigDecimal calculateScore(Diamond diamond);
 
     List<Diamond> getMyDiamondsOwned();
 
@@ -36,6 +28,8 @@ public interface IDiamondService {
     List<Diamond> getAllAvailable();
 
     Page<Diamond> getAllDiamonds();
+
+    List<Diamond> getDiamondsByScoreBounds(int lowerBound, int upperBound);
 
     Diamond create(Diamond diamond);
 

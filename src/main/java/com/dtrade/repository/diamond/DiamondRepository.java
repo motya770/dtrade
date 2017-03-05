@@ -1,6 +1,5 @@
 package com.dtrade.repository.diamond;
 
-import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,4 +29,7 @@ public interface DiamondRepository extends JpaRepository<Diamond, Long> {
     //@Query("select d from Diamond d ")
     @Query("select d from Diamond d where diamondStatus = 'ACQUIRED' and account.id = :accountId")
     List<Diamond> getMyDiamondsOwned(@Param("accountId") Long accountId);
+
+    @Query("select d from Diamond d where score >= :lowerBound and score < :upperBound ")
+    List<Diamond> getDiamondsByScoreBounds(@Param("lowerBound") int lowerBound, @Param("upperBound") int upperBound);
 }

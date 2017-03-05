@@ -3,7 +3,6 @@ package com.dtrade.model.diamond;
 import com.dtrade.model.account.Account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -44,7 +43,11 @@ public class Diamond implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
+    @NotNull
     private BigDecimal score;
+
+   // @Embedded
+   // private DiamondCategory diamondCategory;
 
     @Override
     public String toString(){

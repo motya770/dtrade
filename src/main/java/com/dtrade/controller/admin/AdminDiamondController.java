@@ -2,7 +2,6 @@ package com.dtrade.controller.admin;
 
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondType;
-import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

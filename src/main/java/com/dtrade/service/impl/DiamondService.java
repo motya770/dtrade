@@ -4,20 +4,14 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondStatus;
-import com.dtrade.model.diamond.DiamondType;
 import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -40,9 +34,11 @@ public class DiamondService implements IDiamondService {
     @Autowired
     private IBalanceActivityService balanceActivityService;
 
-
     @Autowired
     private IQuotesService quotesService;
+
+    @Autowired
+    private IScoreService scoreService;
 
     @Override
     public void update(Diamond diamond) {
@@ -161,6 +157,9 @@ public class DiamondService implements IDiamondService {
         //Diamond diamond = new Diamond();
         diamond.setDiamondStatus(DiamondStatus.ENLISTED);
         diamond.setAccount(accountService.getStrictlyLoggedAccount());
+
+        diamond.setScore(scoreService.calculateScore(diamond));
+
         diamond = diamondRepository.save(diamond);
         return diamond;
     }
@@ -190,19 +189,6 @@ public class DiamondService implements IDiamondService {
         return diamondRepository.getMyDiamondsForSale(accountService.getStrictlyLoggedAccount().getId());
     }
 
-    @Override
-    public BigDecimal calculateScore(Diamond diamond) {
-
-        //TODO write formula for scoring
-
-         //DiamondType diamondType = diamond.getDiamondType();
-
-         BigDecimal carats = diamond.getCarats();
-
-         BigDecimal clarity = diamond.getClarity();
-
-         return  carats.multiply(clarity);
-    }
 
     @Override
     public List<Diamond> getMyDiamondsOwned() {
@@ -213,5 +199,10 @@ public class DiamondService implements IDiamondService {
         }
 
         return diamondRepository.getMyDiamondsOwned(account.getId());
+    }
+
+    @Override
+    public List<Diamond> getDiamondsByScoreBounds(int lowerBound, int upperBound) {
+        return diamondRepository.getDiamondsByScoreBounds(lowerBound, upperBound);
     }
 }

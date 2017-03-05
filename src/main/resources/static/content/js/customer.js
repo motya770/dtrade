@@ -6,11 +6,11 @@ var diamondApp = angular.module('diamondApp', []);
 
      var self = this;
 
-     $http.get('/customer/diamond-activities').then(function(response) {
+     $http.post('/customer/diamond-activities', null).then(function(response) {
          self.diamondActivities = response.data;
      });
 
-     $http.get('/customer/balance-activities').then(function(response) {
+     $http.post('/customer/balance-activities', null).then(function(response) {
          self.balanceActivities = response.data;
      });
  });
