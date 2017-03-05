@@ -8,12 +8,25 @@
             <#list diamondActivities as activity>
             <tr>
                 <td>${activity.id}</td>
-                <td><a href="/admin/account/show?id=${activity.seller.id}">${activity.seller.mail}</a></td>
-                <td><a href="/admin/account/show?id=${activity.buyer.id}"> ${activity.buyer.mail}</a></td>
-                <td><a href="/admin/diamond/show?id=${diamond.id}"> ${activity.diamond.id}</a></td>
+                <td>
+                <#if activity.seller??>
+                   <a href="/admin/account/show?id=${activity.seller.id}">${activity.seller.mail}</a>
+                </#if>
+                </td>
+                <td>
+                <#if activity.buyer??>
+                   <a href="/admin/account/show?id=${activity.buyer.id}"> ${activity.buyer.mail}</a>
+                </#if>
+                </td>
+                <td><a href="/admin/diamond/show?id=${activity.diamond.id}"> ${activity.diamond.id}</a></td>
                 <td>${activity.diamond.name}</td>
-                <td>${activity.sum}</td>
-                <td>${activity.date}</td>
+                <td>${activity.price}</td>
+
+                <td>
+                    <#if activity.date??>
+                        ${activity.date?number_to_datetime}
+                    </#if>
+                </td>
             </tr>
             </#list>
         </#if>

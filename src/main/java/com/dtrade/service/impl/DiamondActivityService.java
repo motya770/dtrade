@@ -9,6 +9,7 @@ import com.dtrade.repository.diamondactivity.DiamondActivityRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondActivityService;
 import com.dtrade.service.IDiamondService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,7 +78,8 @@ public class DiamondActivityService implements IDiamondActivityService {
     @Override
     public List<DiamondActivity> getAccountDiamondActivities() {
         Account account = accountService.getStrictlyLoggedAccount();
-        return diamondActivityRepository.getAccountDiamondActivities(account);
+        List<DiamondActivity> diamondActivities =  diamondActivityRepository.getAccountDiamondActivities(account);
+        return diamondActivities;
     }
 
     @Override

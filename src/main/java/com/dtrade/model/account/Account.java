@@ -3,6 +3,7 @@ package com.dtrade.model.account;
 import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.diamond.Diamond;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +22,7 @@ import java.util.List;
  */
 @Data
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Account implements UserDetails {
 
     private static SimpleGrantedAuthority ROLE_ACCOUNT = new SimpleGrantedAuthority("ROLE_ACCOUNT");
