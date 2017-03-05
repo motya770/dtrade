@@ -18,5 +18,7 @@ public interface IBalanceActivityService {
 
     List<BalanceActivity> getAccountBalanceActivities();
 
+    List<BalanceActivity> findAll();
+
 
 }

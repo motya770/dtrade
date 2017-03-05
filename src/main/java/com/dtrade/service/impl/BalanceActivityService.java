@@ -33,6 +33,11 @@ public class BalanceActivityService implements IBalanceActivityService {
     private IDiamondService diamondService;
 
     @Override
+    public List<BalanceActivity> findAll() {
+        return balanceActivityRepository.findAll();
+    }
+
+    @Override
     public List<BalanceActivity> getAccountBalanceActivities() {
         Account account = accountService.getStrictlyLoggedAccount();
         return balanceActivityRepository.findByAccount(account);

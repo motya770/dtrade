@@ -6,6 +6,7 @@
         <tr>
             <th>Id</th>
             <th>Account</th>
+            <th>Amount</th>
             <th>Balance Activity Type</th>
             <th>Date</th>
         </tr>
@@ -17,7 +18,11 @@
                 <td><a href="/admin/account/show?id=${activity.account.id}"> ${activity.account.mail}</a></td>
                 <td>${activity.balanceActivityType}</td>
                 <td>${activity.amount}</td>
-                <td>${activity.date?number_to_datetime}</td>
+                <td>
+                <#if activity.createDate??>
+                    ${activity.createDate?number_to_datetime}
+                </#if>
+                </td>
             </tr>
             </#list>
         </#if>
