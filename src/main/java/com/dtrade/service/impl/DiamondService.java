@@ -70,7 +70,11 @@ public class DiamondService implements IDiamondService {
     public Diamond buyDiamond(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException {
 
         accountService.checkCurrentAccount(buyer);
-        return performTrade(diamond, buyer, seller, price);
+        diamond = performTrade(diamond, buyer, seller, price);
+
+        scoreService.calculateCategory(diamond);
+
+        return diamond;
     }
 
     @Override

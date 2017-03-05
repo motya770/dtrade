@@ -1,6 +1,7 @@
 package com.dtrade.service.impl;
 
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.service.ICategoryTickService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IQuotesService;
 import com.dtrade.service.IScoreService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.OptionalDouble;
+import java.util.OptionalInt;
 
 /**
  * Created by kudelin on 3/4/17.
@@ -21,14 +23,16 @@ public class ScoreService implements IScoreService {
     private IDiamondService diamondService;
 
     @Autowired
-    private IQuotesService quotesService;
+    private ICategoryTickService categoryTickService;
 
     @Override
     public void calculateCategory(Diamond diamond) {
 
-        BigDecimal score = diamond.getScore();
-
-        int realScore = (int) score.doubleValue();
+        Integer score = diamond.getScore();
+        int realScore = 0;
+        if(score != null){
+            realScore = score;
+        }
 
         int step = realScore / 5;
 
@@ -37,12 +41,17 @@ public class ScoreService implements IScoreService {
 
         OptionalDouble categoryAvg = diamondService.getDiamondsByScoreBounds(lowerBound, upperBound)
                 .stream().mapToDouble(d -> d.getScore().doubleValue()).average();
+        double categoryAvgScore = categoryAvg.orElseGet(()->{
+            double d = 0.0;
+            return d;
+        });
 
-        quotesService.createCategoryQuote(diamond.getScore(), new BigDecimal(categoryAvg.getAsDouble()));
+        //TODO fix new BigDecimal and check calculations
+        categoryTickService.createCategoryQuote(diamond.getScore(), new BigDecimal(categoryAvgScore));
     }
 
     @Override
-    public BigDecimal calculateScore(Diamond diamond) {
+    public Integer calculateScore(Diamond diamond) {
         //TODO write formula for scoring
 
         //DiamondType diamondType = diamond.getDiamondType();
@@ -51,6 +60,7 @@ public class ScoreService implements IScoreService {
 
         BigDecimal clarity = diamond.getClarity();
 
-        return new BigDecimal(carats.multiply(clarity).doubleValue() % 100);
+        int result = (int) carats.multiply(clarity).doubleValue() % 100;
+        return result;
     }
 }

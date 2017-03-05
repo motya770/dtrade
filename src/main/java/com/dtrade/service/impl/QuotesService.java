@@ -56,11 +56,6 @@ public class QuotesService implements IQuotesService {
     }
 
     @Override
-    public Quote createCategoryQuote(BigDecimal score, BigDecimal avarage) {
-        return null;
-    }
-
-    @Override
     public Page<Quote> getPagedQuotes(Integer pageNumber, Integer pageSize, Sort sorting) throws TradeException {
         if(sorting == null) {
             return quoteRepository.findAll(new PageRequest(pageNumber, pageSize));

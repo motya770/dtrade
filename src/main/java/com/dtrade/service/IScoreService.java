@@ -12,5 +12,5 @@ public interface IScoreService {
 
     void calculateCategory(Diamond diamond);
 
-    BigDecimal calculateScore(Diamond diamond);
+    Integer calculateScore(Diamond diamond);
 }

@@ -46,7 +46,7 @@ public class Diamond implements Serializable {
     private Account account;
 
     //@NotNull
-    private BigDecimal score;
+    private Integer score;
 
    // @Embedded
    // private DiamondCategory diamondCategory;

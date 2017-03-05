@@ -42,17 +42,17 @@ public class QuoteManager implements IQuoteManager {
     @Override
     public void calculateQuotes() {
 
-        List<Diamond> diamonds =  diamondService.getAllAvailable();
-        diamonds.parallelStream().forEach(diamond -> {
-            BigDecimal score = diamond.getScore();
-
-            //TODO calculate price for that score.
-            BigDecimal ask = null;
-            BigDecimal bid = null;
-            quotesService.create(diamond, ask, bid, System.currentTimeMillis());
-
-
-        });
+//        List<Diamond> diamonds =  diamondService.getAllAvailable();
+//        diamonds.parallelStream().forEach(diamond -> {
+//            BigDecimal score = diamond.getScore()
+//
+//            //TODO calculate price for that score.
+//            BigDecimal ask = null;
+//            BigDecimal bid = null;
+//            quotesService.create(diamond, ask, bid, System.currentTimeMillis());
+//
+//
+//        });
     }
 
 

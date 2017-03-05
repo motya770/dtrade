@@ -18,8 +18,6 @@ public interface IQuotesService {
 
     //void generateQuotes();
 
-    Quote createCategoryQuote(BigDecimal score, BigDecimal avarage);
-
     Quote create(Quote quote);
 
     Quote create(Diamond diamond, BigDecimal price, Long time);

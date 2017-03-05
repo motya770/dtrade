@@ -21,7 +21,10 @@ public class CategoryTick {
     private Long id;
 
     @NotNull
-    private BigDecimal score;
+    private Integer score;
+
+    @NotNull
+    private BigDecimal avarage;
 
     @NotNull
     private Long time;
