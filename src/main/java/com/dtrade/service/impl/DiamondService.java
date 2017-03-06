@@ -9,6 +9,7 @@ import com.dtrade.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -185,7 +186,13 @@ public class DiamondService implements IDiamondService {
 
     @Override
     public List<Diamond> getAvailable() {
-        return diamondRepository.getAvailable();
+        Account account = accountService.getCurrentAccount();
+        if(account==null){
+           return diamondRepository.getAvailable();
+        }
+        else{
+           return diamondRepository.getAvailableExceptCurrent(account.getId());
+        }
     }
 
     @Override

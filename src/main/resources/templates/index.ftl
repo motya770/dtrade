@@ -141,6 +141,7 @@
                              <!--
                              <td> <img src="../static/content/image/diamond.png" /> </td>
                              -->
+                             <td>10</td>
                          </tr>
 
                          <tr class="options-closed">
