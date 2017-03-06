@@ -184,9 +184,9 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
         useHighStocks: true
     }
 
-    var pushToChart = function(data){
+    var pushToChart = function(data, seriesId){
         $scope.chartConfig.series.push({
-                id: 1,
+                id: seriesId,
                 data: data
             }
         );
@@ -208,22 +208,42 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
                 formattedData[i] = point;
             }
 
-            pushToChart(formattedData);
+            pushToChart(formattedData, 1);
         });
     };
+
+
+    var getCategoryScoreData = function (score) {
+        $http.post("/category-tick/for-score?score="+score, null).then(function (responce) {
+            var data = responce.data;
+            var formattedData = [data.length + 1];
+            for (var i in data){
+                var point = new Array(2);
+                point[0] = data[i].avarage;
+                point[0] = data[i].time;
+                formattedData[i] = point;
+            }
+
+            pushToChart(formattedData, 2);
+
+        });
+    }
 
     getChartData(diamondId);
 
     $scope.$on('buyDiamondChoosed', function (event, arg) {
         getChartData(arg.id);
+        getCategoryScoreData(arg.score);
     });
 
     $scope.$on('ownedDiamondChoosed', function (event, arg) {
         getChartData(arg.id);
+        getCategoryScoreData(arg.score);
     });
 
     $scope.$on('openForSaleDiamondChoosed', function (event, arg) {
         getChartData(arg.id);
+        getCategoryScoreData(arg.score);w
     });
 });
 

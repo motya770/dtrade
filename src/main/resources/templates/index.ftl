@@ -107,6 +107,7 @@
                              <th>Type</th>
                              <th>Carats</th>
                              <th>Clarity</th>
+                             <th>Score</th>
                              <!--
                              <th>Pic</th>
                              -->
@@ -122,6 +123,7 @@
                                      <td>{{diamond.diamondType}}</td>
                                      <td>{{diamond.carats}}</td>
                                      <td>{{diamond.clarity}}</td>
+                                     <td>{{diamond.score}}</td>
                              <!--
                                      <td> <a class="fancybox" rel="group" href="../static/content/image/real_diamond.png"><img src="../static/content/image/diamond.png" alt="" /></a></td>
                                -->
