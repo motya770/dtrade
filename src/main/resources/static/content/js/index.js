@@ -212,15 +212,14 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
         });
     };
 
-
     var getCategoryScoreData = function (score) {
         $http.post("/category-tick/for-score?score="+score, null).then(function (responce) {
             var data = responce.data;
             var formattedData = [data.length + 1];
             for (var i in data){
                 var point = new Array(2);
-                point[0] = data[i].avarage;
                 point[0] = data[i].time;
+                point[1] = data[i].avarage;
                 formattedData[i] = point;
             }
 
