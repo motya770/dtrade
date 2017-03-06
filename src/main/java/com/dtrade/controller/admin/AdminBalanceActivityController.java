@@ -1,9 +1,7 @@
 package com.dtrade.controller.admin;
 
 import com.dtrade.model.balanceactivity.BalanceActivity;
-import com.dtrade.model.diamondactivity.DiamondActivity;
 import com.dtrade.service.IBalanceActivityService;
-import com.dtrade.service.IDiamondActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

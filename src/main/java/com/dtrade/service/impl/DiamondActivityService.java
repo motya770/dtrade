@@ -9,7 +9,6 @@ import com.dtrade.repository.diamondactivity.DiamondActivityRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondActivityService;
 import com.dtrade.service.IDiamondService;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
