@@ -26,7 +26,7 @@ public class GraphController {
     @Autowired
     private IQuotesService quotesService;
 
-    @RequestMapping(value = "/get-quotes", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-quotes", method = RequestMethod.POST)
     public List<Quote> getRangeQuotes(@RequestParam(required = true) Diamond diamond,
                                       @RequestParam(required = false) Long openTime,
                                       @RequestParam(required = false) Long closeTime

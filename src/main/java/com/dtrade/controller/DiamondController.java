@@ -4,10 +4,7 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,7 +13,7 @@ import java.util.List;
  * Created by kudelin on 8/24/16.
  */
 @RestController
-@RequestMapping(value = "/diamond")
+@RequestMapping(value = "/diamond", method = RequestMethod.POST)
 public class DiamondController {
 
     @Autowired

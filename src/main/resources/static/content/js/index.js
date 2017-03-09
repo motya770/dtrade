@@ -2,16 +2,36 @@
 var diamondApp = angular.module('diamondApp', ["highcharts-ng"]);
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
-diamondApp.controller('AvailableController', function AvailableController($scope, $http, $rootScope) {
+diamondApp.controller('AvailableController', function AvailableController($scope, $http, $rootScope, AvailableService) {
     var self = this;
     $scope.chooseAvailableDiamond = function(diamond){
         $rootScope.$broadcast('buyDiamondChoosed', diamond);
     }
 
-    $http.get('/diamond/available').then(function(response) {
-        self.availableDiamonds = response.data;
-    });
+    AvailableService.getAvailable().then(function (data) {
+        self.availableDiamonds = data;
+    })
 });
+
+diamondApp.service('AvailableService', function($http, $q){
+    var availableDiamonds = [];
+
+    var getAvailable = function() {
+        if(availableDiamonds!=null && availableDiamonds.length > 0) {
+            return $q.resolve(ownedDiamonds)
+        }else{
+            return $http.post('/diamond/available', null).then(function(response) {
+                availableDiamonds = response.data;
+                return availableDiamonds;
+            });
+        }
+    };
+
+    return {
+        getAvailable: getAvailable
+    };
+});
+
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
 diamondApp.controller('OwnedController', function OwnedController($scope, $http, $rootScope, MyDiamondsService) {
@@ -58,10 +78,6 @@ function arrayObjectIndexOf(arr, obj){
         if(arr[i].id == obj.id){
             return i;
         }
-
-        // if(angular.equals(arr[i], obj)){
-        //     return i;
-        // }
     };
     return -1;
 }
@@ -88,7 +104,7 @@ diamondApp.service('MyDiamondsService', function($http, $q){
           if (ownedDiamonds != null && ownedDiamonds.length != 0) {
               return $q.resolve(ownedDiamonds)
           }else{
-             return $http.get('/diamond/my-owned').then(function(response) {
+             return $http.post('/diamond/my-owned', null).then(function(response) {
                  ownedDiamonds = response.data;
                  return ownedDiamonds;
              });
@@ -99,7 +115,7 @@ diamondApp.service('MyDiamondsService', function($http, $q){
         if (saleDiamonds != null && saleDiamonds.length != 0) {
             return $q.resolve(saleDiamonds)
         }else{
-            return $http.get('/diamond/my-for-sale').then(function (response) {
+            return $http.post('/diamond/my-for-sale', null).then(function (response) {
                 saleDiamonds = response.data;
                 return saleDiamonds;
             });
@@ -162,8 +178,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
 
 });
 
-
-diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
+diamondApp.controller('ChartController', function ($scope, $timeout, $http, AvailableService) {
     $scope.chartConfig = {
         options: {
             chart: {
@@ -193,9 +208,9 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
     };
 
     var self = this;
-    var diamondId = 1;
+    //var diamondId = 1;
     var getChartData = function(diamondId){
-        $http.get('/graph/get-quotes?diamond=' + diamondId).then(function(response) {
+        $http.post('/graph/get-quotes?diamond=' + diamondId, null).then(function(response) {
             var data = response.data;
 
             console.log("l:" + data.length)
@@ -228,7 +243,16 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http) {
         });
     }
 
-    getChartData(diamondId);
+
+    //init for graph
+    AvailableService.getAvailable().then(function (data) {
+        if(data!=null && data.length>0){
+            var firstDiamond = data[0];
+             getChartData(firstDiamond.id);
+             getCategoryScoreData(firstDiamond.score);
+        }
+    })
+
 
     $scope.$on('buyDiamondChoosed', function (event, arg) {
         getChartData(arg.id);
