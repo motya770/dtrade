@@ -52,6 +52,4 @@ public class QuoteManager implements IQuoteManager {
 //        });
     }
 
-
-
 }

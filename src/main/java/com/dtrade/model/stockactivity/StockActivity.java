@@ -1,11 +1,13 @@
-package com.dtrade.model.tradeorder;
+package com.dtrade.model.stockactivity;
 
 import com.dtrade.model.diamond.Diamond;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -13,29 +15,25 @@ import java.math.BigDecimal;
  */
 @Data
 @Entity
-public class TradeOrder implements Serializable {
+public class StockActivity {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @NotNull
+    @ManyToOne
     private Diamond diamond;
-
-    @NotNull
-    private BigDecimal amount;
 
     @NotNull
     private BigDecimal price;
 
     @NotNull
-    private Long creationDate;
+    private BigDecimal amount;
 
     @NotNull
-    private Long executionDate;
+    private BigDecimal totalAmount;
 
     @NotNull
-    private TraderOrderStatus traderOrderStatus;
+    private Long createDate;
 
 }

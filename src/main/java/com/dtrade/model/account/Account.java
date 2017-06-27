@@ -2,6 +2,7 @@ package com.dtrade.model.account;
 
 import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.stock.Stock;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -40,6 +41,9 @@ public class Account implements UserDetails {
     @JsonIgnore
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<Diamond> ownedDiamonds;
+
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    private List<Stock> stocks;
 
     @JsonIgnore
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
