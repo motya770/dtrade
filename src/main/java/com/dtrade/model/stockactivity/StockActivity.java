@@ -1,5 +1,6 @@
 package com.dtrade.model.stockactivity;
 
+import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import lombok.Data;
 
@@ -23,6 +24,12 @@ public class StockActivity {
 
     @ManyToOne
     private Diamond diamond;
+
+    @NotNull
+    private Account buyer;
+
+    @NotNull
+    private Account seller;
 
     @NotNull
     private BigDecimal price;
