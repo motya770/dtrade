@@ -12,9 +12,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan
 public class WebConfig extends WebMvcConfigurerAdapter {
 
-      @Override
+    @Override
    public void addViewControllers(ViewControllerRegistry registry) {
           registry.addViewController("/").setViewName("index");
           registry.addViewController("/customer").setViewName("customer");
-      }
+    }
 }

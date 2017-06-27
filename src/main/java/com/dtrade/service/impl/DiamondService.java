@@ -96,7 +96,7 @@ public class DiamondService implements IDiamondService {
 
         checkDiamondOwnship(seller, diamond);
         checkDiamondPrice(diamond, price);
-
+//
         quotesService.create(diamond, price, System.currentTimeMillis());
 
         balanceActivityService.createBalanceActivity(buyer, seller, diamond, price);
