@@ -13,6 +13,7 @@ import java.math.BigDecimal;
  * Created by kudelin on 1/4/17.
  */
 
+@Deprecated
 @Data
 @Entity
 public class Offering implements Serializable {

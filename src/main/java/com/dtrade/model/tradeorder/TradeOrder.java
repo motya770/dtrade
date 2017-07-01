@@ -1,5 +1,6 @@
 package com.dtrade.model.tradeorder;
 
+import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import lombok.Data;
 
@@ -23,6 +24,10 @@ public class TradeOrder implements Serializable {
     @NotNull
     private Diamond diamond;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    private Account account;
+
     @NotNull
     private BigDecimal amount;
 
@@ -32,10 +37,12 @@ public class TradeOrder implements Serializable {
     @NotNull
     private Long creationDate;
 
-    @NotNull
     private Long executionDate;
 
     @NotNull
     private TraderOrderStatus traderOrderStatus;
+
+    @NotNull
+    private TradeOrderType tradeOrderType;
 
 }

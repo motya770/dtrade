@@ -25,9 +25,11 @@ public class StockActivity {
     @ManyToOne
     private Diamond diamond;
 
+    @ManyToOne
     @NotNull
     private Account buyer;
 
+    @ManyToOne
     @NotNull
     private Account seller;
 

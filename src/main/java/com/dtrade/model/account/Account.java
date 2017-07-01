@@ -73,7 +73,6 @@ public class Account implements UserDetails {
 
     }
 
-
     public Account(String mail, String password) {
         this.mail = mail;
         this.password = password;

@@ -33,12 +33,16 @@ public interface IDiamondService {
 
     Diamond create(Diamond diamond);
 
+    @Deprecated
     Diamond preBuyDiamond(Diamond diamond, Long buyerId, BigDecimal price) throws TradeException;
 
+    @Deprecated
     Diamond buyDiamond(Diamond diamond, Account buyer, Account seller, BigDecimal price)  throws TradeException;
 
+    @Deprecated
     Diamond sellDiamond(Diamond diamond, Account buyer, Account seller, BigDecimal price) throws TradeException;
 
+    @Deprecated
     Diamond openForSale(Diamond diamond, BigDecimal price) throws TradeException;
 
     Diamond hideFromSale(Diamond diamond);
