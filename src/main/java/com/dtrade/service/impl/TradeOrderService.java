@@ -33,6 +33,11 @@ public class TradeOrderService  implements ITradeOrderService{
     @Autowired
     private IAccountService accountService;
 
+    @Override
+    public List<TradeOrder> getLiveTradeOrders() {
+        return tradeOrderRepository.getLiveTradeOrders();
+    }
+
     //the reason i use stock object in this case is just a convenience
     @Override
     public TradeOrder createTradeOrder(Stock stock, BigDecimal price) {
@@ -86,10 +91,16 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public TradeOrder executeTradeOrder(TradeOrder tradeOrder, Account tradeParticipant) {
 
-        // get stock - pass to another
-        // get money - add money
-        // create balance activity (2 sides)
-        // create stock activity
+
+        /*
+            1) Simple example of market order should be produced
+            1a) We assume that on market orders exists
+            2) Take sellers(!) stock and transfer to buyer
+            3) Transfer money
+            4) Write all activities
+            5) work only during one minute
+         */
+
 
         final TradeOrder tradeOrderCopy = tradeOrderRepository.findOne(tradeOrder.getId());
         accountService.checkCurrentAccount(tradeOrder.getAccount());
