@@ -1,8 +1,9 @@
 package com.dtrade.service;
 
 import com.dtrade.model.bookorder.BookOrder;
-import com.dtrade.model.bookorder.BookOrdersHolder;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.tradeorder.TradeOrder;
+import org.springframework.data.util.Pair;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,6 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public interface IBookOrderService {
 
-    ConcurrentHashMap<Diamond, BookOrder> getInitialBookOrders();
+     ConcurrentHashMap<Diamond, BookOrder> getBookOrders();
 
+     void addNew(TradeOrder order);
+
+     void remove(TradeOrder order);
+
+     Pair<TradeOrder, TradeOrder> findClosest(Diamond diamond);
 }

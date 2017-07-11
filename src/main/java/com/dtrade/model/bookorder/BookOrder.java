@@ -2,9 +2,7 @@ package com.dtrade.model.bookorder;
 
 import com.dtrade.model.tradeorder.TradeOrder;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * Created by kudelin on 7/10/17.
@@ -12,12 +10,16 @@ import java.util.List;
 @Data
 public class BookOrder {
 
-    private List<TradeOrder> buy;
+    private ConcurrentSkipListSet<TradeOrder> buy;
 
-    private List<TradeOrder> sell;
+    private ConcurrentSkipListSet<TradeOrder> sell;
 
     public BookOrder() {
-        buy = new ArrayList<>();
-        sell = new ArrayList<>();
+        buy = new ConcurrentSkipListSet<>(((o1, o2) -> {
+            return o1.getPrice().compareTo(o2.getPrice());
+        }));
+        sell = new ConcurrentSkipListSet<>((o1, o2)->{
+            return o1.getPrice().compareTo(o2.getPrice());
+        });
     }
 }

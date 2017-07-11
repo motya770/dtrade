@@ -8,9 +8,11 @@ import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.IAccountService;
+import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.IStockService;
 import com.dtrade.service.ITradeOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +40,9 @@ public class TradeOrderService  implements ITradeOrderService{
         return tradeOrderRepository.getLiveTradeOrders();
     }
 
+    @Autowired
+    private IBookOrderService bookOrderService;
+
     //the reason i use stock object in this case is just a convenience
     @Override
     public TradeOrder createTradeOrder(Stock stock, BigDecimal price) {
@@ -62,6 +67,8 @@ public class TradeOrderService  implements ITradeOrderService{
 
         tradeOrder = tradeOrderRepository.save(tradeOrder);
 
+        bookOrderService.addNew(tradeOrder);
+
         return tradeOrder;
     }
 
@@ -85,12 +92,34 @@ public class TradeOrderService  implements ITradeOrderService{
 
         tradeOrder = tradeOrderRepository.save(tradeOrder);
 
+        bookOrderService.remove(tradeOrder);
+
         return tradeOrder;
     }
 
     @Override
-    public TradeOrder executeTradeOrder(TradeOrder tradeOrder, Account tradeParticipant) {
+    public boolean checkIfCanExecute(Pair<TradeOrder, TradeOrder> pair) {
 
+        if(pair==null){
+            return false;
+        }
+
+        TradeOrder buyOrder = pair.getFirst();
+        TradeOrder sellOrder = pair.getSecond();
+
+        if(buyOrder==null || sellOrder == null){
+            return false;
+        }
+
+        if(buyOrder.getPrice().compareTo(sellOrder.getPrice()) >= 0){
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
 
         /*
             1) Simple example of market order should be produced
@@ -101,6 +130,38 @@ public class TradeOrderService  implements ITradeOrderService{
             5) work only during one minute
          */
 
+
+        TradeOrder buyOrder = tradeOrderRepository.findOne(pair.getFirst().getId());
+        TradeOrder sellOrder = tradeOrderRepository.findOne(pair.getSecond().getId());
+
+        if(!checkIfCanExecute(pair)){
+            return;
+        }
+
+        Account buyAccount = buyOrder.getAccount();
+        Account sellAccount = sellOrder.getAccount();
+
+        if(buyAccount.equals(sellAccount)){
+            return;
+        }
+
+
+        BigDecimal buyPrice = buyOrder.getPrice();
+
+        BigDecimal buyAmount = buyOrder.getAmount();
+        BigDecimal sellAmount = sellOrder.getAmount();
+
+        BigDecimal realAmount = buyAmount.min(sellAmount);
+
+        BigDecimal cash = realAmount.multiply(buyPrice);
+
+        if(buyAccount.getBalance().compareTo(cash) < 0){
+            return;
+        }
+
+
+
+        /*
 
         final TradeOrder tradeOrderCopy = tradeOrderRepository.findOne(tradeOrder.getId());
         accountService.checkCurrentAccount(tradeOrder.getAccount());
@@ -128,10 +189,6 @@ public class TradeOrderService  implements ITradeOrderService{
 
             }
 
-            // think about manny sallers
-//            if(tradeParticipantStock == null || tradeParticipantStock.getAmount()  ){
-//
-//            }
 
         }else if (type.equals(TradeOrderType.SELL)){
 
@@ -139,5 +196,6 @@ public class TradeOrderService  implements ITradeOrderService{
         }
 
         return null;
+        */
     }
 }

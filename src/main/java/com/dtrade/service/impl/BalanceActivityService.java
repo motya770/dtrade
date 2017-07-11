@@ -5,10 +5,12 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.balanceactivity.BalanceActivityType;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.repository.balanceactivity.BalanceActivityRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
 import com.dtrade.service.IDiamondService;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +44,12 @@ public class BalanceActivityService implements IBalanceActivityService {
         Account account = accountService.getStrictlyLoggedAccount();
         return balanceActivityRepository.findByAccount(account);
     }
+
+    @Override
+    public void createBalanceActivity(Pair<TradeOrder, TradeOrder> pair) {
+        //TODO write realization
+    }
+
 
     @Override
     public void createBalanceActivity(Account buyer, Account seller,  Diamond diamond, BigDecimal price) throws TradeException{

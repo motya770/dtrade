@@ -15,5 +15,8 @@ public class StockActivityService implements IStockActivityService {
     @Autowired
     private StockActivityRepository stockActivityRepository;
 
+    @Override
+    public void createStockActivity() {
 
+    }
 }
