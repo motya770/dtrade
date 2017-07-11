@@ -1,6 +1,7 @@
 package com.dtrade.model.balanceactivity;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.tradeorder.TradeOrder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -31,6 +32,12 @@ public class BalanceActivity {
 
     @NotNull
     private BigDecimal amount;
+
+    @ManyToOne
+    private TradeOrder buyOrder;
+
+    @ManyToOne
+    private TradeOrder sellOrder;
 
     @NotNull
     private Long createDate;

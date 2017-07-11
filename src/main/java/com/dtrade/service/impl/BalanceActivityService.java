@@ -46,8 +46,32 @@ public class BalanceActivityService implements IBalanceActivityService {
     }
 
     @Override
-    public void createBalanceActivity(Pair<TradeOrder, TradeOrder> pair) {
-        //TODO write realization
+    public void createBalanceActivities(Account buyer, Account seller, BigDecimal cash, TradeOrder buyOrder, TradeOrder sellOrder) {
+
+        //buyer don't have enougth money
+        if(buyer.getBalance().compareTo(cash) < 0){
+            throw new TradeException("Not enough money for this operation.");
+        }
+
+        BigDecimal minusCash = cash.multiply(new BigDecimal("-1"));
+
+        accountService.updateBalance(buyer, minusCash);
+        accountService.updateBalance(seller, cash);
+
+        BalanceActivity buyerActivity = new BalanceActivity();
+        buyerActivity.setBalanceActivityType(BalanceActivityType.BUY);
+        buyerActivity.setAccount(buyer);
+        buyerActivity.setAmount(minusCash);
+        buyerActivity.setCreateDate(System.currentTimeMillis());
+
+        BalanceActivity sellerActivity = new BalanceActivity();
+        sellerActivity.setBalanceActivityType(BalanceActivityType.SELL);
+        sellerActivity.setAccount(seller);
+        sellerActivity.setAmount(cash);
+        sellerActivity.setCreateDate(System.currentTimeMillis());
+
+        balanceActivityRepository.save(sellerActivity);
+        balanceActivityRepository.save(buyerActivity);
     }
 
 

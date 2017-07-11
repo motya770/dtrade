@@ -88,6 +88,20 @@ public class BookOrderService implements IBookOrderService {
         });
     }
 
+    @Override
+    public void update(TradeOrder order) {
+        BookOrder book = bookOrders.get(order.getDiamond());
+        Optional.of(book).ifPresent((bookOrder)->{
+            if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
+                bookOrder.getBuy().remove(order);
+                bookOrder.getBuy().add(order);
+            }else if(order.getTradeOrderType().equals(TradeOrderType.SELL)){
+                bookOrder.getSell().remove(order);
+                bookOrder.getSell().add(order);
+            }
+        });
+    }
+
     @PostConstruct
     private void init(){
         List<TradeOrder> orders = tradeOrderService.getLiveTradeOrders();

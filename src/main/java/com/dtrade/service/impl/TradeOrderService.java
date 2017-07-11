@@ -2,18 +2,17 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
-import com.dtrade.service.IAccountService;
-import com.dtrade.service.IBookOrderService;
-import com.dtrade.service.IStockService;
-import com.dtrade.service.ITradeOrderService;
+import com.dtrade.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -35,6 +34,9 @@ public class TradeOrderService  implements ITradeOrderService{
     @Autowired
     private IAccountService accountService;
 
+    @Autowired
+    private IBalanceActivityService balanceActivityService;
+
     @Override
     public List<TradeOrder> getLiveTradeOrders() {
         return tradeOrderRepository.getLiveTradeOrders();
@@ -42,6 +44,11 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Autowired
     private IBookOrderService bookOrderService;
+
+    @Autowired
+    private IStockActivityService stockActivityService;
+
+    private BigDecimal zeroValue = new BigDecimal("0.00");
 
     //the reason i use stock object in this case is just a convenience
     @Override
@@ -118,6 +125,7 @@ public class TradeOrderService  implements ITradeOrderService{
         return false;
     }
 
+    //buy - sell
     @Override
     public void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
 
@@ -130,9 +138,20 @@ public class TradeOrderService  implements ITradeOrderService{
             5) work only during one minute
          */
 
-
         TradeOrder buyOrder = tradeOrderRepository.findOne(pair.getFirst().getId());
         TradeOrder sellOrder = tradeOrderRepository.findOne(pair.getSecond().getId());
+
+        if(!buyOrder.getDiamond().equals(sellOrder.getDiamond())){
+            return;
+        }
+
+        if(!buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)){
+            return;
+        }
+
+        if(!sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)){
+            return;
+        }
 
         if(!checkIfCanExecute(pair)){
             return;
@@ -145,57 +164,51 @@ public class TradeOrderService  implements ITradeOrderService{
             return;
         }
 
-
         BigDecimal buyPrice = buyOrder.getPrice();
-
         BigDecimal buyAmount = buyOrder.getAmount();
         BigDecimal sellAmount = sellOrder.getAmount();
 
         BigDecimal realAmount = buyAmount.min(sellAmount);
 
+        Stock buyStock = stockService.getSpecificStock(buyAccount, buyOrder.getDiamond());
+        Stock sellStock = stockService.getSpecificStock(sellAccount, sellOrder.getDiamond());
+
+        //seller don't have enouth stocks
+        if(sellStock.getAmount().compareTo(realAmount) < 0){
+            throw new TradeException("Not enougth stocks at " + sellStock);
+        }
+
         BigDecimal cash = realAmount.multiply(buyPrice);
 
-        if(buyAccount.getBalance().compareTo(cash) < 0){
-            return;
+        balanceActivityService.createBalanceActivities(buyAccount, sellAccount, cash, buyOrder, sellOrder);
+
+        buyStock.getAmount().add(realAmount);
+        sellStock.getAmount().subtract(realAmount);
+
+        stockActivityService.createStockActivity( buyOrder, sellOrder,
+                 cash, realAmount);
+
+        if(buyOrder.equals(zeroValue)){
+            bookOrderService.remove(buyOrder);
+            buyOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
+        }else {
+            bookOrderService.update(buyOrder);
         }
 
-
-
-        /*
-
-        final TradeOrder tradeOrderCopy = tradeOrderRepository.findOne(tradeOrder.getId());
-        accountService.checkCurrentAccount(tradeOrder.getAccount());
-
-        Account account = tradeOrder.getAccount();
-
-        if(account.getId().equals(tradeParticipant.getId())){
-            throw new TradeException("Can't make trade in the same account");
+        if(sellOrder.equals(zeroValue)){
+            bookOrderService.remove(sellOrder);
+            sellOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
+        }else{
+            bookOrderService.update(sellOrder);
         }
 
-        List<Stock> stocks = account.getStocks();
+        stockService.save(buyStock);
+        stockService.save(sellStock);
 
-        //TODO thing about optimization and sql request
-        TradeOrderType type = tradeOrder.getTradeOrderType();
+        tradeOrderRepository.save(buyOrder);
+        tradeOrderRepository.save(sellOrder);
 
-        Stock tradeOrderStock = stockService.getSpecificStock(account, tradeOrder.getDiamond());
-        Stock tradeParticipantStock = stockService.getSpecificStock(tradeParticipant, tradeOrder.getDiamond());
-
-
-        if(type.equals(TradeOrderType.BUY)){
-
-            if(tradeOrderStock == null) {
-
-                tradeOrderStock = new Stock();
-
-            }
-
-
-        }else if (type.equals(TradeOrderType.SELL)){
-
-
-        }
-
-        return null;
-        */
+        accountService.save(buyAccount);
+        accountService.save(sellAccount);
     }
 }

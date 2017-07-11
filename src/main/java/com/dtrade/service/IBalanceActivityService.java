@@ -19,7 +19,7 @@ public interface IBalanceActivityService {
     @Deprecated
     void createBalanceActivity(Account buyer, Account seller, Diamond diamond, BigDecimal price) throws TradeException;
 
-    void createBalanceActivity(Pair<TradeOrder, TradeOrder> pair);
+    void createBalanceActivities(Account buyer, Account seller, BigDecimal cash, TradeOrder buyOrder, TradeOrder sellOrder);
 
     List<BalanceActivity> getAccountBalanceActivities();
 

@@ -2,6 +2,8 @@ package com.dtrade.model.stockactivity;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.stock.Stock;
+import com.dtrade.model.tradeorder.TradeOrder;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -27,11 +29,11 @@ public class StockActivity {
 
     @ManyToOne
     @NotNull
-    private Account buyer;
+    private TradeOrder buyOrder;
 
     @ManyToOne
     @NotNull
-    private Account seller;
+    private TradeOrder sellOrder;
 
     @NotNull
     private BigDecimal price;
@@ -39,8 +41,8 @@ public class StockActivity {
     @NotNull
     private BigDecimal amount;
 
-    @NotNull
-    private BigDecimal totalAmount;
+//    @NotNull
+//    private BigDecimal totalAmount;
 
     @NotNull
     private Long createDate;

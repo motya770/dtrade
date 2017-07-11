@@ -14,9 +14,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class StockService  implements IStockService {
 
-
     @Autowired
     private StockRepository stockRepository;
+
+    @Override
+    public void save(Stock stock) {
+        stockRepository.save(stock);
+    }
 
     @Override
     public Stock getSpecificStock(Account account, Diamond diamond) {

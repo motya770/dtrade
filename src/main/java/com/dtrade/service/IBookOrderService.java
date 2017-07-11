@@ -18,5 +18,7 @@ public interface IBookOrderService {
 
      void remove(TradeOrder order);
 
+     void update(TradeOrder order);
+
      Pair<TradeOrder, TradeOrder> findClosest(Diamond diamond);
 }

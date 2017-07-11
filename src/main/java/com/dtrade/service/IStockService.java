@@ -12,4 +12,6 @@ public interface IStockService {
     boolean fieldsNotEmpty(Stock stock);
 
     Stock getSpecificStock(Account account, Diamond diamond);
+
+    void save(Stock stock);
 }
