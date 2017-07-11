@@ -1,8 +1,6 @@
 package com.dtrade.model.stockactivity;
 
-import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.stock.Stock;
 import com.dtrade.model.tradeorder.TradeOrder;
 import lombok.Data;
 

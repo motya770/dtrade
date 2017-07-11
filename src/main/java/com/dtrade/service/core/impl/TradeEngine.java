@@ -1,8 +1,5 @@
 package com.dtrade.service.core.impl;
 
-import com.dtrade.model.bookorder.BookOrder;
-import com.dtrade.model.bookorder.BookOrdersHolder;
-import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.ITradeOrderService;
@@ -13,14 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 /**
  * Created by kudelin on 7/4/17.

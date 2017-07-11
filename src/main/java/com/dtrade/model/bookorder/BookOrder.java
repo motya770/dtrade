@@ -2,6 +2,7 @@ package com.dtrade.model.bookorder;
 
 import com.dtrade.model.tradeorder.TradeOrder;
 import lombok.Data;
+
 import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
