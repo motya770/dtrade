@@ -110,6 +110,15 @@
             <version>2.1.4.RELEASE</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.193</version>
+            <scope>test</scope>
+        </dependency>
+
+
         <!--
         <dependency>
             <groupId>io.vertx</groupId>
