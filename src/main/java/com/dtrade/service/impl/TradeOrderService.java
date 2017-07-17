@@ -35,8 +35,26 @@ public class TradeOrderService  implements ITradeOrderService{
     private IBalanceActivityService balanceActivityService;
 
     @Override
+    public List<TradeOrder> getHistoryTradeOrdersByAccount(){
+        Account account = accountService.getCurrentAccount();
+        if(account==null){
+            return null;
+        }
+        return tradeOrderRepository.getHistoryTradeOrders(account);
+    }
+
+    @Override
     public List<TradeOrder> getLiveTradeOrders() {
         return tradeOrderRepository.getLiveTradeOrders();
+    }
+
+    @Override
+    public List<TradeOrder> getLiveTradeOrdersByAccount(){
+        Account account = accountService.getCurrentAccount();
+        if(account==null){
+            return null;
+        }
+        return tradeOrderRepository.getLiveTradeOrdersByAccount(account);
     }
 
     @Autowired
@@ -47,33 +65,35 @@ public class TradeOrderService  implements ITradeOrderService{
 
     private BigDecimal zeroValue = new BigDecimal("0.00");
 
-    //the reason i use stock object in this case is just a convenience
     @Override
-    public TradeOrder createTradeOrder(Stock stock, BigDecimal price) {
+    public TradeOrder createTradeOrder(TradeOrder tradeOrder) {
 
         //TODO maybe we should price too.
         //TODO check account balance.
         //TODO freeze money (?)
 
-        if(!stockService.fieldsNotEmpty(stock)){
-            throw new TradeException("Can't create stock because stock is empty");
-        }
+//        if(!stockService.fieldsNotEmpty(stock)){
+//            throw new TradeException("Can't create stock because stock is empty");
+//        }
 
-        accountService.checkCurrentAccount(stock.getAccount());
+        accountService.checkCurrentAccount(tradeOrder.getAccount());
 
-        TradeOrder tradeOrder = new TradeOrder();
-        tradeOrder.setAmount(stock.getAmount());
-        tradeOrder.setDiamond(stock.getDiamond());
-        tradeOrder.setAccount(stock.getAccount());
-        tradeOrder.setPrice(price);
-        tradeOrder.setTraderOrderStatus(TraderOrderStatus.CREATED);
-        tradeOrder.setCreationDate(System.currentTimeMillis());
+        TradeOrder realOrder = new TradeOrder();
+        realOrder.setAmount(tradeOrder.getAmount());
+        realOrder.setDiamond(tradeOrder.getDiamond());
+        realOrder.setAccount(tradeOrder.getAccount());
+        realOrder.setPrice(tradeOrder.getPrice());
+        realOrder.setTradeOrderType(tradeOrder.getTradeOrderType());
+        realOrder.setTraderOrderStatus(TraderOrderStatus.CREATED);
+        realOrder.setCreationDate(System.currentTimeMillis());
 
-        tradeOrder = tradeOrderRepository.save(tradeOrder);
+        System.out.println(tradeOrder);
 
-        bookOrderService.addNew(tradeOrder);
+        realOrder = tradeOrderRepository.save(realOrder);
 
-        return tradeOrder;
+        bookOrderService.addNew(realOrder);
+
+        return realOrder;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.dtrade.service;
 
+import com.dtrade.model.account.Account;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.util.Pair;
@@ -12,9 +13,13 @@ import java.util.List;
  */
 public interface ITradeOrderService {
 
+    List<TradeOrder> getHistoryTradeOrdersByAccount();
+
     List<TradeOrder> getLiveTradeOrders();
 
-    TradeOrder createTradeOrder(Stock stock, BigDecimal price);
+    List<TradeOrder> getLiveTradeOrdersByAccount();
+
+    TradeOrder createTradeOrder(TradeOrder tradeOrder);
 
     TradeOrder cancelTradeOrder(TradeOrder tradeOrder);
 

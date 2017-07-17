@@ -1,6 +1,8 @@
 package com.dtrade.service.impl;
 
+import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.account.company.Company;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.repository.stock.StockRepository;
@@ -16,6 +18,21 @@ public class StockService  implements IStockService {
 
     @Autowired
     private StockRepository stockRepository;
+
+    @Override
+    public void makeIPO(Company owner, Diamond diamond){
+
+        if(diamond.getTotalStockAmount()==null){
+            throw new TradeException("Can't produce IPO for diamond " + diamond + " where totalStockAmount is not defined");
+        }
+
+        Stock stock = new Stock();
+        stock.setAmount(diamond.getTotalStockAmount());
+        stock.setAccount(diamond.getAccount());
+        stock.setDiamond(diamond);
+
+        stockRepository.save(stock);
+    }
 
     @Override
     public void save(Stock stock) {

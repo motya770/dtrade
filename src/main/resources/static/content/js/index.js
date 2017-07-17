@@ -132,25 +132,92 @@ diamondApp.service('MyDiamondsService', function($http, $q){
 });
 
 
-diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http, AccountService, MyDiamondsService){
+diamondApp.service("TradeOrderService", function ($http, $q) {
+
+    var liveOrders = [];
+    var historyOrders = [];
+
+    var addLiveOrder = function(order){
+
+    };
+
+    var getHistoryOrders = function () {
+
+        if (historyOrders != null && historyOrders.length != 0) {
+            return $q.resolve(historyOrders)
+        }else{
+            return $http.post("/trade-order/history-orders", null, null).then(function (responce) {
+                historyOrders = responce.data;
+                return historyOrders;
+            });
+        }
+    };
+
+    var getLiveOrders = function () {
+
+        if (liveOrders != null && liveOrders.length != 0) {
+            return $q.resolve(liveOrders)
+        }else{
+            return $http.post("/trade-order/live-orders", null, null).then(function (response) {
+                liveOrders = response.data;
+                return liveOrders;
+            });
+        }
+    };
+
+    return {
+        getHistoryOrders: getHistoryOrders,
+        getLiveOrders: getLiveOrders,
+        addLiveOrder: addLiveOrder
+    }
+});
+
+diamondApp.controller("TradeOrderController", function BidderController($scope, $rootScope, $http, AccountService, TradeOrderService){
+
+    var self = this;
+
+    TradeOrderService.getLiveOrders().then(function (data) {
+        self.liveTradeOrders = data;
+    });
+
+    TradeOrderService.getHistoryOrders().then(function (data) {
+         self.historyTradeOrders = data;
+    })
+});
+
+diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http, AccountService, TradeOrderService){
     var self= this;
+    self.tradeOrder = {};
 
     AccountService.currentAccount().then(function (currentAccount) {
         self.currentAccount = currentAccount;
     });
 
+    $scope.createTradeOrder = function (tradeOrder, diamond) {
+
+        tradeOrder["account"] = self.currentAccount;
+        tradeOrder["diamond"] = diamond;
+
+        $http.post("/trade-order/create", tradeOrder, null).then(function (response) {
+            TradeOrderService.addLiveOrder(response.data);
+        })
+    };
+
+    $scope.$on('buyDiamondChoosed', function (event, arg) {
+        self.buyDiamond = arg;
+    });
+
+    /*
     $scope.buyDiamond = function(diamond, currentAccount){
 
             $http.post("/diamond/buy?buyerId=" + currentAccount.id
                 + "&price=" + diamond.price, diamond).then(function(responce){
 
                 MyDiamondsService.addOwned(responce.data);
-
-                //console.log("buy: " + responce);
-                // responce.data;
-               // $scope.saleDiamonds.push(responce.data);
             });
     };
+
+
 
     $scope.sellDiamond = function(diamond, currentAccount){
 
@@ -172,8 +239,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
 
     $scope.$on('openForSaleDiamondChoosed', function (event, arg) {
         self.sellDiamond = null;
-    });
-
+    });*/
 
 
 });

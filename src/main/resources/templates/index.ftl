@@ -108,13 +108,13 @@
                              <th>Carats</th>
                              <th>Clarity</th>
                              <th>Score</th>
+                             <th>Total Stock</th>
                              <!--
                              <th>Pic</th>
                              -->
                          </tr>
                          </thead>
                          <tbody>
-
 
                          <tr ng-repeat="diamond in vm.availableDiamonds" ng-click="chooseAvailableDiamond(diamond)">
                                      <td>{{diamond.id}}</td>
@@ -123,7 +123,7 @@
                                      <td>{{diamond.diamondType}}</td>
                                      <td>{{diamond.carats}}</td>
                                      <td>{{diamond.clarity}}</td>
-                                     <td>{{diamond.score}}</td>
+                                     <td>{{diamond.totalStockAmount}}</td>
                              <!--
                                      <td> <a class="fancybox" rel="group" href="../static/content/image/real_diamond.png"><img src="../static/content/image/diamond.png" alt="" /></a></td>
                                -->
@@ -159,20 +159,30 @@
 
                 <div ng-controller="BidderController as vm">
                     <div class="pull-left button-block">
+
+                        <div class="buy-block">
+                            <div>
+                                Do You want to buy {{vm.buyDiamond.name}} ({{vm.buyDiamond.id}})?
+                            </div>
+
+                            <div class="price">PRICE:  <input ng-model="vm.tradeOrder.price"> $</input></div>
+                            <div class="amount">AMOUNT: <input ng-model="vm.tradeOrder.amount"> $</input></div>
+
+                            <input type="hidden" ng-model="vm.tradeOrder.tradeOrderType" ng-init="vm.tradeOrder.tradeOrderType='BUY'" />
+
+                            <a class="button black" href="#" ng-click="$event.preventDefault(); createTradeOrder(vm.tradeOrder, vm.buyDiamond)">BUY ORDER</a>
+                        </div>
+
+                        <!--
                         <div class="buy-block">
                             <div>
                                 Do You want to buy {{vm.buyDiamond.name}} ({{vm.buyDiamond.id}})?
                             </div>
 
                             <div class="price">PRICE: <span>{{vm.buyDiamond.price}} $</span></div>
-                            <!--
-                            <button class="button black" ng-click="buyDiamond(vm.buyDiamond, vm.currentAccount)">BUY</button>
-                            -->
-
                             <a class="button black" href="#" ng-click="$event.preventDefault(); buyDiamond(vm.buyDiamond, vm.currentAccount)">BUY</a>
 
                         </div>
-
                         <div class="sell-block" ng-show="vm.sellDiamond">
                             <div>
                                 Open {{vm.sellDiamond.name}} ({{vm.sellDiamond.id}}) For Sale?
@@ -183,13 +193,9 @@
                                 <input ng-model="vm.sellDiamond.price" value="{{vm.sellDiamond.price}}" type="text" class="btn"/>
                                 <button class="btn">+</button>
                             </div>
-
-                            <!--
-                            <button class="button black" ng-click="sellDiamond(vm.sellDiamond, vm.currentAccount)">OPEN FOR A SALE</button>
-                            -->
                             <a href="#" class="button black" ng-click="$event.preventDefault(); sellDiamond(vm.sellDiamond, vm.currentAccount)">SALE</a>
-
                         </div>
+                        -->
                     </div>
                 </div>
 
@@ -213,6 +219,64 @@
                     <a class="after-graph pull-right" href="/">Trade History</a>
                 </div>
 
+
+                <div ng-controller="TradeOrderController as vm">
+                    <div style="margin-top:20px;">Live orders</div>
+                    <table class="table-striped big-table table-bordered statistic" >
+                        <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Diamond Name</th>
+                            <th>Amount</th>
+                            <th>Price</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Type</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="tradeOrder in vm.liveTradeOrders">
+                            <td>{{tradeOrder.id}}</td>
+                            <td>{{tradeOrder.diamond.name}}</td>
+                            <td>{{tradeOrder.amount}}</td>
+                            <td>{{tradeOrder.price}}</td>
+                            <td>{{tradeOrder.creationDate}}</td>
+                            <td>{{tradeOrder.traderOrderStatus}}</td>
+                            <td>{{tradeOrder.tradeOrderType}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div style="margin-top:20px;">History orders</div>
+                    <table class="table-striped big-table table-bordered statistic" >
+                        <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Diamond Name</th>
+                            <th>Amount</th>
+                            <th>Price</th>
+                            <th>Date Created</th>
+                            <th>Date Executed</th>
+                            <th>Status</th>
+                            <th>Type</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="tradeOrder in vm.historyTradeOrders">
+                            <td>{{tradeOrder.id}}</td>
+                            <td>{{tradeOrder.diamond.name}}</td>
+                            <td>{{tradeOrder.amount}}</td>
+                            <td>{{tradeOrder.price}}</td>
+                            <td>{{tradeOrder.creationDate}}</td>
+                            <td>{{tradeOrder.executionDate}}</td>
+                            <td>{{tradeOrder.traderOrderStatus}}</td>
+                            <td>{{tradeOrder.tradeOrderType}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
 
                 <div ng-controller="OwnedController as vm">
                     <div style="margin-top:20px;">Owned diamonds</div>
@@ -241,7 +305,6 @@
                              <td>{{diamond.carats}}</td>
                              <td>{{diamond.clarity}}</td>
                         </tr>
-
                         </tbody>
                     </table>
                 </div>
