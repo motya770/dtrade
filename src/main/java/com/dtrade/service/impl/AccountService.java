@@ -57,6 +57,9 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public void checkCurrentAccount(Account account) throws TradeException {
+        if(account==null){
+            throw new TradeException("Empty account");
+        }
         Account currentAccount = getStrictlyLoggedAccount();
         //TODO
         if(account.equals(currentAccount)){

@@ -185,21 +185,26 @@ public class DiamondService implements IDiamondService {
 
     @Override
     public List<Diamond> getAvailable() {
-        Account account = accountService.getCurrentAccount();
+
+        return diamondRepository.getAllAvailable();
+
+        /*Account account = accountService.getCurrentAccount();
         if(account==null){
            return diamondRepository.getAvailable();
         }
         else{
            return diamondRepository.getAvailableExceptCurrent(account.getId());
-        }
+        }*/
     }
 
+    @Deprecated
     @Override
     public List<Diamond> getMyDiamondsForSale() {
         return diamondRepository.getMyDiamondsForSale(accountService.getStrictlyLoggedAccount().getId());
     }
 
 
+    @Deprecated
     @Override
     public List<Diamond> getMyDiamondsOwned() {
 

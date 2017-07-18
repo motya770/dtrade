@@ -8,6 +8,8 @@ import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.ITradeOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,7 +83,7 @@ public class BookOrderService implements IBookOrderService {
     @Override
     public void remove(TradeOrder order){
         BookOrder book = bookOrders.get(order.getDiamond());
-        Optional.of(book).ifPresent((bookOrder)->{
+        Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
                  bookOrder.getBuy().remove(order);
             }else if(order.getTradeOrderType().equals(TradeOrderType.SELL)){
@@ -93,7 +95,7 @@ public class BookOrderService implements IBookOrderService {
     @Override
     public void update(TradeOrder order) {
         BookOrder book = bookOrders.get(order.getDiamond());
-        Optional.of(book).ifPresent((bookOrder)->{
+        Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
                 bookOrder.getBuy().remove(order);
                 bookOrder.getBuy().add(order);
@@ -104,15 +106,11 @@ public class BookOrderService implements IBookOrderService {
         });
     }
 
-    @PostConstruct
-    private void init(){
-        //TODO return
-
-        return;
-
-//        List<TradeOrder> orders = tradeOrderService.getLiveTradeOrders();
-//        for(TradeOrder order: orders){
-//            addNew(order);
-//        }
+    @EventListener(ContextRefreshedEvent.class)
+    public void init() {
+        List<TradeOrder> orders = tradeOrderService.getLiveTradeOrders();
+        for(TradeOrder order: orders){
+            addNew(order);
+        }
     }
 }

@@ -32,11 +32,12 @@ public class TradeEngine implements ITradeEngine {
     private void init(){
 
        service = Executors.newScheduledThreadPool(10);
-       service.scheduleWithFixedDelay(()->{
-
-           calculateTradeOrders();
-
-       }, 1_000, 1_000, TimeUnit.MILLISECONDS);
+       //TODO rewrite
+//       service.scheduleWithFixedDelay(()->{
+//
+//           calculateTradeOrders();
+//
+//       }, 1_000, 1_000, TimeUnit.MILLISECONDS);
     }
 
     private void calculateTradeOrders(){

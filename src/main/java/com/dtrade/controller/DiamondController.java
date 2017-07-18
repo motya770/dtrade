@@ -19,19 +19,20 @@ public class DiamondController {
     @Autowired
     private IDiamondService diamondService;
 
+    @Deprecated
     @RequestMapping(value = "/buy")
     public Diamond buyDiamond(@RequestBody Diamond diamond, @RequestParam Long buyerId,
                               @RequestParam BigDecimal price) throws TradeException{
         return diamondService.preBuyDiamond(diamond, buyerId, price);
     }
 
-
+    @Deprecated
     @RequestMapping(value = "/hide-from-sale")
     public Diamond hideFromSale(@RequestBody Diamond diamond) throws TradeException{
         return diamondService.hideFromSale(diamond);
     }
 
-
+    @Deprecated
     @RequestMapping(value = "/open-for-sale")
     public Diamond openForSaleDiamond(@RequestBody Diamond diamond, @RequestParam BigDecimal price) throws TradeException{
         return diamondService.openForSale(diamond, price);
@@ -41,6 +42,7 @@ public class DiamondController {
     public List<Diamond> getAvailableDiamonds() {
         return diamondService.getAvailable();
     }
+
 
     @RequestMapping(value = "/my-owned")
     public List<Diamond> getMyDiamondsOwned() {

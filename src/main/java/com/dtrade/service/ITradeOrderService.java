@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface ITradeOrderService {
 
+    boolean fieldsNotEmpty(TradeOrder tradeOrder);
+
     List<TradeOrder> getHistoryTradeOrdersByAccount();
 
     List<TradeOrder> getLiveTradeOrders();

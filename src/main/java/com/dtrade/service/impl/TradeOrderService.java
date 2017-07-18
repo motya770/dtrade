@@ -66,15 +66,42 @@ public class TradeOrderService  implements ITradeOrderService{
     private BigDecimal zeroValue = new BigDecimal("0.00");
 
     @Override
+    public boolean fieldsNotEmpty(TradeOrder tradeOrder){
+
+        //TODO thing about exception and explanation and client validation
+        if(tradeOrder.getAmount()==null || (tradeOrder.getAmount().compareTo(zeroValue) <= 0)){
+            return false;
+        }
+
+        if(tradeOrder.getDiamond()==null){
+            return false;
+        }
+
+        if(tradeOrder.getAccount()==null){
+            return false;
+        }
+
+        if(tradeOrder.getPrice()==null || (tradeOrder.getPrice().compareTo(zeroValue)<=0)){
+            return false;
+        }
+
+        if(tradeOrder.getTradeOrderType()==null){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
     public TradeOrder createTradeOrder(TradeOrder tradeOrder) {
 
         //TODO maybe we should price too.
         //TODO check account balance.
         //TODO freeze money (?)
 
-//        if(!stockService.fieldsNotEmpty(stock)){
-//            throw new TradeException("Can't create stock because stock is empty");
-//        }
+        if(!fieldsNotEmpty(tradeOrder)){
+            throw new TradeException("Can't create stock because stock is empty");
+        }
 
         accountService.checkCurrentAccount(tradeOrder.getAccount());
 

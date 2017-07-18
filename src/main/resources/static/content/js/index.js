@@ -176,6 +176,12 @@ diamondApp.controller("TradeOrderController", function BidderController($scope, 
 
     var self = this;
 
+    $scope.cancelTradeOrder = function(tradeOrder) {
+        $http.post("/trade-order/cancel", tradeOrder, null).then(function (response) {
+            console.log("tradeOrder canceled  " + response.data);
+        });
+    };
+
     TradeOrderService.getLiveOrders().then(function (data) {
         self.liveTradeOrders = data;
     });

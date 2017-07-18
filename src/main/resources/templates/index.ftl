@@ -232,6 +232,7 @@
                             <th>Date</th>
                             <th>Status</th>
                             <th>Type</th>
+                            <th>----</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -243,6 +244,7 @@
                             <td>{{tradeOrder.creationDate}}</td>
                             <td>{{tradeOrder.traderOrderStatus}}</td>
                             <td>{{tradeOrder.tradeOrderType}}</td>
+                            <td><a href="#" class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">CANCEL</a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -278,6 +280,8 @@
 
                 </div>
 
+
+                <!--
                 <div ng-controller="OwnedController as vm">
                     <div style="margin-top:20px;">Owned diamonds</div>
                     <table class="table-striped big-table table-bordered statistic" >
@@ -344,6 +348,7 @@
                         </tbody>
                     </table>
                 </div>
+                -->
             </div>
          </div>
      </div>

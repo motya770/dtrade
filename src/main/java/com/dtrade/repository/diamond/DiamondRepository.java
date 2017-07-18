@@ -17,19 +17,22 @@ import java.util.List;
 public interface DiamondRepository extends JpaRepository<Diamond, Long> {
 
     //@Query("select d from Diamond d where diamondStatus = 'AVAILABLE' ")
+    @Deprecated
     @Query("select d from Diamond d where diamondStatus = 'ENLISTED' ")
     List<Diamond> getAvailable();
 
+    @Deprecated
     @Query("select d from Diamond d where diamondStatus = 'ENLISTED' and account.id <> :accountId ")
     List<Diamond> getAvailableExceptCurrent(@Param("accountId") Long accountId);
 
     @Query("select d from Diamond d where diamondStatus = 'ENLISTED'")
     List<Diamond> getAllAvailable();
 
+    @Deprecated
     @Query("select d from Diamond d where diamondStatus = 'ENLISTED' and account.id = :accountId ")
     List<Diamond> getMyDiamondsForSale(@Param("accountId") Long accountId);
 
-    //@Query("select d from Diamond d ")
+    @Deprecated
     @Query("select d from Diamond d where diamondStatus = 'ACQUIRED' and account.id = :accountId")
     List<Diamond> getMyDiamondsOwned(@Param("accountId") Long accountId);
 
