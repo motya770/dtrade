@@ -10,7 +10,10 @@ import com.dtrade.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -34,6 +37,22 @@ public class TradeOrderService  implements ITradeOrderService{
     @Autowired
     private IBalanceActivityService balanceActivityService;
 
+    @Autowired
+    private IBookOrderService bookOrderService;
+
+    @Autowired
+    private IStockActivityService stockActivityService;
+
+    private BigDecimal zeroValue = new BigDecimal("0.00");
+
+    private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    public void setTransactionManager(PlatformTransactionManager transactionManager){
+        transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+    }
+
     @Override
     public List<TradeOrder> getHistoryTradeOrdersByAccount(){
         Account account = accountService.getCurrentAccount();
@@ -56,14 +75,6 @@ public class TradeOrderService  implements ITradeOrderService{
         }
         return tradeOrderRepository.getLiveTradeOrdersByAccount(account);
     }
-
-    @Autowired
-    private IBookOrderService bookOrderService;
-
-    @Autowired
-    private IStockActivityService stockActivityService;
-
-    private BigDecimal zeroValue = new BigDecimal("0.00");
 
     @Override
     public boolean fieldsNotEmpty(TradeOrder tradeOrder){
@@ -173,95 +184,108 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
 
-        try {
+//        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
+//            @Override
+//            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
+                try {
+                    /*
+                        1) Simple example of market order should be produced
+                        1a) We assume that on market orders exists
+                        2) Take sellers(!) stock and transfer to buyer
+                        3) Transfer money
+                        4) Write all activities
+                        5) work only during one minute
+                     */
 
-            /*
-                1) Simple example of market order should be produced
-                1a) We assume that on market orders exists
-                2) Take sellers(!) stock and transfer to buyer
-                3) Transfer money
-                4) Write all activities
-                5) work only during one minute
-             */
+                    long start = System.currentTimeMillis();
 
-            TradeOrder buyOrder = tradeOrderRepository.findOne(pair.getFirst().getId());
-            TradeOrder sellOrder = tradeOrderRepository.findOne(pair.getSecond().getId());
+                    TradeOrder buyOrder = tradeOrderRepository.findOne(pair.getFirst().getId());
+                    TradeOrder sellOrder = tradeOrderRepository.findOne(pair.getSecond().getId());
 
-            if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
-                return;
-            }
+                    if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
+                        return;
+                    }
 
-            if (!(buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
-                    || buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
-                return;
-            }
+                    if (!(buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
+                            || buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
+                        return;
+                    }
 
-            if (!(sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
-                    || sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
-                return;
-            }
+                    if (!(sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
+                            || sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
+                        return;
+                    }
 
-            if (!checkIfCanExecute(pair)) {
-                return;
-            }
+                    if (!checkIfCanExecute(pair)) {
+                        return;
+                    }
 
-            Account buyAccount = buyOrder.getAccount();
-            Account sellAccount = sellOrder.getAccount();
+                    Account buyAccount = buyOrder.getAccount();
+                    Account sellAccount = sellOrder.getAccount();
 
-            if (buyAccount.equals(sellAccount)) {
-                return;
-            }
-
-
-            BigDecimal buyPrice = buyOrder.getPrice();
-            BigDecimal buyAmount = buyOrder.getAmount();
-            BigDecimal sellAmount = sellOrder.getAmount();
-
-            BigDecimal realAmount = buyAmount.min(sellAmount);
-
-            Stock buyStock = stockService.getSpecificStock(buyAccount, buyOrder.getDiamond());
-            Stock sellStock = stockService.getSpecificStock(sellAccount, sellOrder.getDiamond());
-
-            //seller don't have enouth stocks
-            if (sellStock.getAmount().compareTo(realAmount) < 0) {
-                throw new TradeException("Not enougth stocks at " + sellStock);
-            }
-
-            BigDecimal cash = realAmount.multiply(buyPrice);
+                    if (buyAccount.equals(sellAccount)) {
+                        return;
+                    }
 
 
-            balanceActivityService.createBalanceActivities(buyAccount, sellAccount, cash, buyOrder, sellOrder);
+                    BigDecimal buyPrice = buyOrder.getPrice();
+                    BigDecimal buyAmount = buyOrder.getAmount();
+                    BigDecimal sellAmount = sellOrder.getAmount();
 
-            buyStock.setAmount(buyStock.getAmount().add(realAmount));
-            sellStock.setAmount(sellStock.getAmount().subtract(realAmount));
+                    BigDecimal realAmount = buyAmount.min(sellAmount);
 
-            stockActivityService.createStockActivity(buyOrder, sellOrder,
-                    cash, realAmount);
+                    Stock buyStock = stockService.getSpecificStock(buyAccount, buyOrder.getDiamond());
+                    Stock sellStock = stockService.getSpecificStock(sellAccount, sellOrder.getDiamond());
 
-            if (buyOrder.equals(zeroValue)) {
-                bookOrderService.remove(buyOrder);
-                buyOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
-            } else {
-                bookOrderService.update(buyOrder);
-            }
+                    //seller don't have enouth stocks
+                    if (sellStock.getAmount().compareTo(realAmount) < 0) {
+                        throw new TradeException("Not enougth stocks at " + sellStock);
+                    }
 
-            if (sellOrder.equals(zeroValue)) {
-                bookOrderService.remove(sellOrder);
-                sellOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
-            } else {
-                bookOrderService.update(sellOrder);
-            }
+                    BigDecimal cash = realAmount.multiply(buyPrice);
 
-            stockService.save(buyStock);
-            stockService.save(sellStock);
 
-            tradeOrderRepository.save(buyOrder);
-            tradeOrderRepository.save(sellOrder);
+                    balanceActivityService.createBalanceActivities(buyAccount, sellAccount, cash, buyOrder, sellOrder);
 
-            accountService.save(buyAccount);
-            accountService.save(sellAccount);
-        }catch (Exception e){
-            e.printStackTrace();
+                    buyStock.setAmount(buyStock.getAmount().add(realAmount));
+                    sellStock.setAmount(sellStock.getAmount().subtract(realAmount));
+
+                    stockActivityService.createStockActivity(buyOrder, sellOrder,
+                            cash, realAmount);
+
+                    buyOrder.setAmount(buyOrder.getAmount().subtract(realAmount));
+                    sellOrder.setAmount(sellOrder.getAmount().subtract(realAmount));
+
+                    checkIfExecuted(buyOrder);
+                    checkIfExecuted(sellOrder);
+
+                    stockService.save(buyStock);
+                    stockService.save(sellStock);
+
+                    tradeOrderRepository.save(buyOrder);
+                    tradeOrderRepository.save(sellOrder);
+
+                    accountService.save(buyAccount);
+                    accountService.save(sellAccount);
+
+                    long end = System.currentTimeMillis() - start;
+
+                    System.out.println("TIME: " + end);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+//            }
+//        });
+    }
+
+
+    private void checkIfExecuted(TradeOrder tradeOrder){
+        if (tradeOrder.equals(zeroValue)) {
+            bookOrderService.remove(tradeOrder);
+            tradeOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
+        } else {
+            tradeOrder.setTraderOrderStatus(TraderOrderStatus.IN_MARKET);
+            bookOrderService.update(tradeOrder);
         }
     }
 }

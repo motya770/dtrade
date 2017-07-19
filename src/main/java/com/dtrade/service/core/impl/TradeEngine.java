@@ -39,7 +39,7 @@ public class TradeEngine implements ITradeEngine {
 
            calculateTradeOrders();
 
-       }, 1_000, 1_000, TimeUnit.MILLISECONDS);
+       }, 1_000, 10_000, TimeUnit.MILLISECONDS);
     }
 
     private void calculateTradeOrders(){
