@@ -180,7 +180,7 @@ diamondApp.controller("TradeOrderController", function BidderController($scope, 
         $http.post("/trade-order/cancel", tradeOrder, null).then(function (response) {
             console.log("tradeOrder canceled  " + response.data);
         });
-    };
+    }
 
     TradeOrderService.getLiveOrders().then(function (data) {
         self.liveTradeOrders = data;
@@ -193,7 +193,8 @@ diamondApp.controller("TradeOrderController", function BidderController($scope, 
 
 diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http, AccountService, TradeOrderService){
     var self= this;
-    self.tradeOrder = {};
+    self.buyOrder = {};
+    self.sellOrder = {};
 
     AccountService.currentAccount().then(function (currentAccount) {
         self.currentAccount = currentAccount;
@@ -211,6 +212,10 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
 
     $scope.$on('buyDiamondChoosed', function (event, arg) {
         self.buyDiamond = arg;
+    });
+
+    $scope.$on('buyDiamondChoosed', function (event, arg) {
+        self.sellDiamond = arg;
     });
 
     /*

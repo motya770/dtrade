@@ -165,12 +165,30 @@
                                 Do You want to buy {{vm.buyDiamond.name}} ({{vm.buyDiamond.id}})?
                             </div>
 
-                            <div class="price">PRICE:  <input ng-model="vm.tradeOrder.price"> $</input></div>
-                            <div class="amount">AMOUNT: <input ng-model="vm.tradeOrder.amount"> $</input></div>
+                            <div class="price">PRICE:  <input ng-model="vm.buyOrder.price"> $</input></div>
+                            <div class="amount">AMOUNT: <input ng-model="vm.buyOrder.amount"> $</input></div>
 
-                            <input type="hidden" ng-model="vm.tradeOrder.tradeOrderType" ng-init="vm.tradeOrder.tradeOrderType='BUY'" />
+                            <input type="hidden" ng-model="vm.buyOrder.tradeOrderType" ng-init="vm.buyOrder.tradeOrderType='BUY'" />
 
-                            <a class="button black" href="#" ng-click="$event.preventDefault(); createTradeOrder(vm.tradeOrder, vm.buyDiamond)">BUY ORDER</a>
+                            <a class="button black" href="#" ng-click="$event.preventDefault(); createTradeOrder(vm.buyOrder, vm.buyDiamond)">BUY ORDER</a>
+                        </div>
+
+
+                        <div class="sell-block">
+                            <div>
+                                Open {{vm.sellDiamond.name}} ({{vm.sellDiamond.id}}) For Sale?
+                            </div>
+
+                            <div class="price">PRICE:</div>
+                            <div class="btn-group size">
+                                <button class="btn">-</button>
+                                <input ng-model="vm.sellOrder.price" type="text" class="btn"/>
+                                <button class="btn">+</button>
+                            </div>
+                            <div class="amount">AMOUNT: <input ng-model="vm.sellOrder.amount"> $</input></div>
+
+                            <input type="hidden" ng-model="vm.sellOrder.tradeOrderType" ng-init="vm.sellOrder.tradeOrderType='SELL'" />
+                            <a href="#" class="button black" ng-click="$event.preventDefault(); createTradeOrder(vm.sellOrder, vm.sellDiamond)">SELL ORDER</a>
                         </div>
 
                         <!--
@@ -331,7 +349,7 @@
                             <th>Status</th>
                             <th>Cancel</th>
                         </tr>
-                        </thead>
+                        </thead>3
                         <tbody>
                         <tr ng-repeat="diamond in vm.saleDiamonds" ng-click="chooseOpenForSale(diamond)">
                              <td>{{diamond.id}}</td>

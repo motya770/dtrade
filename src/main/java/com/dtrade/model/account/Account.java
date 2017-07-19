@@ -42,6 +42,7 @@ public class Account implements UserDetails {
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<Diamond> ownedDiamonds;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<Stock> stocks;
 

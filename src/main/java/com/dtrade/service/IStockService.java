@@ -10,7 +10,7 @@ import com.dtrade.model.stock.Stock;
  */
 public interface IStockService {
 
-    void makeIPO(Company owner, Diamond diamond);
+    void makeIPO(Long diamondId);
 
     boolean fieldsNotEmpty(Stock stock);
 

@@ -6,30 +6,52 @@ import com.dtrade.model.account.company.Company;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.repository.stock.StockRepository;
+import com.dtrade.service.IAccountService;
+import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IStockService;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 
 /**
  * Created by kudelin on 6/27/17.
  */
 @Service
+@Transactional
 public class StockService  implements IStockService {
 
     @Autowired
     private StockRepository stockRepository;
 
+    @Autowired
+    private IDiamondService diamondService;
+
+    @Autowired
+    private IAccountService accountService;
+
+    //TODO refactor - add StockActivity
     @Override
-    public void makeIPO(Company owner, Diamond diamond){
+    public void makeIPO(Long diamondId){
+
+        Diamond diamond = diamondService.find(diamondId);
+
+        diamondService.checkDiamondOwnship(accountService.getStrictlyLoggedAccount(), diamond);
 
         if(diamond.getTotalStockAmount()==null){
             throw new TradeException("Can't produce IPO for diamond " + diamond + " where totalStockAmount is not defined");
         }
 
+       // Hibernate.initialize(diamond.getAccount());
+
         Stock stock = new Stock();
         stock.setAmount(diamond.getTotalStockAmount());
         stock.setAccount(diamond.getAccount());
         stock.setDiamond(diamond);
+
+
 
         stockRepository.save(stock);
     }
@@ -41,7 +63,14 @@ public class StockService  implements IStockService {
 
     @Override
     public Stock getSpecificStock(Account account, Diamond diamond) {
-        return stockRepository.findByAccountAndDiamond(account, diamond);
+        Stock stock = stockRepository.findByAccountAndDiamond(account, diamond);
+        if(stock==null){
+            stock = new Stock();
+            stock.setAmount(new BigDecimal("0.0"));
+            stock.setDiamond(diamond);
+            stock.setAccount(account);
+        }
+        return stock;
     }
 
     @Override

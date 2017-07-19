@@ -3,13 +3,11 @@ package com.dtrade.controller.admin;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondType;
 import com.dtrade.service.IDiamondService;
+import com.dtrade.service.IStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +22,17 @@ public class AdminDiamondController {
 
     @Autowired
     private IDiamondService diamondService;
+
+    @Autowired
+    private IStockService stockService;
+
+    @RequestMapping(value = "/make-ipo/{id}", method = RequestMethod.GET)
+    public String makeIPO(@PathVariable Long id, Model model) {
+
+        stockService.makeIPO(id);
+
+        return "redirect:/admin/diamond/list";
+    }
 
     @RequestMapping(value = "/new-entity", method = RequestMethod.GET)
     public String newEntity(@ModelAttribute Diamond diamond, Model model) {

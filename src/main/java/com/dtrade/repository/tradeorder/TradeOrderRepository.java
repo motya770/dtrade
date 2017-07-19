@@ -19,8 +19,8 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
             "or to.traderOrderStatus = 'IN_MARKET' ")
     List<TradeOrder> getLiveTradeOrders();
 
-    @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} and to.traderOrderStatus = 'CREATED' " +
-            "or to.traderOrderStatus = 'IN_MARKET' ")
+    @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} and (to.traderOrderStatus = 'CREATED' " +
+            "or to.traderOrderStatus = 'IN_MARKET' )")
     List<TradeOrder> getLiveTradeOrdersByAccount(@Param("account") Account account);
 
     @Query("select to from TradeOrder to where to.account.id = :#{#account.id} and to.traderOrderStatus <> 'CREATED' " +

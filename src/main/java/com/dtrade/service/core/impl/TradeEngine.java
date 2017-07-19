@@ -5,6 +5,8 @@ import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.ITradeOrderService;
 import com.dtrade.service.core.ITradeEngine;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
@@ -28,16 +30,16 @@ public class TradeEngine implements ITradeEngine {
 
     private ScheduledExecutorService service;
 
-    @PostConstruct
+    @EventListener(ContextRefreshedEvent.class)
     private void init(){
 
        service = Executors.newScheduledThreadPool(10);
        //TODO rewrite
-//       service.scheduleWithFixedDelay(()->{
-//
-//           calculateTradeOrders();
-//
-//       }, 1_000, 1_000, TimeUnit.MILLISECONDS);
+       service.scheduleWithFixedDelay(()->{
+
+           calculateTradeOrders();
+
+       }, 1_000, 1_000, TimeUnit.MILLISECONDS);
     }
 
     private void calculateTradeOrders(){

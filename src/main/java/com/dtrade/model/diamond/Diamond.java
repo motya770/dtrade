@@ -45,7 +45,6 @@ public class Diamond implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
 
-    @NotNull
     private Integer score;
 
     @NotNull

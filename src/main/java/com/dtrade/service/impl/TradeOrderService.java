@@ -100,7 +100,7 @@ public class TradeOrderService  implements ITradeOrderService{
         //TODO freeze money (?)
 
         if(!fieldsNotEmpty(tradeOrder)){
-            throw new TradeException("Can't create stock because stock is empty");
+            throw new TradeException("Can't create trade order because some fields is empty");
         }
 
         accountService.checkCurrentAccount(tradeOrder.getAccount());
@@ -173,86 +173,95 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
 
-        /*
-            1) Simple example of market order should be produced
-            1a) We assume that on market orders exists
-            2) Take sellers(!) stock and transfer to buyer
-            3) Transfer money
-            4) Write all activities
-            5) work only during one minute
-         */
+        try {
 
-        TradeOrder buyOrder = tradeOrderRepository.findOne(pair.getFirst().getId());
-        TradeOrder sellOrder = tradeOrderRepository.findOne(pair.getSecond().getId());
+            /*
+                1) Simple example of market order should be produced
+                1a) We assume that on market orders exists
+                2) Take sellers(!) stock and transfer to buyer
+                3) Transfer money
+                4) Write all activities
+                5) work only during one minute
+             */
 
-        if(!buyOrder.getDiamond().equals(sellOrder.getDiamond())){
-            return;
+            TradeOrder buyOrder = tradeOrderRepository.findOne(pair.getFirst().getId());
+            TradeOrder sellOrder = tradeOrderRepository.findOne(pair.getSecond().getId());
+
+            if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
+                return;
+            }
+
+            if (!(buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
+                    || buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
+                return;
+            }
+
+            if (!(sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
+                    || sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
+                return;
+            }
+
+            if (!checkIfCanExecute(pair)) {
+                return;
+            }
+
+            Account buyAccount = buyOrder.getAccount();
+            Account sellAccount = sellOrder.getAccount();
+
+            if (buyAccount.equals(sellAccount)) {
+                return;
+            }
+
+
+            BigDecimal buyPrice = buyOrder.getPrice();
+            BigDecimal buyAmount = buyOrder.getAmount();
+            BigDecimal sellAmount = sellOrder.getAmount();
+
+            BigDecimal realAmount = buyAmount.min(sellAmount);
+
+            Stock buyStock = stockService.getSpecificStock(buyAccount, buyOrder.getDiamond());
+            Stock sellStock = stockService.getSpecificStock(sellAccount, sellOrder.getDiamond());
+
+            //seller don't have enouth stocks
+            if (sellStock.getAmount().compareTo(realAmount) < 0) {
+                throw new TradeException("Not enougth stocks at " + sellStock);
+            }
+
+            BigDecimal cash = realAmount.multiply(buyPrice);
+
+
+            balanceActivityService.createBalanceActivities(buyAccount, sellAccount, cash, buyOrder, sellOrder);
+
+            buyStock.setAmount(buyStock.getAmount().add(realAmount));
+            sellStock.setAmount(sellStock.getAmount().subtract(realAmount));
+
+            stockActivityService.createStockActivity(buyOrder, sellOrder,
+                    cash, realAmount);
+
+            if (buyOrder.equals(zeroValue)) {
+                bookOrderService.remove(buyOrder);
+                buyOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
+            } else {
+                bookOrderService.update(buyOrder);
+            }
+
+            if (sellOrder.equals(zeroValue)) {
+                bookOrderService.remove(sellOrder);
+                sellOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
+            } else {
+                bookOrderService.update(sellOrder);
+            }
+
+            stockService.save(buyStock);
+            stockService.save(sellStock);
+
+            tradeOrderRepository.save(buyOrder);
+            tradeOrderRepository.save(sellOrder);
+
+            accountService.save(buyAccount);
+            accountService.save(sellAccount);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-
-        if(!buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)){
-            return;
-        }
-
-        if(!sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)){
-            return;
-        }
-
-        if(!checkIfCanExecute(pair)){
-            return;
-        }
-
-        Account buyAccount = buyOrder.getAccount();
-        Account sellAccount = sellOrder.getAccount();
-
-        if(buyAccount.equals(sellAccount)){
-            return;
-        }
-
-        BigDecimal buyPrice = buyOrder.getPrice();
-        BigDecimal buyAmount = buyOrder.getAmount();
-        BigDecimal sellAmount = sellOrder.getAmount();
-
-        BigDecimal realAmount = buyAmount.min(sellAmount);
-
-        Stock buyStock = stockService.getSpecificStock(buyAccount, buyOrder.getDiamond());
-        Stock sellStock = stockService.getSpecificStock(sellAccount, sellOrder.getDiamond());
-
-        //seller don't have enouth stocks
-        if(sellStock.getAmount().compareTo(realAmount) < 0){
-            throw new TradeException("Not enougth stocks at " + sellStock);
-        }
-
-        BigDecimal cash = realAmount.multiply(buyPrice);
-
-        balanceActivityService.createBalanceActivities(buyAccount, sellAccount, cash, buyOrder, sellOrder);
-
-        buyStock.getAmount().add(realAmount);
-        sellStock.getAmount().subtract(realAmount);
-
-        stockActivityService.createStockActivity( buyOrder, sellOrder,
-                 cash, realAmount);
-
-        if(buyOrder.equals(zeroValue)){
-            bookOrderService.remove(buyOrder);
-            buyOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
-        }else {
-            bookOrderService.update(buyOrder);
-        }
-
-        if(sellOrder.equals(zeroValue)){
-            bookOrderService.remove(sellOrder);
-            sellOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
-        }else{
-            bookOrderService.update(sellOrder);
-        }
-
-        stockService.save(buyStock);
-        stockService.save(sellStock);
-
-        tradeOrderRepository.save(buyOrder);
-        tradeOrderRepository.save(sellOrder);
-
-        accountService.save(buyAccount);
-        accountService.save(sellAccount);
     }
 }

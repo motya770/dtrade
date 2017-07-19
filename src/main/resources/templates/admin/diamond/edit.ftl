@@ -28,6 +28,11 @@
             <input type="number" class="form-control" name="price" id="price" placeholder="price" value="${(diamond.price)!""}">
         </div>
 
+        <div class="form-group">
+            <label for="name">Total Stock Amount</label>
+            <input type="number" class="form-control" name="totalStockAmount" id="totalStockAmount" placeholder="totalStockAmount" value="${(diamond.totalStockAmount)!""}">
+        </div>
+
         <div class="radio">
 
         <#assign stringStatusValue = (diamond.diamondType)!"" />
