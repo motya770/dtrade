@@ -177,6 +177,16 @@ public class TradeOrderService  implements ITradeOrderService{
             return true;
         }
 
+
+        /*
+        if(buyOrder.getAmount().equals(new BigDecimal("0.00"))){
+            return false;
+        }
+
+        if(sellOrder.getAmount().equals(new BigDecimal("0.00"))){
+            return false;
+        }*/
+
         return false;
     }
 
@@ -280,7 +290,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
 
     private void checkIfExecuted(TradeOrder tradeOrder){
-        if (tradeOrder.equals(zeroValue)) {
+        if (tradeOrder.getAmount().equals(zeroValue)) {
             bookOrderService.remove(tradeOrder);
             tradeOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
         } else {
