@@ -38,8 +38,6 @@ public class GraphController {
         List<Quote> quotes = quotesService.getRangeQuotes(diamond, openTime, closeTime);
         logger.info("time: " + (System.currentTimeMillis() - start) + " size: " + quotes.size());
 
-        Arrays.asList("a", "b", "c").stream().collect(Collectors.toList());
-
        // Stream.of().forEach();
         return quotes;
     }

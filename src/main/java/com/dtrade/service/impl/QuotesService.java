@@ -4,30 +4,61 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
 import com.dtrade.model.quote.QuoteType;
+import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.repository.quote.QuoteRepository;
 import com.dtrade.service.IQuotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
  * Created by matvei on 1/3/15.
  */
 @Service
-@Transactional(value = "transactionManager")
+@Transactional
 public class QuotesService implements IQuotesService {
 
     private static long max_history =  2 *  30 *  24 *  60 * 60 * 1_000;
 
     @Autowired
     private QuoteRepository quoteRepository;
+
+    @Override
+    public Quote issueQuote(Pair<TradeOrder, TradeOrder> pair){
+
+        if(pair==null){
+            return null;
+        }
+
+        TradeOrder buyOrder = pair.getFirst();
+        TradeOrder sellOrder = pair.getSecond();
+        if(sellOrder == null && buyOrder == null){
+            return null;
+        }
+
+        BigDecimal bid = buyOrder != null ? buyOrder.getPrice() : null;
+        BigDecimal ask = sellOrder != null ? sellOrder.getPrice(): null;
+
+        TradeOrder order = Optional.of(buyOrder).orElse(sellOrder);
+
+
+        Quote quote = new Quote();
+        quote.setAsk(ask);
+        quote.setBid(bid);
+        quote.setTime(System.currentTimeMillis());
+        quote.setDiamond(order.getDiamond());
+        quote.setQuoteType(QuoteType.ACTION_QUOTE);
+        return create(quote);
+    }
 
     @Override
     public Quote create(Quote quote) {

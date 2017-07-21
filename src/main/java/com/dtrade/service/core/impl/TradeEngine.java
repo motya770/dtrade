@@ -2,6 +2,7 @@ package com.dtrade.service.core.impl;
 
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderService;
+import com.dtrade.service.IQuotesService;
 import com.dtrade.service.ITradeOrderService;
 import com.dtrade.service.core.ITradeEngine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class TradeEngine implements ITradeEngine {
     @Autowired
     private ITradeOrderService tradeOrderService;
 
+    @Autowired
+    private IQuotesService quotesService;
+
     private ScheduledExecutorService service;
 
     @EventListener(ContextRefreshedEvent.class)
@@ -48,6 +52,9 @@ public class TradeEngine implements ITradeEngine {
     private void calculateTradeOrders(){
        bookOrderService.getBookOrders().entrySet().forEach((entry)->{
            Pair<TradeOrder, TradeOrder> pair = bookOrderService.findClosest(entry.getKey());
+
+           quotesService.issueQuote(pair);
+
            if( tradeOrderService.checkIfCanExecute(pair)) {
                 tradeOrderService.executeTradeOrders(pair);
            }
