@@ -14,7 +14,6 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -29,15 +28,17 @@ public class BookOrderService implements IBookOrderService {
     @Autowired
     private ITradeOrderService tradeOrderService;
 
-    private ConcurrentHashMap<Diamond, BookOrder> bookOrders = new ConcurrentHashMap<>();
+    //THINK about equals for diamond
+    private ConcurrentHashMap<Long, BookOrder> bookOrders = new ConcurrentHashMap<>();
 
-    public ConcurrentHashMap<Diamond, BookOrder> getBookOrders(){
+    @Override
+    public ConcurrentHashMap<Long, BookOrder> getBookOrders(){
         return bookOrders;
     }
 
     @Override
     public void addNew(TradeOrder order){
-        BookOrder bookOrder = bookOrders.get(order.getDiamond());
+        BookOrder bookOrder = bookOrders.get(order.getDiamond().getId());
         if(bookOrder==null){
             bookOrder = new BookOrder();
         }
@@ -47,26 +48,35 @@ public class BookOrderService implements IBookOrderService {
 
         }else if(TradeOrderType.SELL.equals(order.getTradeOrderType())){
             bookOrder.getSell().add(order);
-
         }else{
             throw new TradeException("Type of the order is not defined!");
         }
 
-        bookOrders.putIfAbsent(order.getDiamond(), bookOrder);
+        //bookOrders.put(order.getDiamond(), bookOrder);
+
+        bookOrders.putIfAbsent(order.getDiamond().getId(), bookOrder);
     }
 
     @Override
-    public Pair<TradeOrder, TradeOrder> findClosest(Diamond diamond) {
+    public Pair<TradeOrder, TradeOrder> findClosest(Long diamondId) {
         Pair<TradeOrder, TradeOrder> pair = null;
 
-        if(diamond==null){
+        if(diamondId==null){
             throw new TradeException("Diamond is null!");
         }
 
-
-        BookOrder bookOrder  = bookOrders.get(diamond);
+        BookOrder bookOrder  = bookOrders.get(diamondId);
 
         if(bookOrder ==null || bookOrder.getBuy()==null || bookOrder.getSell()==null){
+            return null;
+        }
+
+        if(bookOrder.getBuy().size()==0){
+            return null;
+
+        }
+
+        if(bookOrder.getSell().size()==0){
             return null;
         }
 
@@ -82,7 +92,7 @@ public class BookOrderService implements IBookOrderService {
 
     @Override
     public void remove(TradeOrder order){
-        BookOrder book = bookOrders.get(order.getDiamond());
+        BookOrder book = bookOrders.get(order.getDiamond().getId());
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
                  bookOrder.getBuy().remove(order);
@@ -94,7 +104,7 @@ public class BookOrderService implements IBookOrderService {
 
     @Override
     public void update(TradeOrder order) {
-        BookOrder book = bookOrders.get(order.getDiamond());
+        BookOrder book = bookOrders.get(order.getDiamond().getId());
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
                 bookOrder.getBuy().remove(order);
@@ -108,6 +118,9 @@ public class BookOrderService implements IBookOrderService {
 
     @EventListener(ContextRefreshedEvent.class)
     public void init() {
+
+        System.out.println("ContextRefreshedEvent!!!");
+
         List<TradeOrder> orders = tradeOrderService.getLiveTradeOrders();
         for(TradeOrder order: orders){
             addNew(order);

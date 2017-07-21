@@ -10,7 +10,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -36,8 +35,12 @@ public class TradeEngine implements ITradeEngine {
        service = Executors.newScheduledThreadPool(10);
        //TODO rewrite
        service.scheduleWithFixedDelay(()->{
-
-           calculateTradeOrders();
+           try{
+               System.out.println("IN THE LOOP!!!");
+               calculateTradeOrders();
+           }catch (Exception e){
+               e.printStackTrace();
+           }
 
        }, 1_000, 10_000, TimeUnit.MILLISECONDS);
     }

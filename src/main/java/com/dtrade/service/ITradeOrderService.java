@@ -1,11 +1,8 @@
 package com.dtrade.service;
 
-import com.dtrade.model.account.Account;
-import com.dtrade.model.stock.Stock;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.util.Pair;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**

@@ -14,7 +14,6 @@ import java.util.List;
  */
 public interface IBalanceActivityService {
 
-
     @Deprecated
     void createBalanceActivity(Account buyer, Account seller, Diamond diamond, BigDecimal price) throws TradeException;
 
@@ -23,6 +22,4 @@ public interface IBalanceActivityService {
     List<BalanceActivity> getAccountBalanceActivities();
 
     List<BalanceActivity> findAll();
-
-
 }

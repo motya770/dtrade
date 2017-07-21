@@ -255,7 +255,9 @@ public class TradeOrderService  implements ITradeOrderService{
                     BigDecimal cash = realAmount.multiply(buyPrice);
 
 
+                    long startActivity = System.currentTimeMillis();
                     balanceActivityService.createBalanceActivities(buyAccount, sellAccount, cash, buyOrder, sellOrder);
+                    System.out.println(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
 
                     buyStock.setAmount(buyStock.getAmount().add(realAmount));
                     sellStock.setAmount(sellStock.getAmount().subtract(realAmount));

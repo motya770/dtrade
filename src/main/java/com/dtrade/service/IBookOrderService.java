@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public interface IBookOrderService {
 
-     ConcurrentHashMap<Diamond, BookOrder> getBookOrders();
+     ConcurrentHashMap<Long, BookOrder> getBookOrders();
 
      void addNew(TradeOrder order);
 
@@ -20,5 +20,5 @@ public interface IBookOrderService {
 
      void update(TradeOrder order);
 
-     Pair<TradeOrder, TradeOrder> findClosest(Diamond diamond);
+     Pair<TradeOrder, TradeOrder> findClosest(Long diamondId);
 }

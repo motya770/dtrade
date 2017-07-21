@@ -107,7 +107,6 @@
                              <th>Type</th>
                              <th>Carats</th>
                              <th>Clarity</th>
-                             <th>Score</th>
                              <th>Total Stock</th>
                              <!--
                              <th>Pic</th>

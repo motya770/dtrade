@@ -55,6 +55,6 @@ public class Diamond implements Serializable {
 
     @Override
     public String toString(){
-        return "owner: {id:" + id +  "}";
+        return "diamond: {id:" + id +  "}";
     }
 }
