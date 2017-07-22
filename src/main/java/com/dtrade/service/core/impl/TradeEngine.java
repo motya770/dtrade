@@ -1,14 +1,10 @@
 package com.dtrade.service.core.impl;
 
-import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.service.IBookOrderService;
-import com.dtrade.service.IQuotesService;
 import com.dtrade.service.ITradeOrderService;
 import com.dtrade.service.core.ITradeEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
@@ -23,13 +19,8 @@ import java.util.concurrent.TimeUnit;
 public class TradeEngine implements ITradeEngine {
 
     @Autowired
-    private IBookOrderService bookOrderService;
-
-    @Autowired
     private ITradeOrderService tradeOrderService;
 
-    @Autowired
-    private IQuotesService quotesService;
 
     private ScheduledExecutorService service;
 
@@ -41,30 +32,12 @@ public class TradeEngine implements ITradeEngine {
        service.scheduleWithFixedDelay(()->{
            try{
                System.out.println("IN THE LOOP!!!");
-               calculateTradeOrders();
+               tradeOrderService.calculateTradeOrders();
            }catch (Exception e){
                e.printStackTrace();
            }
 
-       }, 1_000, 10_000, TimeUnit.MILLISECONDS);
-    }
-
-    private void calculateTradeOrders(){
-
-
-        bookOrderService.getBookOrders().entrySet().forEach((entry)->{
-            System.out.println("ONE: " + entry.getKey() + " " + entry.getValue().getSell().size() + " " + entry.getValue().getBuy().size());
-        });
-
-       bookOrderService.getBookOrders().entrySet().forEach((entry)->{
-           Pair<TradeOrder, TradeOrder> pair = bookOrderService.findClosest(entry.getKey());
-
-           quotesService.issueQuote(pair);
-
-           if( tradeOrderService.checkIfCanExecute(pair)) {
-                tradeOrderService.executeTradeOrders(pair);
-           }
-       });
+       }, 1_000, 5, TimeUnit.MILLISECONDS);
     }
 
     @PreDestroy

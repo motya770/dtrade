@@ -1,6 +1,10 @@
 package com.dtrade;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.account.company.Company;
+import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.repository.offering.OfferringRepository;
 import com.dtrade.service.IStockService;
 import com.dtrade.service.ITradeOrderService;
@@ -15,6 +19,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.math.BigDecimal;
 
 //import java.io.File;
 //import java.nio.file.Files;
@@ -47,23 +53,40 @@ public class DtradeApplication  implements CommandLineRunner {
         //offerringRepository.findOne(1L);
         ///offerringRepository.getPreviousLiveOfferingsForDiamond(null, null);
 
+        /*
+        Account a1 =  (Account) userDetailsService.loadUserByUsername("motya770@gmail.com");
+        setAccount(a1);
 
-//        Company company = (Company) userDetailsService.loadUserByUsername("motya770@gmail.com");
-//        setAccount(company);
-//
-//        Account buyer = (Account) userDetailsService.loadUserByUsername("motya7701@gmail.com");
-//
-//        Diamond diamond =  diamondService.getAllAvailable().get(0);
-//        stockService.makeIPO(company, diamond);
-//
-//
-//        TradeOrder tradeOrder = new TradeOrder();
-//        tradeOrder.setDiamond(diamond);
-//        tradeOrder.setAccount(buyer);
-//        tradeOrder.setAmount(new BigDecimal("100"));
-//        tradeOrder.setPrice(new BigDecimal("20.0"));
-//
-//        tradeOrderService.createTradeOrder(tradeOrder);
+        Account a2 = (Account) userDetailsService.loadUserByUsername("motya7701@gmail.com");
+
+        Diamond diamond =  diamondService.find(2L);
+
+        //stockService.makeIPO(company, diamond);
+
+        for(int i = 0; i< 1_000; i++) {
+            TradeOrder
+                    tradeOrder = new TradeOrder();
+            tradeOrder.setDiamond(diamond);
+            tradeOrder.setAccount(a1);
+            tradeOrder.setAmount(new BigDecimal("100"));
+            tradeOrder.setPrice(new BigDecimal("20.0"));
+            tradeOrder.setTradeOrderType(TradeOrderType.BUY);
+
+            tradeOrderService.createTradeOrder(tradeOrder);
+        }
+
+        setAccount(a2);
+
+        for(int i = 0; i< 1_000; i++) {
+            TradeOrder tradeOrder = new TradeOrder();
+            tradeOrder.setDiamond(diamond);
+            tradeOrder.setAccount(a2);
+            tradeOrder.setAmount(new BigDecimal("100"));
+            tradeOrder.setPrice(new BigDecimal("20.0"));
+            tradeOrder.setTradeOrderType(TradeOrderType.SELL);
+
+            tradeOrderService.createTradeOrder(tradeOrder);
+        }*/
     }
 
 

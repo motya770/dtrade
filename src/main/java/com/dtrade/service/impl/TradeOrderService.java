@@ -43,6 +43,9 @@ public class TradeOrderService  implements ITradeOrderService{
     @Autowired
     private IStockActivityService stockActivityService;
 
+    @Autowired
+    private IQuotesService quotesService;
+
     private BigDecimal zeroValue = new BigDecimal("0.00");
 
     private TransactionTemplate transactionTemplate;
@@ -51,6 +54,24 @@ public class TradeOrderService  implements ITradeOrderService{
     public void setTransactionManager(PlatformTransactionManager transactionManager){
         transactionTemplate = new TransactionTemplate(transactionManager);
         transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+    }
+
+    @Override
+    public void calculateTradeOrders(){
+
+        bookOrderService.getBookOrders().entrySet().forEach((entry)->{
+            System.out.println("ONE: " + entry.getKey() + " " + entry.getValue().getSell().size() + " " + entry.getValue().getBuy().size());
+        });
+
+        bookOrderService.getBookOrders().entrySet().forEach((entry)->{
+            Pair<TradeOrder, TradeOrder> pair = bookOrderService.findClosest(entry.getKey());
+
+            quotesService.issueQuote(pair);
+
+            if(checkIfCanExecute(pair)) {
+                executeTradeOrders(pair);
+            }
+        });
     }
 
     @Override

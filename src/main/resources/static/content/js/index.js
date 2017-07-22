@@ -268,6 +268,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, Avai
                 enabled: true
             }
         },
+
         series: [],
         title: {
             text: 'Diamond Price'
@@ -276,10 +277,11 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, Avai
         useHighStocks: true
     }
 
-    var pushToChart = function(data, seriesId){
+    var pushToChart = function(data, seriesId, name){
         $scope.chartConfig.series.push({
                 id: seriesId,
-                data: data
+                data: data,
+                name: name
             }
         );
     };
@@ -291,20 +293,30 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, Avai
             var data = response.data;
 
             console.log("l:" + data.length)
-            var formattedData = [data.length + 1];
-
+            var bids = [data.length + 1];
+            var asks = [data.length + 1];
             for (var i in data) {
-                var point = new Array(2);
-                point[0] = data[i].time;
-                point[1] = data[i].price;
-                formattedData[i] = point;
+                var bidPoint = new Array(2);
+                bidPoint[0] = data[i].time;
+                bidPoint[1] = data[i].bid;
+                bids[i] = bidPoint;
+
+                var askPoint = new Array(2);
+                askPoint[0] = data[i].time;
+                askPoint[1] = data[i].ask;
+                asks[i] = askPoint;
             }
 
-            pushToChart(formattedData, 1);
+            pushToChart(bids, 1, "Bids");
+            pushToChart(asks, 2, "Asks");
         });
     };
 
+
     var getCategoryScoreData = function (score) {
+
+        //TODO
+        return;
         $http.post("/category-tick/for-score?score="+score, null).then(function (responce) {
             var data = responce.data;
             var formattedData = [data.length + 1];
