@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface ITradeOrderService {
 
+    List<TradeOrder> findAll();
+
     void calculateTradeOrders();
 
     boolean fieldsNotEmpty(TradeOrder tradeOrder);

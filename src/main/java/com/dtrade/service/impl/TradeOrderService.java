@@ -50,6 +50,11 @@ public class TradeOrderService  implements ITradeOrderService{
 
     private TransactionTemplate transactionTemplate;
 
+    @Override
+    public List<TradeOrder> findAll() {
+        return tradeOrderRepository.findAll();
+    }
+
     @Autowired
     public void setTransactionManager(PlatformTransactionManager transactionManager){
         transactionTemplate = new TransactionTemplate(transactionManager);
