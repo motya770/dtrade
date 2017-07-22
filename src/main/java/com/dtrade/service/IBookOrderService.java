@@ -1,7 +1,6 @@
 package com.dtrade.service;
 
 import com.dtrade.model.bookorder.BookOrder;
-import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.util.Pair;
 

@@ -3,7 +3,6 @@ package com.dtrade.model.tradeorder;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
