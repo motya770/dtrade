@@ -3,11 +3,13 @@ package com.dtrade.model.tradeorder;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Created by kudelin on 6/27/17.
@@ -47,4 +49,20 @@ public class TradeOrder implements Serializable {
     @NotNull
     private TradeOrderType tradeOrderType;
 
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o == this) return true;
+        if (!(o instanceof TradeOrder)) {
+            return false;
+        }
+        TradeOrder order = (TradeOrder) o;
+        return Objects.equals(id, order.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

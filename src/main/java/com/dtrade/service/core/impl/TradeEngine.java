@@ -50,6 +50,12 @@ public class TradeEngine implements ITradeEngine {
     }
 
     private void calculateTradeOrders(){
+
+
+        bookOrderService.getBookOrders().entrySet().forEach((entry)->{
+            System.out.println("ONE: " + entry.getKey() + " " + entry.getValue().getSell().size() + " " + entry.getValue().getBuy().size());
+        });
+
        bookOrderService.getBookOrders().entrySet().forEach((entry)->{
            Pair<TradeOrder, TradeOrder> pair = bookOrderService.findClosest(entry.getKey());
 

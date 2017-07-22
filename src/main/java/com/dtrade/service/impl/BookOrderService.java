@@ -14,9 +14,12 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 /**
  * Created by kudelin on 7/10/17.
@@ -43,10 +46,13 @@ public class BookOrderService implements IBookOrderService {
             bookOrder = new BookOrder();
         }
 
+
         if(TradeOrderType.BUY.equals(order.getTradeOrderType())){
+            System.out.println("adding buy " + order.getId());
             bookOrder.getBuy().add(order);
 
         }else if(TradeOrderType.SELL.equals(order.getTradeOrderType())){
+            System.out.println("adding sell " + order.getId());
             bookOrder.getSell().add(order);
         }else{
             throw new TradeException("Type of the order is not defined!");
@@ -54,7 +60,7 @@ public class BookOrderService implements IBookOrderService {
 
         //bookOrders.put(order.getDiamond(), bookOrder);
 
-        bookOrders.putIfAbsent(order.getDiamond().getId(), bookOrder);
+        bookOrders.put(order.getDiamond().getId(), bookOrder);
     }
 
     @Override
@@ -92,6 +98,7 @@ public class BookOrderService implements IBookOrderService {
 
     @Override
     public void remove(TradeOrder order){
+        System.out.println("remove D");
         BookOrder book = bookOrders.get(order.getDiamond().getId());
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
@@ -104,6 +111,7 @@ public class BookOrderService implements IBookOrderService {
 
     @Override
     public void update(TradeOrder order) {
+        System.out.println("update D");
         BookOrder book = bookOrders.get(order.getDiamond().getId());
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){

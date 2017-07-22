@@ -15,12 +15,19 @@ public class BookOrder {
 
     private ConcurrentSkipListSet<TradeOrder> sell;
 
+    private int comporator(TradeOrder o1, TradeOrder o2){
+        int response = o1.getPrice().compareTo(o2.getPrice());
+        if(response==0){
+            response = o1.getCreationDate().compareTo(o2.getCreationDate());
+        }
+        if(response==0){
+            response = o1.getId().compareTo(o2.getId());
+        }
+        return response;
+    }
+
     public BookOrder() {
-        buy = new ConcurrentSkipListSet<>(((o1, o2) -> {
-            return o1.getPrice().compareTo(o2.getPrice());
-        }));
-        sell = new ConcurrentSkipListSet<>((o1, o2)->{
-            return o1.getPrice().compareTo(o2.getPrice());
-        });
+        buy = new ConcurrentSkipListSet<>(this::comporator);
+        sell = new ConcurrentSkipListSet<>(this::comporator);
     }
 }

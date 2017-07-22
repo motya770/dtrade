@@ -233,9 +233,11 @@ public class TradeOrderService  implements ITradeOrderService{
                     Account buyAccount = buyOrder.getAccount();
                     Account sellAccount = sellOrder.getAccount();
 
+                    /*
+                    Decided that buyer and seller can be the same
                     if (buyAccount.equals(sellAccount)) {
                         return;
-                    }
+                    }*/
 
 
                     BigDecimal buyPrice = buyOrder.getPrice();
