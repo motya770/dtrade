@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by kudelin on 6/27/17.
@@ -29,6 +30,11 @@ public class StockService  implements IStockService {
 
     @Autowired
     private IAccountService accountService;
+
+    @Override
+    public List<Stock> findAll(){
+        return stockRepository.findAll();
+    }
 
     //TODO refactor - add StockActivity
     @Override
