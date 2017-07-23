@@ -36,6 +36,12 @@ public class StockService  implements IStockService {
         return stockRepository.findAll();
     }
 
+    @Override
+    public List<Stock> getStocksByAccount() {
+        Account account = accountService.getStrictlyLoggedAccount();
+        return stockRepository.findByAccount(account);
+    }
+
     //TODO refactor - add StockActivity
     @Override
     public void makeIPO(Long diamondId){

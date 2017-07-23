@@ -298,6 +298,28 @@
                 </div>
 
 
+                <div ng-controller="StockController as vm">
+                    <div style="margin-top:20px;">Stocks</div>
+                    <table class="table-striped big-table table-bordered statistic" >
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Diamond Id</th>
+                            <th>Diamond Name</th>
+                            <th>Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="stock in vm.stocks">
+                            <td>{{stock.id}}</td>
+                            <td>{{stock.diamond.id}}</td>
+                            <td>{{stock.diamond.name}}</td>
+                            <td>{{stock.amount}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <!--
                 <div ng-controller="OwnedController as vm">
                     <div style="margin-top:20px;">Owned diamonds</div>

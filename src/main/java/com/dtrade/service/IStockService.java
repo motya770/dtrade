@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface IStockService {
 
+    List<Stock> getStocksByAccount();
+
     List<Stock> findAll();
 
     void makeIPO(Long diamondId);

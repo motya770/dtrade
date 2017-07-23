@@ -65,7 +65,7 @@ public class TradeOrderService  implements ITradeOrderService{
     public void calculateTradeOrders(){
 
         bookOrderService.getBookOrders().entrySet().forEach((entry)->{
-            System.out.println("ONE: " + entry.getKey() + " " + entry.getValue().getSell().size() + " " + entry.getValue().getBuy().size());
+           // System.out.println("ONE: " + entry.getKey() + " " + entry.getValue().getSell().size() + " " + entry.getValue().getBuy().size());
         });
 
         bookOrderService.getBookOrders().entrySet().forEach((entry)->{

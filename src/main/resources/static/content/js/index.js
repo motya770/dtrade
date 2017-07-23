@@ -82,6 +82,18 @@ function arrayObjectIndexOf(arr, obj){
     return -1;
 }
 
+
+diamondApp.controller('StockController', function ($http) {
+
+    var self = this;
+
+
+    $http.post('/stock/owned', null).then(function(response) {
+            self.stocks = response.data;
+    });
+
+});
+
 diamondApp.service('MyDiamondsService', function($http, $q){
     var ownedDiamonds = [];
     var saleDiamonds = [];

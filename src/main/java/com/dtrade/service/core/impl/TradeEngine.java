@@ -31,7 +31,7 @@ public class TradeEngine implements ITradeEngine {
        //TODO rewrite
        service.scheduleWithFixedDelay(()->{
            try{
-               System.out.println("IN THE LOOP!!!");
+              // System.out.println("IN THE LOOP!!!");
                tradeOrderService.calculateTradeOrders();
            }catch (Exception e){
                e.printStackTrace();
