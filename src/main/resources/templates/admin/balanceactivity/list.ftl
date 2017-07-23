@@ -16,8 +16,9 @@
             <tr>
                 <td>${activity.id}</td>
                 <td><a href="/admin/account/show?id=${activity.account.id}"> ${activity.account.mail}</a></td>
-                <td>${activity.balanceActivityType}</td>
                 <td>${activity.amount}</td>
+                <td>${activity.balanceActivityType}</td>
+
                 <td>
                 <#if activity.createDate??>
                     ${activity.createDate?number_to_datetime}
