@@ -150,7 +150,13 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
     var historyOrders = [];
 
     var addLiveOrder = function(order){
+        liveOrders.push(order);
+    };
 
+
+    var addHistoryOrder = function (order) {
+        liveOrders.splice(arrayObjectIndexOf(liveOrders, order),1);
+        historyOrders.push(order);
     };
 
     var getHistoryOrders = function () {
@@ -180,7 +186,8 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
     return {
         getHistoryOrders: getHistoryOrders,
         getLiveOrders: getLiveOrders,
-        addLiveOrder: addLiveOrder
+        addLiveOrder: addLiveOrder,
+        addHistoryOrder: addHistoryOrder
     }
 });
 
@@ -191,6 +198,7 @@ diamondApp.controller("TradeOrderController", function BidderController($scope, 
     $scope.cancelTradeOrder = function(tradeOrder) {
         $http.post("/trade-order/cancel", tradeOrder, null).then(function (response) {
             console.log("tradeOrder canceled  " + response.data);
+            TradeOrderService.addHistoryOrder(response.data);
         });
     }
 
