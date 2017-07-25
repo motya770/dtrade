@@ -164,8 +164,15 @@
                                 Do You want to buy {{vm.buyDiamond.name}} ({{vm.buyDiamond.id}})?
                             </div>
 
-                            <div class="price">PRICE:  <input ng-model="vm.buyOrder.price"> $</input></div>
-                            <div class="amount">AMOUNT: <input ng-model="vm.buyOrder.amount"> $</input></div>
+                            <div class="price">PRICE:</div>
+                            <div class="btn-group size">
+                                <button class="btn">-</button>
+                                <input ng-model="vm.buyOrder.price" type="text" class="btn"/>
+                                <button class="btn">+</button>
+                            </div>
+
+
+                            <div class="amount">AMOUNT: <input ng-model="vm.buyOrder.amount"></input></div>
 
                             <input type="hidden" ng-model="vm.buyOrder.tradeOrderType" ng-init="vm.buyOrder.tradeOrderType='BUY'" />
 
@@ -184,7 +191,7 @@
                                 <input ng-model="vm.sellOrder.price" type="text" class="btn"/>
                                 <button class="btn">+</button>
                             </div>
-                            <div class="amount">AMOUNT: <input ng-model="vm.sellOrder.amount"> $</input></div>
+                            <div class="amount">AMOUNT: <input ng-model="vm.sellOrder.amount"></input></div>
 
                             <input type="hidden" ng-model="vm.sellOrder.tradeOrderType" ng-init="vm.sellOrder.tradeOrderType='SELL'" />
                             <a href="#" class="button black" ng-click="$event.preventDefault(); createTradeOrder(vm.sellOrder, vm.sellDiamond)">SELL ORDER</a>
@@ -232,9 +239,10 @@
                 </div>
 
 
+                <!--
                 <div class="row">
                     <a class="after-graph pull-right" href="/">Trade History</a>
-                </div>
+                </div>-->
 
 
                 <div ng-controller="TradeOrderController as vm">
@@ -303,7 +311,7 @@
                     <table class="table-striped big-table table-bordered statistic" >
                         <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Number</th>
                             <th>Diamond Id</th>
                             <th>Diamond Name</th>
                             <th>Amount</th>
