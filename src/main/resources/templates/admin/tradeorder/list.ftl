@@ -11,6 +11,7 @@
             <th>Account Id</th>
             <th>Account Name</th>
             <th>Amount</th>
+            <th>Initial Amount</th>
             <th>Price</th>
             <th>Creation Date</th>
             <th>Status</th>
@@ -25,6 +26,7 @@
                 <td><a href="/admin/account/show?id=${tradeOrder.account.id}"> ${tradeOrder.account.id}</a> </td>
                 <td>${tradeOrder.account.mail}</td>
                 <td>${tradeOrder.amount}</td>
+                <td>${tradeOrder.initialAmount}</td>
                 <td>${tradeOrder.price}</td>
                 <td>${tradeOrder.creationDate?number_to_datetime}</td>
                 <td>${(tradeOrder.traderOrderStatus)!""}</td>

@@ -253,6 +253,7 @@
                             <th>Number</th>
                             <th>Diamond Name</th>
                             <th>Amount</th>
+                            <th>Initial Amount</th>
                             <th>Price</th>
                             <th>Date</th>
                             <th>Status</th>
@@ -265,6 +266,7 @@
                             <td>{{tradeOrder.id}}</td>
                             <td>{{tradeOrder.diamond.name}}</td>
                             <td>{{tradeOrder.amount}}</td>
+                            <td>{{tradeOrder.initialAmount}}</td>
                             <td>{{tradeOrder.price}}</td>
                             <td>{{tradeOrder.creationDate}}</td>
                             <td>{{tradeOrder.traderOrderStatus}}</td>
@@ -282,6 +284,7 @@
                             <th>Number</th>
                             <th>Diamond Name</th>
                             <th>Amount</th>
+                            <th>Initial Amount</th>
                             <th>Price</th>
                             <th>Date Created</th>
                             <th>Date Executed</th>
@@ -294,6 +297,7 @@
                             <td>{{tradeOrder.id}}</td>
                             <td>{{tradeOrder.diamond.name}}</td>
                             <td>{{tradeOrder.amount}}</td>
+                            <td>{{tradeOrder.initialAmount}}</td>
                             <td>{{tradeOrder.price}}</td>
                             <td>{{tradeOrder.creationDate}}</td>
                             <td>{{tradeOrder.executionDate}}</td>

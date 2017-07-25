@@ -144,6 +144,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         TradeOrder realOrder = new TradeOrder();
         realOrder.setAmount(tradeOrder.getAmount());
+        realOrder.setInitialAmount(tradeOrder.getAmount());
         realOrder.setDiamond(tradeOrder.getDiamond());
         realOrder.setAccount(tradeOrder.getAccount());
         realOrder.setPrice(tradeOrder.getPrice());

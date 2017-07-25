@@ -33,6 +33,9 @@ public class TradeOrder implements Serializable {
     private BigDecimal amount;
 
     @NotNull
+    private BigDecimal initialAmount;
+
+    @NotNull
     private BigDecimal price;
 
     @NotNull
