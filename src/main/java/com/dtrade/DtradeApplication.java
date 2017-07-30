@@ -1,10 +1,6 @@
 package com.dtrade;
 
 import com.dtrade.model.account.Account;
-import com.dtrade.model.account.company.Company;
-import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.repository.offering.OfferringRepository;
 import com.dtrade.service.IStockService;
 import com.dtrade.service.ITradeOrderService;
@@ -20,10 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.math.BigDecimal;
-
-//import java.io.File;
-//import java.nio.file.Files;
 
 @SpringBootApplication
 public class DtradeApplication  implements CommandLineRunner {
