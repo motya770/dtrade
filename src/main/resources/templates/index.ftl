@@ -268,7 +268,7 @@
                             <td>{{tradeOrder.amount}}</td>
                             <td>{{tradeOrder.initialAmount}}</td>
                             <td>{{tradeOrder.price}}</td>
-                            <td>{{tradeOrder.creationDate}}</td>
+                            <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                             <td>{{tradeOrder.traderOrderStatus}}</td>
                             <td>{{tradeOrder.tradeOrderType}}</td>
                             <td><a href="#" class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">CANCEL</a></td>
@@ -299,8 +299,8 @@
                             <td>{{tradeOrder.amount}}</td>
                             <td>{{tradeOrder.initialAmount}}</td>
                             <td>{{tradeOrder.price}}</td>
-                            <td>{{tradeOrder.creationDate}}</td>
-                            <td>{{tradeOrder.executionDate}}</td>
+                            <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                            <td>{{tradeOrder.executionDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                             <td>{{tradeOrder.traderOrderStatus}}</td>
                             <td>{{tradeOrder.tradeOrderType}}</td>
                         </tr>

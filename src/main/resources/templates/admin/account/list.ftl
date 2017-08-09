@@ -9,6 +9,7 @@
             <th>Balance</th>
         </tr>
         <tbody>
+
         <#if accounts??>
             <#list accounts as account>
             <tr>

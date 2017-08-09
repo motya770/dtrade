@@ -47,7 +47,7 @@ public class DtradeApplication  implements CommandLineRunner {
 
         /*
         Account a1 =  (Account) userDetailsService.loadUserByUsername("motya770@gmail.com");
-        setAccount(a1);
+        setAccount(a1);F
 
         Account a2 = (Account) userDetailsService.loadUserByUsername("motya7701@gmail.com");
 
