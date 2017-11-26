@@ -1,6 +1,7 @@
 package com.dtrade.service;
 
 import com.dtrade.model.bookorder.BookOrder;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.util.Pair;
 
@@ -12,6 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public interface IBookOrderService {
 
      ConcurrentHashMap<Long, BookOrder> getBookOrders();
+
+     BookOrder getBookOrder(Diamond diamond);
 
      void addNew(TradeOrder order);
 

@@ -32,6 +32,27 @@ diamondApp.service('AvailableService', function($http, $q){
     };
 });
 
+diamondApp.controller("BookOrderController", function BookOrderController(BookOrderService) {
+
+    var self = this;
+    BookOrderService.getBookOrder().then(function (data) {
+        self.bookOrder = data;
+    });
+});
+
+
+diamondApp.service('BookOrderService', function($http){
+
+    var getBookOrder = function() {
+            $http.post('/trade-order/book-order?diamondId=1', null).then(function(response) {
+                return response.data;
+            });
+    };
+    return {
+        getBookOrder: getBookOrder,
+    };
+});
+
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
 diamondApp.controller('OwnedController', function OwnedController($scope, $http, $rootScope, MyDiamondsService) {
@@ -41,16 +62,11 @@ diamondApp.controller('OwnedController', function OwnedController($scope, $http,
         self.ownedDiamonds = data;
     });
 
-    // $http.get('/diamond/my-owned').then(function(response) {
-    //     self.ownedDiamonds = response.data;
-    // });
-
     $scope.chooseOwnedDiamond = function(diamond){
         $rootScope.$broadcast('ownedDiamondChoosed', diamond);
     }
 });
 
-// Define the `PhoneListController` controller on the `phonecatApp` module
 diamondApp.controller('SaleController', function SaleController($scope, $http, $rootScope, MyDiamondsService) {
         var self = this;
 

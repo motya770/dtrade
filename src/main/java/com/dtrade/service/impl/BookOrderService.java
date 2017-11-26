@@ -2,6 +2,7 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.bookorder.BookOrder;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.service.IBookOrderService;
@@ -31,6 +32,11 @@ public class BookOrderService implements IBookOrderService {
     private ConcurrentHashMap<Long, BookOrder> bookOrders = new ConcurrentHashMap<>();
 
     @Override
+    public BookOrder getBookOrder(Diamond diamond) {
+        return bookOrders.get(diamond.getId());
+    }
+
+    @Override
     public ConcurrentHashMap<Long, BookOrder> getBookOrders(){
         return bookOrders;
     }
@@ -42,14 +48,13 @@ public class BookOrderService implements IBookOrderService {
             bookOrder = new BookOrder();
         }
 
-
         if(TradeOrderType.BUY.equals(order.getTradeOrderType())){
             System.out.println("adding buy " + order.getId());
-            bookOrder.getBuy().add(order);
+            bookOrder.getBuyOrders().add(order);
 
         }else if(TradeOrderType.SELL.equals(order.getTradeOrderType())){
             System.out.println("adding sell " + order.getId());
-            bookOrder.getSell().add(order);
+            bookOrder.getSellOrders().add(order);
         }else{
             throw new TradeException("Type of the order is not defined!");
         }
@@ -69,21 +74,21 @@ public class BookOrderService implements IBookOrderService {
 
         BookOrder bookOrder  = bookOrders.get(diamondId);
 
-        if(bookOrder ==null || bookOrder.getBuy()==null || bookOrder.getSell()==null){
+        if(bookOrder ==null || bookOrder.getBuyOrders()==null || bookOrder.getSellOrders()==null){
             return null;
         }
 
-        if(bookOrder.getBuy().size()==0){
+        if(bookOrder.getBuyOrders().size()==0){
             return null;
 
         }
 
-        if(bookOrder.getSell().size()==0){
+        if(bookOrder.getSellOrders().size()==0){
             return null;
         }
 
-        TradeOrder buyOrder = bookOrder.getBuy().last();
-        TradeOrder sellOrder = bookOrder.getSell().first();
+        TradeOrder buyOrder = bookOrder.getBuyOrders().last();
+        TradeOrder sellOrder = bookOrder.getSellOrders().first();
 
         if(buyOrder == null || sellOrder == null){
             return null;
@@ -98,9 +103,9 @@ public class BookOrderService implements IBookOrderService {
         BookOrder book = bookOrders.get(order.getDiamond().getId());
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
-                 bookOrder.getBuy().remove(order);
+                 bookOrder.getBuyOrders().remove(order);
             }else if(order.getTradeOrderType().equals(TradeOrderType.SELL)){
-                bookOrder.getSell().remove(order);
+                bookOrder.getSellOrders().remove(order);
             }
         });
     }
@@ -111,11 +116,11 @@ public class BookOrderService implements IBookOrderService {
         BookOrder book = bookOrders.get(order.getDiamond().getId());
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
-                bookOrder.getBuy().remove(order);
-                bookOrder.getBuy().add(order);
+                bookOrder.getBuyOrders().remove(order);
+                bookOrder.getBuyOrders().add(order);
             }else if(order.getTradeOrderType().equals(TradeOrderType.SELL)){
-                bookOrder.getSell().remove(order);
-                bookOrder.getSell().add(order);
+                bookOrder.getSellOrders().remove(order);
+                bookOrder.getSellOrders().add(order);
             }
         });
     }

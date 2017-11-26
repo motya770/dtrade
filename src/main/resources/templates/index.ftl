@@ -332,6 +332,37 @@
                     </table>
                 </div>
 
+
+                <div ng-controller="BookOrderController as vm">
+                    <div style="margin-top:20px;">Buy Orders</div>
+                    <table class="table-striped big-table table-bordered statistic" >
+                        <thead>
+                        <tr>
+                            <th>Number</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="tradeOrder in vm.buyOrder">
+                            <td>{{tradeOrder.id}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top:20px;">Sell Orders</div>
+                    <table class="table-striped big-table table-bordered statistic" >
+                        <thead>
+                        <tr>
+                            <th>Number</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="tradeOrder in vm.sellOrder">
+                            <td>{{tradeOrder.id}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <!--
                 <div ng-controller="OwnedController as vm">
                     <div style="margin-top:20px;">Owned diamonds</div>

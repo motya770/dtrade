@@ -23,4 +23,5 @@ public class StockController {
     public List<Stock> getOwnedStocks(){
         return stockService.getStocksByAccount();
     }
+
 }

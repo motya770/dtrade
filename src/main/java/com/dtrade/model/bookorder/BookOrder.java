@@ -11,11 +11,11 @@ import java.util.concurrent.ConcurrentSkipListSet;
 @Data
 public class BookOrder {
 
-    private ConcurrentSkipListSet<TradeOrder> buy;
+    private ConcurrentSkipListSet<TradeOrder> buyOrders;
 
-    private ConcurrentSkipListSet<TradeOrder> sell;
+    private ConcurrentSkipListSet<TradeOrder> sellOrders;
 
-    private int comporator(TradeOrder o1, TradeOrder o2){
+    private static int comparator(TradeOrder o1, TradeOrder o2){
         int response = o1.getPrice().compareTo(o2.getPrice());
         if(response==0){
             response = o1.getCreationDate().compareTo(o2.getCreationDate());
@@ -27,7 +27,7 @@ public class BookOrder {
     }
 
     public BookOrder() {
-        buy = new ConcurrentSkipListSet<>(this::comporator);
-        sell = new ConcurrentSkipListSet<>(this::comporator);
+        buyOrders = new ConcurrentSkipListSet<>(BookOrder::comparator);
+        sellOrders = new ConcurrentSkipListSet<>(BookOrder::comparator);
     }
 }
