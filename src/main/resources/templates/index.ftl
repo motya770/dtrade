@@ -239,6 +239,48 @@
                 </div>
 
 
+
+                <div ng-controller="BookOrderController as vm">
+                    <div style="margin-top:20px;">Buy Orders</div>
+
+
+                    <table class="table-striped big-table table-bordered statistic" >
+                        <thead>
+                        <tr>
+                            <th>Number</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders">
+                            <td>{{tradeOrder.id}}</td>
+                            <td>{{tradeOrder.price}}</td>
+                            <td>{{tradeOrder.amount}}</td>
+                            <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top:20px;">Sell Orders</div>
+                    <table class="table-striped big-table table-bordered statistic" >
+                        <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders">
+                            <td>{{tradeOrder.id}}</td>
+                            <td>{{tradeOrder.price}}</td>
+                            <td>{{tradeOrder.amount}}</td>
+                            <td>{{tradeOrder.creationDate  | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <!--
                 <div class="row">
                     <a class="after-graph pull-right" href="/">Trade History</a>
@@ -333,46 +375,6 @@
                 </div>
 
 
-                <div ng-controller="BookOrderController as vm">
-                    <div style="margin-top:20px;">Buy Orders</div>
-
-
-                    <table class="table-striped big-table table-bordered statistic" >
-                        <thead>
-                        <tr>
-                            <th>Number</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders">
-                            <td>{{tradeOrder.id}}</td>
-                            <td>{{tradeOrder.price}}</td>
-                            <td>{{tradeOrder.amount}}</td>
-                            <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <div style="margin-top:20px;">Sell Orders</div>
-                    <table class="table-striped big-table table-bordered statistic" >
-                        <thead>
-                        <tr>
-                            <th>Number</th>
-                            <th>Price</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders">
-                            <td>{{tradeOrder.id}}</td>
-                            <td>{{tradeOrder.price}}</td>
-                            <td>{{tradeOrder.amount}}</td>
-                            <td>{{tradeOrder.creationDate  | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
 
                 <!--
                 <div ng-controller="OwnedController as vm">

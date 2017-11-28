@@ -20,13 +20,7 @@ public class TradeOrderController {
     @Autowired
     private ITradeOrderService tradeOrderService;
 
-    @Autowired
-    private IBookOrderService bookOrderService;
 
-    @RequestMapping(value = "/book-order")
-    public BookOrder getBookOrder(@RequestBody Diamond diamond){
-        return bookOrderService.getBookOrder(diamond);
-    }
 
     @RequestMapping(value = "/create")
     public TradeOrder create(@RequestBody TradeOrder tradeOrder){
