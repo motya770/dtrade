@@ -32,27 +32,49 @@ diamondApp.service('AvailableService', function($http, $q){
     };
 });
 
-diamondApp.controller("BookOrderController", function BookOrderController(BookOrderService) {
 
-    var self = this;
-    BookOrderService.getBookOrder().then(function (data) {
-        self.bookOrder = data;
-    });
-});
-
-
-diamondApp.service('BookOrderService', function($http){
-
-    var getBookOrder = function() {
-            $http.post('/trade-order/book-order?diamondId=1', null).then(function(response) {
+diamondApp.service('BookOrderService', function BookOrderService($http){
+    var getBookOrder = function(diamond) {
+        return $http.post('/trade-order/book-order', diamond, null).then(function (response) {
                 return response.data;
-            });
+        });
     };
     return {
-        getBookOrder: getBookOrder,
+        getBookOrder: getBookOrder
     };
 });
 
+
+diamondApp.controller("BookOrderController", function BookOrderController($scope, $http, $rootScope, BookOrderService) {
+
+    var self = this;
+
+    function callBookOrderService() {
+        BookOrderService.getBookOrder(self.diamond).then(function (data) {
+            self.bookOrder = data;
+        });
+    }
+
+    $scope.$on('buyDiamondChoosed', function (event, arg) {
+        self.diamond = arg;
+        callBookOrderService();
+    });
+
+    $scope.$on('ownedDiamondChoosed', function (event, arg) {
+        self.diamond = arg;
+        callBookOrderService();
+    });
+
+    $scope.$on('openForSaleDiamondChoosed', function (event, arg) {
+        self.diamond = arg;
+        callBookOrderService();
+    });
+
+    $scope.$on('buyDiamondChoosed', function (event, arg) {
+        self.diamond = arg;
+        callBookOrderService();
+    });
+});
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
 diamondApp.controller('OwnedController', function OwnedController($scope, $http, $rootScope, MyDiamondsService) {
@@ -253,42 +275,6 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
     $scope.$on('buyDiamondChoosed', function (event, arg) {
         self.sellDiamond = arg;
     });
-
-    /*
-    $scope.buyDiamond = function(diamond, currentAccount){
-
-            $http.post("/diamond/buy?buyerId=" + currentAccount.id
-                + "&price=" + diamond.price, diamond).then(function(responce){
-
-                MyDiamondsService.addOwned(responce.data);
-            });
-    };
-
-
-
-    $scope.sellDiamond = function(diamond, currentAccount){
-
-        $http.post("/diamond/open-for-sale?byuerId=" + currentAccount.id + "&price=" + diamond.price, diamond).then(function(responce){
-
-            console.log("sell: " + responce);
-            MyDiamondsService.addForSale(responce.data);
-
-        });
-    };
-
-    $scope.$on('buyDiamondChoosed', function (event, arg) {
-        self.buyDiamond = arg;
-    });
-
-    $scope.$on('ownedDiamondChoosed', function (event, arg) {
-        self.sellDiamond = arg;
-    });
-
-    $scope.$on('openForSaleDiamondChoosed', function (event, arg) {
-        self.sellDiamond = null;
-    });*/
-
-
 });
 
 diamondApp.controller('ChartController', function ($scope, $timeout, $http, AvailableService) {
@@ -391,7 +377,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, Avai
 
     $scope.$on('openForSaleDiamondChoosed', function (event, arg) {
         getChartData(arg.id);
-        getCategoryScoreData(arg.score);w
+        getCategoryScoreData(arg.score);
     });
 });
 
@@ -437,30 +423,7 @@ diamondApp.factory( 'AccountService', ["$http", function($http) {
             }
         }
     }
-
-    // return {
-    //
-    //     currentAccount: function() {
-    //
-    //         if(currentAccount==null){
-    //             $http.post('/accounts/get-current').then(function(response){
-    //                 self.user = response.data;
-    //             });
-    //         }
-    //
-    //         return currentAccount;
-    //     }
-    //
-    // };
 }]);
-
-
-// diamondApp.factory('AccountService', function($http) {
-//
-//      return {
-//          user: self.user
-//      }
-// });
 
 // app.controller( 'MainCtrl', function( $scope, AuthService ) {
 //     $scope.$watch( AuthService.isLoggedIn, function ( isLoggedIn ) {
@@ -474,10 +437,6 @@ diamondApp.controller('AccountController', ['$scope', "$http", "AccountService",
     AccountService.currentAccount().then(function (user) {
         self.user = user;
     });
-    // $http.post('/accounts/get-current').then(function(response){
-    //     self.user = response.data;
-    //     //$scope["currentAccount"] = self.user;
-    // });
 }]);
 
 

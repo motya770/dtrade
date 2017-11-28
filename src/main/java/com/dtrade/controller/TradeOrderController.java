@@ -24,10 +24,7 @@ public class TradeOrderController {
     private IBookOrderService bookOrderService;
 
     @RequestMapping(value = "/book-order")
-    public BookOrder getBookOrder(@RequestParam Long diamondId){
-
-        Diamond diamond = new Diamond();
-        diamond.setId(diamondId);
+    public BookOrder getBookOrder(@RequestBody Diamond diamond){
         return bookOrderService.getBookOrder(diamond);
     }
 

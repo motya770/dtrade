@@ -2,6 +2,7 @@ package com.dtrade.model.tradeorder;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class TradeOrder implements Serializable {
     @NotNull
     private Diamond diamond;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     private Account account;
