@@ -39,6 +39,12 @@
     <script src="/content/js/app/register.controller.js"></script>
     <script src="/content/js/app/stock.controller.js"></script>
     <script src="/content/js/app/stock.service.js"></script>
+    <script src="/content/js/app/mydiamonds.service.js"></script>
+    <script src="/content/js/app/owned.controller.js"></script>
+    <script src="/content/js/app/sale.controller.js"></script>
+    <script src="/content/js/app/tradeorder.controller.js"></script>
+    <script src="/content/js/app/tradeorder.service.js"></script>
+    <script src="/content/js/app/utils.js"></script>
 
     <!--
     <script src="/content/js/test.js"></script>
@@ -99,7 +105,6 @@
      </div>
 
      <div class="row">
-
 
          <div ng-controller="AvailableController as vm">
              <div class="left-sidebar pull-left">
