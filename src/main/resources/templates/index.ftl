@@ -32,6 +32,7 @@
     <script src="/content/js/app/account.service.js"></script>
     <script src="/content/js/app/available.controller.js"></script>
     <script src="/content/js/app/available.service.js"></script>
+    <script src="/content/js/app/bidder.controller.js"></script>
     <script src="/content/js/app/bookorder.controller.js"></script>
     <script src="/content/js/app/bookorder.service.js"></script>
     <script src="/content/js/app/chart.controller.js"></script>
