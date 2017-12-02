@@ -7,6 +7,8 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
         self.currentAccount = currentAccount;
     });
 
+
+    //TODO check it!
     $scope.createTradeOrder = function (tradeOrder, diamond) {
 
         tradeOrder["account"] = self.currentAccount;
