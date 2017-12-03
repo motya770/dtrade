@@ -1,7 +1,7 @@
-diamondApp.controller('OwnedController', function OwnedController($scope, $http, $rootScope, MyDiamondsService) {
+diamondApp.controller('OwnedController', function OwnedController($scope, $http, $rootScope, OwnedService) {
     var self = this;
 
-    MyDiamondsService.getOwnedDiamonds().then(function (data) {
+    OwnedService.getOwnedDiamonds().then(function (data) {
         self.ownedDiamonds = data;
     });
 

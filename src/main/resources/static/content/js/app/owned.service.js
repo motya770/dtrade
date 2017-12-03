@@ -1,18 +1,5 @@
-
-//TODO rewrite
 diamondApp.service('OwnedService', function($http, $q){
     var ownedDiamonds = [];
-    var saleDiamonds = [];
-
-    var hideFromSale = function(diamond) {
-        saleDiamonds.splice(arrayObjectIndexOf(saleDiamonds, diamond),1);
-        ownedDiamonds.push(diamond);
-    };
-
-    var addForSale = function (diamond) {
-        saleDiamonds.push(diamond);
-        ownedDiamonds.splice(arrayObjectIndexOf(ownedDiamonds, diamond),1);
-    };
 
     var addOwned = function (diamond) {
         ownedDiamonds.push(diamond);
@@ -29,22 +16,17 @@ diamondApp.service('OwnedService', function($http, $q){
         }
     };
 
-    var getForSaleDiamonds = function() {
-        if (saleDiamonds != null && saleDiamonds.length != 0) {
-            return $q.resolve(saleDiamonds)
-        }else{
-            return $http.post('/diamond/my-for-sale', null).then(function (response) {
-                saleDiamonds = response.data;
-                return saleDiamonds;
-            });
-        }
-    };
+    var addOwnedDiamond = function (diamond) {
+        ownedDiamonds.push(diamond);
+    }
+    var hideOwnedDiamond=function (diamond) {
+        ownedDiamonds.splice(arrayObjectIndexOf(ownedDiamonds, diamond),1);
+    }
 
     return {
-        hideFromSale: hideFromSale,
+        addOwnedDiamond: addOwnedDiamond,
+        hideOwnedDiamond: hideOwnedDiamond,
         getOwnedDiamonds: getOwnedDiamonds,
-        getForSaleDiamonds: getForSaleDiamonds,
-        addForSale: addForSale,
         addOwned: addOwned
     };
 });

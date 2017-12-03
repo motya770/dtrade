@@ -1,14 +1,14 @@
-diamondApp.controller('SaleController', function SaleController($scope, $http, $rootScope, MyDiamondsService) {
+diamondApp.controller('SaleController', function SaleController($scope, $http, $rootScope, SaleService) {
     var self = this;
 
-    MyDiamondsService.getForSaleDiamonds().then(function (data) {
+    SaleService.getForSaleDiamonds().then(function (data) {
         self.saleDiamonds = data;
     });
 
     $scope.hideFromSale = function (diamond) {
         $http.post("/diamond/hide-from-sale", diamond).then(function (responce) {
             var diamond = responce.data;
-            MyDiamondsService.hideFromSale(diamond);
+            SaleService.hideFromSale(diamond);
         });
     }
 
