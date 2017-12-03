@@ -76,13 +76,14 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, Avai
     }
 
     //init for graph
+    /*
     AvailableService.getAvailable().then(function (data) {
         if(data!=null && data.length>0){
             var firstDiamond = data[0];
             getChartData(firstDiamond.id);
             getCategoryScoreData(firstDiamond.score);
         }
-    })
+    })*/
 
     $scope.$on('buyDiamondChoosed', function (event, arg) {
         getChartData(arg.id);
