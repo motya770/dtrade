@@ -18,6 +18,8 @@ public interface ITradeOrderService {
 
     List<TradeOrder> getHistoryTradeOrdersByAccount();
 
+    List<TradeOrder> getHistoryTradeOrders();
+
     List<TradeOrder> getLiveTradeOrders();
 
     List<TradeOrder> getLiveTradeOrdersByAccount();

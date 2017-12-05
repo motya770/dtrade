@@ -35,9 +35,13 @@ public class TradeOrderController {
 
     @RequestMapping(value = "/history-orders")
     public List<TradeOrder> getHistoryTradeOrders(){
-        return tradeOrderService.getHistoryTradeOrdersByAccount();
+        return tradeOrderService.getHistoryTradeOrders();
     }
 
+    @RequestMapping(value = "/account-history-orders")
+    public List<TradeOrder> getHistoryTradeOrdersByAcount(){
+        return tradeOrderService.getHistoryTradeOrdersByAccount();
+    }
 
     @RequestMapping(value = "/cancel")
     public TradeOrder cancel(@RequestBody TradeOrder tradeOrder){

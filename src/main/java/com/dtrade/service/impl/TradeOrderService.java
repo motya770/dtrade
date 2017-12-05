@@ -8,6 +8,7 @@ import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -80,12 +81,17 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
     @Override
+    public List<TradeOrder> getHistoryTradeOrders() {
+        return tradeOrderRepository.getHistoryTradeOrders(new PageRequest(0, 100));
+    }
+
+    @Override
     public List<TradeOrder> getHistoryTradeOrdersByAccount(){
         Account account = accountService.getCurrentAccount();
         if(account==null){
             return null;
         }
-        return tradeOrderRepository.getHistoryTradeOrders(account);
+        return tradeOrderRepository.getHistoryTradeOrdersForAccount(account);
     }
 
     @Override
