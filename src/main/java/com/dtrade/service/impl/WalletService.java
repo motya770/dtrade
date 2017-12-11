@@ -2,9 +2,6 @@ package com.dtrade.service.impl;
 
 import com.dtrade.service.IWalletService;
 import org.springframework.stereotype.Service;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.methods.response.Web3ClientVersion;
-import org.web3j.protocol.http.HttpService;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;

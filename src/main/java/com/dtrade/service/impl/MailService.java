@@ -103,8 +103,5 @@ public class MailService implements IMailService {
             logger.error("{}", me);
             me.printStackTrace();
         }
-        //};
-
-        //taskExecutor.execute(runnable);
     }
 }
