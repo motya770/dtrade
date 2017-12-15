@@ -197,24 +197,24 @@ public class DiamondService implements IDiamondService {
         }*/
     }
 
-    @Deprecated
-    @Override
-    public List<Diamond> getMyDiamondsForSale() {
-        return diamondRepository.getMyDiamondsForSale(accountService.getStrictlyLoggedAccount().getId());
-    }
-
-
-    @Deprecated
-    @Override
-    public List<Diamond> getMyDiamondsOwned() {
-
-        Account account = accountService.getCurrentAccount();
-        if(account == null){
-            return null;
-        }
-
-        return diamondRepository.getMyDiamondsOwned(account.getId());
-    }
+//    @Deprecated
+//    @Override
+//    public List<Diamond> getMyDiamondsForSale() {
+//        return diamondRepository.getMyDiamondsForSale(accountService.getStrictlyLoggedAccount().getId());
+//    }
+//
+//
+//    @Deprecated
+//    @Override
+//    public List<Diamond> getMyDiamondsOwned() {
+//
+//        Account account = accountService.getCurrentAccount();
+//        if(account == null){
+//            return null;
+//        }
+//
+//        return diamondRepository.getMyDiamondsOwned(account.getId());
+//    }
 
     @Override
     public List<Diamond> getDiamondsByScoreBounds(int lowerBound, int upperBound) {

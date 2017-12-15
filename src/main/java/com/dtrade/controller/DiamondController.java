@@ -43,7 +43,7 @@ public class DiamondController {
         return diamondService.getAvailable();
     }
 
-
+/*
     @RequestMapping(value = "/my-owned")
     public List<Diamond> getMyDiamondsOwned() {
         return diamondService.getMyDiamondsOwned();
@@ -53,4 +53,6 @@ public class DiamondController {
     public List<Diamond> getMyDiamondsForSale() {
         return diamondService.getMyDiamondsForSale();
     }
+*/
+
 }

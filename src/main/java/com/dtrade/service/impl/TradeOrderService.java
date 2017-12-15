@@ -51,6 +51,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
     private TransactionTemplate transactionTemplate;
 
+    //TODO add paging
     @Override
     public List<TradeOrder> findAll() {
         return tradeOrderRepository.findAll();

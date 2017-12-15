@@ -19,9 +19,9 @@ public interface IDiamondService {
 
     Diamond find(Long diamondId);
 
-    List<Diamond> getMyDiamondsOwned();
-
-    List<Diamond> getMyDiamondsForSale();
+//    List<Diamond> getMyDiamondsOwned();
+//
+//    List<Diamond> getMyDiamondsForSale();
 
     List<Diamond> getAvailable();
 

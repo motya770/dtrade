@@ -81,15 +81,6 @@ public class DtradeApplication  implements CommandLineRunner {
         }*/
     }
 
-
-    private SecurityContext setAccount(Account account){
-        UserDetails principal = account;
-        Authentication authentication = new UsernamePasswordAuthenticationToken(principal, principal.getPassword(), principal.getAuthorities());
-        SecurityContext context = SecurityContextHolder.createEmptyContext();
-        context.setAuthentication(authentication);
-        return context;
-    }
-
     public static void main(String[] args) {
 
         //File file = new File();
