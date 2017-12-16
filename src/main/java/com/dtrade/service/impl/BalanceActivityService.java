@@ -10,6 +10,7 @@ import com.dtrade.repository.balanceactivity.BalanceActivityRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
 import com.dtrade.service.IDiamondService;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +46,7 @@ public class BalanceActivityService implements IBalanceActivityService {
     }
 
     @Override
-    public void createBalanceActivities(Account buyer, Account seller, BigDecimal cash, TradeOrder buyOrder, TradeOrder sellOrder) {
+    public org.springframework.data.util.Pair<BalanceActivity, BalanceActivity> createBalanceActivities(Account buyer, Account seller, BigDecimal cash, TradeOrder buyOrder, TradeOrder sellOrder) {
 
         //buyer don't have enougth money
         if(buyer.getBalance().compareTo(cash) < 0){
@@ -62,16 +63,21 @@ public class BalanceActivityService implements IBalanceActivityService {
         buyerActivity.setAccount(buyer);
         buyerActivity.setAmount(minusCash);
         buyerActivity.setCreateDate(System.currentTimeMillis());
+        buyerActivity.setBuyOrder(buyOrder);
 
         BalanceActivity sellerActivity = new BalanceActivity();
         sellerActivity.setBalanceActivityType(BalanceActivityType.SELL);
         sellerActivity.setAccount(seller);
         sellerActivity.setAmount(cash);
         sellerActivity.setCreateDate(System.currentTimeMillis());
+        sellerActivity.setSellOrder(sellOrder);
 
         balanceActivityRepository.save(sellerActivity);
         balanceActivityRepository.save(buyerActivity);
+
+        return org.springframework.data.util.Pair.of(buyerActivity, sellerActivity);
     }
+
 
 
     @Override
@@ -105,4 +111,5 @@ public class BalanceActivityService implements IBalanceActivityService {
         balanceActivityRepository.save(sellerActivity);
         balanceActivityRepository.save(buyerActivity);
     }
+
 }

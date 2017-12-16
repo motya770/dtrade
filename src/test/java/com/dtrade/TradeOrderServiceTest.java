@@ -33,9 +33,8 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TradeOrderServiceTest {
+public class TradeOrderServiceTest extends BaseTest {
 
-    public static final String F_DEFAULT_TEST_ACCOUNT = "motya770@gmail.com";
 
 
     @Autowired
@@ -153,31 +152,6 @@ public class TradeOrderServiceTest {
     }
 
 
-    private TradeOrder createTestTradeOrder(){
-       return createTestTradeOrder(null);
-    }
-
-    private TradeOrder createTestTradeOrder(TradeOrderType tradeOrderType){
-        TradeOrder tradeOrder = new TradeOrder();
-        tradeOrder.setAmount(new BigDecimal("10.0"));
-        tradeOrder.setDiamond(diamondService.getAvailable().stream().findFirst().get());
-        tradeOrder.setAccount(accountService.getCurrentAccount());
-        tradeOrder.setPrice(new BigDecimal("100.00"));
-        if(tradeOrderType==null){
-            tradeOrderType = TradeOrderType.BUY;
-        }
-        tradeOrder.setTradeOrderType(tradeOrderType);
-        tradeOrder = tradeOrderService.createTradeOrder(tradeOrder);
-        return tradeOrder;
-    }
-
-    private TradeOrder createTestBuyTradeOrder(){
-        return createTestTradeOrder(TradeOrderType.BUY);
-    }
-
-    private TradeOrder createTestSellTradeOrder(){
-        return createTestTradeOrder(TradeOrderType.SELL);
-    }
 
     @Test
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)

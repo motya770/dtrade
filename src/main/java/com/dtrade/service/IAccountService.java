@@ -37,4 +37,7 @@ public interface IAccountService {
 
     void updateBalance(Account account, BigDecimal addedValue);
 
+    Account findByMail(String login);
+
+
 }

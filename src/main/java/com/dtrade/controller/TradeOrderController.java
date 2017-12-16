@@ -20,8 +20,6 @@ public class TradeOrderController {
     @Autowired
     private ITradeOrderService tradeOrderService;
 
-
-
     @RequestMapping(value = "/create")
     public TradeOrder create(@RequestBody TradeOrder tradeOrder){
         return tradeOrderService.createTradeOrder(tradeOrder);

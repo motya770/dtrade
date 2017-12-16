@@ -61,8 +61,8 @@ public class AccountService implements IAccountService, UserDetailsService {
             throw new TradeException("Empty account");
         }
         Account currentAccount = getStrictlyLoggedAccount();
-        //TODO
-        if(account.equals(currentAccount)){
+
+        if(!account.getId().equals(currentAccount.getId())){
             throw new TradeException("Passed account is not current");
         }
     }
@@ -170,6 +170,11 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Override
     public void create(Account account) {
         accountRepository.save(account);
+    }
+
+    @Override
+    public Account findByMail(String login) {
+        return accountRepository.findByMail(login);
     }
 
     @Override
