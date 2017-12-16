@@ -19,7 +19,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.AssertTrue;
 import java.math.BigDecimal;
@@ -32,6 +34,9 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TradeOrderServiceTest {
+
+    public static final String F_DEFAULT_TEST_ACCOUNT = "motya770@gmail.com";
+
 
     @Autowired
     private ITradeOrderService tradeOrderService;
@@ -53,6 +58,7 @@ public class TradeOrderServiceTest {
         return context;
     }
 
+    /*
     @Test
     public void test(){
 
@@ -64,7 +70,7 @@ public class TradeOrderServiceTest {
 
         System.out.println("1233 234 " + tradeOrderService);
 
-    }
+    }*/
 
     @Test
     public void testFindAll(){
@@ -78,11 +84,15 @@ public class TradeOrderServiceTest {
     }
 
     @Test
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     public void testFieldsNotEmpty(){
-        TradeOrder tradeOrder  = new TradeOrder();
+        TradeOrder tradeOrder  =  createTestTradeOrder();
         tradeOrderService.cancelTradeOrder(tradeOrder);
     }
 
+
+    @Transactional
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
     public void testGetHistoryTradeOrdersByAccount(){
         Account currentAccount = accountService.getCurrentAccount();
@@ -95,7 +105,6 @@ public class TradeOrderServiceTest {
         });
     }
 
-
     @Test
     public void testGetHistoryTradeOrders(){
         List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders();
@@ -106,10 +115,11 @@ public class TradeOrderServiceTest {
         });
     }
 
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
     public void testLiveTradeOrders(){
 
-        TradeOrder tradeOrder = new TradeOrder();
+        TradeOrder tradeOrder = createTestTradeOrder();
         tradeOrderService.createTradeOrder(tradeOrder);
 
         List<TradeOrder> tradeOrders = tradeOrderService.getLiveTradeOrders();
@@ -118,16 +128,23 @@ public class TradeOrderServiceTest {
     }
 
     @Test
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
+    @Transactional
     public void tetLiveTradeOrdersByAccount(){
         Account account = accountService.getCurrentAccount();
-        TradeOrder tradeOrder = new TradeOrder();
+        TradeOrder tradeOrder = createTestTradeOrder();
         tradeOrderService.createTradeOrder(tradeOrder);
         List<TradeOrder> tradeOrders =  tradeOrderService.getLiveTradeOrdersByAccount();
+        tradeOrders.forEach(tradeOrder1 -> {
+            Assert.assertTrue(tradeOrder.getAccount().equals(account));
+        });
         Assert.assertNotNull(tradeOrders);
         Assert.assertTrue(tradeOrders.size() > 0);
     }
 
+    @Transactional
     @Test
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     public void  testCreateTradeOrder(){
         TradeOrder tradeOrder = createTestTradeOrder();
         TradeOrder savedTradeOrder = tradeOrderRepository.getOne(tradeOrder.getId());
@@ -147,6 +164,7 @@ public class TradeOrderServiceTest {
     }
 
     @Test
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     public void testCancelTradeOrder(){
         TradeOrder tradeOrder = createTestTradeOrder();
         Assert.assertNotNull(tradeOrder);
