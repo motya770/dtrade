@@ -8,12 +8,12 @@ import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.ITradeOrderService;
+import javafx.util.Pair;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.util.Pair;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -152,15 +152,31 @@ public class TradeOrderServiceTest {
         Assert.assertTrue(savedTradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED));
     }
 
+
     private TradeOrder createTestTradeOrder(){
+       return createTestTradeOrder(null);
+    }
+
+    private TradeOrder createTestTradeOrder(TradeOrderType tradeOrderType){
         TradeOrder tradeOrder = new TradeOrder();
         tradeOrder.setAmount(new BigDecimal("10.0"));
         tradeOrder.setDiamond(diamondService.getAvailable().stream().findFirst().get());
         tradeOrder.setAccount(accountService.getCurrentAccount());
         tradeOrder.setPrice(new BigDecimal("100.00"));
-        tradeOrder.setTradeOrderType(TradeOrderType.BUY);
-        tradeOrder =tradeOrderService.createTradeOrder(tradeOrder);
+        if(tradeOrderType==null){
+            tradeOrderType = TradeOrderType.BUY;
+        }
+        tradeOrder.setTradeOrderType(tradeOrderType);
+        tradeOrder = tradeOrderService.createTradeOrder(tradeOrder);
         return tradeOrder;
+    }
+
+    private TradeOrder createTestBuyTradeOrder(){
+        return createTestTradeOrder(TradeOrderType.BUY);
+    }
+
+    private TradeOrder createTestSellTradeOrder(){
+        return createTestTradeOrder(TradeOrderType.SELL);
     }
 
     @Test
@@ -171,14 +187,29 @@ public class TradeOrderServiceTest {
         Assert.assertTrue(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED));
     }
 
+
+    //TODO check execution more precily
     @Test
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     public void testExecuteTradeOrders(){
 
+       TradeOrder buyOrder = createTestBuyTradeOrder();
+       TradeOrder sellOrder = createTestSellTradeOrder();
+
+       org.springframework.data.util.Pair<TradeOrder, TradeOrder> pair = org.springframework.data.util.Pair.of(buyOrder, sellOrder);
+
+       tradeOrderService.executeTradeOrders(pair);
     }
 
     @Test
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     public void testCheckIfCanExecute(){
 
+        TradeOrder buyOrder = createTestBuyTradeOrder();
+        TradeOrder sellOrder = createTestSellTradeOrder();
+        org.springframework.data.util.Pair<TradeOrder, TradeOrder> pair = org.springframework.data.util.Pair.of(buyOrder, sellOrder);
+
+         Assert.assertTrue(tradeOrderService.checkIfCanExecute(pair));
     }
 }
 
