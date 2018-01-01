@@ -41,9 +41,9 @@ public class DiamondService implements IDiamondService {
     private IScoreService scoreService;
 
     @Override
-    public void update(Diamond diamond) {
+    public Diamond update(Diamond diamond) {
         checkDiamondOwnship(accountService.getStrictlyLoggedAccount(), diamond);
-        diamondRepository.save(diamond);
+        return diamondRepository.save(diamond);
     }
 
     @Override
@@ -183,7 +183,7 @@ public class DiamondService implements IDiamondService {
         return diamondRepository.getAllAvailable();
     }
 
-    @Override
+    //@Override
     public List<Diamond> getAvailable() {
 
         return diamondRepository.getAllAvailable();

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface IDiamondService {
 
-    void update(Diamond diamond);
+    Diamond update(Diamond diamond);
 
     void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException;
 
@@ -23,7 +23,7 @@ public interface IDiamondService {
 //
 //    List<Diamond> getMyDiamondsForSale();
 
-    List<Diamond> getAvailable();
+   // List<Diamond> getAvailable();
 
     List<Diamond> getAllAvailable();
 
@@ -45,5 +45,6 @@ public interface IDiamondService {
     @Deprecated
     Diamond openForSale(Diamond diamond, BigDecimal price) throws TradeException;
 
+    @Deprecated
     Diamond hideFromSale(Diamond diamond);
 }

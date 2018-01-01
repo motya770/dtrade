@@ -28,8 +28,7 @@ public class DiamondServiceTest  extends BaseTest{
 
     @Autowired
     private DiamondService diamondService;
-
-
+    
 /*
     Diamond find(Long diamondId);
 
