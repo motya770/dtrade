@@ -1,5 +1,7 @@
 package com.dtrade;
 
+import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.diamond.DiamondType;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.service.impl.AccountService;
@@ -21,6 +23,19 @@ public class BaseTest {
 
     @Autowired
     private TradeOrderService tradeOrderService;
+
+    public Diamond createDiamond(){
+        Diamond diamond= new Diamond();
+        diamond.setName("Test");
+        diamond.setPrice(new BigDecimal("20"));
+        diamond.setDiamondType(DiamondType.ASSCHER);
+        diamond.setCarats(new BigDecimal("2"));
+        diamond.setClarity(new BigDecimal("10"));
+        diamond.setTotalStockAmount(new BigDecimal("40000000"));
+
+        diamond = diamondService.create(diamond);
+        return diamond;
+    }
 
     public TradeOrder createTestTradeOrder(){
         return createTestTradeOrder(null);

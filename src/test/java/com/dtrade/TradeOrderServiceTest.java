@@ -2,13 +2,11 @@ package com.dtrade;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.ITradeOrderService;
-import javafx.util.Pair;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,8 +21,6 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.AssertTrue;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -34,8 +30,6 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TradeOrderServiceTest extends BaseTest {
-
-
 
     @Autowired
     private ITradeOrderService tradeOrderService;
