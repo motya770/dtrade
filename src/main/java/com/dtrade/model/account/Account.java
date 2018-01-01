@@ -109,8 +109,7 @@ public class Account implements UserDetails {
 
     @Override
     public boolean isEnabled(){
-        //TODO see enabled field
-        return true;
+       return enabled;
     }
 
     @Override
