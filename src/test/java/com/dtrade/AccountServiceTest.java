@@ -12,6 +12,9 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 /**
  * Created by kudelin on 12/7/16.
  */
@@ -65,18 +68,34 @@ public class AccountServiceTest extends BaseTest{
 
     @Test
     public void testFindAll(){
-          accountService.findAll();
+        List<Account> accounts = accountService.findAll();
+        Assert.assertNotNull(accounts);
+        Assert.assertTrue(accounts.size() > 0);
 
+        int currentSize = accounts.size();
+
+        createAccount();
+
+        Assert.assertTrue(accountService.findAll().size()  == currentSize + 1);
     }
 
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
+    @Test
     public void testFind(){
+        Account currentAccount = accountService.getCurrentAccount();
+        Account foundAccount = accountService.find(currentAccount.getId());
+        Assert.assertTrue(foundAccount.getId().equals(foundAccount.getId()));
 
     }
 
+    @Test
     public void testCreate(){
-
+        Account account = createAccount();
+        Account foundAccount = accountService.find(account.getId());
+        Assert.assertTrue(account.getId().equals(foundAccount.getId()));
     }
 
+    //TODO write later
     public void testConfirmRegistration(){
 
     }
@@ -89,16 +108,34 @@ public class AccountServiceTest extends BaseTest{
 
     }
 
-
+   @Test
    public  void testSave(){
+        Account account = createAccount();
 
+        BigDecimal balance = new BigDecimal("10");
+        account.setBalance(balance);
+        account = accountService.save(account);
+        Assert.assertTrue(account.getBalance().equals(balance));
    }
 
+   @Test
    public void testUpdateBalance(){
+        Account account = createAccount();
+        BigDecimal oldBalance = account.getBalance();
+        BigDecimal addedValue =  new BigDecimal("59");
+        account = accountService.updateBalance(account, addedValue);
+
+        Assert.assertTrue(account.getBalance().equals(oldBalance.add(addedValue)));
 
    }
 
-    public void testFindByMail(){
+   @Test
+   public void testFindByMail(){
+
+       Account account =  accountService.findByMail(F_DEFAULT_TEST_ACCOUNT);
+       Assert.assertNotNull(account);
+       Assert.assertNotNull(F_DEFAULT_TEST_ACCOUNT.equals(account.getMail()));
+
 
    }
 

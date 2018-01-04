@@ -150,7 +150,8 @@ public class AccountService implements IAccountService, UserDetailsService {
         return account;
     }
 
-    private Account buildAccount(String mail, String pwd, String phone, String curr) throws TradeException {
+    @Override
+    public Account buildAccount(String mail, String pwd, String phone, String curr) throws TradeException {
         Account anotherAccount = accountRepository.findByMail(mail);
         if (anotherAccount != null) {
             throw new TradeException("Can't create account with this login!");
@@ -169,13 +170,13 @@ public class AccountService implements IAccountService, UserDetailsService {
     }
 
     @Override
-    public void save(Account account) {
-        accountRepository.save(account);
+    public Account save(Account account) {
+        return accountRepository.save(account);
     }
 
     @Override
-    public void create(Account account) {
-        accountRepository.save(account);
+    public Account create(Account account) {
+       return accountRepository.save(account);
     }
 
     @Override
@@ -185,7 +186,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     @Transactional
-    public void updateBalance(Account account, BigDecimal addedValue) {
+    public Account updateBalance(Account account, BigDecimal addedValue) {
 
         Account rereadAccount = find(account.getId());
 
@@ -195,10 +196,11 @@ public class AccountService implements IAccountService, UserDetailsService {
             balance = balance.setScale(2, BigDecimal.ROUND_HALF_UP);
             rereadAccount.setBalance(balance);
 
-            accountRepository.save(rereadAccount);
+           return accountRepository.save(rereadAccount);
 
         } else {
             logger.warn("Can't update balance of account {} because addedValue is null", account.getId());
         }
+        return  rereadAccount;
     }
 }

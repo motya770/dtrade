@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface IAccountService {
 
+    Account buildAccount(String mail, String pwd, String phone, String curr);
+
     void checkCurrentAccount(Account account) throws TradeException;
 
     Account getCurrentAccount();
@@ -25,7 +27,7 @@ public interface IAccountService {
 
     Account find(Long accountId);
 
-    void create(Account account);
+    Account create(Account account);
 
     Account confirmRegistration(String guid) throws TradeException;
 
@@ -33,9 +35,9 @@ public interface IAccountService {
 
     Account createRealAccount(String login, String pwd, String phone, String currency) throws TradeException;
 
-    void save(Account account);
+    Account save(Account account);
 
-    void updateBalance(Account account, BigDecimal addedValue);
+    Account updateBalance(Account account, BigDecimal addedValue);
 
     Account findByMail(String login);
 

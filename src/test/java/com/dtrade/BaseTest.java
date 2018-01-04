@@ -1,5 +1,6 @@
 package com.dtrade;
 
+import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondType;
 import com.dtrade.model.tradeorder.TradeOrder;
@@ -23,6 +24,12 @@ public class BaseTest {
 
     @Autowired
     private TradeOrderService tradeOrderService;
+
+    public Account createAccount(){
+       Account account = accountService.buildAccount("test@test " + (int)(Math.random() * 100 % 100) + ".com",
+                "pwd", "012345678", "USD");
+       return accountService.create(account);
+    }
 
     public Diamond createDiamond(){
         Diamond diamond= new Diamond();
