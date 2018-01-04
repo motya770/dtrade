@@ -5,6 +5,7 @@ import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.IAccountService;
+import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.ITradeOrderService;
 import org.junit.Assert;
@@ -21,6 +22,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -42,6 +44,9 @@ public class TradeOrderServiceTest extends BaseTest {
 
     @Autowired
     private IDiamondService diamondService;
+
+    @Autowired
+    private IBookOrderService bookOrderService;
 
     private SecurityContext setAccount(Account account){
         UserDetails principal = account;
@@ -71,9 +76,46 @@ public class TradeOrderServiceTest extends BaseTest {
         Assert.assertTrue(tradeOrders.size()>0);
     }
 
+
+    private static int MAX_TRADES_COUNT = 1_000;
+    private List<TradeOrder> createBuyOrderList(){
+        List<TradeOrder> tradeOrders = new LinkedList<>();
+        for(int j = 0; j<MAX_TRADES_COUNT; j++){
+            TradeOrder tradeOrder = createTestBuyTradeOrder();
+            tradeOrders.add(tradeOrder);
+        }
+        return tradeOrders;
+    }
+
+    private List<TradeOrder> createSellOrderList(){
+        List<TradeOrder> tradeOrders = new LinkedList<>();
+        for(int j = 0; j<MAX_TRADES_COUNT; j++){
+            TradeOrder tradeOrder = createTestSellTradeOrder();
+            tradeOrders.add(tradeOrder);
+        }
+        return tradeOrders;
+    }
+
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
     public void testCalculateTradeOrders(){
 
+      List<TradeOrder> buyOrders = createBuyOrderList();
+      List<TradeOrder> sellOrders = createSellOrderList();
+
+        System.out.println("START ");
+        long start = System.currentTimeMillis();
+      buyOrders.parallelStream().forEach((tradeOrder)->{
+          bookOrderService.addNew(tradeOrder);
+      });
+
+      sellOrders.parallelStream().forEach(tradeOrder -> {
+          bookOrderService.addNew(tradeOrder);
+      });
+
+
+        tradeOrderService.calculateTradeOrders();
+        System.out.println("END " + (System.currentTimeMillis() - start));
     }
 
     @Test

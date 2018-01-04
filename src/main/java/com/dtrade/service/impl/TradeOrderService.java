@@ -66,6 +66,8 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public void calculateTradeOrders(){
 
+        System.out.println("CALCULATING TRADE ORDERS");
+
         bookOrderService.getBookOrders().entrySet().forEach((entry)->{
            // System.out.println("ONE: " + entry.getKey() + " " + entry.getValue().getSell().size() + " " + entry.getValue().getBuy().size());
         });
@@ -76,6 +78,7 @@ public class TradeOrderService  implements ITradeOrderService{
             quotesService.issueQuote(pair);
 
             if(checkIfCanExecute(pair)) {
+                System.out.println("EXECUTING TRADE PAIR");
                 executeTradeOrders(pair);
             }
         });
