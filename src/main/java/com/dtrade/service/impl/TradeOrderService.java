@@ -7,6 +7,8 @@ import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.util.Pair;
@@ -18,13 +20,14 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
-
 /**
  * Created by kudelin on 6/27/17.
  */
 @Transactional
 @Service
 public class TradeOrderService  implements ITradeOrderService{
+
+    private static final Logger logger = LoggerFactory.getLogger(TradeOrderService.class);
 
     @Autowired
     private TradeOrderRepository tradeOrderRepository;
@@ -51,6 +54,9 @@ public class TradeOrderService  implements ITradeOrderService{
 
     private TransactionTemplate transactionTemplate;
 
+
+
+
     //TODO add paging
     @Override
     public List<TradeOrder> findAll() {
@@ -66,7 +72,7 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public void calculateTradeOrders(){
 
-        System.out.println("CALCULATING TRADE ORDERS");
+        logger.debug("CALCULATING TRADE ORDERS");
 
         bookOrderService.getBookOrders().entrySet().forEach((entry)->{
            // System.out.println("ONE: " + entry.getKey() + " " + entry.getValue().getSell().size() + " " + entry.getValue().getBuy().size());
@@ -78,7 +84,8 @@ public class TradeOrderService  implements ITradeOrderService{
             quotesService.issueQuote(pair);
 
             if(checkIfCanExecute(pair)) {
-                System.out.println("EXECUTING TRADE PAIR");
+
+                logger.debug("EXECUTING TRADE PAIR");
                 executeTradeOrders(pair);
             }
         });
@@ -162,7 +169,7 @@ public class TradeOrderService  implements ITradeOrderService{
         realOrder.setTraderOrderStatus(TraderOrderStatus.CREATED);
         realOrder.setCreationDate(System.currentTimeMillis());
 
-        System.out.println(tradeOrder);
+        logger.debug("before save {}", tradeOrder);
 
         realOrder = tradeOrderRepository.save(realOrder);
 
@@ -293,10 +300,9 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     BigDecimal cash = realAmount.multiply(buyPrice);
 
-
                     long startActivity = System.currentTimeMillis();
                     balanceActivityService.createBalanceActivities(buyAccount, sellAccount, cash, buyOrder, sellOrder);
-                    System.out.println(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
+                    logger.debug(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
 
                     buyStock.setAmount(buyStock.getAmount().add(realAmount));
                     sellStock.setAmount(sellStock.getAmount().subtract(realAmount));
@@ -321,7 +327,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     long end = System.currentTimeMillis() - start;
 
-                    System.out.println("TIME: " + end);
+                    logger.debug("TIME: " + end);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

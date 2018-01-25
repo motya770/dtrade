@@ -26,13 +26,13 @@ public class QuoteManager implements IQuoteManager {
     @PostConstruct
     private void init(){
 
-        ExecutorService service = Executors.newSingleThreadExecutor();
-
-        Runnable runnable = () -> {
-            System.out.println("Test");
-        };
-
-        service.submit(runnable);
+//        ExecutorService service = Executors.newSingleThreadExecutor();
+//
+//        Runnable runnable = () -> {
+//            System.out.println("Test");
+//        };
+//
+//        service.submit(runnable);
     }
 
 

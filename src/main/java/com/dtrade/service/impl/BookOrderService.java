@@ -7,6 +7,8 @@ import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.ITradeOrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -24,6 +26,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @Transactional
 @Service
 public class BookOrderService implements IBookOrderService {
+
+
+    private static final Logger logger = LoggerFactory.getLogger(TradeOrderService.class);
 
     @Autowired
     private ITradeOrderService tradeOrderService;
@@ -49,11 +54,11 @@ public class BookOrderService implements IBookOrderService {
         }
 
         if(TradeOrderType.BUY.equals(order.getTradeOrderType())){
-            System.out.println("adding buy " + order.getId());
+            logger.debug("adding buy " + order.getId());
             bookOrder.getBuyOrders().add(order);
 
         }else if(TradeOrderType.SELL.equals(order.getTradeOrderType())){
-            System.out.println("adding sell " + order.getId());
+            logger.debug("adding sell " + order.getId());
             bookOrder.getSellOrders().add(order);
         }else{
             throw new TradeException("Type of the order is not defined!");
@@ -99,7 +104,7 @@ public class BookOrderService implements IBookOrderService {
 
     @Override
     public void remove(TradeOrder order){
-        System.out.println("remove D");
+        logger.debug("remove D");
         BookOrder book = bookOrders.get(order.getDiamond().getId());
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
@@ -112,7 +117,7 @@ public class BookOrderService implements IBookOrderService {
 
     @Override
     public void update(TradeOrder order) {
-        System.out.println("update D");
+        logger.debug("update D");
         BookOrder book = bookOrders.get(order.getDiamond().getId());
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
@@ -128,7 +133,7 @@ public class BookOrderService implements IBookOrderService {
     @EventListener(ContextRefreshedEvent.class)
     public void init() {
 
-        System.out.println("ContextRefreshedEvent!!!");
+        logger.debug("ContextRefreshedEvent!!!");
 
         List<TradeOrder> orders = tradeOrderService.getLiveTradeOrders();
         for(TradeOrder order: orders){

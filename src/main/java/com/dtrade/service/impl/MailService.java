@@ -77,7 +77,7 @@ public class MailService implements IMailService {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
 
-            System.out.println(body);
+            logger.debug(body);
             Multipart mp = new MimeMultipart();
 
             MimeBodyPart textPart = new MimeBodyPart();

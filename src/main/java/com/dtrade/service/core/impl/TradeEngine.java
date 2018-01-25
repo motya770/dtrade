@@ -27,6 +27,8 @@ public class TradeEngine implements ITradeEngine {
     @EventListener(ContextRefreshedEvent.class)
     private void init(){
 
+
+
        service = Executors.newScheduledThreadPool(10);
        //TODO rewrite
        service.scheduleWithFixedDelay(()->{
