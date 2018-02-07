@@ -3,9 +3,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>TRO</title>
 
+    <!--
+    <link rel="stylesheet/less" type="text/css" href="styles.less" />
+    -->
 
     <link rel="stylesheet" type="text/css" href="/content/libs/bootstrap/css/bootstrap-select.css">
-
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/docs/assets/css/bootstrap.css"/>
 
     <link rel="stylesheet" href="/content/css/style.css"/>
     <link rel="stylesheet" href="/content/css/diamond.css"/>
@@ -15,9 +18,8 @@
     <script src="/resources/js/hightstock/theme.js"></script>
     -->
 
-    <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
-    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
-
+    <script src="/bower_components/jquery/jquery.js" type="text/javascript"></script>
+    <script src="/bower_components/bootstrap/docs/assets/js/bootstrap.js" type="text/javascript"></script>
 
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
     <script src="/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
@@ -25,7 +27,7 @@
 
     <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
     <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js" type="text/javascript"></script>
-
+    <script src="/bower_components/less/dist/less.min.js" type="text/javascript"></script>
 
     <script src="/content/js/app.js"></script>
     <script src="/content/js/app/account.controller.js"></script>
@@ -54,15 +56,20 @@
     <script src="/content/js/test.js"></script>
     -->
 
-    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-messages/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="/bower_components/angular-material/angular-material.min.js"></script>
 
 	<script type="text/javascript">
 	$(document).ready(function() {
 		//$(".fancybox").fancybox();
 	});
 	</script>
-	
 	<!-- Add fancyBox -->
     <!--
     <link rel="stylesheet" href="/content/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
@@ -80,7 +87,6 @@
         <div>{{vm.user.balance}}</div>
     </div>
 
-
     <div>
         <form action="/login" method="post">
             <input type="text" name="username" /><br/>
@@ -88,9 +94,7 @@
             <input type="submit" value="Login"/>
         </form>
     </div>
-
 </div>
-
 
 
  <div class="container tro">

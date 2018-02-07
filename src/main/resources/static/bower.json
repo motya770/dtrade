@@ -1,0 +1,33 @@
+{
+  "name": "dtrade",
+  "authors": [
+    "PRDBX1 <motya770@gmail.com>"
+  ],
+  "description": "Trading app",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.9",
+    "angular-animate": "^1.6.9",
+    "angular-aria": "^1.6.9",
+    "angular-messages": "^1.6.9",
+    "angular-material": "^1.1.6",
+    "highcharts": "hightcharts#^6.0.5",
+    "angular-resource": "^1.6.9",
+    "highcharts-ng": "^1.2.0",
+    "bootstrap": "2.3.2",
+    "less": "^2.7.3"
+  },
+  "resolutions": {
+    "bootstrap": "2.3.2"
+  }
+}
