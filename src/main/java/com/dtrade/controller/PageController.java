@@ -14,4 +14,9 @@ public class PageController {
     public String index(){
         return "test.html";
     }
+
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public String registration(){
+        return "registration";
+    }
 }

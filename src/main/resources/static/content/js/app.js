@@ -1,7 +1,6 @@
 // Define the `phonecatApp` module
 var diamondApp = angular.module('diamondApp', ["highcharts-ng", 'ngMaterial']);
 
-
 /*
 diamondApp.controller('LoginController', ['$scope', '$http', function($scope, $http) {
     $scope.master = {};

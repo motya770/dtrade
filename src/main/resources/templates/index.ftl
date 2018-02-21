@@ -9,16 +9,20 @@
 
     <link rel="stylesheet" type="text/css" href="/content/libs/bootstrap/css/bootstrap-select.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/docs/assets/css/bootstrap.css"/>
+    <link rel="stylesheet" href= "/bower_components/angular-material/angular-material.min.css"/>
 
     <link rel="stylesheet" href="/content/css/style.css"/>
     <link rel="stylesheet" href="/content/css/diamond.css"/>
+    <link rel="stylesheet" href="/content/css/dialog.css"/>
 
     <!--
     <script src="/resources/js/hightstock/highstock.js"></script>
     <script src="/resources/js/hightstock/theme.js"></script>
     -->
 
+
     <script src="/bower_components/jquery/jquery.js" type="text/javascript"></script>
+
     <script src="/bower_components/bootstrap/docs/assets/js/bootstrap.js" type="text/javascript"></script>
 
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
@@ -56,7 +60,6 @@
     <script src="/content/js/test.js"></script>
     -->
 
-
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/bower_components/angular-aria/angular-aria.js"></script>
@@ -65,20 +68,9 @@
     <!-- Angular Material Library -->
     <script src="/bower_components/angular-material/angular-material.min.js"></script>
 
-	<script type="text/javascript">
-	$(document).ready(function() {
-		//$(".fancybox").fancybox();
-	});
-	</script>
-	<!-- Add fancyBox -->
-    <!--
-    <link rel="stylesheet" href="/content/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
-    <script type="text/javascript" src="/content/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-    -->
 
 </head>
 <body>
-
 
 <div>
     <span>Current Account</span>
@@ -93,7 +85,12 @@
             <input type="password" name="password"><br/>
             <input type="submit" value="Login"/>
         </form>
+
+        <div ng-controller="RegisterController as vm">
+            <button ng-click="showRegistractionForm(this);">register</button>
+        </div>
     </div>
+
 </div>
 
 
@@ -526,8 +523,9 @@
      </div>
  </div>
 
+<!--
  <script src="/content/js/main.js"></script>
-
+-->
 
  <!--
  <script src="//www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit" async defer></script>
