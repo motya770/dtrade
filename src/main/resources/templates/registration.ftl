@@ -36,39 +36,81 @@
 -->
 
 <h1>ttt</h1>
-<div ng-controller="DemoCtrl" layout="column" layout-padding="" ng-cloak="" class="inputdemoIcons" ng-app="MyApp">
+<div ng-controller="DemoCtrl" layout="column" layout-padding="" ng-cloak="" class="material-input", class="input-demo-Errors, ng-app="MyApp">
 
   <br>
-  <md-content class="md-no-momentum">
-    <md-input-container class="md-icon-float md-block">
-      <!-- Use floating label instead of placeholder -->
-      <label>Name</label>
-      <md-icon md-svg-src="img/icons/ic_person_24px.svg" class="name"></md-icon>
-      <input ng-model="user.name" type="text">
-    </md-input-container>
-
     <md-input-container md-no-float="" class="md-block">
       <md-icon md-svg-src="img/icons/ic_phone_24px.svg"></md-icon>
-      <input ng-model="user.phone" type="text" placeholder="Phone Number">
-    </md-input-container>
-
-    <md-input-container class="md-block">
-      <!-- Use floating placeholder instead of label -->
-      <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
-      <input ng-model="user.email" type="email" placeholder="Email (required)" ng-required="true">
+      <input ng-model="user.phone" type="text" placeholder="Phone Number(Full format)">
     </md-input-container>
 
     <md-input-container md-no-float="" class="md-block">
-      <input ng-model="user.address" type="text" placeholder="Address">
-      <md-icon md-svg-src="img/icons/ic_place_24px.svg" style="display:inline-block;"></md-icon>
+          <input ng-model="user.address" type="text" placeholder="Address">
+          <md-icon md-svg-src="img/icons/ic_place_24px.svg" style="display:inline-block;"></md-icon>
+     </md-input-container>
+
+    <md-input-container class="md-block">
+        <!-- Use floating placeholder instead of label -->
+        <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
+         <input ng-model="user.email" type="email" placeholder="Email (required)" ng-required="true">
     </md-input-container>
 
-    <md-input-container class="md-icon-float md-icon-right md-block">
-      <label>Donation Amount</label>
-      <md-icon md-svg-src="img/icons/ic_card_giftcard_24px.svg"></md-icon>
-      <input ng-model="user.donation" type="number" step="0.01">
-      <md-icon md-svg-src="img/icons/ic_euro_24px.svg"></md-icon>
-    </md-input-container>
+
+    <md-input-container md-no-float="" class="md-block">
+          <input ng-model="user.password" type="password" placeholder="Password">
+        </md-input-container>
+
+        <md-input-container md-no-float="" class="md-block">
+                 <input ng-model="user.password" type="password" placeholder="Repeat password">
+                </md-input-container>
+
+
+     <md-input-container class="md-block">
+            <md-checkbox name="tos" ng-model="project.tos" required="">
+              I accept the terms of service.
+            </md-checkbox>
+            <div ng-messages="projectForm.tos.$error" multiple="" md-auto-hide="false">
+              <div ng-message="required">
+                You must accept the terms of service before you can proceed.
+              </div>
+            </div>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <md-switch class="md-primary" name="special" ng-model="project.special" required="">
+              Enable special options.
+            </md-switch>
+            <div ng-messages="projectForm.special.$error" multiple="">
+              <div ng-message="required">
+                You must enable all special options before you can proceed.
+              </div>
+            </div>
+          </md-input-container>
+          <div>
+            <md-button type="submit">Submit</md-button>
+          </div>
+
+            <form name="newPasswordForm" role="form" ng-submit="newPasswordForm.$valid && ok()" novalidate>
+                <div class="form-group">
+                  <label for="newPassword">New Password</label>
+                  <input type="password" name="newPassword" ng-model="password.new"
+                         ng-minlength="6" required />
+                  <span class="help-block"
+                        ng-show="newPasswordForm.newPassword.$dirty && newPasswordForm.newPassword.$invalid">
+                    Please enter a new password, it must be at least 6 characters long.
+                  </span>
+                </div>
+                <div class="form-group">
+                  <label for="newPasswordConfirm">Confirm New Password</label>
+                  <input type="password" name="newPasswordConfirm"
+                         ng-model="password.confirm" ng-minlength="6"
+                         value-matches="password.new" required />
+                  <span class="help-block"
+                        ng-show="newPasswordForm.newPasswordConfirm.$dirty && newPasswordForm.newPasswordConfirm.$invalid">
+                    Please enter the same password again to confirm.
+                  </span>
+                </div>
+              </form>
 
   </md-content>
 
