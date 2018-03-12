@@ -45,6 +45,7 @@
     </md-input-container>
 
     <md-input-container md-no-float="" class="md-block">
+     <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
           <input ng-model="user.address" type="text" placeholder="Address">
           <md-icon md-svg-src="img/icons/ic_place_24px.svg" style="display:inline-block;"></md-icon>
      </md-input-container>
@@ -55,15 +56,39 @@
          <input ng-model="user.email" type="email" placeholder="Email (required)" ng-required="true">
     </md-input-container>
 
-
+ <!--
     <md-input-container md-no-float="" class="md-block">
+     <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
           <input ng-model="user.password" type="password" placeholder="Password">
         </md-input-container>
 
         <md-input-container md-no-float="" class="md-block">
+         <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
                  <input ng-model="user.password" type="password" placeholder="Repeat password">
                 </md-input-container>
+                -->
 
+               <form name="newPasswordForm" role="form" ng-submit="newPasswordForm.$valid && ok()" novalidate>
+                <md-input-container md-no-float="" class="md-block">
+                 <label for="newPassword">New Password</label>
+                 <input type="password" name="newPassword" ng-model="password.new"
+                 ng-minlength="6" required />
+                  <span class="help-block"
+                   ng-show="newPasswordForm.newPassword.$dirty && newPasswordForm.newPassword.$invalid">
+                   Please enter a new password, it must be at least 6 characters long.
+                   </span>
+                    </md-input-container>
+                     <md-input-container md-no-float="" class="md-block">
+                     <label for="newPasswordConfirm">Confirm New Password</label>
+                     <input type="password" name="newPasswordConfirm"
+                     ng-model="password.confirm" ng-minlength="6"
+                     value-matches="password.new" required />
+                     <span class="help-block"
+                     ng-show="newPasswordForm.newPasswordConfirm.$dirty && newPasswordForm.newPasswordConfirm.$invalid">
+                     Please enter the same password again to confirm.
+                     </span>
+                     </md-input-container>
+                     </form>
 
      <md-input-container class="md-block">
             <md-checkbox name="tos" ng-model="project.tos" required="">
@@ -75,7 +100,6 @@
               </div>
             </div>
           </md-input-container>
-
           <md-input-container class="md-block">
             <md-switch class="md-primary" name="special" ng-model="project.special" required="">
               Enable special options.
@@ -90,27 +114,7 @@
             <md-button type="submit">Submit</md-button>
           </div>
 
-            <form name="newPasswordForm" role="form" ng-submit="newPasswordForm.$valid && ok()" novalidate>
-                <div class="form-group">
-                  <label for="newPassword">New Password</label>
-                  <input type="password" name="newPassword" ng-model="password.new"
-                         ng-minlength="6" required />
-                  <span class="help-block"
-                        ng-show="newPasswordForm.newPassword.$dirty && newPasswordForm.newPassword.$invalid">
-                    Please enter a new password, it must be at least 6 characters long.
-                  </span>
-                </div>
-                <div class="form-group">
-                  <label for="newPasswordConfirm">Confirm New Password</label>
-                  <input type="password" name="newPasswordConfirm"
-                         ng-model="password.confirm" ng-minlength="6"
-                         value-matches="password.new" required />
-                  <span class="help-block"
-                        ng-show="newPasswordForm.newPasswordConfirm.$dirty && newPasswordForm.newPasswordConfirm.$invalid">
-                    Please enter the same password again to confirm.
-                  </span>
-                </div>
-              </form>
+
 
   </md-content>
 
