@@ -2,6 +2,7 @@
 <body>
 <link rel="stylesheet" href= "/content/css/material-input.css" />
 <link rel="stylesheet" href= "/bower_components/angular-material/angular-material.min.css"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
 
@@ -35,16 +36,34 @@
 </script>
 -->
 
+<!--
 <h1>ttt</h1>
+-->
 <div ng-controller="DemoCtrl" layout="column" layout-padding="" ng-cloak="" class="material-input", class="input-demo-Errors, ng-app="MyApp">
 
   <br>
     <md-input-container md-no-float="" class="md-block">
-      <md-icon md-svg-src="img/icons/ic_phone_24px.svg"></md-icon>
+    <!--
+    <md-icon md-svg-src="bower_components/material-design-icons/editor/svg/production/ic_merge_type_24px.svg"></md-icon>
+    -->
+
+    <!--
+    <i class="material-icons">phone</i>
+     -->
+
+     <!--
+         <md-icon> face </md-icon>
+         <md-icon md-font-set="material-icons"> face </md-icon>
+         <md-icon>  </md-icon>
+          -->
+    <md-icon class="material-icons md-light md-48"> phone </md-icon>
+
+    <md-icon md-svg-src="img/icons/ic_phone_24px.svg"></md-icon>
       <input ng-model="user.phone" type="text" placeholder="Phone Number(Full format)">
     </md-input-container>
 
     <md-input-container md-no-float="" class="md-block">
+    <md-icon class="material-icons md-light md-48"> place </md-icon>
      <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
           <input ng-model="user.address" type="text" placeholder="Address">
           <md-icon md-svg-src="img/icons/ic_place_24px.svg" style="display:inline-block;"></md-icon>
@@ -52,6 +71,7 @@
 
     <md-input-container class="md-block">
         <!-- Use floating placeholder instead of label -->
+        <md-icon class="material-icons md-light md-48"> email </md-icon>
         <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
          <input ng-model="user.email" type="email" placeholder="Email (required)" ng-required="true">
     </md-input-container>
