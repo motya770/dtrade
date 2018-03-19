@@ -11,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/docs/assets/css/bootstrap.css"/>
     <link rel="stylesheet" href= "/bower_components/angular-material/angular-material.min.css"/>
 
+
+    <link rel="stylesheet" href="/content/css/inputdemoIcons.css"/>
+
     <link rel="stylesheet" href="/content/css/style.css"/>
     <link rel="stylesheet" href="/content/css/diamond.css"/>
     <link rel="stylesheet" href="/content/css/dialog.css"/>

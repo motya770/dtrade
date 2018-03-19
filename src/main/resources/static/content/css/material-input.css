@@ -1,0 +1,25 @@
+
+.input-demo-Errors .inputErrorsApp {
+min-height: 48px; }
+
+.input-demo-Errors md-input-container > p {
+    font-size: 0.8em;
+    text-align: left;
+    width: 100%; }
+
+.material-input.right-icon {
+    position: absolute;
+    top: 4px;
+    right: 2px;
+    left: auto;
+    margin-top: 0;
+ }
+  .material-input .inputIconDemo {
+    min-height: 48px; }
+  .material-input md-input-container:not(.md-input-invalid) > md-icon.email {
+    color: green; }
+  .material-input md-input-container:not(.md-input-invalid) > md-icon.name {
+    color: dodger-blue; }
+  .material-input md-input-container.md-input-invalid > md-icon.email,
+  .material-input md-input-container.md-input-invalid > md-icon.name {
+    color: red; }
