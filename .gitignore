@@ -6,3 +6,10 @@
 .idea/inspectionProfiles/
 .idea/workspace.xml
 target/
+.idea/
+.idea/**
+.vertx/
+src/main/resources/static/bower_components/
+src/main/resources/static/bower_components/
+src/main/resources/static/bower_components_old/
+src/main/resources/static/bower_components_old/
