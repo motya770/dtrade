@@ -22,13 +22,20 @@ angular
           }
         };
       }])
-  .controller('DemoCtrl', function($scope) {
-    $scope.user = {
+  .controller('RegistrationController', function($scope, $http) {
+    $scope.account = {
       email: '',
       phone: '',
-      address: 'Mountain View, CA',
-      description: 'Nuclear Missile Defense System',
-      rate: 500,
-      special: true
+      password: null,
     };
+
+      $scope.createAccount = function (account) {
+
+          console.log(account);
+
+          account.pwd = account.password.confirm;
+          $http.post("/accounts/register", account, null).then(function (response) {
+            console.log(response);
+          });
+      };
   });
