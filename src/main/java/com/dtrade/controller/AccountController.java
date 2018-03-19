@@ -83,9 +83,6 @@ public class AccountController {
         if (phone.length() < 6) {
             throw new TradeException("Phone should be at least 6 signs.");
         }
-
-
-
     }
 
     @RequestMapping(value = "/get-current", method = RequestMethod.POST)

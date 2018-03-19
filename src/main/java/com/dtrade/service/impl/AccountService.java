@@ -143,9 +143,13 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Override
     public Account createRealAccount(String login, String pwd, String phone, String currency) throws TradeException {
         Account account = buildAccount(login, pwd, phone, currency);
+        //TODO remove after smpt
+        account.setConfirmed(true);
+        account.setEnabled(true);
         accountRepository.save(account);
 
-        mailService.sendRegistrationMail(account);
+        //TODO enable after restart
+        //mailService.sendRegistrationMail(account);
 
         return account;
     }

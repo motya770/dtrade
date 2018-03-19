@@ -58,7 +58,7 @@ public class MailService implements IMailService {
         String RECIPIENT = account.getMail();
 
         String[] to = {RECIPIENT}; // list of recipient email addresses
-        String subject = "Регистрация в UnityOptions.";
+        String subject = "Регистрация в Diaminds.";
         String body = templateService.getRegistrationMail(account);
 
         Session session = Session.getDefaultInstance(props);
