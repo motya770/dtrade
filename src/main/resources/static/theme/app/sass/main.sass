@@ -1,0 +1,888 @@
+@import "bourbon"
+@import "vars"
+@import "libs"
+@import "mixins"
+
+//Custom styles here
+
+@import "susy/sass/susy"
+
+.versus
+	position: relative
+	&:after
+		content: ""
+		@include position(absolute, 0 0 null 0)
+		height: 100%
+		background-color: #fcfcfc
+		border-bottom: 1px solid #e7e7e7
+		@include for-desktop
+			height: calc(100% - 20px)
+	&__inner
+		@include container()
+		position: relative
+		z-index: $z-index1
+	&__icons
+		@include span(12)
+		@include clearfix
+		margin-top: -10px
+		@include for-desktop
+			@include span(4)
+			margin-top: -20px
+	&__descr
+		@include span(12)
+		margin-top: 25px
+		padding-bottom: 25px
+		color: $bg
+		@include for-desktop
+			margin-top: 0
+			@include span(8)
+			padding:
+				left: 40px
+				top: 62px
+		h2
+			font:
+				size: 22px
+				family: $addfont-semi
+			text-transform: uppercase
+			letter-spacing: .84px
+			@include for-desktop
+				font-size: 28px
+		p
+			display: block
+			font-size: 14px
+			margin-top: 25px
+			line-height: 1.65
+			@include for-desktop
+				font-size: 18px
+	&__ico
+		width: 50%
+		float: left
+		background-color: #3c86ff
+		display: inline-flex
+		align-items: center
+		justify-content: center
+		height: 190px
+		&:nth-child(2)
+			background-color: #4b8fff
+		&:nth-child(3)
+			background-color: #6aa3ff
+		&:last-cgild
+			background-color: #5b99ff
+
+.make-invest
+	&__inner
+		@include container()
+		padding:
+			top: 30px
+			bottom: 30px
+		@include for-desktop
+			padding:
+				top: 60px
+				bottom: 40px
+	&__descr
+		@include span(12)
+		color: $bg
+		@include for-desktop
+			@include span(7)
+		h2
+			font:
+				size: 22px
+				family: $addfont-semi
+			text-transform: uppercase
+			letter-spacing: .84px
+			margin-bottom: 15px
+			@include for-desktop
+				font-size: 28px
+				margin-bottom: 28px
+		blockquote
+			background-color: #ebf3ff
+			padding: 20px 28px
+			font:
+				size: 14px
+				weight: 500
+			color: #3c86ff
+			margin-bottom: 25px
+			@include for-desktop
+				font-size: 18px
+				margin-bottom: 42px
+		ul
+			li
+				display: block
+				padding-left: 20px
+				font-size: 14px
+				line-height: 1.6
+				position: relative
+				&:after
+					content: ""
+					@include position(absolute, 12px null null 0)
+					width: 5px
+					height: 5px
+					background-color: #347bff
+				@include for-desktop
+					font-size: 18px
+				& + li
+					margin-top: 35px
+	&__icons
+		@include span(12)
+		margin-top: 25px
+		display: flex
+		flex-wrap: wrap
+		padding-top: 15px
+		@include for-desktop
+			margin-top: 0
+			padding-top: 105px
+			@include span(4)
+			@include push(1)
+	&__ico
+		width: 33.3333%
+		text-align: center
+		margin-bottom: 30px
+		@include for-desktop
+			margin-bottom: 55px
+		img
+			margin-bottom: 6px
+		span
+			font-size: 12px
+			color: #a1a2a8
+			display: block
+
+.ctablock
+	background-color: #3a3a53
+	padding:
+		top: 30px
+		bottom: 30px
+	@include for-desktop
+		padding:
+			top: 54px
+			bottom: 54px
+	&__inner
+		@include container()
+	&__content
+		@include span(12)
+		text-align: center
+		h2
+			font:
+				size: 22px
+				family: $addfont-semi
+			color: #fff
+			display: inline-block
+			text-transform: uppercase
+			line-height: 1.05
+			letter-spacing: .84px
+			position: relative
+			top: 5px
+			margin-right: 6px
+			@media (max-width: 638px)
+				margin-bottom: 15px
+			@include for-desktop
+				font-size: 28px		
+				margin-right: 86px
+				top: 7px
+
+.gray-bg
+	background-color: #fcfcfc
+
+.feedback
+	padding-top: 30px
+	@include for-desktop
+		padding-top: 70px
+	&__inner
+		@include container()
+	&__slider
+		@include span(12)
+		box-shadow: 0 0 10px rgba(#000, .1)
+	
+.feedback-slider
+	background-color: #fff
+	&__carousel
+		@include for-tablet-portrait
+			width: calc(100% - 95px)
+			float: left
+	&__ctrls
+		@include clearfix
+		@include for-tablet-portrait
+			width: 95px
+			float: left
+	&__btn
+		display: block
+		border: none
+		background: url(../img/slider-arr.png) center no-repeat
+		width: 50%
+		float: left
+		height: 95px
+		border-left: 1px solid #d3d2d3
+		cursor: pointer
+		transition: .2s ease-in
+		@include for-tablet-portrait
+			width: 95px
+			float: none
+		&:hover
+			background-color: #eee
+		&--next
+			border-bottom: 1px solid #d3d2d3
+			transform: rotate(-180deg)
+			@media (max-width: 599px)
+				border-top: 1px solid #d3d2d3 !important
+			@include for-tablet-portrait
+				transform: none
+		&--prev
+			@include for-tablet-portrait
+				transform: rotate(-180deg)
+			border:
+				left: none
+				right: 1px solid #d3d2d3
+				top: 1px solid #d3d2d3
+				bottom: 1px solid #d3d2d3
+			@media (max-width: 599px)
+				border-left: 1px solid #d3d2d3
+			@include for-tablet-landscape
+				border:
+					bottom: none
+					top: 1px solid #d3d3d3
+					bottom: none
+			@include for-desktop
+				border-top: none
+
+.f-slider-carousel
+	&__item
+		@include clearfix
+	&__image
+		width: 50%
+		height: 190px
+		float: left
+		background:
+			position: center
+			repeat: no-repeat
+			size: cover
+		@include for-tablet-landscape
+			width: 190px
+	&__info
+		background-color: #3c86ff
+		position: relative
+		padding: 60px 5px 10px 20px
+		color: #fff
+		width: 50%
+		height: 190px
+		float: left
+		@include for-tablet-landscape
+			width: 190px
+		@include for-desktop
+			&:after
+				content: ""
+				@include position(absolute, 50% -9px null null)
+				width: 0
+				height: 0
+				border-style: solid
+				border-width: 16px 0 16px 9px
+				border-color: transparent transparent transparent #3686ff
+				transform: translateY(-50%)
+		h3
+			font:
+				size: 14px
+				weight: 500
+			@include for-desktop
+				font-size: 18px
+		p
+			display: block
+			margin-top: 6px
+			font-size: 12px
+			@include for-desktop
+				font-size: 14px
+	&__text
+		width: 100%
+		float: left
+		padding: 25px
+		font:
+			size: 14px
+			style: italic
+		color: $bg
+		@include for-tablet-landscape
+			width: calc(100% - 380px)
+			padding: 65px 20px 20px 60px
+		@include for-desktop
+			font-size: 18px
+		p
+			display: block
+			@include for-desktop
+				max-width: 500px
+
+.sert
+	padding:
+		top: 45px
+		bottom: 30px
+	@include for-desktop
+		padding:
+			top: 60px
+			bottom: 65px
+	&__inner
+		@include container(1220px)
+	&__heading
+		@include span(12)
+		padding-left: 10px
+		font:
+			size: 22px
+			family: $addfont-semi
+		color: $bg
+		margin-bottom: 15px
+		letter-spacing: .84px
+		text-transform: uppercase
+		@include for-desktop
+			font-size: 28px
+			margin-bottom: 18px
+	&__carousel
+		@include span(12)
+
+.sert-carousel
+	&__item
+		padding: 10px
+		> div
+			box-shadow: 0 0 10px rgba(#000, .1)
+			position: relative
+			background-color: #fff
+			height: 190px
+			img
+				@include position(absolute, 50% null null 50%)
+				transform: translate(-50%, -50%)
+				width: auto !important
+				height: auto
+
+.table-container
+	&--btp
+		border-top: 1px solid #e7e7e7
+	overflow-x: auto
+	.diamont-table
+		min-width: 950px
+
+.diamont-table
+	width: 100%
+	&--pdb
+		tbody
+			tr
+				&:last-child
+					td
+						padding-bottom: 10px
+	thead
+		border-bottom: 1px solid #e7e7e7
+		th
+			text-align: left
+			color: #a1a2a8
+			font-size: 12px
+			padding: 10px 15px 5px 15px
+			&:first-child
+				padding-left: 20px
+				@include for-desktop
+					padding-left: 40px
+			&:last-child
+				padding-right: 20px
+				@include for-desktop
+					padding-right: 40px
+	tbody
+		tr
+			border-bottom: 1px solid #e7e7e7
+			&:last-child
+				border-bottom: none
+			td
+				vertical-align: middle
+				color: $bg
+				font-size: 14px
+				padding: 15px
+				&:first-child
+					padding-left: 20px
+					@include for-desktop
+						padding-left: 40px
+				&:last-child
+					padding-right: 20px
+					@include for-desktop
+						padding-right: 40px
+				a
+					color: $accent
+					&:hover
+						color: darken($accent, 5)
+			&.nopadding
+				display: none
+				td
+					padding:
+						left: 0 !important
+						right: 0 !important
+						bottom: 25px
+					h2
+						font:
+							size: 18px
+							family: $addfont-semi
+						color: $bg
+						text-transform: uppercase
+						letter-spacing: .54px
+						padding: 20px 10px 10px 20px
+						@include for-desktop
+							padding: 25px 15px 15px 40px
+					img
+						margin:
+							top: 10px
+							bottom: 12px
+					p
+						display: block
+						font-size: 14px
+						color: $bg
+						padding: 0 10px 10px 20px
+						@include for-desktop
+							padding: 0 10px 10px 40px
+
+.lk-tabs-heading
+	// text-align: center
+	// @include for-desktop
+	// 	text-align: left
+	li
+		display: inline-block
+		a
+			display: inline-block
+			padding: 10px 6px 5px 6px
+			border-bottom: 4px solid transparent
+			font:
+				size: 12px
+				family: $addfont-semi
+			color: $bg
+			letter-spacing: .54px
+			text-transform: uppercase
+			transition: .2s ease-in
+			@include for-tablet-portrait
+				padding: 5px 10px
+				font-size: 14px
+			@include for-desktop
+				padding: 15px 40px 10px 40px
+				font-size: 18px
+			&:hover
+				color: #999
+		&.active
+			a
+				border-bottom-color: $accent
+
+.lk-main-tab
+	@include clearfix
+	&__table
+		@include for-desktop
+			width: 587px
+			float: left
+			border:
+				right: 1px solid #e7e7e7
+				top: 1px solid #e7e7e7
+		.table-container
+			padding-top: 5px
+			.diamont-table
+				min-width: 586px
+	&__info
+		margin-top: 15px
+		@include for-desktop
+			margin-top: 0
+			width: 587px
+			float: left
+			border-top: 1px solid #e7e7e7
+
+.lk-stat-info
+	padding: 20px 20px 0 20px
+	display: flex
+	justify-content: space-between
+	flex-wrap: wrap
+	@include for-desktop
+		padding: 36px 40px 5px 40px
+	&__elem
+		display: inline-block
+		margin-bottom: 33px
+		padding:
+			left: 40px
+			right: 20px
+		background:
+			position: top 2px left
+			repeat: no-repeat
+		&--calendar
+			background-image: url(../img/calendar-ico.png)
+			width: 100%
+		&--graph
+			background-image: url(../img/graph-ico.png)
+		&--reverse
+			background-image: url(../img/reverse-ico.png)
+		h3
+			font-size: 14px
+			color: $bg
+			line-height: 1.3
+		p
+			font-size: 12px
+			color: #a1a2a8
+
+.lk-stat-charts
+	border-top: 1px solid #e7e7e7
+	text-align: center
+	padding:
+		top: 30px
+		bottom: 30px
+	@include for-desktop
+		padding-top: 58px
+
+.sep-cab-page
+	&__inner
+		@include container()
+		padding-bottom: 30px
+	&__content
+		@include span(12)
+	&__top, &__bottom
+		@include clearfix
+	&__side
+		box-shadow: 0 0 10px rgba(#000, .1)
+		background-color: #fff
+		margin-bottom: 8px
+	&__left
+		@include for-tablet-landscape
+			width: calc(50% - 5px)
+			float: left
+		@include for-desktop
+			width: 390px
+	&__mid
+		@include for-tablet-landscape
+			width: calc(50% - 5px)
+			float: right
+		@include for-desktop
+			width: 280px
+			float: left
+			margin-left: 8px
+	&__right
+		@include for-tablet-landscape
+			width: 100%
+			float: left
+		@include for-desktop
+			width: 490px
+			float: right
+	&__bottom-left
+		@include for-tablet-landscape
+			width: calc(50% - 5px)
+			float: left
+		@include for-desktop
+			width: 390px
+			position: relative
+			&:after
+				content: ""
+				@include position(absolute, null 6px 0 null)
+				height: 20px
+				width: 1px
+				background-color: #e7e7e7
+	&__bottom-right
+		@include for-tablet-landscape
+			width: calc(50% - 5px)
+			float: right
+		@include for-desktop
+			width: 777.5px
+	&__activity, &__form
+		box-shadow: 0 0 10px rgba(#000, .1)
+		background-color: #fff
+		margin-bottom: 8px
+	&__heading
+		padding: 24px 20px 10px 20px
+		h2
+			font:
+				size: 18px
+				family: $addfont-semi
+			color: $bg
+			text-transform: uppercase
+			letter-spacing: .54px
+			line-height: 1.3
+		p
+			font-size: 12px
+			color: #a1a2a8
+
+.sep-cab-tabs
+	border-bottom: 1px solid #e7e7e7
+	li
+		display: inline-block
+		a
+			display: inline-block
+			font:
+				size: 14px
+				family: $addfont-semi
+			color: $bg
+			text-transform: uppercase
+			letter-spacing: .54px
+			border-bottom: 4px solid transparent
+			padding: 10px 20px 5px 20px
+			@include for-desktop
+				font-size: 18px
+				padding: 22px 20px 10px 20px
+		&.active
+			a
+				border-bottom-color: $accent
+
+.sep-cab-tab
+	.diamont-table
+		min-width: 777.5px
+		border-bottom: 1px solid #e7e7e7
+		th
+			&:first-child
+				padding-left: 20px
+			&:last-child
+				padding-right: 20px
+		td
+			&:first-child
+				padding-left: 20px
+			&:last-child
+				padding-right: 20px
+	&__more
+		display: inline-block
+		font-size: 14px
+		color: $accent
+		margin: 15px 20px
+		transition: .2s ease-in
+		&:hover
+			color: darken($accent, 5)
+
+.trades-tabs
+	padding-bottom: 15px
+
+.trades-tab
+	@include for-desktop
+		height: 590px
+		padding-right: 6px
+	.diamont-table
+		min-width: 384px
+		@include for-desktop
+			border-right: 1px solid #e7e7e7
+		th
+			&:first-child
+				padding-left: 20px
+			&:last-child
+				padding-right: 20px
+		tr
+			border-bottom: none
+			td
+				padding: 2px 15px
+				&:first-child
+					padding-left: 20px
+				&:last-child
+					padding-right: 20px
+		tbody
+			tr
+				&:first-child
+					td
+						padding-top: 8px
+	.up
+		color: #48d26f
+	.down
+		color: #ff6565
+	.blue
+		color: $accent
+
+.activity-graph
+	text-align: center
+	padding:
+		top: 20px
+		bottom: 20px
+
+.filterlist
+	display: flex
+	flex-wrap: wrap
+	padding: 5px 20px
+	align-items: center
+	&__date
+		font-size: 12px
+		color: $bg
+		display: inline-block
+		@include for-tablet-portrait
+			flex: 2
+			text-align: right
+		padding:
+			right: 10px
+			left: 10px
+
+.main-trade-graph
+	margin-top: 22px
+	padding:
+		bottom: 2px
+		left: 20px
+		right: 20px
+	border-bottom: 1px solid #e7e7e7
+	text-align: center
+	img
+		display: inline-block
+
+.sub-trade-graph
+	padding-bottom: 20px
+	text-align: center
+	@include for-desktop
+		text-align: left
+	h3
+		font-size: 14px
+		color: $bg
+		padding: 25px 20px 20px 20px
+
+.searchform
+	padding: 10px 20px 5px 20px
+	@include clearfix
+	&__inp
+		width: calc(100% - 80px)
+		float: left
+		border: 1px solid #d8d8d8
+		background-color: #fff
+		box-shadow: none
+		height: 40px
+		padding: 0 15px
+		font:
+			size: 12px
+			family: $default-font
+		color: #999
+		border-radius: 2px 0 0 2px
+		&::placeholder
+			color: #d3d3d6
+	&__btn
+		border: none
+		height: 40px
+		width: 80px
+		float: left
+		text-transform: uppercase
+		color: #fff
+		font:
+			size: 12px
+			weight: 900
+			family: $default-font
+		text-align: center
+		background-color: $accent
+		border-radius: 0 2px 2px 0
+		cursor: pointer
+		transition: .2s ease-in
+		&:hover
+			background-color: darken($accent, 5)
+
+.type-diamond-table
+	@include for-desktop
+		height: 610px
+		padding-right: 6px
+		.table-container
+			border-right: 1px solid #e7e7e7
+	.diamont-table
+		min-width: 380px
+		th
+			&:first-child
+				padding-left: 20px
+			&:last-child
+				padding-right: 20px
+		tr
+			td
+				line-height: 1.45
+				padding:
+					top: 10px
+					bottom: 10px
+					right: 5px
+				&:first-child
+					padding-left: 20px
+				&:last-child
+					padding-right: 20px
+	.inf
+		display: inline-block
+		width: 15px
+		height: 15px
+		line-height: 13px
+		text-align: center
+		border: 1px solid #dadada
+		border-radius: 50%
+		font-size: 12px
+		color: #a1a2a8
+		cursor: pointer
+	small
+		font-size: 10px
+		color: #a1a2a8
+		display: block
+	img
+		min-width: 30px
+
+.form-tabs
+	padding:
+		top: 15px
+		left: 20px
+		right: 20px
+		bottom: 22px
+	&__tab
+		@include for-desktop
+			min-height: 382px
+	&__boxes
+		display: flex
+		justify-content: space-between
+	&__row
+		margin-top: 15px
+		position: relative
+		label
+			display: block
+			font-size: 12px
+			color: #a1a2a8
+			margin-bottom: 6px
+		input
+			width: 100%
+			height: 40px
+			border-radius: 2px
+			background-color: transparent
+			box-shadow: none
+			padding: 0 12px
+			font:
+				size: 12px
+				family: $default-font
+			color: #d3d3d6
+			border: 1px solid #d8d8d8
+			&.pdr
+				padding-right: 50px
+		small
+			display: inline-block
+			text-transform: uppercase
+			font-size: 12px
+			color: #d3d3d6
+			@include position(absolute, 55% 15px null null)
+	&__info
+		margin-top: 20px
+		p
+			display: block
+			margin-top: 10px
+			font-size: 12px
+			color: #a1a2a8
+			line-height: 1.4
+	&__info-top
+		@include clearfix
+		h3
+			padding-left: 15px
+			background: url(../img/limit-arrow.png) left center no-repeat
+			font-size: 14px
+			color: $bg
+			float: left
+		a
+			float: right
+			font-size: 12px
+			color: $accent
+			transition: .2s ease-in
+			&:hover
+				color: darken($accent, 5)
+	&__submit
+		margin-top: 18px
+		padding-top: 20px
+		position: relative
+		&:after
+			content: ""
+			@include position(absolute, 0 0 null -20px)
+			width: calc(100% + 40px)
+			height: 1px
+			background-color: #e7e7e7
+		h3
+			font-size: 14px
+			color: $bg
+			margin-bottom: 15px
+	&__subm
+		width: 100%
+		height: 40px
+		color: #fff
+		border: none
+		border-radius: 2px
+		color: #fff
+		font:
+			size: 12px
+			family: $default-font
+			weight: 900
+		letter-spacing: .34px
+		background-color: $accent
+		cursor: pointer
+		transition: .2s ease-in
+		text-transform: uppercase
+		&:hover
+			background-color: darken($accent, 5)
+
+@import "media"

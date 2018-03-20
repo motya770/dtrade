@@ -1,0 +1,43 @@
+// @import "app/libs/remodal/dist/css/remodal"
+// @import "app/libs/remodal/dist/css/remodal-default-theme"
+@import "app/libs/OwlCarousel2-2.2.1/dist/assets/owl.carousel"
+@import "app/libs/OwlCarousel2-2.2.1/dist/assets/owl.theme.default"
+@import "app/libs/Lightweight-Chart-Plugin-With-jQuery-CSS-cssCharts-js/chart"
+
+
+.chart.donut
+	width: 140px
+	height: 140px
+	border-radius: 50%
+	background-color: #eaeaea
+	h2
+		font:
+			size: 28px
+			weight: 500
+		color: #48d26f
+		span
+			font-size: 14px
+			color: $bg
+
+
+.donut-chart:after
+	width: calc(100% - 8px)
+	height: calc(100% - 8px)
+
+.donut-chart .pie
+	background: #48d26f
+
+.chart
+	display: inline-block
+	& + .chart
+		margin-left: 12px
+		@media (min-width: 1200px)
+			margin-left: 96px
+
+.chart--red
+	h2
+		color: #ff5a5a !important
+	.pie
+		background: #eaeaea
+	&.donut
+		background-color: #ff6565

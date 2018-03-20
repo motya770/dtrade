@@ -1,0 +1,70 @@
+// SCALABLE Z-INDEX --------------------------------------------
+$z-index-fall: -100
+$z-index1: 100
+$z-index2: 200
+$z-index3: 300
+$z-index4: 400
+$z-index5: 500
+$z-index6: 600
+$z-index7: 700
+$z-index8: 800
+$z-index9: 900
+$z-index10: 1000
+
+// example of usage
+// .my-box
+//     z-index: $z-index1
+
+
+// BREAKPOINTS -------------------------------------------------
+@mixin for-phone-only
+	@media (max-width: 599px)
+		@content
+
+
+@mixin for-tablet-portrait
+	@media (min-width: 600px)
+		@content
+
+
+@mixin for-tablet-landscape
+	@media (min-width: 900px)
+		@content
+
+
+@mixin for-desktop
+	@media (min-width: 1200px)
+		@content
+
+
+@mixin for-big-desktop
+	@media (min-width: 1800px)
+		@content
+
+// example of usage
+// .my-box
+// 	@include for-desktop-up
+// 		padding: 20px
+
+// font-sizes to em and rem
+// 10 - 62.5
+// 11 - 68.75
+// 12 - 75
+// 13 - 81.25
+// 14 - 87.5
+// 15 - 93.75
+// 16 - 100
+// 17 - 106.25
+// 18 - 112.5
+// 19 - 118.75
+// 20 - 125
+// 21 - 131.25
+// 22 - 137.5
+// 23 - 143.75
+// 24 - 150
+// 25 - 156.25
+// 26 - 162.5
+// 27 - 168.75
+// 28 - 175
+// 29 - 181.25
+// 30 - 187.5

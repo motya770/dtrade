@@ -1,0 +1,233 @@
+.btn
+	display: inline-block
+	padding: 12px 18px
+	margin-bottom: 0
+	font:
+		size: 12px
+		weight: 900
+		family: $default-font
+	text-transform: uppercase
+	line-height: 1.4
+	text-align: center
+	white-space: nowrap
+	vertical-align: middle
+	touch-action: manipulation
+	cursor: pointer
+	user-select: none
+	-webkit-appearance: none
+	background-image: none
+	border-radius: 2px
+	color: #fff
+	background-color: $accent
+	letter-spacing: .36px
+	transition: .2s ease-in
+	&:hover
+		background-color: darken($accent, 5)
+	&--darken
+		background-color: #605f7f
+		&:hover
+			background-color: darken(#605f7f, 5)
+	&--lg
+		@include for-desktop
+			min-width: 240px
+			padding:
+				top: 17px
+				bottom: 17px
+
+.def-dots
+	.owl-dots
+		margin-top: 21px
+		display: block !important
+		text-align: center
+		.owl-dot
+			display: inline-block
+			& + .owl-dot
+				margin-left: 20px
+			span
+				display: inline-block
+				width: 10px
+				height: 10px
+				border-radius: 50%
+				border: 1px solid #dfdfdf
+			&.active
+				span
+					border-color: #3c86ff
+					background-color: #3c86ff
+
+.footer
+	background-color: #a1a2a8
+	&__inner
+		@include container()
+	&__content
+		@include span(12)
+		display: flex
+		align-items: center
+		padding:
+			top: 18px
+			bottom: 18px
+	&__copy
+		display: block
+		flex: 1 1 auto
+		font-size: 14px
+		color: #d3d4d6
+		padding-right: 15px
+
+.subnav
+	background-color: #fff
+	box-shadow: 0 0 10px rgba(#000, .1)
+	&__inner
+		@include container()
+	&__list
+		@include span(12)
+		li
+			display: inline-block
+			a
+				display: inline-block
+				padding: 10px 7px
+				border-bottom: 2px solid transparent
+				font:
+					size: 11px
+					weight: 900
+				color: $bg
+				letter-spacing: .36px
+				text-transform: uppercase
+				position: relative
+				transition: .2s ease-in
+				@include for-tablet-portrait
+					padding: 14px 18px 16px 18px
+					font-size: 12px
+				&:hover
+					color: #999
+				&:after
+					content: ""
+					@include position(absolute, 50% null null 0)
+					height: 20px
+					width: 1px
+					background-color: #eaeaea
+					margin-top: -10px
+			&.active
+				a
+					border-bottom-color: #347bff
+			&:last-child
+				a
+					@include for-tablet-portrait
+						&:before
+							content: ""
+							@include position(absolute, 50% 0 null null)
+							height: 20px
+							width: 1px
+							background-color: #eaeaea
+							margin-top: -10px
+
+.cabtop-info
+	padding:
+		top: 20px
+		bottom: 20px
+	&__inner
+		@include container()
+	&__content
+		@include span(12)
+		display: flex
+	&__ico
+		display: inline-block
+		min-width: 50px
+		height: 50px
+		border: 1px solid $accent2
+		background: url(img/portf.png) center no-repeat
+		margin-right: 10px
+		border-radius: 50%
+		@include for-tablet-portrait
+			margin-right: 20px
+	&__text
+		display: inline-block
+		h3
+			font-size: 12px
+			color: #a1a2a8
+			margin-bottom: 6px
+		p
+			font:
+				size: 13px
+				weight: 500
+			color: #a1a2a8
+			@include for-tablet-portrait
+				font-size: 16px
+			.accent
+				color: $accent2
+
+
+body.page
+	background-color: #fcfcfc
+
+.def-cab-page
+	padding-bottom: 40px
+	&__inner
+		@include container()
+	&__content
+		@include span(12)
+		background-color: #fff
+		box-shadow: 0 0 10px rgba(#000, .1)
+	&__heading
+		font:
+			size: 22px
+			family: $addfont-semi
+		color: $bg
+		text-transform: uppercase
+		letter-spacing: .84px
+		line-height: 1.25
+		padding: 25px 20px 10px 20px
+		@include for-desktop
+			font-size: 28px
+			padding: 34px 40px 15px 40px
+
+.selectbox
+	position: relative
+	width: 120px
+	&__input
+		display: none
+	&__heading
+		border: 1px solid #d8d8d8
+		height: 40px
+		line-height: 38px
+		padding: 0 22px 0 12px
+		font-size: 12px
+		color: $bg
+		background: url(img/select-arr.png) right 12px center no-repeat
+		cursor: pointer
+	&__list
+		@include position(absolute, 40px 0 null 0)
+		background-color: #fff
+		z-index: $z-index1
+		box-shadow: 0 0 5px rgba(#000, .05)
+		padding:
+			bottom: 5px
+			top: 5px
+		display: none
+		li
+			display: block
+			a
+				display: block
+				padding: 5px 12px
+				font-size: 12px
+				color: $bg
+
+.typebox
+	width: calc(50% - 1px)
+	&__input
+		display: none
+		&:checked + .typebox__capt
+			background-color: #48d26f
+	&__capt
+		display: inline-block
+		width: 100%
+		height: 40px
+		line-height: 40px
+		text-align: center
+		padding: 0 10px
+		color: #fff
+		text-transform: uppercase
+		font:
+			size: 12px
+			weight: 900
+		background-color: #ff6565
+		border-radius: 2px
+		cursor: pointer

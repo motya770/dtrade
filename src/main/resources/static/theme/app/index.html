@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+
+	<title>Title</title>
+	<meta name="description" content="">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- Template Basic Images Start -->
+	<meta property="og:image" content="path/to/image.jpg">
+	<link rel="shortcut icon" href="img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-touch-icon-114x114.png">
+	<!-- Template Basic Images End -->
+
+	<!-- Header CSS (first screen styles from header.min.css) - inserted in the build of the project -->
+	<style>@@include('header.min.css')</style>
+
+	<!-- Load CSS, CSS Localstorage & WebFonts Main Function -->
+	<script>!function(e){"use strict";function t(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent&&e.attachEvent("on"+t,n)};function n(t,n){return e.localStorage&&localStorage[t+"_content"]&&localStorage[t+"_file"]===n};function a(t,a){if(e.localStorage&&e.XMLHttpRequest)n(t,a)?o(localStorage[t+"_content"]):l(t,a);else{var s=r.createElement("link");s.href=a,s.id=t,s.rel="stylesheet",s.type="text/css",r.getElementsByTagName("head")[0].appendChild(s),r.cookie=t}}function l(e,t){var n=new XMLHttpRequest;n.open("GET",t,!0),n.onreadystatechange=function(){4===n.readyState&&200===n.status&&(o(n.responseText),localStorage[e+"_content"]=n.responseText,localStorage[e+"_file"]=t)},n.send()}function o(e){var t=r.createElement("style");t.setAttribute("type","text/css"),r.getElementsByTagName("head")[0].appendChild(t),t.styleSheet?t.styleSheet.cssText=e:t.innerHTML=e}var r=e.document;e.loadCSS=function(e,t,n){var a,l=r.createElement("link");if(t)a=t;else{var o;o=r.querySelectorAll?r.querySelectorAll("style,link[rel=stylesheet],script"):(r.body||r.getElementsByTagName("head")[0]).childNodes,a=o[o.length-1]}var s=r.styleSheets;l.rel="stylesheet",l.href=e,l.media="only x",a.parentNode.insertBefore(l,t?a:a.nextSibling);var c=function(e){for(var t=l.href,n=s.length;n--;)if(s[n].href===t)return e();setTimeout(function(){c(e)})};return l.onloadcssdefined=c,c(function(){l.media=n||"all"}),l},e.loadLocalStorageCSS=function(l,o){n(l,o)||r.cookie.indexOf(l)>-1?a(l,o):t(e,"load",function(){a(l,o)})}}(this);</script>
+
+	<!-- Load Fonts CSS Start -->
+	<script>
+		loadCSS( "css/fonts.min.css?ver=1.0.0", false, "all" ); // Loading fonts, if the site is located in a subfolder
+		// loadLocalStorageCSS( "webfonts", "css/fonts.min.css?ver=1.0.0" ); // Loading fonts, if the site is at the root
+	</script>
+	<!-- Load Fonts CSS End -->
+
+	<!-- Load Custom CSS Start -->
+	<!--<Deject>--><script>loadCSS( "header.min.css?ver=1.0.0", false, "all" );</script><!--</Deject>-->
+	<script>loadCSS( "css/main.min.css?ver=1.0.0", false, "all" );</script>
+	<!-- Load Custom CSS End -->
+
+	<!-- Load Custom CSS Compiled without JS Start -->
+	<noscript>
+		<link rel="stylesheet" href="css/fonts.min.css">
+		<link rel="stylesheet" href="css/main.min.css">
+	</noscript>
+	<!-- Load Custom CSS Compiled without JS End -->
+
+	<!-- Custom Browsers Color Start -->
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#000">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#000">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#000">
+	<!-- Custom Browsers Color End -->
+
+</head>
+
+<body>
+
+	<!-- Custom HTML -->
+	
+	<header class="header">
+		<div class="header__inner">
+			<div class="header__logo">
+				<a href="/">Платформа для торговли<br>финансовыми акциями бриллиантов</a>
+			</div>
+			<div class="header__right">
+				<div class="header__lang header-lang">
+					<span class="header-lang__open">ru</span>
+					<ul class="header-lang__list">
+						<li class="active">
+							<a href="#">ru</a>
+						</li>
+						<li>
+							<a href="#">en</a>
+						</li>
+					</ul>
+				</div>
+				<a href="#" class="btn btn--darken">Личный кабинет</a>
+			</div>
+		</div>
+	</header>
+	<main class="content">
+		<div class="hero" style="background-image: url(img/hero-bg.jpg)">
+			<div class="hero__inner">
+				<div class="hero__text">
+					<h1 class="hero__heading">Почему нужно инвестировать в бриллианты?</h1>
+					<p class="hero__descr">В последнее время эти вечные драгоценные камни уже доказали свою надёжность в качестве объекта инвестиций, поскольку они обеспечивают защиту от банковских и финансовых рисков, колебаний курсов валют и инфляции.</p>
+				</div>
+				<div class="hero__stat">
+					<div class="hero-stat-elem">
+						<h3>38</h3>
+						<p>стран<br>реализации</p>
+					</div>
+					<div class="hero-stat-elem">
+						<h3>59</h3>
+						<p>контрактов<br>сбыта</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="versus">
+			<div class="versus__inner">
+				<div class="versus__icons">
+					<span class="versus__ico">
+						<img src="img/quality-ico.png" alt="quality">
+					</span>
+					<span class="versus__ico">
+						<img src="img/flash-ico.png" alt="quality">
+					</span>
+					<span class="versus__ico">
+						<img src="img/man-ico.png" alt="quality">
+					</span>
+					<span class="versus__ico">
+						<img src="img/quant-ico.png" alt="quality">
+					</span>
+				</div>
+				<div class="versus__descr">
+					<h2>Алмазы против золота</h2>
+					<p>Сырьевые товары могут рассматриваться как альтернативное вложение денег. Особенно золото и алмазы – предметы сравнительного анализа потенциальных инвесторов. Каждый алмаз уникален, и по своим свойствам он отличается от других алмазов, а золото однородно и может в большом объёме иметь одинаковое качество.</p>
+				</div>
+			</div>
+		</div>
+		<div class="make-invest">
+			<div class="make-invest__inner">
+				<div class="make-invest__descr">
+					<h2>Инвестируйте свой бюджет в акции</h2>
+					<blockquote>Наша миссия - максимизация возможности наших клиентов получить выгоду от приобретения и инвестирования в бриллианты.</blockquote>
+					<ul>
+						<li>Вкладывайте в акции  у источника по наилучшей цене. Наши бриллианты оценены на основе их инвестиционной ценности во благо всех наших уважаемых клиентов во всем мире.</li>
+						<li>Из-за постоянно меняющихся курсов валют и материальных цен и из-за того, что алмазный рынок – быстроразвивающийся, все наши котировки действительны только в течение ограниченного времени и при наличии котируемых бриллиантов.</li>
+						<li>Мы входим в состав группы алмазных фондовых бирж, которые имеют прямой доступ к лучшим камням. Возможно это благодаря акционерам, часть которых занимается торговлей алмазами более 100 лет.</li>
+					</ul>
+				</div>
+				<div class="make-invest__icons">
+					<span class="make-invest__ico">
+						<img src="img/stone1.png" alt="stone">
+						<span>Princess</span>
+					</span>
+					<span class="make-invest__ico">
+						<img src="img/stone2.png" alt="stone">
+						<span>Radian</span>
+					</span>
+					<span class="make-invest__ico">
+						<img src="img/stone3.png" alt="stone">
+						<span>Assher</span>
+					</span>
+					<span class="make-invest__ico">
+						<img src="img/stone4.png" alt="stone">
+						<span>Cushion</span>
+					</span>
+					<span class="make-invest__ico">
+						<img src="img/stone5.png" alt="stone">
+						<span>Oval</span>
+					</span>
+					<span class="make-invest__ico">
+						<img src="img/stone6.png" alt="stone">
+						<span>Emerald</span>
+					</span>
+					<span class="make-invest__ico">
+						<img src="img/stone7.png" alt="stone">
+						<span>Rear</span>
+					</span>
+					<span class="make-invest__ico">
+						<img src="img/stone8.png" alt="stone">
+						<span>Marquis</span>
+					</span>
+					<span class="make-invest__ico">
+						<img src="img/stone9.png" alt="stone">
+						<span>Heart</span>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="ctablock">
+			<div class="ctablock__inner">
+				<div class="ctablock__content">
+					<h2>Взгляните на наш выбор акций</h2>
+					<a href="#" class="btn btn--lg">Начать инвестировать</a>
+				</div>
+			</div>
+		</div>
+		<div class="gray-bg">
+			<div class="feedback">
+				<div class="feedback__inner">
+					<div class="feedback__slider feedback-slider">
+						<div class="owl-carousel feedback-slider__carousel f-slider-carousel">
+							<div class="f-slider-carousel__item">
+								<span class="f-slider-carousel__image" style="background-image: url(img/feedback.jpg)"></span>
+								<div class="f-slider-carousel__info">
+									<h3>Николай Иванов</h3>
+									<p>Маркетолог<br>42 года</p>
+								</div>
+								<div class="f-slider-carousel__text">
+									<p>“ Удобный сервис по покупке / продаже акций бриллиантов на мировом рынке ”</p>
+								</div>
+							</div>
+							<div class="f-slider-carousel__item">
+								<span class="f-slider-carousel__image" style="background-image: url(img/feedback.jpg)"></span>
+								<div class="f-slider-carousel__info">
+									<h3>Николай Иванов</h3>
+									<p>Маркетолог<br>42 года</p>
+								</div>
+								<div class="f-slider-carousel__text">
+									<p>“ Удобный сервис по покупке / продаже акций бриллиантов на мировом рынке ”</p>
+								</div>
+							</div>
+						</div>
+						<div class="feedback-slider__ctrls">
+							<button class="feedback-slider__btn feedback-slider__btn--next"></button>
+							<button class="feedback-slider__btn feedback-slider__btn--prev"></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="sert">
+				<div class="sert__inner">
+					<h2 class="sert__heading">Сертификаты</h2>
+					<div class="owl-carousel def-dots sert__carousel sert-carousel">
+						<div class="sert-carousel__item">
+							<div>
+								<img src="img/brand1.png" alt="brand">
+							</div>
+						</div>
+						<div class="sert-carousel__item">
+							<div>
+								<img src="img/brand2.png" alt="brand">
+							</div>
+						</div>
+						<div class="sert-carousel__item">
+							<div>
+								<img src="img/brand3.png" alt="brand">
+							</div>
+						</div>
+						<div class="sert-carousel__item">
+							<div>
+								<img src="img/brand4.png" alt="brand">
+							</div>
+						</div>
+						<div class="sert-carousel__item">
+							<div>
+								<img src="img/brand4.png" alt="brand">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<div class="footer">
+		<div class="footer__inner">
+			<div class="footer__content">
+				<p class="footer__copy">Инвестиционное бюро бриллиантов</p>
+				<img src="img/cards.png" alt="cards" class="footer__card">
+			</div>
+		</div>
+	</div>
+
+	<!-- Optimized loading JS Start -->
+	<script>var scr = {"scripts":[
+		{"src" : "js/libs.min.js", "async" : false},
+		{"src" : "js/common.js", "async" : false}
+		]};!function(t,n,r){"use strict";var c=function(t){if("[object Array]"!==Object.prototype.toString.call(t))return!1;for(var r=0;r<t.length;r++){var c=n.createElement("script"),e=t[r];c.src=e.src,c.async=e.async,n.body.appendChild(c)}return!0};t.addEventListener?t.addEventListener("load",function(){c(r.scripts);},!1):t.attachEvent?t.attachEvent("onload",function(){c(r.scripts)}):t.onload=function(){c(r.scripts)}}(window,document,scr);
+	</script>
+	<!-- Optimized loading JS End -->
+
+</body>
+</html>
