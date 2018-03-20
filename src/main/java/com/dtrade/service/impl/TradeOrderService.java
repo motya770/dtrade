@@ -335,14 +335,18 @@ public class TradeOrderService  implements ITradeOrderService{
 //        });
     }
 
-
     private void checkIfExecuted(TradeOrder tradeOrder){
         if (tradeOrder.getAmount().equals(zeroValue)) {
             bookOrderService.remove(tradeOrder);
             tradeOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
+            setExecutionDate(tradeOrder);
         } else {
             tradeOrder.setTraderOrderStatus(TraderOrderStatus.IN_MARKET);
             bookOrderService.update(tradeOrder);
         }
+    }
+
+    private void setExecutionDate(TradeOrder tradeOrder){
+        tradeOrder.setExecutionDate(System.currentTimeMillis());
     }
 }

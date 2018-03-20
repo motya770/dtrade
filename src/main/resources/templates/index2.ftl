@@ -108,9 +108,16 @@
                 <a href="/">Платформа для торговли<br>финансовыми акциями бриллиантов</a>
             </div>
             <div class="header__right">
-                <a href="#" class="btn btn--darken">Выход</a>
+                <a href="#" class="btn btn--darken">Вход</a>
             </div>
+
+
         </div>
+        <form action="/login" method="post">
+            <input type="text" name="username" /><br/>
+            <input type="password" name="password"><br/>
+            <input type="submit" value="Login"/>
+        </form>
     </header>
     <!--
     <nav class="subnav">
@@ -443,6 +450,8 @@
                             <div class="trades-tabs">
                                 <div class="trades-tab" id="tab03">
                                     <div class="table-container">
+
+                                        <div ng-controller="TradeOrderController as vm">
                                         <table class="diamont-table">
                                             <thead>
                                             <tr>
@@ -452,14 +461,16 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>0.004523</td>
+
+                                            <tr ng-repeat="tradeOrder in vm.historyTradeOrders">
+                                                <td>{{tradeOrder.amount}}</td>
                                                 <td class="up">
-                                                    457.91
+                                                    {{tradeOrder.price}}
                                                     <img src="/theme/app/img/up.png" alt="up">
                                                 </td>
-                                                <td>11.36.20</td>
+                                                <td>{{tradeOrder.executionDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             </tr>
+
                                             <tr>
                                                 <td>0.004523</td>
                                                 <td class="up">
@@ -648,6 +659,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="trades-tab" id="tab04">
@@ -978,7 +990,7 @@
                                             <th>Статус</th>
                                             <th>Цена продажи</th>
                                             -->
-                                            <th>Цена рынка</th>
+                                            <th>Количество</th>
                                             <th>Действие</th>
                                         </tr>
                                         </thead>
