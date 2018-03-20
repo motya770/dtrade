@@ -813,7 +813,9 @@
                             <div class="sep-cab-tabs-container">
                                 <div class="sep-cab-tab" id="tab01">
                                     <div class="table-container">
-                                        <table class="diamont-table">
+
+                                        <div ng-controller="TradeOrderController as vm">
+                                            <table class="diamont-table">
                                             <thead>
                                             <tr>
                                                 <th>Наименование</th>
@@ -826,6 +828,24 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+
+                                            <tr ng-repeat="tradeOrder in vm.liveTradeOrders">
+                                                <!--
+                                                <td>{{tradeOrder.id}}</td>
+                                                -->
+                                                <td>{{tradeOrder.diamond.name}}</td>
+                                                <td>{{tradeOrder.price}}</td>
+                                                <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                                <td>{{tradeOrder.traderOrderStatus}}</td>
+                                                <td>{{tradeOrder.tradeOrderType}}</td>
+                                                <!--
+                                                <td>{{tradeOrder.amount}}</td>
+                                                -->
+                                                <td>{{tradeOrder.initialAmount}}</td>
+                                                <td><a href="#" class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">CANCEL</a></td>
+                                            </tr>
+
+                                            <!--
                                             <tr>
                                                 <td>Brilliant Elizaveta</td>
                                                 <td>10 000</td>
@@ -936,27 +956,46 @@
                                                 </td>
                                                 <td>200</td>
                                             </tr>
+                                            -->
                                             </tbody>
                                         </table>
+                                        </div>
                                     </div>
                                     <a href="#" class="sep-cab-tab__more">Показать предыдущие позиции</a>
                                 </div>
                             </div>
                             <div class="sep-cab-tab" id="tab02">
                                 <div class="table-container">
-                                    <table class="diamont-table">
+
+                                    <div ng-controller="StockController as vm">
+                                        <table class="diamont-table">
                                         <thead>
                                         <tr>
                                             <th>Наименование</th>
+                                            <!--
                                             <th>Цена</th>
                                             <th>t покупки</th>
                                             <th>Статус</th>
                                             <th>Цена продажи</th>
+                                            -->
                                             <th>Цена рынка</th>
                                             <th>Действие</th>
                                         </tr>
                                         </thead>
                                         <tbody>
+
+                                        <tr ng-repeat="stock in vm.stocks">
+                                            <!--
+                                            <td>{{stock.id}}</td>
+                                            <td>{{stock.diamond.id}}</td>
+                                            -->
+                                            <td>{{stock.diamond.name}}</td>
+                                            <td>{{stock.amount}}</td>
+                                            <td>
+                                                <a href="#">Начать</a>
+                                            </td>
+                                        </tr>
+                                        <!--
                                         <tr>
                                             <td>Brilliant Elizaveta</td>
                                             <td>10 000</td>
@@ -964,9 +1003,7 @@
                                             <td>Резерв</td>
                                             <td>-</td>
                                             <td>-</td>
-                                            <td>
-                                                <a href="#">Начать</a>
-                                            </td>
+
                                         </tr>
                                         <tr>
                                             <td>Brilliant Elis</td>
@@ -1066,9 +1103,10 @@
                                             <td>
                                                 <a href="#">Начать</a>
                                             </td>
-                                        </tr>
+                                        </tr>-->
                                         </tbody>
                                     </table>
+                                    </div>
                                 </div>
                                 <a href="#" class="sep-cab-tab__more">Показать предыдущие позиции</a>
                             </div>
