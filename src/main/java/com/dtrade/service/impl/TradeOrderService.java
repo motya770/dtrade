@@ -116,7 +116,7 @@ public class TradeOrderService  implements ITradeOrderService{
         if(account==null){
             return null;
         }
-        return tradeOrderRepository.getLiveTradeOrdersByAccount(account);
+        return tradeOrderRepository.getLiveTradeOrdersByAccount(account, new PageRequest(0, 12));
     }
 
     @Override
