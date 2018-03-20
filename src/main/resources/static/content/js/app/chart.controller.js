@@ -1,5 +1,6 @@
 diamondApp.controller('ChartController', function ($scope, $timeout, $http, AvailableService) {
     $scope.chartConfig = {
+        width: 400,
         options: {
             chart: {
                 zoomType: 'x'
@@ -9,12 +10,13 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, Avai
             },
             navigator: {
                 enabled: true
-            }
+            },
+            width: 400
         },
 
         series: [],
         title: {
-            text: 'Diamond Price'
+            text: ''
         },
 
         useHighStocks: true

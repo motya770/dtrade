@@ -56,6 +56,8 @@
     <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
     <script src="/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
 
+    <link rel="stylesheet" href="/bower_components/highcharts-ng/dist/highcharts-ng.css ">
+
     <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
     <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js" type="text/javascript"></script>
     <script src="/bower_components/less/dist/less.min.js" type="text/javascript"></script>
@@ -110,6 +112,7 @@
             </div>
         </div>
     </header>
+    <!--
     <nav class="subnav">
         <div class="subnav__inner">
             <ul class="subnav__list">
@@ -124,7 +127,7 @@
                 </li>
             </ul>
         </div>
-    </nav>
+    </nav>-->
     <main class="content">
         <div class="cabtop-info">
             <div class="cabtop-info__inner">
@@ -295,7 +298,7 @@
                             <div class="sep-cab-page__form">
                                 <ul class="sep-cab-tabs sep-cab-tabs--form">
                                     <li class="active">
-                                        <a href="#tab05">Marcet</a>
+                                        <a href="#tab05">Market</a>
                                     </li>
                                     <li>
                                         <a href="#tab06">Limit</a>
@@ -369,8 +372,9 @@
                         <div class="sep-cab-page__side sep-cab-page__right">
                             <div class="sep-cab-page__heading">
                                 <h2>Технический анализ</h2>
-                                <p>Основные параметры на текущем этапе</p>
+                                <p>График изменения цены долей бриллианта</p>
                             </div>
+                            <!--
                             <form class="filterlist">
                                 <div class="selectbox">
                                     <input type="text" value="Свеча" class="selectbox__input">
@@ -409,9 +413,16 @@
                                     </ul>
                                 </div>
                                 <span class="filterlist__date">26 ноября</span>
-                            </form>
+                            </form>-->
                             <div class="main-trade-graph">
+                                <div ng-controller="ChartController as vm">
+                                    <div class="row">
+                                        <highchart id="chart1" config="chartConfig" class="span10"></highchart>
+                                    </div>
+                                </div>
+                                <!--
                                 <img src="/theme/app/img/graph04.png" alt="graph">
+                                -->
                             </div>
                             <div class="sub-trade-graph">
                                 <h3>Динамика акций бриллианта за последний год</h3>
