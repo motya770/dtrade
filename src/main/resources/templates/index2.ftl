@@ -662,6 +662,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <div ng-controller="BookOrderController as vm">
                                 <div class="trades-tab" id="tab04">
                                     <div class="table-container">
                                         <table class="diamont-table diamont-table--pdb">
@@ -673,6 +676,14 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+
+                                            <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders">
+                                                <td>{{tradeOrder.amount}}</td>
+                                                <td class="down">{{tradeOrder.price}}</td>
+                                                <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+                                            </tr>
+
+                                            <!--
                                             <tr>
                                                 <td class="down">4000</td>
                                                 <td>49 808</td>
@@ -733,6 +744,7 @@
                                                 <td>49 808</td>
                                                 <td></td>
                                             </tr>
+                                            -->
                                             </tbody>
                                         </table>
                                     </div>
@@ -747,6 +759,15 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+
+                                            <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders">
+                                                <td></td>
+                                                <td  class="blue">{{tradeOrder.creationDate  | date:'dd/MM HH:mm:ss' }}</td>
+                                                <td  class="blue">{{tradeOrder.amount}}</td>
+                                                <td>{{tradeOrder.price}}</td>
+                                            </tr>
+
+                                            <!--
                                             <tr>
                                                 <td></td>
                                                 <td class="blue">49 808</td>
@@ -806,9 +827,10 @@
                                                 <td class="blue">49 752</td>
                                                 <td class="blue">50</td>
                                                 <td></td>
-                                            </tr>
+                                            </tr>-->
                                             </tbody>
                                         </table>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
