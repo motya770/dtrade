@@ -12,7 +12,7 @@ public class PageController {
 
     @RequestMapping(value = "/index.html", method = RequestMethod.GET)
     public String index(){
-        return "test.html";
+        return "index2";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
