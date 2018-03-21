@@ -416,6 +416,7 @@
 
 
                             </div>
+                            <!--
                             <div class="sep-cab-page__activity">
                                 <div class="sep-cab-page__heading">
                                     <h2>Общая активность</h2>
@@ -424,7 +425,7 @@
                                 <div class="activity-graph">
                                     <img src="/theme/app/img/graph02.png" alt="graph">
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="sep-cab-page__side sep-cab-page__right">
                             <div class="sep-cab-page__heading">
@@ -481,10 +482,12 @@
                                 <img src="/theme/app/img/graph04.png" alt="graph">
                                 -->
                             </div>
+                            <!--
                             <div class="sub-trade-graph">
                                 <h3>Динамика акций бриллианта за последний год</h3>
                                 <img src="/theme/app/img/graph03.png" alt="graph">
                             </div>
+                            -->
                         </div>
                     </div>
                     <div class="sep-cab-page__bottom">

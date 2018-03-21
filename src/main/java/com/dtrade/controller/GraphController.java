@@ -26,6 +26,23 @@ public class GraphController {
     @Autowired
     private IQuotesService quotesService;
 
+
+    @RequestMapping(value = "/get-quotes-last-year", method = RequestMethod.POST)
+    public List<Quote> getLastYearQuotes(@RequestParam(required = true) Diamond diamond
+    ) throws TradeException {
+
+        //TODO add implementation
+        return null;
+    }
+
+    @RequestMapping(value = "/get-market-index-activity", method = RequestMethod.POST)
+    public List<Quote> getMarketIndexActivity(@RequestParam(required = true) Diamond diamond
+    ) throws TradeException {
+
+        //TODO add implementation
+        return null;
+    }
+
     @RequestMapping(value = "/get-quotes", method = RequestMethod.POST)
     public List<Quote> getRangeQuotes(@RequestParam(required = true) Diamond diamond,
                                       @RequestParam(required = false) Long openTime,
