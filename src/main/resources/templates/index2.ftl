@@ -304,52 +304,99 @@
                         <div class="sep-cab-page__mid">
                             <div class="sep-cab-page__form">
                                 <ul class="sep-cab-tabs sep-cab-tabs--form">
+                                    <!--
                                     <li class="active">
                                         <a href="#tab05">Market</a>
-                                    </li>
-                                    <li>
+                                    </li>-->
+                                    <li class="active">
                                         <a href="#tab06">Limit</a>
                                     </li>
                                 </ul>
-                                <div class="form-tabs">
+
+
+                                <!--
+                                <div ng-controller="BidderController as vm">
+                                    <div class="pull-left button-block">
+                                        <div class="buy-block">
+                                            <div>
+                                                Do You want to buy {{vm.buyDiamond.name}} ({{vm.buyDiamond.id}})?
+                                            </div>
+
+                                            <div class="price">PRICE:</div>
+                                            <div class="btn-group size">
+                                                <button class="btn">-</button>
+                                                <input ng-model="vm.buyOrder.price" type="text" class="btn"/>
+                                                <button class="btn">+</button>
+                                            </div>
+
+                                            <div class="amount">AMOUNT: <input ng-model="vm.buyOrder.amount"></input></div>
+                                            <input type="hidden" ng-model="vm.buyOrder.tradeOrderType" ng-init="vm.buyOrder.tradeOrderType='BUY'" />
+
+                                            <a class="button black" href="#" ng-click="$event.preventDefault(); createTradeOrder(vm.buyOrder, vm.buyDiamond)">BUY ORDER</a>
+                                        </div>
+
+                                        <div class="sell-block">
+                                            <div>
+                                                Open {{vm.sellDiamond.name}} ({{vm.sellDiamond.id}}) For Sale?
+                                            </div>
+
+                                            <div class="price">PRICE:</div>
+                                            <div class="btn-group size">
+                                                <button class="btn">-</button>
+                                                <input ng-model="vm.sellOrder.price" type="text" class="btn"/>
+                                                <button class="btn">+</button>
+                                            </div>
+                                            <div class="amount">AMOUNT: <input ng-model="vm.sellOrder.amount"></input></div>
+
+                                            <input type="hidden" ng-model="vm.sellOrder.tradeOrderType" ng-init="vm.sellOrder.tradeOrderType='SELL'" />
+                                            <a href="#" class="button black" ng-click="$event.preventDefault(); createTradeOrder(vm.sellOrder, vm.sellDiamond)">SELL ORDER</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                -->
+
+                                <div ng-controller="BidderController as vm">
+                                    <div class="form-tabs">
+                                        <!--
                                     <form class="form-tabs__tab" id="tab05">
                                         <div class="form-tabs__boxes">
                                             <label class="typebox">
                                                 <input type="radio" class="typebox__input" name="type" checked>
-                                                <span class="typebox__capt">Buy</span>
+                                                <span class="typebox__capt" ng-click="buyOption(vm.tradeOrder);" >Buy</span>
                                             </label>
                                             <label class="typebox">
                                                 <input type="radio" class="typebox__input" name="type">
-                                                <span class="typebox__capt">Sell</span>
+                                                <span class="typebox__capt" ng-click="sellOption(vm.tradeOrder);">Sell</span>
                                             </label>
                                         </div>
                                         <div class="form-tabs__row">
                                             <label for="input03">Amount</label>
-                                            <input type="text" value="0.00" id="input03">
+                                            <input type="text" ng-model="vm.tradeOrder.amount" value="0.00" id="input03">
                                         </div>
                                         <div class="form-tabs__submit">
-                                            <h3>Total (ETH)</h3>
-                                            <button class="form-tabs__subm">Place by order</button>
+                                            <h3>Total (USD)</h3>
+                                            <button class="form-tabs__subm" ng-click="alert('test'); createTradeOrder(vm.tradeOrder, vm.diamond);">Place order</button>
                                         </div>
-                                    </form>
+                                    </form>-->
                                     <form class="form-tabs__tab" id="tab06">
                                         <div class="form-tabs__boxes">
                                             <label class="typebox">
                                                 <input type="radio" class="typebox__input" name="type" checked>
-                                                <span class="typebox__capt">Buy</span>
+                                                <span class="typebox__capt" ng-click="buyOption(vm.tradeOrder);">Buy</span>
                                             </label>
                                             <label class="typebox">
                                                 <input type="radio" class="typebox__input" name="type">
-                                                <span class="typebox__capt">Sell</span>
+                                                <span class="typebox__capt" ng-click="sellOption(vm.tradeOrder);">Sell</span>
                                             </label>
                                         </div>
                                         <div class="form-tabs__row">
                                             <label for="input01">Amount</label>
-                                            <input type="text" value="0.00" id="input01">
+                                            <input type="text" ng-model="vm.tradeOrder.amount" value="0.00" id="input01">
                                         </div>
                                         <div class="form-tabs__row">
                                             <label for="input02">Limit price</label>
-                                            <input type="text" value="0.00" id="input02" class="pdr">
+                                            <input type="text" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr">
                                             <small>USD</small>
                                         </div>
                                         <div class="form-tabs__info">
@@ -360,11 +407,14 @@
                                             <p>Сообщение не выбрано. Эта сделка может выполняться только заказчиком</p>
                                         </div>
                                         <div class="form-tabs__submit">
-                                            <h3>Total (ETH)</h3>
-                                            <button class="form-tabs__subm">Place by order</button>
+                                            <h3>Total (USD)</h3>
+                                            <button class="form-tabs__subm" onclick="alert('123');" ng-click="alert('test1'); createTradeOrder(vm.tradeOrder, vm.diamond)">Place order</button>
                                         </div>
                                     </form>
                                 </div>
+                                </div>
+
+
                             </div>
                             <div class="sep-cab-page__activity">
                                 <div class="sep-cab-page__heading">
@@ -1155,7 +1205,7 @@
         <div class="footer__inner">
             <div class="footer__content">
                 <p class="footer__copy">Инвестиционное бюро бриллиантов</p>
-                <img src="img/cards.png" alt="cards" class="footer__card">
+                <img src="/theme/app/img/cards.png" alt="cards" class="footer__card">
             </div>
         </div>
     </div>

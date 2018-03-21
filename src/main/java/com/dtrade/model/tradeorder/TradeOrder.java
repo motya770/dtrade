@@ -1,8 +1,11 @@
 package com.dtrade.model.tradeorder;
 
+import com.dtrade.controller.view.View;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,7 +29,7 @@ public class TradeOrder implements Serializable {
     @NotNull
     private Diamond diamond;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     private Account account;
@@ -52,7 +55,6 @@ public class TradeOrder implements Serializable {
     @Enumerated(EnumType.STRING)
     @NotNull
     private TradeOrderType tradeOrderType;
-
 
     @Override
     public boolean equals(Object o) {

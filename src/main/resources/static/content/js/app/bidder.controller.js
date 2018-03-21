@@ -7,23 +7,39 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
         self.currentAccount = currentAccount;
     });
 
+    $scope.tradeOrder = {
+        diamond : '',
+        initialAmount : '',
+        price: null,
+        account : null,
+        tradeOrderType: null
+    };
 
     //TODO check it!
     $scope.createTradeOrder = function (tradeOrder, diamond) {
 
         tradeOrder["account"] = self.currentAccount;
         tradeOrder["diamond"] = diamond;
+        tradeOrder.tradeOrderType = $scope.tradeOrder.tradeOrderType;
 
         $http.post("/trade-order/create", tradeOrder, null).then(function (response) {
             TradeOrderService.addLiveOrder(response.data);
         })
     };
 
+    $scope.sellOption = function (tradeOrder) {
+        $scope.tradeOrder.tradeOrderType = "SELL";
+    };
+
+    $scope.buyOption = function (tradeOrder) {
+        $scope.tradeOrder.tradeOrderType = "BUY";
+    };
+
     $scope.$on('buyDiamondChoosed', function (event, arg) {
-        self.buyDiamond = arg;
+        self.diamond = arg;
     });
 
     $scope.$on('buyDiamondChoosed', function (event, arg) {
-        self.sellDiamond = arg;
+        self.diamond = arg;
     });
 });
