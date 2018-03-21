@@ -93,7 +93,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Override
     public List<TradeOrder> getHistoryTradeOrders() {
-        return tradeOrderRepository.getHistoryTradeOrders(new PageRequest(0, 100));
+        return tradeOrderRepository.getHistoryTradeOrders(new PageRequest(0, 30));
     }
 
     @Override
