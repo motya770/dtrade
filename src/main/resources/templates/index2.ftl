@@ -37,6 +37,8 @@
     <script>loadCSS( "/theme/app/css/main.min.css?ver=1.0.0", false, "all" );</script>
     <!-- Load Custom CSS End -->
 
+    <link rel="stylesheet" href="/theme/app/css/custom.css">
+
     <!-- Load Custom CSS Compiled without JS Start -->
     <noscript>
         <link rel="stylesheet" href="/theme/app/css/fonts.min.css">
