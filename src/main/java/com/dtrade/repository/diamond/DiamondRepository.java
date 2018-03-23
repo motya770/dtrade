@@ -26,8 +26,11 @@ public interface DiamondRepository extends JpaRepository<Diamond, Long> {
     List<Diamond> getAvailableExceptCurrent(@Param("accountId") Long accountId);
     */
 
-    @Query("select d from Diamond d where diamondStatus = 'ENLISTED'")
-    List<Diamond> getAllAvailable();
+    @Query("select d from Diamond d where diamondStatus = 'ENLISTED' and d.name like %:name%")
+    List<Diamond> getAllAvailableByName(@Param("name") String name);
+
+    //@Query("select d from Diamond d where diamondStatus = 'ENLISTED'")
+    //List<Diamond> getAllAvailable();
 
     /*
     @Deprecated

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -179,14 +180,17 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
-    public List<Diamond> getAllAvailable() {
-        return diamondRepository.getAllAvailable();
+    public List<Diamond> getAllAvailable(String name) {
+        if(StringUtils.isEmpty(name)){
+            name = ""; //all enlisted diamonds
+        }
+        return diamondRepository.getAllAvailableByName(name);
     }
 
     //@Override
     public List<Diamond> getAvailable() {
 
-        return diamondRepository.getAllAvailable();
+        return diamondRepository.getAllAvailableByName("");
 
         /*Account account = accountService.getCurrentAccount();
         if(account==null){

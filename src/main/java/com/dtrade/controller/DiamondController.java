@@ -39,8 +39,8 @@ public class DiamondController {
     }
 
     @RequestMapping(value = "/available")
-    public List<Diamond> getAllAvailableDiamonds() {
-        return diamondService.getAllAvailable();
+    public List<Diamond> getAllAvailableDiamonds(@RequestParam(required = false) String name) {
+        return diamondService.getAllAvailable(name);
     }
 
 /*

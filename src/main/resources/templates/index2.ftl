@@ -158,11 +158,12 @@
                                 <h2>Список бриллиантов</h2>
                                 <p>Все акции бриллиантов в работе</p>
                             </div>
+                            <!--
                             <form class="searchform">
                                 <input type="text" class="searchform__inp" placeholder="Введите имя бриллианта">
                                 <button class="searchform__btn">Найти</button>
                             </form>
-
+                            -->
 
                             <div class="type-diamond-table">
                                 <div class="table-container">

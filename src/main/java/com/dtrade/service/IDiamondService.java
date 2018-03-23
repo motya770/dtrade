@@ -25,7 +25,7 @@ public interface IDiamondService {
 
    // List<Diamond> getAvailable();
 
-    List<Diamond> getAllAvailable();
+    List<Diamond> getAllAvailable(String name);
 
     Page<Diamond> getAllDiamonds();
 
