@@ -4,7 +4,7 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
     var historyOrders = [];
 
     var addLiveOrder = function(order){
-        liveOrders.push(order);
+        liveOrders.unshift(order);
     };
 
 

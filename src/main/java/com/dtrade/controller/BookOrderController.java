@@ -26,9 +26,19 @@ public class BookOrderController {
     public BookOrderView getBookOrder(@RequestBody Diamond diamond){
 
         BookOrder bookOrder = bookOrderService.getBookOrder(diamond);
-        List<TradeOrder> buyOrders = bookOrder.getBuyOrders().stream().limit(20).collect(Collectors.toList());
-        List<TradeOrder> sellOrders = bookOrder.getSellOrders().stream().limit(20).collect(Collectors.toList());
+        List<TradeOrder> buyOrders  = null;
+        List<TradeOrder> sellOrders  = null;
 
+        if(bookOrder==null){
+            return null;
+        }
+        if(bookOrder.getBuyOrders()!=null) {
+            buyOrders = bookOrder.getBuyOrders().stream().limit(20).collect(Collectors.toList());
+        }
+
+        if(bookOrder.getSellOrders()!=null) {
+            sellOrders = bookOrder.getSellOrders().stream().limit(20).collect(Collectors.toList());
+        }
         return new BookOrderView(buyOrders, sellOrders);
 
     }

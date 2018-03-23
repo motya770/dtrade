@@ -18,15 +18,15 @@ import java.util.List;
 public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
     @Query("select to from TradeOrder to where to.traderOrderStatus = 'CREATED' " +
-            "or to.traderOrderStatus = 'IN_MARKET' ")
+            "or to.traderOrderStatus = 'IN_MARKET' order by to.creationDate desc")
     List<TradeOrder> getLiveTradeOrders();
 
     @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} and (to.traderOrderStatus = 'CREATED' " +
-            "or to.traderOrderStatus = 'IN_MARKET' )")
+            "or to.traderOrderStatus = 'IN_MARKET' ) order by to.creationDate desc")
     List<TradeOrder> getLiveTradeOrdersByAccount(@Param("account") Account account, Pageable pageable);
 
     @Query("select to from TradeOrder to where to.account.id = :#{#account.id} and to.traderOrderStatus <> 'CREATED' " +
-            "and to.traderOrderStatus <> 'IN_MARKET' ")
+            "and to.traderOrderStatus <> 'IN_MARKET' order by to.creationDate desc")
     List<TradeOrder> getHistoryTradeOrdersForAccount(@Param("account") Account account);
 
     @Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' order by to.executionDate desc ")
