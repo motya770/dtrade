@@ -383,6 +383,13 @@
                                     </form>-->
                                     <form class="form-tabs__tab" id="tab06">
                                         <div class="form-tabs__boxes">
+                                            <div class="form-tabs__info-top diamond-bid-name">
+                                                <div>{{vm.diamond.name}}</div>
+                                                <p>{{vm.diamond.id}}, {{vm.diamond.diamondType}},
+                                                {{vm.diamond.carats}}, {{vm.diamond.clarity}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-tabs__boxes">
                                             <label class="typebox">
                                                 <input type="radio" class="typebox__input" name="type" checked>
                                                 <span class="typebox__capt" ng-click="buyOption(vm.tradeOrder);">Buy</span>

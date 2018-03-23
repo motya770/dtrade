@@ -1,3 +1,14 @@
 .diamont-table tbody tr:hover{
     background-color: #d6e9c6;
 }
+
+.form-tabs__info-top.diamond-bid-name{
+    margin-bottom: 20px;
+}
+
+.diamond-bid-name p {
+    display: block;
+    font-size: 12px;
+    color: #a1a2a8;
+    line-height: 1.4;
+}
