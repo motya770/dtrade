@@ -18,6 +18,7 @@ diamondApp.controller('GraphController', function GraphController($scope, $http)
                 text: ''
             },
             series: [{
+                showInLegend: false,
                 name: 'AAPL',
                 data: formattedData,
                 tooltip: {
@@ -39,7 +40,7 @@ diamondApp.controller('GraphController', function GraphController($scope, $http)
         for (var i in data) {
             var point = new Array(2);
             //console.log(data[i].time + " " + new Date(data[i].time));
-            point[0] = data[i].time;
+            point[0] = new Date(data[i].time);
             point[1] = data[i].price;
             formattedData[i] = point;
 

@@ -110,16 +110,9 @@
                 <a href="/">Платформа для торговли<br>финансовыми акциями бриллиантов</a>
             </div>
             <div class="header__right">
-                <a href="#" class="btn btn--darken">Вход</a>
+                <a href="/login-page" class="btn btn--darken">Вход</a>
             </div>
-
-
         </div>
-        <form action="/login" method="post">
-            <input type="text" name="username" /><br/>
-            <input type="password" name="password"><br/>
-            <input type="submit" value="Login"/>
-        </form>
     </header>
     <!--
     <nav class="subnav">
