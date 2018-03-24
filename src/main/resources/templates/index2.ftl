@@ -107,39 +107,39 @@
     <header class="header header--page">
         <div class="header__inner">
             <div class="header__logo">
-                <a href="/">Платформа для торговли<br>финансовыми акциями бриллиантов</a>
+                <a href="/">Diaminds<br><small>diamonds for everyone</small></a>
             </div>
             <div class="header__right">
                 <a href="/login-page" class="btn btn--darken">Вход</a>
             </div>
         </div>
     </header>
-    <!--
     <nav class="subnav">
         <div class="subnav__inner">
             <ul class="subnav__list">
-                <li>
-                    <a href="#">Бриллианты</a>
-                </li>
-                <li>
-                    <a href="#">Текущие сделки</a>
-                </li>
                 <li class="active">
-                    <a href="#">Мой аккаунт</a>
+                    <a href="/">Торговать</a>
+                </li>
+                <li>
+                    <a href="/diamonds">Текущие сделки</a>
+                </li>
+                <li>
+                    <a href="/account">Мой аккаунт</a>
                 </li>
             </ul>
         </div>
-    </nav>-->
+    </nav>
     <main class="content">
         <div class="cabtop-info">
             <div class="cabtop-info__inner">
+                <!--
                 <div class="cabtop-info__content">
                     <span class="cabtop-info__ico"></span>
                     <div class="cabtop-info__text">
                         <h3>Портфель акций</h3>
                         <p><span class="accent">34 акции</span> на общую сумму <span class="accent">145 000 руб.</span></p>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <div class="sep-cab-page">

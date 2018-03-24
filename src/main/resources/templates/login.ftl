@@ -61,7 +61,6 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#000">
     <!-- Custom Browsers Color End -->
-
 </head>
 
 <body class="page">
@@ -128,8 +127,7 @@
                                 <input type="password" name="password"><br/>
                                 -->
 
-                                <md-button type="submit" class="md-raised md-primary">Primary</md-button>
-                                <input type="submit" value="Login"/>
+                                <md-button type="submit" class="md-raised md-primary">Login</md-button>
                             </form>
                         </div>
 
@@ -184,7 +182,7 @@
                         </div>
                     </md-input-container>
                         <div>
-                            <md-button class="md-raised md-primary" type="submit" ng-click="createAccount(account);">Submit</md-button>
+                            <md-button class="md-raised md-primary" type="submit" ng-click="createAccount(account);">Register</md-button>
                         </div>
                         </md-content>
                     </div>
