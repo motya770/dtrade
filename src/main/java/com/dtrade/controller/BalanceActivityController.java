@@ -17,7 +17,7 @@ public class BalanceActivityController {
     private IBalanceActivityService balanceActivityService;
 
     @RequestMapping(value = "/by-account")
-    public List<BalanceActivity> getLiveOrdersByAccount(){
+    public List<BalanceActivity> getAccountBalanceActivities(){
         return balanceActivityService.getAccountBalanceActivities();
     }
 }

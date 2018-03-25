@@ -10,8 +10,8 @@ import com.dtrade.repository.balanceactivity.BalanceActivityRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
 import com.dtrade.service.IDiamondService;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +42,7 @@ public class BalanceActivityService implements IBalanceActivityService {
     @Override
     public List<BalanceActivity> getAccountBalanceActivities() {
         Account account = accountService.getStrictlyLoggedAccount();
-        return balanceActivityRepository.findByAccount(account);
+        return balanceActivityRepository.getByAccount(account, new PageRequest(0, 20));
     }
 
     @Override
@@ -64,6 +64,7 @@ public class BalanceActivityService implements IBalanceActivityService {
         buyerActivity.setAmount(minusCash);
         buyerActivity.setCreateDate(System.currentTimeMillis());
         buyerActivity.setBuyOrder(buyOrder);
+        buyerActivity.setBalanceSnapshot(buyer.getBalance());
 
         BalanceActivity sellerActivity = new BalanceActivity();
         sellerActivity.setBalanceActivityType(BalanceActivityType.SELL);
@@ -71,6 +72,7 @@ public class BalanceActivityService implements IBalanceActivityService {
         sellerActivity.setAmount(cash);
         sellerActivity.setCreateDate(System.currentTimeMillis());
         sellerActivity.setSellOrder(sellOrder);
+        sellerActivity.setBalanceSnapshot(seller.getBalance());
 
         balanceActivityRepository.save(sellerActivity);
         balanceActivityRepository.save(buyerActivity);

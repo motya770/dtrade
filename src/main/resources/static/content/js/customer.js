@@ -10,7 +10,5 @@ var diamondApp = angular.module('diamondApp', []);
          self.diamondActivities = response.data;
      });
 
-     $http.post('/customer/balance-activities', null).then(function(response) {
-         self.balanceActivities = response.data;
-     });
+
  });

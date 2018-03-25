@@ -39,8 +39,8 @@ public class StockActivity {
     @NotNull
     private BigDecimal amount;
 
-//    @NotNull
-//    private BigDecimal totalAmount;
+    @NotNull
+    private BigDecimal currentAccountBalance;
 
     @NotNull
     private Long createDate;

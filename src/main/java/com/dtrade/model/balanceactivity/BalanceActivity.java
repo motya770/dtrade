@@ -33,10 +33,15 @@ public class BalanceActivity {
     @NotNull
     private BigDecimal amount;
 
-    @ManyToOne
+    @NotNull
+    private BigDecimal balanceSnapshot;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     private TradeOrder buyOrder;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     private TradeOrder sellOrder;
 
     @NotNull
