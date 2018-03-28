@@ -2,7 +2,7 @@
 <html ng-app="diamondApp">
 <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <#include "head.ftl">
+    <#include "parts/head.ftl">
     <script src="/content/js/registration.js" ></script>
 </head>
 
@@ -10,10 +10,10 @@
 
 <!-- Custom HTML -->
 <div class="site">
-    <#include "caption.ftl">
-    <#include "menu.ftl">
+    <#include "parts/caption.ftl">
+    <#include "parts/menu.ftl">
     <main class="content">
-        <#include "portfolio.ftl">
+        <#include "parts/portfolio.ftl">
         <div class="def-cab-page">
             <div class="def-cab-page__inner">
                 <div class="def-cab-page__content">
@@ -109,10 +109,10 @@
         </div>
     </main>
 
-    <#include "footer.ftl">
+    <#include "parts/footer.ftl">
 </div>
 
-<#include "bootom-scripts.ftl">
+<#include "parts/bootom-scripts.ftl">
 
 </body>
 </html>

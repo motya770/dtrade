@@ -3,7 +3,7 @@
 
 <head>
 
-<#include "head.ftl">
+<#include "parts/head.ftl">
 
 </head>
 
@@ -13,11 +13,11 @@
 
 <div class="site">
 
-    <#include "caption.ftl">
-    <#include "menu.ftl">
+    <#include "parts/caption.ftl">
+    <#include "parts/menu.ftl">
 
     <main class="content">
-        <#include "portfolio.ftl">
+        <#include "parts/portfolio.ftl">
 
         <div class="sep-cab-page">
             <div class="sep-cab-page__inner">
@@ -836,10 +836,10 @@
             </div>
         </div>
     </main>
-    <#include "footer.ftl">
+    <#include "parts/footer.ftl">
 
 </div>
-<#include "bootom-scripts.ftl">
+<#include "parts/bootom-scripts.ftl">
 
 
 </body>
