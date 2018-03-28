@@ -55,7 +55,7 @@
 
                                         <tr ng-repeat="balanceActivity in vm.balanceActivities">
                                             <td>{{balanceActivity.id}}</td>
-                                            <td>{{balanceActivity.createDate}}</td>
+                                            <td>{{balanceActivity.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                             <td>{{balanceActivity.balanceActivityType}}</td>
                                             <td>{{balanceActivity.amount}}</td>
                                             <td>{{balanceActivity.balanceSnapshot}}</td>
@@ -114,7 +114,7 @@
                                         <tbody>
                                         <tr ng-repeat="tradeOrder in vm.accountHistoryTradeOrders">
                                             <td>{{tradeOrder.id}}</td>
-                                            <td>{{tradeOrder.executionDate}}</td>
+                                            <td>{{tradeOrder.executionDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             <td>{{tradeOrder.diamond.name}}</td>
                                             <td>{{tradeOrder.amount}}</td>
                                             <td>{{tradeOrder.price}}</td>
