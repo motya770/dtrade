@@ -43,6 +43,9 @@ public class DiamondController {
         return diamondService.getAllAvailable(name);
     }
 
+
+
+
 /*
     @RequestMapping(value = "/my-owned")
     public List<Diamond> getMyDiamondsOwned() {
