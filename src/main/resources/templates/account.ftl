@@ -80,16 +80,17 @@
                                             <th>Дата</th>
                                             <th>Сумма, руб</th>
                                             <th>Вид операции</th>
+                                            <th>Баланс на момент</th>
                                         </tr>
                                         </thead>
                                         <tbody>
 
-
                                         <tr ng-repeat="balanceActivity in vm.balanceActivities">
                                             <td>{{balanceActivity.id}}</td>
                                             <td>{{balanceActivity.createDate}}</td>
-                                            <td>{{balanceActivity.amount}}</td>
                                             <td>{{balanceActivity.balanceActivityType}}</td>
+                                            <td>{{balanceActivity.amount}}</td>
+                                            <td>{{balanceActivity.balanceSnapshot}}</td>
                                         </tr>
 
                                         <!--
@@ -175,7 +176,8 @@
                         <div class="lk-main-tab" id="tab02">
                             <div class="lk-main-tab__table">
                                 <div class="table-container">
-                                    <table class="diamont-table">
+                                    <div ng-controller="TradeOrderAccountController as vm">
+                                        <table class="diamont-table">
                                         <thead>
                                         <tr>
                                             <th>№</th>
@@ -184,10 +186,44 @@
                                             <th>№ Акции</th>
                                             <th>Цена</th>
                                             <th>Сумма</th>
+                                            <th>Статус</th>
+                                            <!--
                                             <th>Баланс</th>
+                                            -->
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        <tr ng-repeat="tradeOrder in vm.accountHistoryTradeOrders">
+                                            <td>{{tradeOrder.id}}</td>
+                                            <td>{{tradeOrder.executionDate}}</td>
+                                            <td>{{tradeOrder.diamond.name}}</td>
+                                            <td>{{tradeOrder.amount}}</td>
+                                            <td>{{tradeOrder.price}}</td>
+                                            <td>{{tradeOrder.price * tradeOrder.amount}}</td>
+                                            <td>{{tradeOrder.traderOrderStatus}}</td>
+                                            <!--
+                                            <td>{{tradeOrder.}} </td>
+                                            -->
+                                        </tr>
+                                        <!--
+                                        <tr>
+                                            <td>2</td>
+                                            <td>09.10.2017</td>
+                                            <td>Brill</td>
+                                            <td>20</td>
+                                            <td>10000</td>
+                                            <td>200000</td>
+                                            <td>222000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>07.10.2017</td>
+                                            <td>Brill III</td>
+                                            <td>15</td>
+                                            <td>20000</td>
+                                            <td>300000</td>
+                                            <td>470000</td>
+                                        </tr>
                                         <tr>
                                             <td>1</td>
                                             <td>11.10.2017</td>
@@ -232,36 +268,10 @@
                                             <td>10000</td>
                                             <td>200000</td>
                                             <td>222000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>07.10.2017</td>
-                                            <td>Brill III</td>
-                                            <td>15</td>
-                                            <td>20000</td>
-                                            <td>300000</td>
-                                            <td>470000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>11.10.2017</td>
-                                            <td>Brill I</td>
-                                            <td>10</td>
-                                            <td>9000</td>
-                                            <td>90000</td>
-                                            <td>130000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>09.10.2017</td>
-                                            <td>Brill</td>
-                                            <td>20</td>
-                                            <td>10000</td>
-                                            <td>200000</td>
-                                            <td>222000</td>
-                                        </tr>
+                                        </tr>-->
                                         </tbody>
                                     </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="lk-main-tab__info">

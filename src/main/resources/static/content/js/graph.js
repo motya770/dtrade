@@ -15,7 +15,7 @@ diamondApp.controller('GraphController', function GraphController($scope, $http)
                 enabled: false
             },
             title: {
-                text: ''
+                text: 'TEST'
             },
             series: [{
                 showInLegend: false,

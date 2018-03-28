@@ -13,6 +13,7 @@ import java.math.BigDecimal;
  */
 @Data
 @Entity
+@Deprecated
 public class DiamondActivity {
 
     @Id

@@ -98,11 +98,8 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Override
     public List<TradeOrder> getHistoryTradeOrdersByAccount(){
-        Account account = accountService.getCurrentAccount();
-        if(account==null){
-            return null;
-        }
-        return tradeOrderRepository.getHistoryTradeOrdersForAccount(account);
+        Account account = accountService.getStrictlyLoggedAccount();
+        return tradeOrderRepository.getHistoryTradeOrdersForAccount(account, new PageRequest(0, 20));
     }
 
     @Override

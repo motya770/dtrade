@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by kudelin on 6/27/17.
@@ -33,5 +34,11 @@ public class StockActivityService implements IStockActivityService {
         stockActivity.setCreateDate(System.currentTimeMillis());
 
         return stockActivityRepository.save(stockActivity);
+    }
+
+
+    @Override
+    public List<StockActivity> getAccountStockActivities() {
+        return null;
     }
 }

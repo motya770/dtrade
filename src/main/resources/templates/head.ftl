@@ -69,8 +69,15 @@
 <script src="/content/js/app/bookorder.service.js"></script>
 <script src="/content/js/app/chart.controller.js"></script>
 <script src="/content/js/app/register.controller.js"></script>
+
+<script src="/content/js/app/tradeorder.account.service.js"></script>
+<script src="/content/js/app/tradeorder.account.controller.js"></script>
+<script src="/content/js/app/stock.service.js"></script>
+<!--
 <script src="/content/js/app/stock.controller.js"></script>
 <script src="/content/js/app/stock.service.js"></script>
+-->
+
 <!--
 <script src="/content/js/app/mydiamonds.service.js"></script>
 -->
