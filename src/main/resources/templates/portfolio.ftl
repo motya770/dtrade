@@ -1,3 +1,4 @@
+<!--
 <div class="cabtop-info">
     <div class="cabtop-info__inner">
         <div class="cabtop-info__content">
@@ -9,3 +10,4 @@
         </div>
     </div>
 </div>
+-->
