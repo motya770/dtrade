@@ -5,6 +5,8 @@
         </div>
         <div class="header__right">
             <a href="/login-page" class="btn btn--darken">Вход</a>
+            <a href="/logout" class="btn btn--darken">Выход</a>
         </div>
+
     </div>
 </header>
