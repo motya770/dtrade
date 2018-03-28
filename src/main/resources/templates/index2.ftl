@@ -12,44 +12,13 @@
 <!-- Custom HTML -->
 
 <div class="site">
-    <header class="header header--page">
-        <div class="header__inner">
-            <div class="header__logo">
-                <a href="/">Diaminds<br><small>diamonds for everyone</small></a>
-            </div>
-            <div class="header__right">
-                <a href="/login-page" class="btn btn--darken">Вход</a>
-            </div>
-        </div>
-    </header>
-    <nav class="subnav">
-        <div class="subnav__inner">
-            <ul class="subnav__list">
-                <li class="active">
-                    <a href="/">Торговать</a>
-                </li>
-                <li>
-                    <a href="/diamonds">Текущие сделки</a>
-                </li>
-                <li>
-                    <a href="/account">Мой аккаунт</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+
+    <#include "caption.ftl">
+    <#include "menu.ftl">
+
     <main class="content">
-        <div class="cabtop-info">
-            <div class="cabtop-info__inner">
-                <!--
-                <div class="cabtop-info__content">
-                    <span class="cabtop-info__ico"></span>
-                    <div class="cabtop-info__text">
-                        <h3>Портфель акций</h3>
-                        <p><span class="accent">34 акции</span> на общую сумму <span class="accent">145 000 руб.</span></p>
-                    </div>
-                </div>-->
-            </div>
-        </div>
+        <#include "portfolio.ftl">
+
         <div class="sep-cab-page">
             <div class="sep-cab-page__inner">
                 <div class="sep-cab-page__content">
@@ -91,105 +60,7 @@
                                                 <td>{{diamond.totalStockAmount}}</td>
                                             </tr>
                                         <!--
-                                        <tr>
-                                            <td>1Brilliant&nbsp;Elizaveta <small>Rad, GIA - WS1, Cr-7</small></td>
-                                            <td>
-                                                <img src="/theme/app/img/dia1.png" alt="diamond">
-                                            </td>
-                                            <td>300</td>
-                                            <td>10&nbsp;000</td>
-                                            <td>12&nbsp;000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant Elis <small>Ass, GIA - WS1, Cr-6</small></td>
-                                            <td>
-                                                <img src="/theme/app/img/dia2.png" alt="diamond">
-                                            </td>
-                                            <td>250</td>
-                                            <td>9&nbsp;000</td>
-                                            <td>13&nbsp;000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant III <small>Rad, GIA - WS1, Cr-6</small></td>
-                                            <td>
-                                                <img src="/theme/app/img/dia3.png" alt="diamond">
-                                            </td>
-                                            <td>280</td>
-                                            <td>11&nbsp;000</td>
-                                            <td>14&nbsp;500</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant&nbsp;Elizaveta <small>Rad, GIA - WS1, Cr-7</small></td>
-                                            <td>
-                                                <img src="/theme/app/img/dia1.png" alt="diamond">
-                                            </td>
-                                            <td>300</td>
-                                            <td>10&nbsp;000</td>
-                                            <td>12&nbsp;000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant Elis <small>Ass, GIA - WS1, Cr-6</small></td>
-                                            <td>
-                                                <img src="/theme/app/img/dia2.png" alt="diamond">
-                                            </td>
-                                            <td>250</td>
-                                            <td>9&nbsp;000</td>
-                                            <td>13&nbsp;000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant III <small>Rad, GIA - WS1, Cr-6</small></td>
-                                            <td>
-                                                <img src="/theme/app/img/dia3.png" alt="diamond">
-                                            </td>
-                                            <td>280</td>
-                                            <td>11&nbsp;000</td>
-                                            <td>14&nbsp;500</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant&nbsp;Elizaveta <small>Rad, GIA - WS1, Cr-7</small></td>
-                                            <td>
-                                                <img src="img/dia1.png" alt="diamond">
-                                            </td>
-                                            <td>300</td>
-                                            <td>10&nbsp;000</td>
-                                            <td>12&nbsp;000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant Elis <small>Ass, GIA - WS1, Cr-6</small></td>
-                                            <td>
-                                                <img src="img/dia2.png" alt="diamond">
-                                            </td>
-                                            <td>250</td>
-                                            <td>9&nbsp;000</td>
-                                            <td>13&nbsp;000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant III <small>Rad, GIA - WS1, Cr-6</small></td>
-                                            <td>
-                                                <img src="img/dia3.png" alt="diamond">
-                                            </td>
-                                            <td>280</td>
-                                            <td>11&nbsp;000</td>
-                                            <td>14&nbsp;500</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant&nbsp;Elizaveta <small>Rad, GIA - WS1, Cr-7</small></td>
-                                            <td>
-                                                <img src="img/dia1.png" alt="diamond">
-                                            </td>
-                                            <td>300</td>
-                                            <td>10&nbsp;000</td>
-                                            <td>12&nbsp;000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant Elis <small>Ass, GIA - WS1, Cr-6</small></td>
-                                            <td>
-                                                <img src="img/dia2.png" alt="diamond">
-                                            </td>
-                                            <td>250</td>
-                                            <td>9&nbsp;000</td>
-                                            <td>13&nbsp;000</td>
-                                        </tr>
+
                                         <tr>
                                             <td>Brilliant III <small>Rad, GIA - WS1, Cr-6</small></td>
                                             <td>
@@ -435,6 +306,7 @@
                                                 <td>{{tradeOrder.executionDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             </tr>
 
+                                            <!--
                                             <tr>
                                                 <td>0.004523</td>
                                                 <td class="up">
@@ -467,6 +339,7 @@
                                                 </td>
                                                 <td>11.36.20</td>
                                             </tr>
+                                            -->
                                             <!--
                                             <tr>
                                                 <td>0.004523</td>
@@ -525,6 +398,7 @@
                                                 <td>11.36.20</td>
                                             </tr>
                                             -->
+                                            <!--
                                             <tr>
                                                 <td>0.004523</td>
                                                 <td class="down">
@@ -620,7 +494,7 @@
                                                     <img src="/theme/app/img/down.png" alt="up">
                                                 </td>
                                                 <td>11.36.20</td>
-                                            </tr>
+                                            </tr>-->
                                             </tbody>
                                         </table>
                                         </div>
@@ -855,94 +729,7 @@
                                                 </td>
                                                 <td>100</td>
                                             </tr>
-                                            <tr>
-                                                <td>Brilliant Elis</td>
-                                                <td>12 000</td>
-                                                <td>10:42:14</td>
-                                                <td>Закрыт</td>
-                                                <td>11:42:14</td>
-                                                <td>
-                                                    <a href="#">Отменить</a>
-                                                </td>
-                                                <td>200</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brilliant Elizaveta</td>
-                                                <td>10 000</td>
-                                                <td>11:36:20</td>
-                                                <td>Открыт</td>
-                                                <td>12:36:30</td>
-                                                <td>
-                                                    <a href="#">Отменить</a>
-                                                </td>
-                                                <td>100</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brilliant Elis</td>
-                                                <td>12 000</td>
-                                                <td>10:42:14</td>
-                                                <td>Закрыт</td>
-                                                <td>11:42:14</td>
-                                                <td>
-                                                    <a href="#">Отменить</a>
-                                                </td>
-                                                <td>200</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brilliant Elizaveta</td>
-                                                <td>10 000</td>
-                                                <td>11:36:20</td>
-                                                <td>Открыт</td>
-                                                <td>12:36:30</td>
-                                                <td>
-                                                    <a href="#">Отменить</a>
-                                                </td>
-                                                <td>100</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brilliant Elis</td>
-                                                <td>12 000</td>
-                                                <td>10:42:14</td>
-                                                <td>Закрыт</td>
-                                                <td>11:42:14</td>
-                                                <td>
-                                                    <a href="#">Отменить</a>
-                                                </td>
-                                                <td>200</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brilliant Elizaveta</td>
-                                                <td>10 000</td>
-                                                <td>11:36:20</td>
-                                                <td>Открыт</td>
-                                                <td>12:36:30</td>
-                                                <td>
-                                                    <a href="#">Отменить</a>
-                                                </td>
-                                                <td>100</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brilliant Elis</td>
-                                                <td>12 000</td>
-                                                <td>10:42:14</td>
-                                                <td>Закрыт</td>
-                                                <td>11:42:14</td>
-                                                <td>
-                                                    <a href="#">Отменить</a>
-                                                </td>
-                                                <td>200</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Brilliant Elizaveta</td>
-                                                <td>10 000</td>
-                                                <td>11:36:20</td>
-                                                <td>Открыт</td>
-                                                <td>12:36:30</td>
-                                                <td>
-                                                    <a href="#">Отменить</a>
-                                                </td>
-                                                <td>100</td>
-                                            </tr>
+
                                             <tr>
                                                 <td>Brilliant Elis</td>
                                                 <td>12 000</td>
@@ -1014,72 +801,7 @@
                                                 <a href="#">Продать</a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Brilliant QITI</td>
-                                            <td>14 000</td>
-                                            <td>11:36:20</td>
-                                            <td>Резерв</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>
-                                                <a href="#">Начать</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant Elizaveta</td>
-                                            <td>10 000</td>
-                                            <td>11:36:20</td>
-                                            <td>Резерв</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>
-                                                <a href="#">Начать</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant Elis</td>
-                                            <td>12 000</td>
-                                            <td>10:42:14</td>
-                                            <td>На аукционе</td>
-                                            <td>15000</td>
-                                            <td>17900</td>
-                                            <td>
-                                                <a href="#">Продать</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant QITI</td>
-                                            <td>14 000</td>
-                                            <td>11:36:20</td>
-                                            <td>Резерв</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>
-                                                <a href="#">Начать</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant Elizaveta</td>
-                                            <td>10 000</td>
-                                            <td>11:36:20</td>
-                                            <td>Резерв</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>
-                                                <a href="#">Начать</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant Elis</td>
-                                            <td>12 000</td>
-                                            <td>10:42:14</td>
-                                            <td>На аукционе</td>
-                                            <td>15000</td>
-                                            <td>17900</td>
-                                            <td>
-                                                <a href="#">Продать</a>
-                                            </td>
-                                        </tr>
+
                                         <tr>
                                             <td>Brilliant QITI</td>
                                             <td>14 000</td>
@@ -1114,24 +836,11 @@
             </div>
         </div>
     </main>
-    <div class="footer">
+    <#include "footer.ftl">
 
-        <div class="footer__inner">
-            <div class="footer__content">
-                <p class="footer__copy">Инвестиционное бюро бриллиантов</p>
-                <img src="/theme/app/img/cards.png" alt="cards" class="footer__card">
-            </div>
-        </div>
-    </div>
 </div>
+<#include "bootom-scripts.ftl">
 
-<!-- Optimized loading JS Start -->
-<script>var scr = {"scripts":[
-    {"src" : "/theme/app/js/libs.min.js", "async" : false},
-    {"src" : "/theme/app/js/common.js", "async" : false}
-]};!function(t,n,r){"use strict";var c=function(t){if("[object Array]"!==Object.prototype.toString.call(t))return!1;for(var r=0;r<t.length;r++){var c=n.createElement("script"),e=t[r];c.src=e.src,c.async=e.async,n.body.appendChild(c)}return!0};t.addEventListener?t.addEventListener("load",function(){c(r.scripts);},!1):t.attachEvent?t.attachEvent("onload",function(){c(r.scripts)}):t.onload=function(){c(r.scripts)}}(window,document,scr);
-</script>
-<!-- Optimized loading JS End -->
 
 </body>
 </html>

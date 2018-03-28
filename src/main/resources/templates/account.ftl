@@ -13,43 +13,11 @@
 
 <!-- Custom HTML -->
 <div class="site">
-    <header class="header header--page">
-        <div class="header__inner">
-            <div class="header__logo">
-                <a href="/">Платформа для торговли<br>финансовыми акциями бриллиантов</a>
-            </div>
-            <div class="header__right">
-                <a href="#" class="btn btn--darken">Выход</a>
-            </div>
-        </div>
-    </header>
-    <nav class="subnav">
-        <div class="subnav__inner">
-            <ul class="subnav__list">
-                <li>
-                    <a href="#">Бриллианты</a>
-                </li>
-                <li>
-                    <a href="#">Текущие сделки</a>
-                </li>
-                <li class="active">
-                    <a href="#">Мой аккаунт</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <#include "caption.ftl">
+    <#include "menu.ftl">
+
     <main class="content">
-        <div class="cabtop-info">
-            <div class="cabtop-info__inner">
-                <div class="cabtop-info__content">
-                    <span class="cabtop-info__ico"></span>
-                    <div class="cabtop-info__text">
-                        <h3>Портфель акций</h3>
-                        <p><span class="accent">34 акции</span> на общую сумму <span class="accent">145 000 руб.</span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <#include "portfolio.ftl">
         <div class="def-cab-page">
             <div class="def-cab-page__inner">
                 <div class="def-cab-page__content">
@@ -192,23 +160,12 @@
             </div>
         </div>
     </main>
-    <div class="footer">
-        <div class="footer__inner">
-            <div class="footer__content">
-                <p class="footer__copy">Инвестиционное бюро бриллиантов</p>
-                <img src="/theme/app/img/cards.png" alt="cards" class="footer__card">
-            </div>
-        </div>
-    </div>
+    <#include "footer.ftl">
 </div>
 
-<!-- Optimized loading JS Start -->
-<script>var scr = {"scripts":[
-    {"src" : "/theme/app/js/libs.min.js", "async" : false},
-    {"src" : "/theme/app/js/common.js", "async" : false}
-]};!function(t,n,r){"use strict";var c=function(t){if("[object Array]"!==Object.prototype.toString.call(t))return!1;for(var r=0;r<t.length;r++){var c=n.createElement("script"),e=t[r];c.src=e.src,c.async=e.async,n.body.appendChild(c)}return!0};t.addEventListener?t.addEventListener("load",function(){c(r.scripts);},!1):t.attachEvent?t.attachEvent("onload",function(){c(r.scripts)}):t.onload=function(){c(r.scripts)}}(window,document,scr);
-</script>
-<!-- Optimized loading JS End -->
+
+<#include "bootom-scripts.ftl">
+
 
 </body>
 </html>
