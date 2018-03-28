@@ -93,62 +93,13 @@
                                             <td>{{balanceActivity.balanceSnapshot}}</td>
                                         </tr>
 
-                                        <!--
-                                        <tr>
-                                            <td>1</td>
-                                            <td>11.10.2017</td>
-                                            <td>10000</td>
-                                            <td>Покупка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>09.10.2017</td>
-                                            <td>16000</td>
-                                            <td>Продажа</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>07.10.2017</td>
-                                            <td>16000</td>
-                                            <td>Продажа</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>11.10.2017</td>
-                                            <td>10000</td>
-                                            <td>Покупка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>09.10.2017</td>
-                                            <td>16000</td>
-                                            <td>Продажа</td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>07.10.2017</td>
-                                            <td>16000</td>
-                                            <td>Продажа</td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>11.10.2017</td>
-                                            <td>10000</td>
-                                            <td>Покупка</td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>09.10.2017</td>
-                                            <td>16000</td>
-                                            <td>Продажа</td>
-                                        </tr>
-                                        -->
                                         </tbody>
                                     </table>
                                     </div>
                                 </div>
                             </div>
                             <div class="lk-main-tab__info">
+                                <!--
                                 <div class="lk-stat-info">
                                     <div class="lk-stat-info__elem lk-stat-info__elem--calendar">
                                         <h3>Декабрь 2017</h3>
@@ -170,7 +121,7 @@
                                     <div class="chart chart--red">
                                         <div class="donut-chart" data-percent="0.75" data-val="5000" data-title="расход"></div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         <div class="lk-main-tab" id="tab02">
@@ -205,76 +156,13 @@
                                             <td>{{tradeOrder.}} </td>
                                             -->
                                         </tr>
-                                        <!--
-                                        <tr>
-                                            <td>2</td>
-                                            <td>09.10.2017</td>
-                                            <td>Brill</td>
-                                            <td>20</td>
-                                            <td>10000</td>
-                                            <td>200000</td>
-                                            <td>222000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>07.10.2017</td>
-                                            <td>Brill III</td>
-                                            <td>15</td>
-                                            <td>20000</td>
-                                            <td>300000</td>
-                                            <td>470000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>11.10.2017</td>
-                                            <td>Brill I</td>
-                                            <td>10</td>
-                                            <td>9000</td>
-                                            <td>90000</td>
-                                            <td>130000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>09.10.2017</td>
-                                            <td>Brill</td>
-                                            <td>20</td>
-                                            <td>10000</td>
-                                            <td>200000</td>
-                                            <td>222000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>07.10.2017</td>
-                                            <td>Brill III</td>
-                                            <td>15</td>
-                                            <td>20000</td>
-                                            <td>300000</td>
-                                            <td>470000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>11.10.2017</td>
-                                            <td>Brill I</td>
-                                            <td>10</td>
-                                            <td>9000</td>
-                                            <td>90000</td>
-                                            <td>130000</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>09.10.2017</td>
-                                            <td>Brill</td>
-                                            <td>20</td>
-                                            <td>10000</td>
-                                            <td>200000</td>
-                                            <td>222000</td>
-                                        </tr>-->
                                         </tbody>
                                     </table>
                                     </div>
                                 </div>
                             </div>
                             <div class="lk-main-tab__info">
+                                <!--
                                 <div class="lk-stat-info">
                                     <div class="lk-stat-info__elem lk-stat-info__elem--calendar">
                                         <h3>Декабрь 2017</h3>
@@ -296,7 +184,7 @@
                                     <div class="chart chart--red">
                                         <div class="donut-chart" data-percent="0.75" data-val="5000" data-title="расход"></div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>

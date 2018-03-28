@@ -31,4 +31,20 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
     @Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' order by to.executionDate desc ")
     List<TradeOrder> getHistoryTradeOrders(Pageable pageable);
+
+    /*
+    @Query(" select sum(to.price * to.initialAmount) from TradeOrder to where " +
+            "to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
+            " and to.tradeOrderType='SELL' " +
+            " and to.executionDate > :startOfTheMonth " +
+            " order by to.creationDate desc ")
+    long getSellSumForMonthForAccount(Account account, long startOfTheMonth);*/
+
+    /*
+    @Query(" select sum(to.price * to.initialAmount) from TradeOrder to where " +
+            "to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
+            " and to.tradeOrderType='SELL' " +
+            " and to.executionDate > :startOfTheMonth " +
+            " order by to.creationDate desc ")
+    long getBuySumForMonthForAccount();*/
 }

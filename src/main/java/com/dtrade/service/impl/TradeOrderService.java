@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.List;
 /**
  * Created by kudelin on 6/27/17.
@@ -330,6 +331,22 @@ public class TradeOrderService  implements ITradeOrderService{
                 }
 //            }
 //        });
+    }
+
+    @Override
+    public long sellSumForMonthForAccount() {
+        //TODO think about time solution
+        return 0;
+//        Account account = accountService.getStrictlyLoggedAccount();
+//        return tradeOrderRepository.getSellSumForMonthForAccount(account, );
+    }
+
+    @Override
+    public long buySumForMonthForAccount() {
+        return 0;
+
+       // Account account = accountService.getStrictlyLoggedAccount();
+       // return tradeOrderRepository.getBuySumForMonthForAccount();
     }
 
     private void checkIfExecuted(TradeOrder tradeOrder){

@@ -32,4 +32,9 @@ public interface ITradeOrderService {
     void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair);
 
     boolean checkIfCanExecute(Pair<TradeOrder, TradeOrder> pair);
+
+    long sellSumForMonthForAccount();
+
+    long buySumForMonthForAccount();
+
 }
