@@ -13,7 +13,7 @@
     <#include "parts/caption.ftl">
     <#include "parts/menu.ftl">
     <main class="content">
-        <#include "parts/portfolio.ftl">
+
         <div class="def-cab-page">
             <div class="def-cab-page__inner">
                 <div class="def-cab-page__content">

@@ -3,6 +3,11 @@ diamondApp.controller("AccountController", function AccountController($scope, $r
     //self.account = {};
 
     AccountService.currentAccount().then(function (account) {
-        self.account = account;
+
+        if(account.account=="empty"){
+            self.account = null;
+        }else {
+            self.account = account;
+        }
     });
 });

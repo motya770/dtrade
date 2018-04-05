@@ -17,9 +17,8 @@
     <#include "parts/menu.ftl">
 
     <main class="content">
-        <div ng-controller="AvailableController as vm">
-            <#include "parts/portfolio.ftl">
-        </div>
+
+        <#include "parts/portfolio.ftl">
 
         <div class="sep-cab-page">
             <div class="sep-cab-page__inner">

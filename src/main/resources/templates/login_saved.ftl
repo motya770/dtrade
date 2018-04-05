@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="diamondApp">
 <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <#include "parts/head.ftl">
     <script src="/content/js/registration.js" ></script>
 </head>
@@ -23,7 +24,7 @@
                                 <md-input-container class="md-block">
                                     <!-- Use floating placeholder instead of label -->
                                     <md-icon class="material-icons md-light md-48"> email </md-icon>
-                                    <md-icon md-svg-src="/theme/app/img/icons/ic_email_24px.svg" class="username"></md-icon>
+                                    <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="username"></md-icon>
                                     <input type="email" name="username" placeholder="Email (required)" ng-required="true">
                                 </md-input-container>
 

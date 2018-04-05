@@ -62,7 +62,16 @@
 <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js" type="text/javascript"></script>
 <script src="/bower_components/less/dist/less.min.js" type="text/javascript"></script>
 
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="/bower_components/angular-animate/angular-animate.js"></script>
+<script src="/bower_components/angular-aria/angular-aria.js"></script>
+<script src="/bower_components/angular-messages/angular-messages.min.js"></script>
+
+<!-- Angular Material Library -->
+<script src="/bower_components/angular-material/angular-material.min.js"></script>
+
 <script src="/content/js/app.js"></script>
+
 <script src="/content/js/app/account.controller.js"></script>
 <script src="/content/js/app/account.service.js"></script>
 <script src="/content/js/app/available.controller.js"></script>
@@ -80,9 +89,6 @@
 <script src="/content/js/app/stock.controller.js"></script>
 <script src="/content/js/app/stock.service.js"></script>
 
-<!--
-<script src="/content/js/app/mydiamonds.service.js"></script>
--->
 <script src="/content/js/app/owned.controller.js"></script>
 <script src="/content/js/app/sale.controller.js"></script>
 <script src="/content/js/app/sale.service.js"></script>
@@ -90,11 +96,3 @@
 <script src="/content/js/app/tradeorder.controller.js"></script>
 <script src="/content/js/app/tradeorder.service.js"></script>
 <script src="/content/js/app/utils.js"></script>
-
-<!-- Angular Material requires Angular.js Libraries -->
-<script src="/bower_components/angular-animate/angular-animate.js"></script>
-<script src="/bower_components/angular-aria/angular-aria.js"></script>
-<script src="/bower_components/angular-messages/angular-messages.min.js"></script>
-
-<!-- Angular Material Library -->
-<script src="/bower_components/angular-material/angular-material.min.js"></script>
