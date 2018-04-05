@@ -1,6 +1,8 @@
-diamondApp.controller('AccountController', ['$scope', "$http", "AccountService", function($scope, $http, AccountService) {
+diamondApp.controller("AccountController", function AccountController($scope, $rootScope, $http, AccountService){
     var self = this;
-    AccountService.currentAccount().then(function (user) {
-        self.user = user;
+    //self.account = {};
+
+    AccountService.currentAccount().then(function (account) {
+        self.account = account;
     });
-}]);
+});
