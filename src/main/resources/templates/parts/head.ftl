@@ -79,7 +79,7 @@
 <script src="/content/js/app/bidder.controller.js"></script>
 <script src="/content/js/app/bookorder.controller.js"></script>
 <script src="/content/js/app/bookorder.service.js"></script>
-<script src="/content/js/app/chart.controller.js"></script>
+<script src="/content/js/app/chart2.controller.js"></script>
 <script src="/content/js/app/register.controller.js"></script>
 
 <script src="/content/js/app/tradeorder.account.service.js"></script>

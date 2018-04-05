@@ -258,7 +258,10 @@
                             <div class="main-trade-graph">
                                 <div ng-controller="ChartController as vm">
                                     <div class="row">
+                                        <div id="container" style="height: 400px; min-width: 310px; width: 450px;"></div>
+                                        <!--
                                         <highchart id="chart1" config="chartConfig" class="span10"></highchart>
+                                        -->
                                     </div>
                                 </div>
                                 <!--
