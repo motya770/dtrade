@@ -298,12 +298,12 @@
                                             <tbody>
 
                                             <tr ng-repeat="tradeOrder in vm.historyTradeOrders">
-                                                <td>{{tradeOrder.amount}}</td>
+                                                <td>{{tradeOrder.initialAmount}}</td>
                                                 <td class="up">
                                                     {{tradeOrder.price}}
                                                     <img src="/theme/app/img/up.png" alt="up">
                                                 </td>
-                                                <td>{{tradeOrder.executionDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                                <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             </tr>
 
                                             <!--
@@ -501,10 +501,8 @@
                                     </div>
                                 </div>
 
-
-                                <div ng-controller="BookOrderController as vm">
-                                <div class="trades-tab" id="tab04">
-                                    <div class="table-container">
+                                <div ng-controller="BookOrderController as vm" class="trades-tab" id="tab04">
+                                        <div class="table-container">
                                         <table class="diamont-table diamont-table--pdb">
                                             <thead>
                                             <tr>
@@ -586,7 +584,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="table-container table-container--btp">
+                                        <div class="table-container table-container--btp">
                                         <table class="diamont-table">
                                             <thead>
                                             <tr>
@@ -598,11 +596,11 @@
                                             </thead>
                                             <tbody>
 
+
                                             <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders">
-                                                <td></td>
-                                                <td  class="blue">{{tradeOrder.creationDate  | date:'dd/MM HH:mm:ss' }}</td>
-                                                <td  class="blue">{{tradeOrder.amount}}</td>
-                                                <td>{{tradeOrder.price}}</td>
+                                                <td>{{tradeOrder.amount}}</td>
+                                                <td class="down">{{tradeOrder.price}}</td>
+                                                <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                             </tr>
 
                                             <!--
@@ -668,7 +666,6 @@
                                             </tr>-->
                                             </tbody>
                                         </table>
-                                    </div>
                                     </div>
                                 </div>
                             </div>
