@@ -38,7 +38,7 @@
 
                     <div class="lk-main-tabs">
                         <div class="lk-main-tab" id="tab01">
-                            <div class="lk-main-tab__table">
+                            <div class="lk-main-tab__table" style="width: 692px;">
                                 <div class="table-container">
                                     <div ng-controller="BalanceActivityController as vm">
                                         <table class="diamont-table">
@@ -93,7 +93,7 @@
                             </div>
                         </div>
                         <div class="lk-main-tab" id="tab02">
-                            <div class="lk-main-tab__table">
+                            <div class="lk-main-tab__table" style="width: 692px;">
                                 <div class="table-container">
                                     <div ng-controller="TradeOrderAccountController as vm">
                                         <table class="diamont-table">
