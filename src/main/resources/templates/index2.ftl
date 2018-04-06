@@ -191,7 +191,7 @@
                                         </div>
                                         <div class="form-tabs__submit">
                                             <h3>Total (USD)</h3>
-                                            <button class="form-tabs__subm" onclick="alert('123');" ng-click="alert('test1'); createTradeOrder(vm.tradeOrder, vm.diamond)">Place order</button>
+                                            <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond)">Place order</button>
                                         </div>
                                     </form>
                                 </div>
@@ -303,10 +303,27 @@
 
                                             <tr ng-repeat="tradeOrder in vm.historyTradeOrders">
                                                 <td>{{tradeOrder.initialAmount}}</td>
-                                                <td class="up">
-                                                    {{tradeOrder.price}}
-                                                    <img src="/theme/app/img/up.png" alt="up">
+
+                                                <!--
+                                                <td>
+                                                {{tradeOrder.tradeOrderType}} {{tradeOrder.tradeOrderType=='BUY'}}
                                                 </td>
+                                                <td ng-if="tradeOrder.tradeOrderType == 'BUY'">
+                                                    !B
+                                                </td>-->
+
+                                                    <td ng-if="tradeOrder.tradeOrderType == 'BUY'" class="up">
+                                                        {{tradeOrder.price}}
+                                                            <img src="/theme/app/img/up.png" alt="up">
+                                                    </td>
+
+
+                                                    <td ng-if="tradeOrder.tradeOrderType == 'SELL'" class="down">
+                                                        {{tradeOrder.price}}
+                                                            <img src="/theme/app/img/down.png" alt="down">
+                                                    </td>
+
+
                                                 <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             </tr>
 
