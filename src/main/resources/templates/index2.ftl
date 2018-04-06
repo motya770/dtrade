@@ -385,11 +385,11 @@
                                             <tr>
                                                 <th>Наименование</th>
                                                 <th>Цена</th>
+                                                <th>Количество</th>
                                                 <th>t покупки</th>
                                                 <th>Статус</th>
-                                                <th>t завершения</th>
+                                                <th>Тип</th>
                                                 <th>Действие</th>
-                                                <th>N акций</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -400,14 +400,15 @@
                                                 -->
                                                 <td>{{tradeOrder.diamond.name}}</td>
                                                 <td>{{tradeOrder.price}}</td>
+                                                <td>{{tradeOrder.initialAmount}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                                 <td>{{tradeOrder.traderOrderStatus}}</td>
                                                 <td>{{tradeOrder.tradeOrderType}}</td>
                                                 <!--
                                                 <td>{{tradeOrder.amount}}</td>
                                                 -->
-                                                <td>{{tradeOrder.initialAmount}}</td>
-                                                <td><a href="#" class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">CANCEL</a></td>
+
+                                                <td><a ng-if="tradeOrder.traderOrderStatus == 'CREATED'" href="#" class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">CANCEL</a></td>
                                             </tr>
 
                                             <!--
