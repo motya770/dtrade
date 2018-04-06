@@ -9,6 +9,12 @@ diamondApp.controller("TradeOrderController", function TradeOrderController($sco
         });
     }
 
+    $scope.getPreviousLiveOrders = function (pageNumber) {
+        TradeOrderService.getLiveOrders(pageNumber + 1).then(function (data) {
+            self.liveTradeOrders = data;
+        });
+    }
+    
     TradeOrderService.getLiveOrders().then(function (data) {
         self.liveTradeOrders = data;
     });

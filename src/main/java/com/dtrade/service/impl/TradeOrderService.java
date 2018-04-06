@@ -10,6 +10,7 @@ import com.dtrade.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.util.List;
 /**
  * Created by kudelin on 6/27/17.
@@ -109,12 +109,17 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
     @Override
-    public List<TradeOrder> getLiveTradeOrdersByAccount(){
+    public Page<TradeOrder> getLiveTradeOrdersByAccount(Integer pageNumber){
         Account account = accountService.getCurrentAccount();
         if(account==null){
             return null;
         }
-        return tradeOrderRepository.getLiveTradeOrdersByAccount(account, new PageRequest(0, 12));
+
+        if(pageNumber==null){
+            pageNumber=0;
+        }
+
+        return tradeOrderRepository.getLiveTradeOrdersByAccount(account, new PageRequest(pageNumber, 12));
     }
 
     @Override

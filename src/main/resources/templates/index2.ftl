@@ -376,13 +376,14 @@
                                 </li>
                             </ul>
                             <div class="sep-cab-tabs-container">
-                                <div class="sep-cab-tab" id="tab01">
+                                <div class="sep-cab-tab" id="tab01" ng-controller="TradeOrderController as vm">
                                     <div class="table-container">
 
-                                        <div ng-controller="TradeOrderController as vm">
+                                        <div >
                                             <table class="diamont-table">
                                             <thead>
                                             <tr>
+
                                                 <th>Наименование</th>
                                                 <th>Цена</th>
                                                 <th>Количество</th>
@@ -394,10 +395,10 @@
                                             </thead>
                                             <tbody>
 
-                                            <tr ng-repeat="tradeOrder in vm.liveTradeOrders">
-                                                <!--
+                                            <tr ng-repeat="tradeOrder in vm.liveTradeOrders.content">
+
                                                 <td>{{tradeOrder.id}}</td>
-                                                -->
+
                                                 <td>{{tradeOrder.diamond.name}}</td>
                                                 <td>{{tradeOrder.price}}</td>
                                                 <td>{{tradeOrder.initialAmount}}</td>
@@ -440,7 +441,7 @@
                                         </table>
                                         </div>
                                     </div>
-                                    <a href="#" class="sep-cab-tab__more">Показать предыдущие позиции</a>
+                                    <a href="#" ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Показать предыдущие позиции</a>
                                 </div>
                             </div>
                             <div class="sep-cab-tab" id="tab02">

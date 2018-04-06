@@ -1,14 +1,10 @@
 package com.dtrade.controller;
 
-import com.dtrade.controller.view.View;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.ITradeOrderService;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,8 +24,8 @@ public class TradeOrderController {
     }
 
     @RequestMapping(value = "/live-orders")
-    public List<TradeOrder> getLiveOrdersByAccount(){
-        return tradeOrderService.getLiveTradeOrdersByAccount();
+    public Page<TradeOrder> getLiveOrdersByAccount(@RequestParam(required = false) Integer pageNumber ){
+        return tradeOrderService.getLiveTradeOrdersByAccount(pageNumber);
     }
 
 

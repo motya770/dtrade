@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -169,12 +170,13 @@ public class TradeOrderServiceTest extends BaseTest {
         Account account = accountService.getCurrentAccount();
         TradeOrder tradeOrder = createTestTradeOrder();
         tradeOrderService.createTradeOrder(tradeOrder);
-        List<TradeOrder> tradeOrders =  tradeOrderService.getLiveTradeOrdersByAccount();
-        tradeOrders.forEach(tradeOrder1 -> {
+        Page<TradeOrder> tradeOrders =  tradeOrderService.getLiveTradeOrdersByAccount(0);
+        List<TradeOrder> content  = tradeOrders.getContent();
+        content.forEach(tradeOrder1 -> {
             Assert.assertTrue(tradeOrder.getAccount().equals(account));
         });
-        Assert.assertNotNull(tradeOrders);
-        Assert.assertTrue(tradeOrders.size() > 0);
+        Assert.assertNotNull(content);
+        Assert.assertTrue(content.size() > 0);
     }
 
     @Transactional

@@ -4,6 +4,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, Avai
 
         //255 92 92 red  #ff5c5c
         //73 209 109 green #49d16d
+        //209 209 209
 
         var data = response.data;
 

@@ -1,6 +1,6 @@
 diamondApp.service("TradeOrderService", function ($http, $q) {
 
-    var liveOrders = [];
+    var liveOrders = null;
     var historyOrders = [];
 
     var addLiveOrder = function(order){
@@ -25,16 +25,24 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
         }
     };
 
-    var getLiveOrders = function () {
+    var getLiveOrders = function (pageNumber) {
 
-        if (liveOrders != null && liveOrders.length != 0) {
-            return $q.resolve(liveOrders)
-        }else{
-            return $http.post("/trade-order/live-orders", null, null).then(function (response) {
+
+        /*if (liveOrders != null && liveOrders.content!=null && liveOrders.content.length != 0) {
+            return $q.resolve(liveOrders.content)
+        }else{*/
+            var url;
+            if(pageNumber==null){
+               url =  "/trade-order/live-orders"
+            }else {
+               url = "/trade-order/live-orders?pageNumber=" + pageNumber;
+            }
+
+            return $http.post(url, null, null).then(function (response) {
                 liveOrders = response.data;
                 return liveOrders;
             });
-        }
+        //}
     };
 
     return {

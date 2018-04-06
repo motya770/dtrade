@@ -1,6 +1,7 @@
 package com.dtrade.service;
 
 import com.dtrade.model.tradeorder.TradeOrder;
+import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface ITradeOrderService {
 
     List<TradeOrder> getLiveTradeOrders();
 
-    List<TradeOrder> getLiveTradeOrdersByAccount();
+    Page<TradeOrder> getLiveTradeOrdersByAccount(Integer pageNumber);
 
     TradeOrder createTradeOrder(TradeOrder tradeOrder);
 
