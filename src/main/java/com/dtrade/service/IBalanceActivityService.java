@@ -5,6 +5,7 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
+import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
 
 import java.math.BigDecimal;
@@ -20,7 +21,7 @@ public interface IBalanceActivityService {
 
     Pair<BalanceActivity, BalanceActivity> createBalanceActivities(Account buyer, Account seller, BigDecimal cash, TradeOrder buyOrder, TradeOrder sellOrder);
 
-    List<BalanceActivity> getAccountBalanceActivities();
+    Page<BalanceActivity> getAccountBalanceActivities(Integer pageInteger);
 
     //TODO add paging and protecting
     List<BalanceActivity> findAll();

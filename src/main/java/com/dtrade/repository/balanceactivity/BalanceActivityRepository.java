@@ -2,6 +2,7 @@ package com.dtrade.repository.balanceactivity;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balanceactivity.BalanceActivity;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,6 +20,6 @@ public interface BalanceActivityRepository extends JpaRepository<BalanceActivity
 
     @Query("select ba from BalanceActivity ba where ba.account.id = :#{#account.id} " +
             " order by ba.createDate desc")
-    List<BalanceActivity> getByAccount(@Param("account") Account account, Pageable pageable);
+    Page<BalanceActivity> getByAccount(@Param("account") Account account, Pageable pageable);
 }
 

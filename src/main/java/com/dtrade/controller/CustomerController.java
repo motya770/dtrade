@@ -7,6 +7,7 @@ import com.dtrade.service.IBalanceActivityService;
 import com.dtrade.service.IDiamondActivityService;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,8 +38,8 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/balance-activities", method = RequestMethod.POST)
-    public List<BalanceActivity> getBalanceActivities(Model model){
-        return balanceActivityService.getAccountBalanceActivities();
+    public Page<BalanceActivity> getBalanceActivities(Model model){
+        return balanceActivityService.getAccountBalanceActivities(0);
     }
 
     @RequestMapping(value = "/diamond-activities", method = RequestMethod.POST)

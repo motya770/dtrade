@@ -11,6 +11,7 @@ import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,9 +41,9 @@ public class BalanceActivityService implements IBalanceActivityService {
     }
 
     @Override
-    public List<BalanceActivity> getAccountBalanceActivities() {
+    public Page<BalanceActivity> getAccountBalanceActivities(Integer pageInteger) {
         Account account = accountService.getStrictlyLoggedAccount();
-        return balanceActivityRepository.getByAccount(account, new PageRequest(0, 20));
+        return balanceActivityRepository.getByAccount(account, new PageRequest(pageInteger, 20));
     }
 
     @Override

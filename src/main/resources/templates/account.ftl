@@ -39,8 +39,8 @@
                     <div class="lk-main-tabs">
                         <div class="lk-main-tab" id="tab01">
                             <div class="lk-main-tab__table" style="width: 692px;">
-                                <div class="table-container">
-                                    <div ng-controller="BalanceActivityController as vm">
+                                <div class="table-container" ng-controller="BalanceActivityController as vm">
+                                    <div>
                                         <table class="diamont-table">
                                         <thead>
                                         <tr>
@@ -53,7 +53,7 @@
                                         </thead>
                                         <tbody>
 
-                                        <tr ng-repeat="balanceActivity in vm.balanceActivities">
+                                        <tr ng-repeat="balanceActivity in vm.balanceActivities.content">
                                             <td>{{balanceActivity.id}}</td>
                                             <td>{{balanceActivity.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                             <td>{{balanceActivity.balanceActivityType}}</td>
@@ -64,6 +64,7 @@
                                         </tbody>
                                     </table>
                                     </div>
+                                    <a href="#" ng-click="getPreviousBalanceActivities(vm.balanceActivities.number)" class="sep-cab-tab__more">Показать предыдущие изменения</a>
                                 </div>
                             </div>
                             <div class="lk-main-tab__info">

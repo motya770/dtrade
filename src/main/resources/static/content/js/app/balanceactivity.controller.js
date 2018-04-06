@@ -5,7 +5,14 @@ diamondApp.controller('BalanceActivityController', function BalanceActivityContr
         self.balanceActivities = data;
     });*/
 
-    $http.post('/balance-activity/by-account', null).then(function(response) {
+
+    $scope.getPreviousBalanceActivities = function (pageNumber) {
+        $http.post('/balance-activity/by-account?pageNumber=' + (pageNumber + 1), null).then(function(response) {
+            self.balanceActivities = response.data;
+        });
+    }
+
+    $http.post('/balance-activity/by-account?pageNumber=0', null).then(function(response) {
         self.balanceActivities = response.data;
     });
 });

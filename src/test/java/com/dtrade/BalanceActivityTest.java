@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -58,8 +59,9 @@ public class BalanceActivityTest extends BaseTest {
     public void testGetAccountBalanceActivities(){
         Pair<BalanceActivity, BalanceActivity> pair = createTestBalanceActivities();
 
-        List<BalanceActivity> balanceActivities = balanceActivityService.getAccountBalanceActivities();
-        List<BalanceActivity> filtered = balanceActivities.stream().
+        Page<BalanceActivity> balanceActivities = balanceActivityService.getAccountBalanceActivities(0);
+
+        List<BalanceActivity> filtered = balanceActivities.getContent().stream().
                 filter((balanceActivity)->
                     balanceActivity.getId().equals(pair.getFirst().getId()) || balanceActivity.getId().equals(pair.getSecond().getId()))
                 .collect(Collectors.toList());
