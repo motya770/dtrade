@@ -5,7 +5,7 @@
                 <a href="/">Торговать</a>
             </li>
             <li ng-class="getClass('/diamonds')" >
-                <a href="/diamonds">Текущие сделки</a>
+                <a href="/diamonds">Бриллианты</a>
             </li>
             <li ng-class="getClass('/account')">
                 <a href="/account">Мой аккаунт</a>

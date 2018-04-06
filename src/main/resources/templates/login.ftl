@@ -11,7 +11,6 @@
 <!-- Custom HTML -->
 <div class="site">
     <#include "parts/caption.ftl">
-    <#include "parts/menu.ftl">
     <main class="content">
 
         <div class="def-cab-page">
