@@ -4,25 +4,25 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
     var historyOrders = [];
 
     var addLiveOrder = function(order){
-        liveOrders.unshift(order);
+        liveOrders.content.unshift(order);
     };
 
 
     var addHistoryOrder = function (order) {
-        liveOrders.splice(arrayObjectIndexOf(liveOrders, order),1);
+        liveOrders.content.splice(arrayObjectIndexOf(liveOrders, order),1);
         historyOrders.push(order);
     };
 
     var getHistoryOrders = function () {
 
-        if (historyOrders != null && historyOrders.length != 0) {
-            return $q.resolve(historyOrders)
-        }else{
+        // if (historyOrders != null && historyOrders.length != 0) {
+        //     return $q.resolve(historyOrders)
+        // }else{
             return $http.post("/trade-order/history-orders", null, null).then(function (responce) {
                 historyOrders = responce.data;
                 return historyOrders;
             });
-        }
+        //}
     };
 
     var getLiveOrders = function (pageNumber) {

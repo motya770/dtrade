@@ -1,4 +1,4 @@
-diamondApp.controller("TradeOrderController", function TradeOrderController($scope, $rootScope, $http, AccountService, TradeOrderService){
+diamondApp.controller("TradeOrderController", function TradeOrderController($scope, $rootScope, $http, $timeout, AccountService, TradeOrderService){
 
     var self = this;
 
@@ -19,7 +19,11 @@ diamondApp.controller("TradeOrderController", function TradeOrderController($sco
         self.liveTradeOrders = data;
     });
 
-    TradeOrderService.getHistoryOrders().then(function (data) {
-        self.historyTradeOrders = data;
-    })
+    var poller = function() {
+        TradeOrderService.getHistoryOrders().then(function (data) {
+            self.historyTradeOrders = data;
+            $timeout(poller, 1000);
+        });
+    };
+    poller();
 });
