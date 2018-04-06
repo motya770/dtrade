@@ -17,7 +17,7 @@ public interface ITradeOrderService {
 
     boolean fieldsNotEmpty(TradeOrder tradeOrder);
 
-    List<TradeOrder> getHistoryTradeOrdersByAccount();
+    Page<TradeOrder> getHistoryTradeOrdersByAccount(Integer pageNumber);
 
     List<TradeOrder> getHistoryTradeOrders();
 

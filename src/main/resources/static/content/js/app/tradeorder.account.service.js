@@ -2,9 +2,12 @@ diamondApp.service("TradeOrderAccountService", function ($http, $q) {
 
     var historyOrders = [];
 
-    var getAccountHistoryTradeOrders = function () {
+    var getAccountHistoryTradeOrders = function (pageNumber) {
 
-        return $http.post("/trade-order/account-history-orders", null, null).then(function (responce) {
+        if(pageNumber==null){
+            pageNumber = 0;
+        }
+        return $http.post("/trade-order/account-history-orders?pageNumber="+ pageNumber, null, null).then(function (responce) {
             historyOrders = responce.data;
             return historyOrders;
         });

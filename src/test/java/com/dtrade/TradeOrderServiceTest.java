@@ -132,8 +132,10 @@ public class TradeOrderServiceTest extends BaseTest {
     @Test
     public void testGetHistoryTradeOrdersByAccount(){
         Account currentAccount = accountService.getCurrentAccount();
-        List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrdersByAccount();
-        tradeOrders.forEach(tradeOrder -> {
+        Page<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrdersByAccount(0);
+        List<TradeOrder> content = tradeOrders.getContent();
+
+        content.forEach(tradeOrder -> {
             Assert.assertTrue(tradeOrder.getAccount().equals(currentAccount));
             Assert.assertTrue(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)
                     || tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.CANCELED)

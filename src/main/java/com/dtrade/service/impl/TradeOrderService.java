@@ -98,9 +98,9 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
     @Override
-    public List<TradeOrder> getHistoryTradeOrdersByAccount(){
+    public Page<TradeOrder> getHistoryTradeOrdersByAccount(Integer pageNumber){
         Account account = accountService.getStrictlyLoggedAccount();
-        return tradeOrderRepository.getHistoryTradeOrdersForAccount(account, new PageRequest(0, 20));
+        return tradeOrderRepository.getHistoryTradeOrdersForAccount(account, new PageRequest(pageNumber, 20));
     }
 
     @Override

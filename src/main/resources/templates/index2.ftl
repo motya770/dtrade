@@ -387,7 +387,7 @@
                                                 <th>Наименование</th>
                                                 <th>Цена</th>
                                                 <th>Количество</th>
-                                                <th>t покупки</th>
+                                                <th>t открытия </th>
                                                 <th>Статус</th>
                                                 <th>Тип</th>
                                                 <th>Действие</th>
@@ -397,7 +397,6 @@
 
                                             <tr ng-repeat="tradeOrder in vm.liveTradeOrders.content">
 
-                                                <td>{{tradeOrder.id}}</td>
 
                                                 <td>{{tradeOrder.diamond.name}}</td>
                                                 <td>{{tradeOrder.price}}</td>
@@ -523,7 +522,8 @@
                                     </table>
                                     </div>
                                 </div>
-                                <a href="#" class="sep-cab-tab__more">Показать предыдущие позиции</a>
+                                <!--
+                                <a href="#" class="sep-cab-tab__more">Показать предыдущие позиции</a>-->
                             </div>
                         </div>
                     </div>

@@ -94,8 +94,8 @@
                         </div>
                         <div class="lk-main-tab" id="tab02">
                             <div class="lk-main-tab__table" style="width: 692px;">
-                                <div class="table-container">
-                                    <div ng-controller="TradeOrderAccountController as vm">
+                                <div class="table-container" ng-controller="TradeOrderAccountController as vm">
+                                    <div >
                                         <table class="diamont-table">
                                         <thead>
                                         <tr>
@@ -112,7 +112,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="tradeOrder in vm.accountHistoryTradeOrders">
+                                        <tr ng-repeat="tradeOrder in vm.accountHistoryTradeOrders.content">
                                             <td>{{tradeOrder.id}}</td>
                                             <td>{{tradeOrder.executionDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             <td>{{tradeOrder.diamond.name}}</td>
@@ -127,6 +127,7 @@
                                         </tbody>
                                     </table>
                                     </div>
+                                    <a href="#" ng-click="getPreviousAccountHistoryOrders(vm.accountHistoryTradeOrders.number)" class="sep-cab-tab__more">Показать предыдущие позиции</a>
                                 </div>
                             </div>
                             <div class="lk-main-tab__info">
