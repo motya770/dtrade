@@ -306,11 +306,14 @@
                                                 <td>{{tradeOrder.initialAmount}}</td>
                                                     <td ng-if="tradeOrder.tradeOrderType == 'BUY'" class="up">
                                                         {{tradeOrder.price}}
-                                                            <img src="/theme/app/img/up.png" alt="up">
+
+                                                            <img ng-src="/theme/app/img/up.png" alt="up">
+
                                                     </td>
                                                     <td ng-if="tradeOrder.tradeOrderType == 'SELL'" class="down">
                                                         {{tradeOrder.price}}
-                                                            <img src="/theme/app/img/down.png" alt="down">
+                                                            <img ng-src="/theme/app/img/down.png" alt="down">
+
                                                     </td>
                                                 <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             </tr>
