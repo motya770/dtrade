@@ -43,7 +43,7 @@ public class BalanceActivityService implements IBalanceActivityService {
     @Override
     public Page<BalanceActivity> getAccountBalanceActivities(Integer pageInteger) {
         Account account = accountService.getStrictlyLoggedAccount();
-        return balanceActivityRepository.getByAccount(account, new PageRequest(pageInteger, 20));
+        return balanceActivityRepository.getByAccount(account, new PageRequest(pageInteger, 10));
     }
 
     @Override
