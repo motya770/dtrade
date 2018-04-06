@@ -96,3 +96,4 @@
 <script src="/content/js/app/tradeorder.controller.js"></script>
 <script src="/content/js/app/tradeorder.service.js"></script>
 <script src="/content/js/app/utils.js"></script>
+<script src="/content/js/app/menu.controller.js"></script>
