@@ -182,13 +182,14 @@
                                             <input type="text" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr">
                                             <small>USD</small>
                                         </div>
+                                        <!--
                                         <div class="form-tabs__info">
                                             <div class="form-tabs__info-top">
                                                 <h3>Limit price</h3>
                                                 <a href="#">Помощь</a>
                                             </div>
                                             <p>Сообщение не выбрано. Эта сделка может выполняться только заказчиком</p>
-                                        </div>
+                                        </div>-->
                                         <div class="form-tabs__submit">
                                             <h3>Total (USD)</h3>
                                             <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond)">Place order</button>
@@ -199,7 +200,7 @@
 
 
                             </div>
-                            <!--
+
                             <div class="sep-cab-page__activity">
                                 <div class="sep-cab-page__heading">
                                     <h2>Общая активность</h2>
@@ -208,7 +209,7 @@
                                 <div class="activity-graph">
                                     <img src="/theme/app/img/graph02.png" alt="graph">
                                 </div>
-                            </div>-->
+                            </div>
                         </div>
                         <div class="sep-cab-page__side sep-cab-page__right">
                             <div class="sep-cab-page__heading">
@@ -268,12 +269,12 @@
                                 <img src="/theme/app/img/graph04.png" alt="graph">
                                 -->
                             </div>
-                            <!--
+
                             <div class="sub-trade-graph">
                                 <h3>Динамика акций бриллианта за последний год</h3>
                                 <img src="/theme/app/img/graph03.png" alt="graph">
                             </div>
-                            -->
+
                         </div>
                     </div>
                     <div class="sep-cab-page__bottom">
@@ -337,68 +338,6 @@
                                                 <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                             </tr>
 
-                                            <!--
-                                            <tr>
-                                                <td class="down">4000</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">500</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">1000</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">350</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">222</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">553</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">50</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">100</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">100</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">100</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">50</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="down">299</td>
-                                                <td>49 808</td>
-                                                <td></td>
-                                            </tr>
-                                            -->
                                             </tbody>
                                         </table>
                                     </div>
