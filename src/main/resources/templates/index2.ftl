@@ -421,67 +421,6 @@
                                                 <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                             </tr>
 
-                                            <!--
-                                            <tr>
-                                                <td></td>
-                                                <td class="blue">49 808</td>
-                                                <td class="blue">740</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="blue">49 804</td>
-                                                <td class="blue">660</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="blue">49 790</td>
-                                                <td class="blue">50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="blue">49 787</td>
-                                                <td class="blue">60</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="blue">49 786</td>
-                                                <td class="blue">100</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="blue">49 752</td>
-                                                <td class="blue">50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="blue">49 752</td>
-                                                <td class="blue">50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="blue">49 752</td>
-                                                <td class="blue">50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="blue">49 752</td>
-                                                <td class="blue">50</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="blue">49 752</td>
-                                                <td class="blue">50</td>
-                                                <td></td>
-                                            </tr>-->
                                             </tbody>
                                         </table>
                                     </div>
