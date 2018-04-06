@@ -303,219 +303,16 @@
 
                                             <tr ng-repeat="tradeOrder in vm.historyTradeOrders">
                                                 <td>{{tradeOrder.initialAmount}}</td>
-
-                                                <!--
-                                                <td>
-                                                {{tradeOrder.tradeOrderType}} {{tradeOrder.tradeOrderType=='BUY'}}
-                                                </td>
-                                                <td ng-if="tradeOrder.tradeOrderType == 'BUY'">
-                                                    !B
-                                                </td>-->
-
                                                     <td ng-if="tradeOrder.tradeOrderType == 'BUY'" class="up">
                                                         {{tradeOrder.price}}
                                                             <img src="/theme/app/img/up.png" alt="up">
                                                     </td>
-
-
                                                     <td ng-if="tradeOrder.tradeOrderType == 'SELL'" class="down">
                                                         {{tradeOrder.price}}
                                                             <img src="/theme/app/img/down.png" alt="down">
                                                     </td>
-
-
                                                 <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             </tr>
-
-                                            <!--
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="up">
-                                                    457.91
-                                                    <img src="/theme/app/img/up.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="up">
-                                                    457.91
-                                                    <img src="/theme/app/img/up.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="up">
-                                                    457.91
-                                                    <img src="/theme/app/img/up.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="up">
-                                                    457.91
-                                                    <img src="/theme/app/img/up.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            -->
-                                            <!--
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="up">
-                                                    457.91
-                                                    <img src="img/up.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="up">
-                                                    457.91
-                                                    <img src="img/up.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="up">
-                                                    457.91
-                                                    <img src="img/up.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="up">
-                                                    457.91
-                                                    <img src="img/up.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="up">
-                                                    457.91
-                                                    <img src="img/up.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            -->
-                                            <!--
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>
-                                            <tr>
-                                                <td>0.004523</td>
-                                                <td class="down">
-                                                    457.91
-                                                    <img src="/theme/app/img/down.png" alt="up">
-                                                </td>
-                                                <td>11.36.20</td>
-                                            </tr>-->
                                             </tbody>
                                         </table>
                                         </div>
@@ -536,7 +333,7 @@
 
                                             <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders">
                                                 <td>{{tradeOrder.amount}}</td>
-                                                <td class="down">{{tradeOrder.price}}</td>
+                                                <td class="up">{{tradeOrder.price}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                             </tr>
 
@@ -619,8 +416,8 @@
 
 
                                             <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders">
-                                                <td>{{tradeOrder.amount}}</td>
-                                                <td class="down">{{tradeOrder.price}}</td>
+                                                <td style="width: 114px;">{{tradeOrder.amount}}</td>
+                                                <td style="width: 50px;" class="down">{{tradeOrder.price}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                             </tr>
 
