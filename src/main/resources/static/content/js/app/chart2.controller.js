@@ -10,7 +10,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
             return;
         }
 
-        $http.post('/graph/get-quotes?diamond=2', null).then(function(response)  {
+        $http.post('/graph/get-quotes?diamond=' + DiamondService.getCurrentDiamond().id, null).then(function(response)  {
 
             //255 92 92 red  #ff5c5c
             //73 209 109 green #49d16d
