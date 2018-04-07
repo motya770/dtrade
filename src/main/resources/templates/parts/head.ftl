@@ -72,6 +72,7 @@
 
 <script src="/content/js/app.js"></script>
 
+<script src="/content/js/app/diamond.service.js"></script>
 <script src="/content/js/app/account.controller.js"></script>
 <script src="/content/js/app/account.service.js"></script>
 <script src="/content/js/app/available.controller.js"></script>

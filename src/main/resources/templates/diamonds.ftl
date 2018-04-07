@@ -5,7 +5,6 @@
 
     <#include "parts/head.ftl">
     <script src="/content/js/app/diamond.controller.js"></script>
-    <script src="/content/js/app/diamond.service.js"></script>
 
 </head>
 

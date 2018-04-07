@@ -1,6 +1,7 @@
-diamondApp.service("DiamondService", function ($http, $q) {
+diamondApp.service("DiamondService", function DiamondService($http, $rootScope, $q) {
 
     var diamonds = [];
+    var currentDiamond = null;
 
     var getAllEnlistedDiamonds = function () {
 
@@ -16,7 +17,24 @@ diamondApp.service("DiamondService", function ($http, $q) {
         */
     };
 
+    var getCurrentDiamond = function () {
+        return currentDiamond;
+    }
+
+    $rootScope.$on('buyDiamondChoosed', function (event, arg) {
+        currentDiamond = arg;
+    });
+
+    $rootScope.$on('ownedDiamondChoosed', function (event, arg) {
+        currentDiamond = arg;
+    });
+
+    $rootScope.$on('openForSaleDiamondChoosed', function (event, arg) {
+        currentDiamond = arg;
+    });
+
     return {
+        getCurrentDiamond: getCurrentDiamond,
         getAllEnlistedDiamonds: getAllEnlistedDiamonds
     }
 });
