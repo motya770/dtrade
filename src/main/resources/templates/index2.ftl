@@ -24,21 +24,20 @@
             <div class="sep-cab-page__inner">
                 <div class="sep-cab-page__content">
                     <div class="sep-cab-page__top">
-                        <div class="sep-cab-page__side sep-cab-page__left">
+                        <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm">
                             <div class="sep-cab-page__heading">
                                 <h2>Список бриллиантов</h2>
                                 <p>Все акции бриллиантов в работе</p>
                             </div>
-                            <!--
+
                             <form class="searchform">
-                                <input type="text" class="searchform__inp" placeholder="Введите имя бриллианта">
-                                <button class="searchform__btn">Найти</button>
+                                <input type="text" class="searchform__inp" ng-model="searchInputValue" placeholder="Введите имя бриллианта">
+                                <button class="searchform__btn" ng-click="getAvailableByName();">Найти</button>
                             </form>
-                            -->
 
                             <div class="type-diamond-table">
                                 <div class="table-container">
-                                    <div ng-controller="AvailableController as vm">
+                                    <div >
                                       <table class="diamont-table">
                                         <thead>
                                         <tr>
