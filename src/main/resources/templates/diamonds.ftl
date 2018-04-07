@@ -32,7 +32,9 @@
                             <tr>
                                 <th>Наименование</th>
                                 <th>Стартовый капитал</th>
+                                <!--
                                 <th>Количество</th>
+                                -->
                                 <th>Тип</th>
                                 <th>Статус</th>
                                 <th>Караты</th>
@@ -45,7 +47,9 @@
                             <tr ng-repeat="diamond in vm.diamonds">
                                 <td>{{diamond.name}}<br>ISIN: {{diamond.id}}</td>
                                 <td>{{diamond.price}}</td>
+                                <!--
                                 <td>{{diamond.amount}}</td>
+                                -->
                                 <td>{{diamond.diamondType}}</td>
                                 <td>{{diamond.diamondStatus}}</td>
                                 <td>{{diamond.carats}}</td>
