@@ -3,8 +3,8 @@
         <div ng-show="vm.account" class="cabtop-info__content">
                 <span class="cabtop-info__ico"></span>
                 <div class="cabtop-info__text">
-                    <h3>Аккаунт:  {{vm.account.mail}}</h3>
-                    <p><span class="accent">Балланс</span>  <span class="accent">{{vm.account.balance}}  $.</span></p>
+                    <h3>Account:  {{vm.account.mail}}</h3>
+                    <p><span class="accent">Balance</span>  <span class="accent">{{vm.account.balance}}  $.</span></p>
 
 
                 </div>

@@ -21,16 +21,16 @@
         <div class="def-cab-page">
             <div class="def-cab-page__inner">
                 <div class="def-cab-page__content">
-                    <h2 class="def-cab-page__heading">Мои данные</h2>
+                    <h2 class="def-cab-page__heading">My history</h2>
                     <ul class="lk-tabs-heading">
                         <li class="active">
-                            <a href="#tab01">История изменения баланса</a>
+                            <a href="#tab01">Balance activity</a>
                         </li>
                         <li>
-                            <a href="#tab02">Моя история торгов</a>
+                            <a href="#tab02">Trade history</a>
                         </li>
                         <li>
-                            <a href="#tab03">Депозит и вывод денег через карту</a>
+                            <a href="#tab03">Deposits and withdraws</a>
                         </li>
                     </ul>
 
@@ -45,10 +45,10 @@
                                         <thead>
                                         <tr>
                                             <th>№</th>
-                                            <th>Дата</th>
-                                            <th>Сумма, руб</th>
-                                            <th>Вид операции</th>
-                                            <th>Баланс на момент</th>
+                                            <th>Date</th>
+                                            <th>Operation type</th>
+                                            <th>Sum ($)</th>
+                                            <th>Balance</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -64,7 +64,7 @@
                                         </tbody>
                                     </table>
                                     </div>
-                                    <a href="#" ng-click="getPreviousBalanceActivities(vm.balanceActivities.number)" class="sep-cab-tab__more">Показать предыдущие изменения</a>
+                                    <a href="#" ng-click="getPreviousBalanceActivities(vm.balanceActivities.number)" class="sep-cab-tab__more">Previous activities</a>
                                 </div>
                             </div>
                             <div class="lk-main-tab__info">
@@ -101,12 +101,12 @@
                                         <thead>
                                         <tr>
                                             <th>№</th>
-                                            <th>Дата</th>
-                                            <th>Акция</th>
-                                            <th>№ Акции</th>
-                                            <th>Цена</th>
-                                            <th>Сумма</th>
-                                            <th>Статус</th>
+                                            <th>Date</th>
+                                            <th>Name</th>
+                                            <th>№ Amount</th>
+                                            <th>Price</th>
+                                            <th>Sum</th>
+                                            <th>Status</th>
                                             <!--
                                             <th>Баланс</th>
                                             -->
@@ -128,7 +128,7 @@
                                         </tbody>
                                     </table>
                                     </div>
-                                    <a href="#" ng-click="getPreviousAccountHistoryOrders(vm.accountHistoryTradeOrders.number)" class="sep-cab-tab__more">Показать предыдущие позиции</a>
+                                    <a href="#" ng-click="getPreviousAccountHistoryOrders(vm.accountHistoryTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
                                 </div>
                             </div>
                             <div class="lk-main-tab__info">

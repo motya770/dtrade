@@ -23,23 +23,23 @@
         <div class="def-cab-page">
             <div class="def-cab-page__inner">
                 <div class="def-cab-page__content">
-                    <h2 class="def-cab-page__heading">Акции бриллиантов</h2>
+                    <h2 class="def-cab-page__heading">Diamonds derivatives</h2>
 
                     <div ng-controller="DiamondController as vm">
                         <div class="table-container">
                         <table class="diamont-table">
                             <thead>
                             <tr>
-                                <th>Наименование</th>
-                                <th>Стартовый капитал</th>
+                                <th>Name</th>
+                                <th>Initial price</th>
                                 <!--
                                 <th>Количество</th>
                                 -->
-                                <th>Тип</th>
-                                <th>Статус</th>
-                                <th>Караты</th>
-                                <th>Чистота</th>
-                                <th>Σ акций</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Carats</th>
+                                <th>Clarity</th>
+                                <th>Σ stcks</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -56,7 +56,7 @@
                                 <td>{{diamond.clarity}}</td>
                                 <td>{{diamond.totalStockAmount}}</td>
                                 <td>
-                                    <a href="#" data-open="1">Узнать подробности</a>
+                                    <a href="#" data-open="1">More</a>
                                 </td>
                             </tr>
                             <tr class="nopadding" data-show="1">

@@ -26,13 +26,13 @@
                     <div class="sep-cab-page__top">
                         <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm">
                             <div class="sep-cab-page__heading">
-                                <h2>Список бриллиантов</h2>
-                                <p>Все акции бриллиантов в работе</p>
+                                <h2>Diamonds listing</h2>
+                                <p>All diamonds derivates availiable</p>
                             </div>
 
                             <form class="searchform">
-                                <input type="text" class="searchform__inp" ng-model="searchInputValue" placeholder="Введите имя бриллианта">
-                                <button class="searchform__btn" ng-click="getAvailableByName();">Найти</button>
+                                <input type="text" class="searchform__inp" ng-model="searchInputValue" placeholder="Enter the name of the diamond">
+                                <button class="searchform__btn" ng-click="getAvailableByName();">Find</button>
                             </form>
 
                             <div class="type-diamond-table">
@@ -41,7 +41,7 @@
                                       <table class="diamont-table">
                                         <thead>
                                         <tr>
-                                            <th>Бриллиант</th>
+                                            <th>Diamond</th>
                                             <th></th>
                                             <th>N</th>
                                             <th>P <span class="inf">?</span></th>
@@ -202,8 +202,8 @@
 
                             <div class="sep-cab-page__activity">
                                 <div class="sep-cab-page__heading">
-                                    <h2>Общая активность</h2>
-                                    <p>Средние показатели роста акций за год</p>
+                                    <h2>General activity</h2>
+                                    <p>Average market changes for year</p>
                                 </div>
                                 <div class="activity-graph">
                                     <img src="/theme/app/img/graph02.png" alt="graph">
@@ -212,8 +212,8 @@
                         </div>
                         <div class="sep-cab-page__side sep-cab-page__right">
                             <div class="sep-cab-page__heading">
-                                <h2>Технический анализ</h2>
-                                <p>График изменения цены долей бриллианта</p>
+                                <h2>Technical analysis</h2>
+                                <p>Graph of changes of diamond derivative price</p>
                             </div>
                             <!--
                             <form class="filterlist">
@@ -270,7 +270,7 @@
                             </div>
 
                             <div class="sub-trade-graph">
-                                <h3>Динамика акций бриллианта за последний год</h3>
+                                <h3>Dynamic of diamond derivatives for last year</h3>
                                 <img src="/theme/app/img/graph03.png" alt="graph">
                             </div>
 
@@ -294,9 +294,9 @@
                                         <table class="diamont-table">
                                             <thead>
                                             <tr>
-                                                <th>Сумма</th>
-                                                <th>Цена</th>
-                                                <th>Время</th>
+                                                <th>Amount</th>
+                                                <th>Price</th>
+                                                <th>Time</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -327,9 +327,9 @@
                                         <table class="diamont-table diamont-table--pdb">
                                             <thead>
                                             <tr>
-                                                <th>Продажи</th>
-                                                <th>Цена</th>
-                                                <th>Покупки</th>
+                                                <th>Amount</th>
+                                                <th>Price</th>
+                                                <th>Time</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -374,7 +374,7 @@
                                     <a href="#tab01">Open Order</a>
                                 </li>
                                 <li>
-                                    <a href="#tab02">Мои акции</a>
+                                    <a href="#tab02">My derivates (stocks)</a>
                                 </li>
                             </ul>
                             <div class="sep-cab-tabs-container">
@@ -386,13 +386,13 @@
                                             <thead>
                                             <tr>
 
-                                                <th>Наименование</th>
-                                                <th>Цена</th>
-                                                <th>Количество</th>
-                                                <th>t открытия </th>
-                                                <th>Статус</th>
-                                                <th>Тип</th>
-                                                <th>Действие</th>
+                                                <th>Name</th>
+                                                <th>Price</th>
+                                                <th>Amount</th>
+                                                <th>t creation </th>
+                                                <th>Status</th>
+                                                <th>Types</th>
+                                                <th>Action</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -442,7 +442,7 @@
                                         </table>
                                         </div>
                                     </div>
-                                    <a href="#" ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Показать предыдущие позиции</a>
+                                    <a href="#" ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
                                 </div>
                             </div>
                             <div class="sep-cab-tab" id="tab02">
@@ -452,15 +452,15 @@
                                         <table class="diamont-table">
                                         <thead>
                                         <tr>
-                                            <th>Наименование</th>
+                                            <th>Name</th>
                                             <!--
                                             <th>Цена</th>
                                             <th>t покупки</th>
                                             <th>Статус</th>
                                             <th>Цена продажи</th>
                                             -->
-                                            <th>Количество</th>
-                                            <th>Действие</th>
+                                            <th>Amount</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -473,7 +473,7 @@
                                             <td>{{stock.diamond.name}}</td>
                                             <td>{{stock.amount}}</td>
                                             <td>
-                                                <a href="#">Начать</a>
+                                                <a href="#">Choose</a>
                                             </td>
                                         </tr>
                                         <!--

@@ -16,7 +16,7 @@
         <div class="def-cab-page">
             <div class="def-cab-page__inner">
                 <div class="def-cab-page__content">
-                    <h2 class="def-cab-page__heading">Вход</h2>
+                    <h2 class="def-cab-page__heading">Login</h2>
                     <div class="table-container">
                         <div style="width: 400px; margin-left: 8px; margin-bottom: 10px;">
                             <form action="/login" method="post">
@@ -47,7 +47,7 @@
                         </div>
 
                         <div style="width: 400px;">
-                    <h2 class="def-cab-page__heading">Регистрация</h2>
+                    <h2 class="def-cab-page__heading">Registration</h2>
                         <div ng-controller="RegistrationController as vm" style="width:500px;" layout="column" layout-padding="" ng-cloak="" class="material-input", class="input-demo-Errors, ng-app="MyApp">
                          <br>
                         <md-input-container md-no-float="" class="md-block">
