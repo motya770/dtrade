@@ -1,6 +1,15 @@
-diamondApp.controller('ChartController', function ($scope, $timeout, $http, AvailableService) {
+diamondApp.controller('ChartController', function ($scope, $timeout, $http, $interval, $timeout, DiamondService, AvailableService) {
+
+    var self = this;
+    self.isFirstTimeout = true;
 
     var getChartData = function () {
+
+        if(DiamondService.getCurrentDiamond() == null){
+            $timeout(getChartData, 1000);
+            return;
+        }
+
         $http.post('/graph/get-quotes?diamond=2', null).then(function(response)  {
 
             //255 92 92 red  #ff5c5c
@@ -49,10 +58,13 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, Avai
                     }
                 }]
             });
+
+            if(self.isFirstTimeout){
+                self.isFirstTimeout = false;
+                $interval(getChartData, 2000);
+            }
         });
     }
-
-
 
     var simpleTheme = {
         "colors": ["#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d"],
