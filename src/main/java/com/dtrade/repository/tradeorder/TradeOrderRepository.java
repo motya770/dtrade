@@ -1,6 +1,7 @@
 package com.dtrade.repository.tradeorder;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +20,7 @@ import java.util.List;
 public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
     @Query("select to from TradeOrder to where to.traderOrderStatus = 'CREATED' " +
-            "or to.traderOrderStatus = 'IN_MARKET' order by to.creationDate desc")
+            "or to.traderOrderStatus = 'IN_MARKET'  order by to.creationDate desc")
     List<TradeOrder> getLiveTradeOrders();
 
     @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} and (to.traderOrderStatus = 'CREATED' " +
@@ -30,8 +31,8 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
             "and to.traderOrderStatus <> 'IN_MARKET' order by to.creationDate desc")
     Page<TradeOrder> getHistoryTradeOrdersForAccount(@Param("account") Account account, Pageable pageable);
 
-    @Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' order by to.executionDate desc ")
-    List<TradeOrder> getHistoryTradeOrders(Pageable pageable);
+    @Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' and to.diamond.id = :#{#diamond.id} order by to.executionDate desc ")
+    List<TradeOrder> getHistoryTradeOrders(@Param("diamond") Diamond diamond, Pageable pageable);
 
     /*
     @Query(" select sum(to.price * to.initialAmount) from TradeOrder to where " +

@@ -13,19 +13,22 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
         historyOrders.push(order);
     };
 
-    var getHistoryOrders = function () {
+    var getHistoryOrders = function (diamond) {
 
         // if (historyOrders != null && historyOrders.length != 0) {
         //     return $q.resolve(historyOrders)
         // }else{
-            return $http.post("/trade-order/history-orders", null, null).then(function (responce) {
+
+            // var diamond = {}
+            // diamond["diamond"] = diamondObj;
+            return $http.post("/trade-order/history-orders", diamond, null).then(function (responce) {
                 historyOrders = responce.data;
                 return historyOrders;
             });
         //}
     };
 
-    var getLiveOrders = function (pageNumber) {
+    var getLiveOrders = function (diamond, pageNumber) {
 
 
         /*if (liveOrders != null && liveOrders.content!=null && liveOrders.content.length != 0) {

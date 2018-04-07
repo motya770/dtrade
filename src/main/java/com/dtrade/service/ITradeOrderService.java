@@ -1,5 +1,6 @@
 package com.dtrade.service;
 
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
@@ -19,7 +20,7 @@ public interface ITradeOrderService {
 
     Page<TradeOrder> getHistoryTradeOrdersByAccount(Integer pageNumber);
 
-    List<TradeOrder> getHistoryTradeOrders();
+    List<TradeOrder> getHistoryTradeOrders(Diamond diamond);
 
     List<TradeOrder> getLiveTradeOrders();
 

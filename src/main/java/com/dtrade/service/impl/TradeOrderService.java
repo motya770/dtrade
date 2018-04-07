@@ -2,6 +2,7 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
@@ -93,8 +94,8 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
     @Override
-    public List<TradeOrder> getHistoryTradeOrders() {
-        return tradeOrderRepository.getHistoryTradeOrders(new PageRequest(0, 30));
+    public List<TradeOrder> getHistoryTradeOrders(Diamond diamond) {
+        return tradeOrderRepository.getHistoryTradeOrders(diamond, new PageRequest(0, 30));
     }
 
     @Override

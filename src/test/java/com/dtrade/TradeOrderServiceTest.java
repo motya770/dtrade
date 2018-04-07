@@ -145,7 +145,8 @@ public class TradeOrderServiceTest extends BaseTest {
 
     @Test
     public void testGetHistoryTradeOrders(){
-        List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders();
+        //TODO fix it
+        List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders(null);
         tradeOrders.forEach(tradeOrder -> {
             Assert.assertTrue(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)
                     || tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.CANCELED)

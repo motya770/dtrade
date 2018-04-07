@@ -1,5 +1,6 @@
 package com.dtrade.controller;
 
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.ITradeOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class TradeOrderController {
 
 
     @RequestMapping(value = "/history-orders")
-    public List<TradeOrder> getHistoryTradeOrders(){
-        return tradeOrderService.getHistoryTradeOrders();
+    public List<TradeOrder> getHistoryTradeOrders(@RequestBody Diamond diamond){
+        return tradeOrderService.getHistoryTradeOrders(diamond);
     }
 
     @RequestMapping(value = "/account-history-orders")
