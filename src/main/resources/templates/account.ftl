@@ -117,7 +117,7 @@
                                             <td>{{tradeOrder.id}}</td>
                                             <td>{{tradeOrder.executionDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             <td>{{tradeOrder.diamond.name}}</td>
-                                            <td>{{tradeOrder.amount}}</td>
+                                            <td>{{tradeOrder.initialAmount}}</td>
                                             <td>{{tradeOrder.price}}</td>
                                             <td>{{tradeOrder.price * tradeOrder.amount}}</td>
                                             <td>{{tradeOrder.traderOrderStatus}}</td>
