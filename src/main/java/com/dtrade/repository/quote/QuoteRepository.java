@@ -16,10 +16,12 @@ import java.util.List;
 @Repository
 public interface QuoteRepository extends JpaRepository<Quote, Long> {
 
-    @Query("select q from Quote q where q.diamond.id = :diamond and" +
-            " q.time <= :end_time " +
-            "and q.quoteType=:quote_type order by q.id desc")
+    @Query("select q from Quote q where q.diamond.id = :diamond " +
+            " and q.time > :start_time " +
+            " and q.time <= :end_time " +
+            " and q.quoteType=:quote_type order by q.id desc ")
     List<Quote> getRangeQuotes(@Param("diamond") Long diamondId,
+                               @Param("start_time") Long start,
                                @Param("end_time") Long end, @Param("quote_type")
                                        QuoteType quoteType, Pageable pageable);
 

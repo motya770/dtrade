@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -102,9 +103,11 @@ public class QuotesService implements IQuotesService {
             end = System.currentTimeMillis();
         }
 
-        start = null;
+        if(start==null){
+            start = System.currentTimeMillis() - Duration.ofDays(100).toMillis();
+        }
         //TODO potential bug
-        List<Quote> quotes = quoteRepository.getRangeQuotes(diamond.getId(), end, QuoteType.ACTION_QUOTE, new PageRequest(0, 200));
+        List<Quote> quotes = quoteRepository.getRangeQuotes(diamond.getId(), start, end, QuoteType.ACTION_QUOTE, new PageRequest(0, 200));
         Collections.reverse(quotes);
         return quotes;
     }

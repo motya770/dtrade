@@ -37,6 +37,8 @@ public class Quote  {
     @Column(precision = 12, scale = 5)
     private BigDecimal price;
 
+    //TODO think about index
+    //@Index()
     private Long time;
 
     @NotNull

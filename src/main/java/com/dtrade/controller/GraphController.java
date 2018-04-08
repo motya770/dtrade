@@ -45,13 +45,18 @@ public class GraphController {
 
     @RequestMapping(value = "/get-quotes", method = RequestMethod.POST)
     public List<Quote> getRangeQuotes(@RequestParam(required = true) Diamond diamond,
-                                      @RequestParam(required = false) Long openTime,
-                                      @RequestParam(required = false) Long closeTime
+                                      @RequestParam(required = false) Long start,
+                                      @RequestParam(required = false) Long end
     ) throws TradeException {
 
-        long start = System.currentTimeMillis();
-        List<Quote> quotes = quotesService.getRangeQuotes(diamond, openTime, closeTime);
-        logger.info("time: " + (System.currentTimeMillis() - start) + " size: " + quotes.size());
+        long startRequest = System.currentTimeMillis();
+        List<Quote> quotes = quotesService.getRangeQuotes(diamond, start, end);
+//        if(start==null){
+//            start = System.currentTimeMillis();
+//        }
+        logger.info("time:  size: " + quotes.size());
+
+        System.out.println("execution date: " +  (System.currentTimeMillis() - startRequest));
 
        // Stream.of().forEach();
         return quotes;
