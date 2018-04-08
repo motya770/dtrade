@@ -28,7 +28,7 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
         //}
     };
 
-    var getLiveOrders = function (diamond, pageNumber) {
+    var getLiveOrders = function (pageNumber) {
 
 
         /*if (liveOrders != null && liveOrders.content!=null && liveOrders.content.length != 0) {

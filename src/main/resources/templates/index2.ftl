@@ -378,7 +378,7 @@
                                 </li>
                             </ul>
                             <div class="sep-cab-tabs-container">
-                                <div class="sep-cab-tab" id="tab01" ng-controller="TradeOrderController as vm">
+                                <div ng-controller="TradeOrderController as vm" class="sep-cab-tab" id="tab01" >
                                     <div class="table-container">
 
                                         <div >
@@ -396,9 +396,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-
                                             <tr ng-repeat="tradeOrder in vm.liveTradeOrders.content">
-
 
                                                 <td>{{tradeOrder.diamond.name}}</td>
                                                 <td>{{tradeOrder.price}}</td>
