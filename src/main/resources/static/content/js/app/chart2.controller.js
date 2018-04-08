@@ -7,6 +7,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
     self.lastDiamondId = null;
     self.poolingPromise = null;
 
+
     var simpleTheme = {
         "colors": ["#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d"],
         "chart": {
@@ -158,11 +159,28 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
                         text: 'All'
                     }],
                     inputEnabled: false,
-                    selected: 0
+                    selected: 4
                 },
 
+                // rangeSelector: {
+                //     buttons: [{
+                //         count: 1,
+                //         type: 'minute',
+                //         text: '1M'
+                //     }, {
+                //         count: 5,
+                //         type: 'minute',
+                //         text: '5M'
+                //     }, {
+                //         type: 'all',
+                //         text: 'All'
+                //     }],
+                //     inputEnabled: false,
+                //     selected: 0
+                // },
+
                 title: {
-                    text: 'Live random data'
+                    text: ''
                 },
 
                 exporting: {
@@ -170,8 +188,9 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
                 },
 
                 series: [{
-                    name: 'Random data',
+                    name: '',
                     data: result
+
                 }]
             });
         });

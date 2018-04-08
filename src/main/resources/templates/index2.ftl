@@ -255,7 +255,7 @@
                                 </div>
                                 <span class="filterlist__date">26 ноября</span>
                             </form>-->
-                            <div class="main-trade-graph">
+                            <div class="main-trade-graph" style="margin-top:0px; padding-bottom: 16px;">
                                 <div ng-controller="ChartController as vm">
                                     <div class="row">
                                         <div id="container" style="height: 400px; min-width: 310px; width: 450px;"></div>
