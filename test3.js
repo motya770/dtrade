@@ -4,8 +4,44 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
     self.isFirstTimeout = true;
     self.graph = null;
     self.lastTimeQuote = null;
-    self.lastDiamondId = null;
-    self.poolingPromise = null;
+
+    var getChartData = function () {
+
+        if(DiamondService.getCurrentDiamond() == null){
+            $timeout(getChartData, 1000);
+            return;
+        }
+
+        $http.post('/graph/get-quotes?diamond=' + DiamondService.getCurrentDiamond().id, null).then(function(response)  {
+
+            //255 92 92 red  #ff5c5c
+            //73 209 109 green #49d16d
+            //209 209 209
+
+            var data = response.data;
+
+            var points = [data.length + 1];
+            for(var i in data){
+                var point = new Array(5);
+                point[0] = data[i].time;
+                point[1] = data[i].bid;
+                point[2] = data[i].ask;
+                point[3] = data[i].bid;
+                point[4] = data[i].ask;
+
+                points[i] = point;
+            }
+
+            // create the chart
+
+
+            if(self.isFirstTimeout){
+                self.isFirstTimeout = false;
+                $interval(getChartData, 2000);
+            }
+            //graph.series[0].addPoints(points);
+        });
+    }
 
     var simpleTheme = {
         "colors": ["#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d"],
@@ -104,7 +140,8 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
     var addNewPoints = function (that){
 
         var series = that.series[0];
-        $http.post('/graph/get-quotes?diamond=' + DiamondService.getCurrentDiamond().id +  '&start=' + self.lastTimeQuote, null).then(function(response) {
+        //$interval(function () {
+        $http.post('/graph/get-quotes?diamond=2&start=' + self.lastTimeQuote, null).then(function(response) {
             var result = parseQuotesToArray(response.data);
             console.log(result.length);
             for(var i in result){
@@ -115,12 +152,16 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
             }
             console.log("last time: " + self.lastTimeQuote);
         });
+        // }, 1000);
     }
 
+    var consFunc = function () {
+        console.log("Test1");
+    };
     var getGraphData = function () {
 
         if(DiamondService.getCurrentDiamond()==null){
-            $timeout(getGraphData, 500);
+            $timeout(getChartData, 500);
             return;
         }
 
@@ -137,7 +178,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
                         load:function () {
                             console.log("load1");
                             var that = this;
-                            self.poolingPromise = $interval( function () {
+                            $interval( function () {
                                 addNewPoints(that);
                             }, 1000);
                         },
@@ -177,26 +218,5 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
         });
     };
 
-
-    var reloadGraph = function () {
-        if(self.poolingPromise){
-            $interval.cancel(self.poolingPromise);
-        }
-        getGraphData();
-    }
-
-    $scope.$on('buyDiamondChoosed', function (event, arg) {
-        reloadGraph();
-    });
-
-    $scope.$on('ownedDiamondChoosed', function (event, arg) {
-        reloadGraph();
-    });
-
-    $scope.$on('openForSaleDiamondChoosed', function (event, arg) {
-        reloadGraph();
-    });
-
-
-    //getGraphData();
+    getGraphData();
 });
