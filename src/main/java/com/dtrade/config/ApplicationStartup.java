@@ -1,6 +1,6 @@
 package com.dtrade.config;
 
-import com.dtrade.service.QuotesSimulator;
+import com.dtrade.service.simulators.QuotesSimulator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

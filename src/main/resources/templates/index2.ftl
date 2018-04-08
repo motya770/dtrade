@@ -24,7 +24,7 @@
             <div class="sep-cab-page__inner">
                 <div class="sep-cab-page__content">
                     <div class="sep-cab-page__top">
-                        <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm">
+                        <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm" style="height:491px;">
                             <div class="sep-cab-page__heading">
                                 <h2>Diamonds listing</h2>
                                 <p>All diamonds derivates availiable</p>
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <div class="sep-cab-page__mid">
-                            <div class="sep-cab-page__form">
+                            <div class="sep-cab-page__form" style="height: 491px;">
                                 <ul class="sep-cab-tabs sep-cab-tabs--form">
                                     <!--
                                     <li class="active">
@@ -200,6 +200,7 @@
 
                             </div>
 
+                            <!--
                             <div class="sep-cab-page__activity">
                                 <div class="sep-cab-page__heading">
                                     <h2>General activity</h2>
@@ -208,7 +209,7 @@
                                 <div class="activity-graph">
                                     <img src="/theme/app/img/graph02.png" alt="graph">
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="sep-cab-page__side sep-cab-page__right">
                             <div class="sep-cab-page__heading">
@@ -269,10 +270,11 @@
                                 -->
                             </div>
 
+                            <!--
                             <div class="sub-trade-graph">
                                 <h3>Dynamic of diamond derivatives for last year</h3>
                                 <img src="/theme/app/img/graph03.png" alt="graph">
-                            </div>
+                            </div>-->
 
                         </div>
                     </div>

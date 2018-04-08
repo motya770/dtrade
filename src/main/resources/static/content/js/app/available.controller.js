@@ -12,7 +12,16 @@ diamondApp.controller('AvailableController', function AvailableController($scope
 
     var getAvailable = function (name) {
         AvailableService.getAvailable(name).then(function (data) {
-            self.availableDiamonds = data;
+            //TODO only first 5 
+            var onlyFive = [];
+            for(var i in data){
+                onlyFive[i] = data[i];
+                if(i > 3){
+                    break;
+                }
+            }
+
+            self.availableDiamonds = onlyFive;
             if(data!=null && data.length>0){
                 var firstDiamond = data[0];
                 $rootScope.$broadcast('buyDiamondChoosed', firstDiamond);

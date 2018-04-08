@@ -1,7 +1,8 @@
-package com.dtrade.service;
+package com.dtrade.service.simulators;
 
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.repository.diamond.DiamondRepository;
+import com.dtrade.service.IQuotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
