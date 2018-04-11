@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class BalanceActivityTest extends BaseTest {
 
     @Autowired

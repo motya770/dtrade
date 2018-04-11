@@ -24,6 +24,7 @@ import java.util.Objects;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class DiamondServiceTest  extends BaseTest{
 
     @Autowired

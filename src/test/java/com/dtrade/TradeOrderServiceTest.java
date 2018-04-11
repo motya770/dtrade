@@ -33,6 +33,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class TradeOrderServiceTest extends BaseTest {
 
     @Autowired

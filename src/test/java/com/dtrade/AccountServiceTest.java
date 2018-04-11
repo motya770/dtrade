@@ -20,6 +20,7 @@ import java.util.List;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class AccountServiceTest extends BaseTest{
 
     @Autowired
