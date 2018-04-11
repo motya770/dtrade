@@ -77,10 +77,6 @@ public class TradeOrderService  implements ITradeOrderService{
         logger.debug("CALCULATING TRADE ORDERS");
 
         bookOrderService.getBookOrders().entrySet().forEach((entry)->{
-           // System.out.println("ONE: " + entry.getKey() + " " + entry.getValue().getSell().size() + " " + entry.getValue().getBuy().size());
-        });
-
-        bookOrderService.getBookOrders().entrySet().forEach((entry)->{
             Pair<TradeOrder, TradeOrder> pair = bookOrderService.findClosest(entry.getKey());
 
             quotesService.issueQuote(pair);
@@ -88,7 +84,10 @@ public class TradeOrderService  implements ITradeOrderService{
             if(checkIfCanExecute(pair)) {
 
                 logger.debug("EXECUTING TRADE PAIR");
+
+                long start = System.currentTimeMillis();
                 executeTradeOrders(pair);
+                logger.info("execute trade time: {}", (System.currentTimeMillis() - start));
             }
         });
     }
@@ -157,6 +156,9 @@ public class TradeOrderService  implements ITradeOrderService{
         //TODO check account balance.
         //TODO freeze money (?)
 
+        long start = System.currentTimeMillis();
+
+
         if(!fieldsNotEmpty(tradeOrder)){
             throw new TradeException("Can't create trade order because some fields is empty");
         }
@@ -179,6 +181,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.addNew(realOrder);
 
+        logger.info("Open Trade time {}", (System.currentTimeMillis() - start));
         return realOrder;
     }
 
@@ -199,6 +202,31 @@ public class TradeOrderService  implements ITradeOrderService{
 
 
         tradeOrder.setTraderOrderStatus(TraderOrderStatus.CANCELED);
+
+        tradeOrder = tradeOrderRepository.save(tradeOrder);
+
+        bookOrderService.remove(tradeOrder);
+
+        return tradeOrder;
+    }
+
+
+    @Override
+    public TradeOrder rejectTradeOrder(TradeOrder tradeOrder) {
+        if(tradeOrder==null){
+            throw new TradeException("TradeOrder is null");
+        }
+
+        tradeOrder = tradeOrderRepository.getOne(tradeOrder.getId());
+
+        if(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)
+                || tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.CANCELED))
+        {
+            throw new TradeException("Can't cancel trader order with status " + tradeOrder.getTraderOrderStatus());
+        }
+
+
+        tradeOrder.setTraderOrderStatus(TraderOrderStatus.REJECTED);
 
         tradeOrder = tradeOrderRepository.save(tradeOrder);
 
@@ -299,13 +327,25 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     //seller don't have enouth stocks
                     if (sellStock.getAmount().compareTo(realAmount) < 0) {
-                        throw new TradeException("Not enougth stocks at " + sellStock);
+                        //TODO notify user
+                        logger.error("Not enougth stocks at {}" + sellStock);
+                        rejectTradeOrder(sellOrder);
+                        return;
+                        // throw new TradeException("Not enougth stocks at " + sellStock);
                     }
 
                     BigDecimal cash = realAmount.multiply(buyPrice);
 
                     long startActivity = System.currentTimeMillis();
-                    balanceActivityService.createBalanceActivities(buyAccount, sellAccount, cash, buyOrder, sellOrder);
+                    try {
+                        balanceActivityService.createBalanceActivities(buyAccount, sellAccount, cash, buyOrder, sellOrder);
+                    }catch (TradeException e){
+                        //TODO notify user
+                        logger.error("Rejecting {} because of exception {}", buyOrder, e);
+                        rejectTradeOrder(buyOrder);
+                        return;
+                    }
+
                     logger.debug(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
 
                     buyStock.setAmount(buyStock.getAmount().add(realAmount));
@@ -338,6 +378,8 @@ public class TradeOrderService  implements ITradeOrderService{
 //            }
 //        });
     }
+
+
 
     @Override
     public long sellSumForMonthForAccount() {

@@ -28,6 +28,8 @@ public interface ITradeOrderService {
 
     TradeOrder createTradeOrder(TradeOrder tradeOrder);
 
+    TradeOrder rejectTradeOrder(TradeOrder sellOrder);
+
     TradeOrder cancelTradeOrder(TradeOrder tradeOrder);
 
     //buy order // sell order
