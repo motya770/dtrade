@@ -125,7 +125,7 @@ public class AccountServiceTest extends BaseTest{
         BigDecimal addedValue =  new BigDecimal("59");
         account = accountService.updateBalance(account, addedValue);
 
-        Assert.assertTrue(account.getBalance().equals(oldBalance.add(addedValue)));
+        Assert.assertTrue(account.getBalance().compareTo(oldBalance.add(addedValue)) == 0);
 
    }
 

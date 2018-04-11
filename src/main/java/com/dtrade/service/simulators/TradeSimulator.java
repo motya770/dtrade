@@ -7,6 +7,7 @@ import com.dtrade.service.impl.TradeOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -14,6 +15,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.PostConstruct;
 
 //@Component
+@Profile("local")//maybe too much?)
 public class TradeSimulator {
 
     private static final Logger logger = LoggerFactory.getLogger(TradeSimulator.class);

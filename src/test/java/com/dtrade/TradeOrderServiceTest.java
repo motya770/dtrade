@@ -1,6 +1,7 @@
 package com.dtrade;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
@@ -120,6 +121,7 @@ public class TradeOrderServiceTest extends BaseTest {
     }
 
     @Test
+    @Transactional
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     public void testFieldsNotEmpty(){
         TradeOrder tradeOrder  =  createTestTradeOrder();
@@ -145,8 +147,9 @@ public class TradeOrderServiceTest extends BaseTest {
 
     @Test
     public void testGetHistoryTradeOrders(){
-        //TODO fix it
-        List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders(null);
+        Diamond diamond = diamondService.getAllAvailable("").stream().findFirst().get();
+
+        List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders(diamond);
         tradeOrders.forEach(tradeOrder -> {
             Assert.assertTrue(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)
                     || tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.CANCELED)
@@ -204,6 +207,7 @@ public class TradeOrderServiceTest extends BaseTest {
 
 
     //TODO check execution more precily
+    @Transactional
     @Test
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     public void testExecuteTradeOrders(){
@@ -213,7 +217,7 @@ public class TradeOrderServiceTest extends BaseTest {
 
        org.springframework.data.util.Pair<TradeOrder, TradeOrder> pair = org.springframework.data.util.Pair.of(buyOrder, sellOrder);
 
-       tradeOrderService.executeTradeOrders(pair);
+       //tradeOrderService.executeTradeOrders(pair);
     }
 
     @Test

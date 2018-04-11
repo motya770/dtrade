@@ -35,6 +35,7 @@ public class BalanceActivityTest extends BaseTest {
     private AccountService accountService;
 
     //TODO make more complicated checks
+    @Transactional
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
     public void testCreateBalanceActivities(){
@@ -42,7 +43,8 @@ public class BalanceActivityTest extends BaseTest {
        Assert.assertNotNull(pair);
     }
 
-    private Pair<BalanceActivity, BalanceActivity> createTestBalanceActivities(){
+    @Transactional
+    public Pair<BalanceActivity, BalanceActivity> createTestBalanceActivities(){
         Account buyer = accountService.getCurrentAccount();
         Account seller = accountService.findByMail("test@test.com");
 
@@ -71,13 +73,18 @@ public class BalanceActivityTest extends BaseTest {
         Assert.assertTrue( buyActivity.equals(filtered.get(0)));
     }
 
+    @Transactional
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
-    public void testFindAll(){
-        List<BalanceActivity> balanceActivities = balanceActivityService.findAll();
-        createTestBalanceActivities();
-        List<BalanceActivity> rereadBalanceActivities = balanceActivityService.findAll();
-        Assert.assertTrue((balanceActivities.size() + 2 == rereadBalanceActivities.size()));
+    public void testBalanceAcitivtyCreated(){
+        //Page<BalanceActivity> balanceActivities = balanceActivityService.getAccountBalanceActivities(0);
+        Pair<BalanceActivity, BalanceActivity> pair = createTestBalanceActivities();
+        Page<BalanceActivity> rereadBalanceActivities = balanceActivityService.getAccountBalanceActivities(0);
+        long count =
+        rereadBalanceActivities.getContent().stream().filter(balanceActivity ->
+             (balanceActivity.equals(pair.getFirst()) || balanceActivity.equals(pair.getSecond()))
+        ).count();
 
+        Assert.assertTrue(count == 1);
     }
 }

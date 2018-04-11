@@ -11,6 +11,7 @@ import com.dtrade.service.impl.TradeOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class BaseTest {
 
@@ -26,7 +27,7 @@ public class BaseTest {
     private TradeOrderService tradeOrderService;
 
     public Account createAccount(){
-       Account account = accountService.buildAccount("test@test " + (int)(Math.random() * 100 % 100) + ".com",
+       Account account = accountService.buildAccount(("test@test " + UUID.randomUUID().toString()) + ".com",
                 "pwd", "012345678", "USD");
        return accountService.create(account);
     }
