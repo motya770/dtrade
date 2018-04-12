@@ -1,0 +1,10 @@
+docker run -d --name demo-mysql  -e MYSQL_ROOT_PASSWORD=1234  -e MYSQL_DATABASE=dtrade -e MYSQL_USER=root -e MYSQL_PASSWORD=1234  mysql:latest
+
+
+docker run -it --name app --link demo-mysql:mysql -p 8080:8080 springio/app
+
+docker run -it  -e "SPRING_PROFILES_ACTIVE=local" docker -p 8080:8080 -t springio/app:latest
+
+docker run -d  --name app --link demo-mysql:mysql -p 8080:8080   -e DATABASE_HOST=demo-mysql  -e DATABASE_PORT=3306  -e DATABASE_NAME=dtrade   -e DATABASE_USER=root  -e DATABASE_PASSWORD=1234  springio/app
+
+docker run -it  --name app --link demo-mysql:mysql -p 8080:8080   -e DATABASE_HOST=demo-mysql  -e DATABASE_PORT=3306  -e DATABASE_NAME=dtrade   -e DATABASE_USER=root  -e DATABASE_PASSWORD=1234  springio/app
