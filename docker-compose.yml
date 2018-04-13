@@ -11,16 +11,25 @@ services:
     volumes:
         - my-datavolume:/var/lib/mysql
   app:
-    image: wallawalla/diaminds
+      image: wallawalla/diaminds
+      depends_on:
+        - demo-mysql
+      ports:
+        - 8080:8080
+      environment:
+        - DATABASE_HOST=demo-mysql
+        - DATABASE_USER=test
+        - DATABASE_PASSWORD=1234
+        - DATABASE_NAME=dtrade
+        - DATABASE_PORT=3306
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
     depends_on:
       - demo-mysql
     ports:
-      - 8080:8080
+      - 8082:80
     environment:
-      - DATABASE_HOST=demo-mysql
-      - DATABASE_USER=test
-      - DATABASE_PASSWORD=1234
-      - DATABASE_NAME=dtrade
-      - DATABASE_PORT=3306
+      PMA_HOST: demo-mysql
+      PMA_PORT: 3306
 volumes:
      my-datavolume:
