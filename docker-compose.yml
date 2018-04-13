@@ -2,14 +2,16 @@ version: '2.1'
 
 services:
   demo-mysql:
-    image: mysql:latest
+    image: mysql:5.7.21
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=dtrade
       - MYSQL_USER=test
       - MYSQL_PASSWORD=1234
+    volumes:
+        - my-datavolume:/var/lib/mysql
   app:
-    image: springio/app
+    image: wallawalla/diaminds
     depends_on:
       - demo-mysql
     ports:
@@ -20,3 +22,5 @@ services:
       - DATABASE_PASSWORD=1234
       - DATABASE_NAME=dtrade
       - DATABASE_PORT=3306
+volumes:
+     my-datavolume:
