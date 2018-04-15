@@ -36,8 +36,11 @@ public class BalanceActivityService implements IBalanceActivityService {
     private IDiamondService diamondService;
 
     @Override
-    public List<BalanceActivity> findAll() {
-        return balanceActivityRepository.findAll();
+    public Page<BalanceActivity> findAll(Integer pageNumber) {
+        if(pageNumber==null){
+            pageNumber = 0;
+        }
+        return balanceActivityRepository.findAll(new PageRequest(pageNumber, 20));
     }
 
     @Override

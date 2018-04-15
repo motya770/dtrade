@@ -12,7 +12,7 @@
         </tr>
         <tbody>
         <#if balanceActivities??>
-            <#list balanceActivities as activity>
+            <#list balanceActivities.content as activity>
             <tr>
                 <td>${activity.id}</td>
                 <td><a href="/admin/account/show?id=${activity.account.id}"> ${activity.account.mail}</a></td>
@@ -26,6 +26,12 @@
                 </td>
             </tr>
             </#list>
+
+            <a href="/admin/balanceactivity/list?pageNumber=${balanceActivities.number + 1}">
+               ${balanceActivities.number + 1}
+            </a>
+
+
         </#if>
         </tbody>
     </table>

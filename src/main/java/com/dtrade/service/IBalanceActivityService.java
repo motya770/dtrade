@@ -24,5 +24,5 @@ public interface IBalanceActivityService {
     Page<BalanceActivity> getAccountBalanceActivities(Integer pageInteger);
 
     //TODO add paging and protecting
-    List<BalanceActivity> findAll();
+    Page<BalanceActivity> findAll(Integer pageNumber);
 }
