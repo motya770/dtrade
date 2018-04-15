@@ -10,10 +10,20 @@ services:
       - MYSQL_PASSWORD=1234
     volumes:
         - my-datavolume:/var/lib/mysql
+  nginx:
+     container_name: some-nginx
+     image: nginx:1.13
+     restart: always
+     ports:
+       - 80:80
+       - 443:443
+     volumes:
+       - ./nginx/conf.d:/etc/nginx/conf.d
   app:
       image: wallawalla/diaminds
       depends_on:
         - demo-mysql
+        - nginx
       ports:
         - 8080:8080
       environment:

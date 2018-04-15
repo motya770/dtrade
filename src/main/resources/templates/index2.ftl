@@ -337,7 +337,7 @@
                                             <tbody>
 
                                             <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders">
-                                                <td>{{tradeOrder.amount}}</td>
+                                                <td>{{tradeOrder.initialAmount}}</td>
                                                 <td class="up">{{tradeOrder.price}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                             </tr>
@@ -359,7 +359,7 @@
 
 
                                             <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders">
-                                                <td style="width: 114px;">{{tradeOrder.amount}}</td>
+                                                <td style="width: 114px;">{{tradeOrder.initialAmount}}</td>
                                                 <td style="width: 50px;" class="down">{{tradeOrder.price}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                             </tr>
