@@ -8,6 +8,8 @@ import com.dtrade.service.IMailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -101,8 +103,11 @@ public class AccountService implements IAccountService, UserDetailsService {
     }
 
     @Override
-    public List<Account> findAll() {
-        return accountRepository.findAll();
+    public Page<Account> findAll(Integer pageNumber) {
+        if(pageNumber==null){
+            pageNumber = 0;
+        }
+        return accountRepository.findAll(new PageRequest(pageNumber, 20));
     }
 
     @Override

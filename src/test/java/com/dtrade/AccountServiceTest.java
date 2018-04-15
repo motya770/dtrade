@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,15 +70,15 @@ public class AccountServiceTest extends BaseTest{
 
     @Test
     public void testFindAll(){
-        List<Account> accounts = accountService.findAll();
+        Page<Account> accounts = accountService.findAll(0);
         Assert.assertNotNull(accounts);
-        Assert.assertTrue(accounts.size() > 0);
+        Assert.assertTrue(accounts.getContent().size() > 0);
 
-        int currentSize = accounts.size();
+        int currentSize = accounts.getContent().size();
 
         createAccount();
 
-        Assert.assertTrue(accountService.findAll().size()  == currentSize + 1);
+        Assert.assertTrue(accountService.findAll(0).getContent().size()  == currentSize + 1);
     }
 
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)

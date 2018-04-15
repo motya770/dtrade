@@ -2,6 +2,7 @@ package com.dtrade.service;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import sun.jvm.hotspot.debugger.Page;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,7 +24,7 @@ public interface IAccountService {
 
     Account disable(Long accountId);
 
-    List<Account> findAll();
+    org.springframework.data.domain.Page<Account> findAll(Integer pageNumber);
 
     Account find(Long accountId);
 

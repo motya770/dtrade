@@ -3,6 +3,7 @@ package com.dtrade.controller.admin;
 import com.dtrade.model.account.Account;
 import com.dtrade.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,8 @@ public class AdminAccountController {
     private IAccountService accountService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model) {
-        List<Account> accounts = accountService.findAll();
+    public String list(@RequestParam(required = false) Integer pageNumber,  Model model) {
+        Page<Account> accounts = accountService.findAll(pageNumber );
         model.addAttribute("accounts", accounts);
         return "/admin/account/list";
     }
