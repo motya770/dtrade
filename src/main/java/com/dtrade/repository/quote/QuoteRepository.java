@@ -1,7 +1,9 @@
 package com.dtrade.repository.quote;
 
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
 import com.dtrade.model.quote.QuoteType;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +27,5 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
                                @Param("end_time") Long end, @Param("quote_type")
                                        QuoteType quoteType, Pageable pageable);
 
+    Quote findFirstByDiamondOrderByTimeDesc(Diamond diamond);
 }

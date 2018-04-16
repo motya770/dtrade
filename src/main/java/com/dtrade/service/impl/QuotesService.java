@@ -89,6 +89,11 @@ public class QuotesService implements IQuotesService {
     }
 
     @Override
+    public Quote getLastQuote(Diamond diamond) {
+        return quoteRepository.findFirstByDiamondOrderByTimeDesc(diamond);
+    }
+
+    @Override
     public Page<Quote> getPagedQuotes(Integer pageNumber, Integer pageSize, Sort sorting) throws TradeException {
         if(sorting == null) {
             return quoteRepository.findAll(new PageRequest(pageNumber, pageSize));

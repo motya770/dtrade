@@ -2,10 +2,9 @@ package com.dtrade.service;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
-import sun.jvm.hotspot.debugger.Page;
+import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * Created by kudelin on 8/24/16.
@@ -24,7 +23,7 @@ public interface IAccountService {
 
     Account disable(Long accountId);
 
-    org.springframework.data.domain.Page<Account> findAll(Integer pageNumber);
+    Page<Account> findAll(Integer pageNumber);
 
     Account find(Long accountId);
 

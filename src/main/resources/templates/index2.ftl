@@ -43,9 +43,12 @@
                                         <tr>
                                             <th>Diamond</th>
                                             <th></th>
+
+
+                                            <th>Bid <!--<span class="inf">?</span>--></th>
+                                            <th>Ask <!--<span class="inf">?</span>--></th>
+
                                             <th>N</th>
-                                            <th>P <span class="inf">?</span></th>
-                                            <th>S <span class="inf">?</span></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -55,12 +58,13 @@
                                                 <td>
                                                     <img src="/theme/app/img/dia1.png" alt="diamond">
                                                 </td>
-                                                <td>100$</td>
-                                                <td>100$</td>
+
+                                                <td>{{diamond.quote.ask}}</td>
+                                                <td>{{diamond.quote.bid}}</td>
+
                                                 <td>{{diamond.totalStockAmount}}</td>
                                             </tr>
                                         <!--
-
                                         <tr>
                                             <td>Brilliant III <small>Rad, GIA - WS1, Cr-6</small></td>
                                             <td>

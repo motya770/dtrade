@@ -32,4 +32,6 @@ public interface IQuotesService {
 
     List<Quote> getRangeQuotes(Diamond diamond, Long start, Long end) throws TradeException;
 
+    Quote getLastQuote(Diamond diamond);
+
 }

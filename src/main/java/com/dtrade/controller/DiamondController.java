@@ -2,7 +2,9 @@ package com.dtrade.controller;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.diamond.DiamondDTO;
 import com.dtrade.service.IDiamondService;
+import com.dtrade.service.IQuotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ public class DiamondController {
 
     @Autowired
     private IDiamondService diamondService;
+
 
     @Deprecated
     @RequestMapping(value = "/buy")
@@ -39,12 +42,10 @@ public class DiamondController {
     }
 
     @RequestMapping(value = "/available")
-    public List<Diamond> getAllAvailableDiamonds(@RequestParam(required = false) String name) {
-        return diamondService.getAllAvailable(name);
+    public List<DiamondDTO> getAllAvailableDiamonds(@RequestParam(required = false) String name) {
+        List<DiamondDTO> diamonds = diamondService.getAllAvailable(name);
+        return diamonds;
     }
-
-
-
 
 /*
     @RequestMapping(value = "/my-owned")
