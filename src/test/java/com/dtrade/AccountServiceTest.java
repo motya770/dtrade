@@ -74,11 +74,11 @@ public class AccountServiceTest extends BaseTest{
         Assert.assertNotNull(accounts);
         Assert.assertTrue(accounts.getContent().size() > 0);
 
-        int currentSize = accounts.getContent().size();
+        long currentSize = accounts.getTotalElements();
 
         createAccount();
 
-        Assert.assertTrue(accountService.findAll(0).getContent().size()  == currentSize + 1);
+        Assert.assertTrue(accountService.findAll(0).getTotalElements() == currentSize + 1);
     }
 
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
