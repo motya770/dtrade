@@ -54,7 +54,7 @@ public class GraphController {
 //        if(start==null){
 //            start = System.currentTimeMillis();
 //        }
-        logger.info("time:  size: " + quotes.size());
+        //logger.info("time:  size: " + quotes.size());
 
         System.out.println("execution date: " +  (System.currentTimeMillis() - startRequest));
 

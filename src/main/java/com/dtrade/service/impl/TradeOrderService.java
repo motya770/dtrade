@@ -8,6 +8,7 @@ import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -287,6 +288,13 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     TradeOrder buyOrder = tradeOrderRepository.findOne(pair.getFirst().getId());
                     TradeOrder sellOrder = tradeOrderRepository.findOne(pair.getSecond().getId());
+
+                    if (buyOrder==null || sellOrder == null){
+                        return;
+                    }
+
+                   // Hibernate.initialize(buyOrder.getDiamond());
+                   // Hibernate.initialize(sellOrder.getDiamond());
 
                     if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
                         return;
