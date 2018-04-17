@@ -125,6 +125,10 @@ public class QuotesService implements IQuotesService {
         if(start==null){
             start = System.currentTimeMillis() - Duration.ofDays(100).toMillis();
         }
+
+        if(diamond==null){
+            return null;
+        }
         //TODO potential bug
         List<Quote> quotes = quoteRepository.getRangeQuotes(diamond.getId(), start, end, QuoteType.ACTION_QUOTE, new PageRequest(0, 200));
         Collections.reverse(quotes);
