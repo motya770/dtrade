@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -86,6 +87,19 @@ public class QuotesService implements IQuotesService {
         quote.setDiamond(diamond);
         quote.setQuoteType(QuoteType.ACTION_QUOTE);
         return create(quote);
+    }
+
+    @Override
+    public List<Pair<?, ?>>  getLastQuoteForDiamonds(List<Diamond> diamonds) {
+        List<Pair<?, ?>> responce = new ArrayList<>();
+        for(Diamond diamond : diamonds){
+            Quote quote = quoteRepository.findFirstByDiamondOrderByTimeDesc(diamond);
+            if(quote!=null) {
+                Pair<?, ?> pair = Pair.of(diamond, quote);
+                responce.add(pair);
+            }
+        }
+        return responce;
     }
 
     @Override
