@@ -11,7 +11,7 @@
 
 <!-- Custom HTML -->
 
-<div class="site">
+<div class="site" ng-cloak>
 
     <#include "parts/caption.ftl">
     <#include "parts/menu.ftl">

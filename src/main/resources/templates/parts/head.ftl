@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 
-<title>Title</title>
+<title>Financial diamonds exchange</title>
 <meta name="description" content="">
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">

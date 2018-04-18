@@ -49,5 +49,5 @@ diamondApp.controller('AvailableController', function AvailableController($scope
     }
 
     getAvailable("");//all
-    $interval(getLastDiamondsQuotes, 3000);
+    $interval(getLastDiamondsQuotes, 1000);
 });
