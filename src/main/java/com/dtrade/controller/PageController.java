@@ -20,7 +20,7 @@ public class PageController {
         return "test";
     }
 
-    @RequestMapping(value = "/login-page", method = RequestMethod.GET)
+    @RequestMapping(value = "/login-page", method = {RequestMethod.GET, RequestMethod.POST})
     public String loginPage(){
         return "login";
     }

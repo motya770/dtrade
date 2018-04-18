@@ -112,6 +112,9 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
         UserDetails account = accountRepository.findByMail(mail);
+        if(account==null){
+            throw new UsernameNotFoundException("Not registered");
+        }
         return account;
     }
 
