@@ -8,7 +8,6 @@ import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

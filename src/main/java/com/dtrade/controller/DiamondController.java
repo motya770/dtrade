@@ -4,7 +4,6 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondDTO;
 import com.dtrade.service.IDiamondService;
-import com.dtrade.service.IQuotesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,5 @@
 package com.dtrade.service;
 
-import com.dtrade.model.stock.Stock;
 import com.dtrade.model.stockactivity.StockActivity;
 import com.dtrade.model.tradeorder.TradeOrder;
 

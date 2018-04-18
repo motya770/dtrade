@@ -3,13 +3,11 @@ package com.dtrade.service.simulators;
 
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.ITradeOrderService;
-import com.dtrade.service.impl.TradeOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;

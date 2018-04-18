@@ -1,6 +1,5 @@
 package com.dtrade;
 
-import com.dtrade.model.account.Account;
 import com.dtrade.repository.offering.OfferringRepository;
 import com.dtrade.service.IStockService;
 import com.dtrade.service.ITradeOrderService;
@@ -9,11 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 

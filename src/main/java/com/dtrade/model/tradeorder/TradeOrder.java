@@ -1,11 +1,8 @@
 package com.dtrade.model.tradeorder;
 
-import com.dtrade.controller.view.View;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 
 import javax.persistence.*;
