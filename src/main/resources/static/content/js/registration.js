@@ -36,6 +36,9 @@ angular
           account.pwd = account.password.confirm;
           $http.post("/accounts/register", account, null).then(function (response) {
             console.log(response);
+            window.alert("Your account was registered. Please, make login.");
           });
       };
+
+
   });
