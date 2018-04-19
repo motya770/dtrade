@@ -39,7 +39,7 @@ public class TradeEngine implements ITradeEngine {
                e.printStackTrace();
            }
 
-       }, 1_000, 25, TimeUnit.MILLISECONDS);
+       }, 1_000, 100, TimeUnit.MILLISECONDS);
     }
 
     @PreDestroy

@@ -130,7 +130,7 @@ public class QuotesService implements IQuotesService {
             return null;
         }
         //TODO potential bug
-        List<Quote> quotes = quoteRepository.getRangeQuotes(diamond.getId(), start, end, QuoteType.ACTION_QUOTE, new PageRequest(0, 200));
+        List<Quote> quotes = quoteRepository.getRangeQuotes(diamond.getId(), start, end, QuoteType.ACTION_QUOTE, new PageRequest(0, 100));
         Collections.reverse(quotes);
         return quotes;
     }
