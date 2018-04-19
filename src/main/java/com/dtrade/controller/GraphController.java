@@ -3,6 +3,7 @@ package com.dtrade.controller;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
+import com.dtrade.model.quote.QuoteDTO;
 import com.dtrade.service.IQuotesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,13 +45,13 @@ public class GraphController {
     }
 
     @RequestMapping(value = "/get-quotes", method = RequestMethod.POST)
-    public List<Quote> getRangeQuotes(@RequestParam(required = true) Diamond diamond,
+    public String getRangeQuotes(@RequestParam(required = true) Diamond diamond,
                                       @RequestParam(required = false) Long start,
                                       @RequestParam(required = false) Long end
     ) throws TradeException {
 
         long startRequest = System.currentTimeMillis();
-        List<Quote> quotes = quotesService.getRangeQuotes(diamond, start, end);
+        String quotes = quotesService.getRangeQuotes(diamond, start, end);
 //        if(start==null){
 //            start = System.currentTimeMillis();
 //        }

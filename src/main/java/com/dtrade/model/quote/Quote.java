@@ -35,6 +35,9 @@ public class Quote  {
     private BigDecimal bid;
 
     @Column(precision = 12, scale = 5)
+    private BigDecimal avg;
+
+    @Column(precision = 12, scale = 5)
     private BigDecimal price;
 
     //TODO think about index

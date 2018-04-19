@@ -4,6 +4,7 @@ package com.dtrade.service;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
+import com.dtrade.model.quote.QuoteDTO;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -30,7 +31,7 @@ public interface IQuotesService {
 
     Page<Quote> getPagedQuotes(Integer pageNumber, Integer pageSize, Sort sorting) throws TradeException;
 
-    List<Quote> getRangeQuotes(Diamond diamond, Long start, Long end) throws TradeException;
+    String getRangeQuotes(Diamond diamond, Long start, Long end) throws TradeException;
 
     List<Pair<?, ?>>  getLastQuoteForDiamonds(List<Diamond> diamonds);
 

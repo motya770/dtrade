@@ -77,8 +77,11 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
     Highcharts.setOptions(simpleTheme);
 
     var parseQuotesToArray = function (data) {
-        var result = [];
-
+        var result = data;
+        if(data.length>0) {
+            self.lastTimeQuote = data[data.length - 1][0];
+        }
+        /*
         var points = [data.length + 1];
         for(var i in data){
             var point = new Array(2);
@@ -86,11 +89,13 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
             point[1] = (data[i].bid + data[i].ask)/2;
 
             if(i==data.length - 1){
-                self.lastTimeQuote = data[i].time;
+
             }
 
             result.push(point);
-            /*
+
+        }*/
+        /*
             point[0] = data[i].time;
             point[1] = data[i].bid;
             point[2] = data[i].ask;
@@ -98,7 +103,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
             point[4] = data[i].ask;
             points[i] = point;
             */
-        }
+
         return result;
     }
 

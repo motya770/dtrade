@@ -3,6 +3,7 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
+import com.dtrade.model.quote.QuoteDTO;
 import com.dtrade.model.quote.QuoteType;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.repository.quote.QuoteRepository;
@@ -17,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 /**
@@ -60,6 +58,9 @@ public class QuotesService implements IQuotesService {
         quote.setTime(System.currentTimeMillis());
         quote.setDiamond(order.getDiamond());
         quote.setQuoteType(QuoteType.ACTION_QUOTE);
+        if(ask!=null && bid != null) {
+            quote.setAvg(ask.add(bid).divide(new BigDecimal("2.0")));
+        }
         return create(quote);
     }
 
@@ -117,7 +118,7 @@ public class QuotesService implements IQuotesService {
     }
 
     @Override
-    public List<Quote> getRangeQuotes(Diamond diamond, Long start, Long end) throws TradeException {
+    public String getRangeQuotes(Diamond diamond, Long start, Long end) throws TradeException {
         if(end==null){
             end = System.currentTimeMillis();
         }
@@ -130,8 +131,43 @@ public class QuotesService implements IQuotesService {
             return null;
         }
         //TODO potential bug
+
+
         List<Quote> quotes = quoteRepository.getRangeQuotes(diamond.getId(), start, end, QuoteType.ACTION_QUOTE, new PageRequest(0, 100));
-        Collections.reverse(quotes);
-        return quotes;
+        //QuoteDTO[] quoteDTOS = new QuoteDTO[quotes.size()];
+
+        if(quotes.size()==0){
+            return "[]";
+        }
+
+        //sorry hightcharts convention
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+
+        for (int i = (quotes.size() - 1); i >= 0; i--){
+
+            Quote quote = quotes.get(i);
+            builder.append("[");
+            builder.append(quote.getTime());
+            builder.append(",");
+            if(quote.getAvg()!=null) {
+                builder.append(quote.getAvg());
+            }else {
+                builder.append(quote.getAsk().add(quote.getBid()).divide(new BigDecimal("2.0")));
+            }
+            builder.append("]");
+            if(i>0){
+                builder.append(",");
+            }
+//            QuoteDTO dto = new QuoteDTO();
+//            dto.setAvg(quote.getAvg());
+//            dto.setTime(quote.getTime());
+            //quoteDTOS[quotes.size() - 1 - i]= dto;
+        }
+
+        builder.append("]");
+
+        return builder.toString();
     }
 }
