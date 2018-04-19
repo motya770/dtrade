@@ -12,14 +12,14 @@ services:
         - my-datavolume:/var/lib/mysql
   nginx:
      container_name: some-nginx
-     image: nginx:1.13
+     image: wallawalla/nginx:latest
      restart: always
      ports:
-       - 80:80
+       -  80:80
      volumes:
        - ./nginx/conf.d:/etc/nginx/conf.d
   app:
-      image: wallawalla/diaminds
+      image: wallawalla/diaminds:latest
       depends_on:
         - demo-mysql
         - nginx
@@ -31,14 +31,5 @@ services:
         - DATABASE_PASSWORD=1234
         - DATABASE_NAME=dtrade
         - DATABASE_PORT=3306
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:4.7
-    depends_on:
-      - demo-mysql
-    ports:
-      - 8082:80
-    environment:
-      PMA_HOST: demo-mysql
-      PMA_PORT: 3306
 volumes:
      my-datavolume:
