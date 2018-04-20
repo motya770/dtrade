@@ -33,7 +33,9 @@
 
 
     <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
+    <!--
     <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js" type="text/javascript"></script>
+    -->
     <script src="/bower_components/less/dist/less.min.js" type="text/javascript"></script>
 
     <script src="/content/js/app.js"></script>

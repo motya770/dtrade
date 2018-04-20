@@ -56,10 +56,14 @@
 <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
 <script src="/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
 
+<!--
 <link rel="stylesheet" href="/bower_components/highcharts-ng/dist/highcharts-ng.css ">
+-->
 
 <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
+<!--
 <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js" type="text/javascript"></script>
+-->
 <script src="/bower_components/less/dist/less.min.js" type="text/javascript"></script>
 
 <!-- Angular Material requires Angular.js Libraries -->
