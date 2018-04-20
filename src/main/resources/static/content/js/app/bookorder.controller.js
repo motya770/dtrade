@@ -14,7 +14,7 @@ diamondApp.controller("BookOrderController", function BookOrderController($scope
             self.bookOrder = data;
             if(self.firstTimeOut) {
                 self.firstTimeOut = false;
-                $interval(callBookOrderService, 1000, 0, false);
+                window.setInterval(callBookOrderService, 1000);
             }
         });
     }

@@ -29,7 +29,8 @@ diamondApp.controller("TradeOrderController", function TradeOrderController($sco
             self.historyTradeOrders = data;
             if(self.firstTimeOut) {
                 self.firstTimeOut = false;
-                $interval(poller, 1000, 0, false);
+                window.setInterval(poller, 1000);
+               // $interval(poller, 1000, 0, false);
             }
         });
     };
