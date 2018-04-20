@@ -1,6 +1,8 @@
 <html ng-app="diamondApp">
 <body>
+<!--
 <link rel="stylesheet" href= "/content/css/material-input.css" />
+-->
 <link rel="stylesheet" href= "/bower_components/angular-material/angular-material.min.css"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 

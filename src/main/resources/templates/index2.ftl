@@ -62,7 +62,8 @@
                                                 <td>{{diamond.quote.ask}}</td>
                                                 <td>{{diamond.quote.bid}}</td>
 
-                                                <td>{{diamond.totalStockAmount}}</td>
+
+                                                <td>{{diamond.totalStockAmount/10000000 | number}} mln</td>
                                             </tr>
                                         <!--
                                         <tr>
