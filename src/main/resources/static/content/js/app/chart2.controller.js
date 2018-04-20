@@ -7,7 +7,6 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
     self.lastDiamondId = null;
     self.poolingPromise = null;
 
-
     var simpleTheme = {
         "colors": ["#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d"],
         "chart": {
@@ -126,7 +125,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
     var getGraphData = function () {
 
         if(DiamondService.getCurrentDiamond()==null){
-            $timeout(getGraphData, 500);
+            $timeout(getGraphData, 500, false);
             return;
         }
 
@@ -145,7 +144,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
                             var that = this;
                             self.poolingPromise = $interval( function () {
                                 addNewPoints(that);
-                            }, 1000);
+                            }, 1000, 0, false);
                         },
                     }
                 },

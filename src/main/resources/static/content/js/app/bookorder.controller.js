@@ -6,7 +6,7 @@ diamondApp.controller("BookOrderController", function BookOrderController($scope
 
     var callBookOrderService = function() {
         if(DiamondService.getCurrentDiamond()==null){
-            $timeout(callBookOrderService, 150);
+            $timeout(callBookOrderService, 150, false);
             return;
         }
 
@@ -14,7 +14,7 @@ diamondApp.controller("BookOrderController", function BookOrderController($scope
             self.bookOrder = data;
             if(self.firstTimeOut) {
                 self.firstTimeOut = false;
-                $interval(callBookOrderService, 1000);
+                $interval(callBookOrderService, 1000, 0, false);
             }
         });
     }

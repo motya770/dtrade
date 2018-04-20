@@ -22,14 +22,14 @@ diamondApp.controller("TradeOrderController", function TradeOrderController($sco
 
     var poller = function() {
         if(DiamondService.getCurrentDiamond()==null){
-            $timeout(poller, 150);
+            $timeout(poller, 150, false);
             return;
         }
         TradeOrderService.getHistoryOrders(DiamondService.getCurrentDiamond()).then(function (data) {
             self.historyTradeOrders = data;
             if(self.firstTimeOut) {
                 self.firstTimeOut = false;
-                $interval(poller, 1000);
+                $interval(poller, 1000, 0, false);
             }
         });
     };
