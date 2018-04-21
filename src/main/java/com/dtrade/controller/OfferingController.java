@@ -16,10 +16,11 @@ import java.math.BigDecimal;
  */
 
 
-@Controller
-@RequestMapping(value = "/offering", method = {RequestMethod.GET, RequestMethod.PUT})
+//@Controller
+//@RequestMapping(value = "/offering", method = {RequestMethod.GET, RequestMethod.PUT})
 public class OfferingController {
 
+    /*
     @Autowired
     private IOfferingService offeringService;
 
@@ -30,6 +31,6 @@ public class OfferingController {
                               @RequestParam BigDecimal price
                               ) throws TradeException{
         return offeringService.createOffering(fromId, toId, diamondId, price);
-    }
+    }*/
 
 }

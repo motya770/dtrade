@@ -20,7 +20,7 @@ public class DiamondController {
     @Autowired
     private IDiamondService diamondService;
 
-
+    /*
     @Deprecated
     @RequestMapping(value = "/buy")
     public Diamond buyDiamond(@RequestBody Diamond diamond, @RequestParam Long buyerId,
@@ -39,6 +39,7 @@ public class DiamondController {
     public Diamond openForSaleDiamond(@RequestBody Diamond diamond, @RequestParam BigDecimal price) throws TradeException{
         return diamondService.openForSale(diamond, price);
     }
+    */
 
     @RequestMapping(value = "/available")
     public List<DiamondDTO> getAllAvailableDiamonds(@RequestParam(required = false) String name) {

@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -70,6 +71,8 @@ public class Account implements UserDetails {
 
     private String phone;
 
+    private String role;
+
     public Account(){
 
     }
@@ -87,9 +90,8 @@ public class Account implements UserDetails {
     @JsonIgnore
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
-        return Arrays.asList(ROLE_ACCOUNT);
+        return Arrays.asList(new SimpleGrantedAuthority(role));
     }
-
 
     @Override
     public boolean isAccountNonExpired() {
