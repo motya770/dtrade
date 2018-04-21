@@ -79,9 +79,9 @@ public class TradeOrderService  implements ITradeOrderService{
         bookOrderService.getBookOrders().entrySet().forEach((entry)->{
             Pair<TradeOrder, TradeOrder> pair = bookOrderService.findClosest(entry.getKey());
 
-            quotesService.issueQuote(pair);
-
             if(checkIfCanExecute(pair)) {
+
+                quotesService.issueQuote(pair);
 
                 logger.debug("EXECUTING TRADE PAIR");
 

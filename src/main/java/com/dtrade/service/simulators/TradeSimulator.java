@@ -112,22 +112,8 @@ public class TradeSimulator {
         //random buy and random sell (simulation!! :-))
         TradeOrderType tradeOrderType = (random == 0) ? TradeOrderType.BUY : TradeOrderType.SELL;
 
-        BigDecimal price = null;
-
-        int tradeOrderTypeRandom = rand.nextInt(2);
-        BigDecimal multiplicator = tradeOrderTypeRandom == 0 ? new BigDecimal("1.05") : new BigDecimal("0.95") ;
-
-        if(tradeOrderType.equals(TradeOrderType.BUY)){
-            price = quote.getAsk();
-        }else{
-            price = quote.getBid();
-        }
-
-        price = price.multiply(multiplicator);
-
-        if(price==null){
-            price = new BigDecimal("100.00");
-        }
+        int randPrice = rand.nextInt(100);
+        BigDecimal price = new BigDecimal(randPrice);
 
         TradeOrder tradeOrder = new TradeOrder();
         tradeOrder.setAmount(new BigDecimal("10.0"));
