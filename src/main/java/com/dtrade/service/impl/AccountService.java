@@ -176,6 +176,7 @@ public class AccountService implements IAccountService, UserDetailsService {
         account.setBalance(new BigDecimal("10000.0"));
         account.setPhone(phone);
         account.setGuid(UUID.randomUUID().toString());
+        account.setRole(Account.F_ROLE_ACCOUNT);
 
         return account;
     }

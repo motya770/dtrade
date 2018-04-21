@@ -27,8 +27,8 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Account implements UserDetails {
 
-    private static SimpleGrantedAuthority ROLE_ACCOUNT = new SimpleGrantedAuthority("ROLE_ACCOUNT");
-    private static SimpleGrantedAuthority ROLE_ADMIN = new SimpleGrantedAuthority("ROLE_ADMIN");
+    public static final String F_ROLE_ACCOUNT = "ROLE_ACCOUNT";
+    public static final String F_ROLE_ADMIN = "F_ROLE_ADMIN";
 
     public static final String F_MAIL = "login";
     public static final String F_CONFIRMED = "confirmed";
