@@ -103,7 +103,6 @@ public class TradeSimulator {
     private TradeOrder createTradeOrderSimulated() {
 
         Diamond diamond = diamondService.getAllAvailable("").stream().findFirst().get();
-        Quote quote = quotesService.getLastQuote(diamond);
 
         Random rand = new Random();
         int random = rand.nextInt(2);
