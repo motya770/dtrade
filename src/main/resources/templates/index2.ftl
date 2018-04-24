@@ -59,9 +59,8 @@
                                                     <img src="/theme/app/img/dia1.png" alt="diamond">
                                                 </td>
 
-                                                <td>{{diamond.quote.ask}}</td>
-                                                <td>{{diamond.quote.bid}}</td>
-
+                                                <td>{{diamond.askBidPair.first}} </td>
+                                                <td>{{diamond.askBidPair.second}}</td>
 
                                                 <td>{{diamond.totalStockAmount/10000000 | number}} mln</td>
                                             </tr>

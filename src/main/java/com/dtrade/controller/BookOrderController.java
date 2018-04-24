@@ -7,11 +7,13 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +23,11 @@ public class BookOrderController {
 
     @Autowired
     private IBookOrderService bookOrderService;
+
+    @RequestMapping(value = "/get-diamonds-spread", method = RequestMethod.POST)
+    public List<Pair<?, ?>> getLastQuotesForDiamonds(@RequestBody(required = true) ArrayList<Diamond> diamonds){
+        return bookOrderService.getSpreadForDiamonds(diamonds);
+    }
 
     @RequestMapping(value = "/")
     public BookOrderView getBookOrder(@RequestBody Diamond diamond){

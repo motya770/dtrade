@@ -3,6 +3,7 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.bookorder.BookOrder;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.quote.Quote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.service.IBookOrderService;
@@ -16,6 +17,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -67,6 +69,19 @@ public class BookOrderService implements IBookOrderService {
         //bookOrders.put(order.getDiamond(), bookOrder);
 
         bookOrders.put(order.getDiamond().getId(), bookOrder);
+    }
+
+    @Override
+    public List<Pair<?, ?>> getSpreadForDiamonds(List<Diamond> diamonds) {
+        List<Pair<?, ?>> response = new ArrayList<>();
+        for(Diamond diamond : diamonds){
+            Pair<TradeOrder, TradeOrder> closest = this.findClosest(diamond.getId());
+            if(closest!=null) {
+                Pair<?, ?> pair = Pair.of(diamond, Pair.of(closest.getFirst().getPrice(), closest.getSecond().getPrice()));
+                response.add(pair);
+            }
+        }
+        return response;
     }
 
     @Override

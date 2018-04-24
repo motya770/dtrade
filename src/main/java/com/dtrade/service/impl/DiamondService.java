@@ -184,12 +184,15 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
-    public List<DiamondDTO> getAllAvailable(String name) {
+    public List<Diamond> getAllAvailable(String name) {
         if(StringUtils.isEmpty(name)){
             name = ""; //all enlisted diamonds
         }
 
         List<Diamond> diamonds = diamondRepository.getAllAvailableByName(name);
+        return diamonds;
+
+        /*
         if(diamonds==null){
             return null;
         }
@@ -209,6 +212,7 @@ public class DiamondService implements IDiamondService {
         });
 
         return diamondDTOS;
+        */
     }
 
     //@Override

@@ -19,8 +19,5 @@ public class QuoteController {
     @Autowired
     private IQuotesService quotesService;
 
-    @RequestMapping(value = "/get-diamond-last-quotes", method = RequestMethod.POST)
-    public List<Pair<?, ?>> getLastQuotesForDiamonds(@RequestBody(required = true) ArrayList<Diamond> diamonds){
-        return quotesService.getLastQuoteForDiamonds(diamonds);
-    }
+
 }
