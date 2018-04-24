@@ -265,7 +265,7 @@
 
                                 <div ng-controller="ChartController as vm">
                                     <div class="row">
-                                        <div id="container" style="height: 400px; min-width: 310px; width: 450px;"></div>
+                                        <div id="container"></div>
                                     </div>
                                 </div>
                                 <!--
