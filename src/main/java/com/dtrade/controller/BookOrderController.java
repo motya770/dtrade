@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +42,7 @@ public class BookOrderController {
         }
         if(bookOrder.getBuyOrders()!=null) {
             buyOrders = bookOrder.getBuyOrders().stream().limit(7).collect(Collectors.toList());
+            Collections.reverse(buyOrders);
         }
 
         if(bookOrder.getSellOrders()!=null) {

@@ -71,12 +71,30 @@ public class BookOrderService implements IBookOrderService {
         bookOrders.put(order.getDiamond().getId(), bookOrder);
     }
 
+    @Transactional
     @Override
     public List<Pair<?, ?>> getSpreadForDiamonds(List<Diamond> diamonds) {
+
         List<Pair<?, ?>> response = new ArrayList<>();
         for(Diamond diamond : diamonds){
             Pair<TradeOrder, TradeOrder> closest = this.findClosest(diamond.getId());
             if(closest!=null) {
+
+                BookOrder bookOrder = this.getBookOrder(diamond);
+
+                System.out.println("\\n \\n \\n");
+                System.out.println("{SELL : ");
+                bookOrder.getSellOrders().stream().limit(20).forEach(tradeOrder -> {
+                    System.out.println(tradeOrder.getId() + " " + tradeOrder.getDiamond().getName() + " " + tradeOrder.getPrice());
+                });
+
+                System.out.println("{BUY : ");
+                bookOrder.getBuyOrders().stream().limit(20).forEach(tradeOrder -> {
+                    System.out.println(tradeOrder.getId() + " " + tradeOrder.getDiamond().getName() + " " + tradeOrder.getPrice());
+                });
+
+                System.out.println("\\n \\n \\n");
+
                 Pair<?, ?> pair = Pair.of(diamond, Pair.of(closest.getFirst().getPrice(), closest.getSecond().getPrice()));
                 response.add(pair);
             }
@@ -107,7 +125,7 @@ public class BookOrderService implements IBookOrderService {
             return null;
         }
 
-        TradeOrder buyOrder = bookOrder.getBuyOrders().last();
+        TradeOrder buyOrder = bookOrder.getBuyOrders().first();
         TradeOrder sellOrder = bookOrder.getSellOrders().first();
 
         if(buyOrder == null || sellOrder == null){

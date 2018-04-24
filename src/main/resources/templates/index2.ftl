@@ -354,7 +354,7 @@
                                                 <th>Spread</th>
                                                 <th></th>
                                                 <th></th>
-                                                <th>0.01</th>
+                                                <th>{{vm.bookOrder.sellOrders[0].price - vm.bookOrder.buyOrders[0].price}}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
