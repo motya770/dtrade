@@ -306,15 +306,15 @@
                                             <tbody>
 
                                             <tr ng-repeat="tradeOrder in vm.historyTradeOrders track by tradeOrder.id">
-                                                <td>{{tradeOrder.initialAmount}}</td>
+                                                <td>{{tradeOrder.initialAmount | number : 4}}</td>
                                                     <td ng-if="tradeOrder.tradeOrderType == 'BUY'" class="up">
-                                                        {{tradeOrder.price}}
+                                                        {{tradeOrder.price | number : 4 }}
 
                                                             <img ng-src="/theme/app/img/up.png" alt="up">
 
                                                     </td>
                                                     <td ng-if="tradeOrder.tradeOrderType == 'SELL'" class="down">
-                                                        {{tradeOrder.price}}
+                                                        {{tradeOrder.price | number : 4}}
                                                             <img ng-src="/theme/app/img/down.png" alt="down">
 
                                                     </td>
@@ -328,46 +328,46 @@
 
                                 <div ng-controller="BookOrderController as vm" class="trades-tab" id="tab04">
                                         <div class="table-container">
-                                        <table class="diamont-table diamont-table--pdb">
-                                            <thead>
-                                            <tr>
-                                                <th>Amount</th>
-                                                <th>Price</th>
-                                                <th>Time</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
+                                            <table class="diamont-table diamont-table--pdb">
+                                                <thead>
+                                                <tr>
+                                                    <th>Amount</th>
+                                                    <th>Price</th>
+                                                    <th>Time</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
 
-                                            <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders track by tradeOrder.id">
-                                                <td>{{tradeOrder.initialAmount}}</td>
-                                                <td class="up">{{tradeOrder.price}}</td>
-                                                <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
-                                            </tr>
+                                                <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders track by tradeOrder.id">
+                                                    <td>{{tradeOrder.initialAmount | number : 4}}</td>
+                                                    <td class="up">{{tradeOrder.price | number : 4 }}</td>
+                                                    <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+                                                </tr>
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                         <div class="table-container table-container--btp">
-                                        <table class="diamont-table">
-                                            <thead>
-                                            <tr>
-                                                <th>Spread</th>
-                                                <th></th>
-                                                <th></th>
-                                                <th>{{vm.bookOrder.sellOrders[0].price - vm.bookOrder.buyOrders[0].price}}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
+                                            <table class="diamont-table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Spread</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>{{vm.bookOrder.sellOrders[0].price - vm.bookOrder.buyOrders[0].price}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
 
-                                            <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders track by tradeOrder.id">
-                                                <td style="width: 114px;">{{tradeOrder.initialAmount}}</td>
-                                                <td style="width: 50px;" class="down">{{tradeOrder.price}}</td>
-                                                <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
-                                            </tr>
+                                                <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders track by tradeOrder.id">
+                                                    <td style="width: 114px;">{{tradeOrder.initialAmount | number : 4}}</td>
+                                                    <td style="width: 50px;" class="down">{{tradeOrder.price | number : 4}}</td>
+                                                    <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+                                                </tr>
 
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                 </div>
                             </div>
                         </div>
