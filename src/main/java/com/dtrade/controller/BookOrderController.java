@@ -41,12 +41,12 @@ public class BookOrderController {
             return null;
         }
         if(bookOrder.getBuyOrders()!=null) {
-            buyOrders = bookOrder.getBuyOrders().stream().limit(7).collect(Collectors.toList());
+            buyOrders = bookOrder.getBuyOrders().stream().limit(10).collect(Collectors.toList());
             Collections.reverse(buyOrders);
         }
 
         if(bookOrder.getSellOrders()!=null) {
-            sellOrders = bookOrder.getSellOrders().stream().limit(7).collect(Collectors.toList());
+            sellOrders = bookOrder.getSellOrders().stream().limit(10).collect(Collectors.toList());
         }
         return new BookOrderView(buyOrders, sellOrders);
 
