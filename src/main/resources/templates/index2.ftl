@@ -344,9 +344,28 @@
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                                 </tr>
 
+                                                <thead style="border-top: 1px solid #e7e7e7;">
+                                                <tr>
+                                                    <th>Spread</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>{{vm.bookOrder.sellOrders[0].price - vm.bookOrder.buyOrders[0].price}}</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders track by tradeOrder.id">
+                                                    <td style="padding-right: 20px;">{{tradeOrder.initialAmount | number : 4}}</td>
+                                                    <td style="padding-right: 20px" class="down">{{tradeOrder.price | number : 4}}</td>
+                                                    <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+                                                    <!--
+                                                    <td style="width: 114px;">{{tradeOrder.initialAmount | number : 4}}</td>
+                                                    <td style="width: 50px;" class="down">{{tradeOrder.price | number : 4}}</td>
+                                                    <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>-->
+                                                </tr>
                                                 </tbody>
                                             </table>
                                         </div>
+                                    <!--
                                         <div class="table-container table-container--btp">
                                             <table class="diamont-table">
                                                 <thead>
@@ -367,7 +386,7 @@
 
                                                 </tbody>
                                             </table>
-                                        </div>
+                                        </div>-->
                                 </div>
                             </div>
                         </div>
