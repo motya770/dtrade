@@ -263,8 +263,8 @@
                             <div class="main-trade-graph" style="margin-top:0px; padding-bottom: 16px;">
 
                                 <div ng-controller="ChartController as vm">
-                                    <div class="row">
-                                        <div id="container"></div>
+                                    <div class="row" style="position: relative; width: 100%;">
+                                        <div id="container" style="position: relative; width: 100%;"></div>
                                     </div>
                                 </div>
                                 <!--
