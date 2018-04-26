@@ -35,6 +35,7 @@ public class QuotesService implements IQuotesService {
 
     @Override
     public Quote issueQuote(Pair<TradeOrder, TradeOrder> pair){
+       long start = System.currentTimeMillis();
 
         if(pair==null){
             return null;
@@ -61,7 +62,10 @@ public class QuotesService implements IQuotesService {
         if(ask!=null && bid != null) {
             quote.setAvg(ask.add(bid).divide(new BigDecimal("2.0")));
         }
-        return create(quote);
+
+        Quote quote1 =  create(quote);
+        System.out.println("QUOTE ISSUING: " + (System.currentTimeMillis() - start));
+        return quote1;
     }
 
     @Override
@@ -123,8 +127,13 @@ public class QuotesService implements IQuotesService {
             end = System.currentTimeMillis();
         }
 
+        int pageSize = 100;
+
         if(start==null){
             start = System.currentTimeMillis() - Duration.ofDays(100).toMillis();
+        }else{
+            //for the purpose of reducing load for front
+            pageSize = 2;
         }
 
         if(diamond==null){
@@ -133,7 +142,7 @@ public class QuotesService implements IQuotesService {
         //TODO potential bug
 
 
-        List<Quote> quotes = quoteRepository.getRangeQuotes(diamond.getId(), start, end, QuoteType.ACTION_QUOTE, new PageRequest(0, 100));
+        List<Quote> quotes = quoteRepository.getRangeQuotes(diamond.getId(), start, end, QuoteType.ACTION_QUOTE, new PageRequest(0, pageSize));
         //QuoteDTO[] quoteDTOS = new QuoteDTO[quotes.size()];
 
         if(quotes.size()==0){

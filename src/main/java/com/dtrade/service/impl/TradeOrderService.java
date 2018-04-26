@@ -74,18 +74,26 @@ public class TradeOrderService  implements ITradeOrderService{
         logger.debug("CALCULATING TRADE ORDERS");
 
         bookOrderService.getBookOrders().entrySet().forEach((entry)->{
-            Pair<TradeOrder, TradeOrder> pair = bookOrderService.findClosest(entry.getKey());
 
-            if(checkIfCanExecute(pair)) {
+            long start1 = System.currentTimeMillis();
+            List<Pair<TradeOrder, TradeOrder>> pairs = bookOrderService.find10Closest(entry.getKey());
+            if(pairs!=null && pairs.size()>0){
+                pairs.forEach(pair->{
+                    if(checkIfCanExecute(pair)) {
 
-                quotesService.issueQuote(pair);
+                        quotesService.issueQuote(pair);
 
-                logger.debug("EXECUTING TRADE PAIR");
+                        logger.debug("EXECUTING TRADE PAIR");
 
-                long start = System.currentTimeMillis();
-                executeTradeOrders(pair);
-                logger.info("execute trade time: {}", (System.currentTimeMillis() - start));
+                        long start = System.currentTimeMillis();
+                        executeTradeOrders(pair);
+                        logger.info("execute trade time: {}", (System.currentTimeMillis() - start));
+                    }
+                });
             }
+
+            System.out.println("Main execuiton: " + (System.currentTimeMillis() - start1));
+
         });
     }
 
@@ -375,7 +383,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     long end = System.currentTimeMillis() - start;
 
-                    logger.debug("TIME: " + end);
+                    logger.info("SUC EXEC TIME: " + end);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
