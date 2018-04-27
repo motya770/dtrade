@@ -34,8 +34,6 @@
                         </li>
                     </ul>
 
-
-
                     <div class="lk-main-tabs">
                         <div class="lk-main-tab" id="tab01">
                             <div class="lk-main-tab__table" style="width: 692px;">
@@ -155,6 +153,24 @@
                                         <div class="donut-chart" data-percent="0.75" data-val="5000" data-title="расход"></div>
                                     </div>
                                 </div>-->
+                            </div>
+                        </div>
+                        <div class="lk-main-tab" id="tab03">
+                            <div class="lk-main-tab__table" style="width: 692px; min-height: 400px;">
+                                <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
+                                    <input type="hidden" name="cmd" value="_pay">
+                                    <input type="hidden" name="reset" value="1">
+                                    <input type="hidden" name="merchant" value="1fb3cd572acffff43b1c0356d5429f1c">
+                                    <input type="hidden" name="item_name" value="Diaminds Deposit">
+                                    <input type="hidden" name="currency" value="USD">
+                                    <input type="hidden" name="amountf" value="100.00000000">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <input type="hidden" name="allow_quantity" value="0">
+                                    <input type="hidden" name="want_shipping" value="0">
+                                    <input type="hidden" name="success_url" value="www.diaminds.io">
+                                    <input type="hidden" name="allow_extra" value="0">
+                                    <input type="image" src="https://www.coinpayments.net/images/pub/buynow.png" alt="Buy Now with CoinPayments.net">
+                                </form>
                             </div>
                         </div>
                     </div>
