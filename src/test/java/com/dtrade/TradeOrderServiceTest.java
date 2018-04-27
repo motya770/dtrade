@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.util.Pair;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -22,10 +23,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kudelin on 7/15/17.
@@ -50,6 +61,15 @@ public class TradeOrderServiceTest extends BaseTest {
 
     @Autowired
     private IBookOrderService bookOrderService;
+
+    private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    public void setTransactionManager(PlatformTransactionManager transactionManager){
+        transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+    }
+
 
     private SecurityContext setAccount(Account account){
         UserDetails principal = account;
@@ -101,24 +121,51 @@ public class TradeOrderServiceTest extends BaseTest {
 
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
-    public void testCalculateTradeOrders(){
+    public void testCalculateTradeOrders() throws Exception{
 
-      List<TradeOrder> buyOrders = createBuyOrderList();
-      List<TradeOrder> sellOrders = createSellOrderList();
+        Pair<List<TradeOrder>, List<TradeOrder>> pair = transactionTemplate.execute((TransactionStatus status)-> {
+            List<TradeOrder> buyOrders = createBuyOrderList();
+            List<TradeOrder> sellOrders = createSellOrderList();
+            return Pair.of(buyOrders, sellOrders);
+        });
 
         System.out.println("START ");
         long start = System.currentTimeMillis();
-      buyOrders.parallelStream().forEach((tradeOrder)->{
+      pair.getFirst().parallelStream().forEach((tradeOrder)->{
           bookOrderService.addNew(tradeOrder);
       });
 
-      sellOrders.parallelStream().forEach(tradeOrder -> {
+      pair.getSecond().parallelStream().forEach( tradeOrder -> {
           bookOrderService.addNew(tradeOrder);
       });
 
-
-        tradeOrderService.calculateTradeOrders();
+       // tradeOrderService.calculateTradeOrders();
         System.out.println("END " + (System.currentTimeMillis() - start));
+
+
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        executorService.scheduleWithFixedDelay(()->{
+
+            List<TradeOrder> buyTrades = pair.getFirst();
+            List<TradeOrder> sellTrades = pair.getSecond();
+
+            long buyExecuted = buyTrades.stream().map(tradeOrder -> tradeOrderRepository.findOne(tradeOrder.getId())
+            ).filter( tradeOrder -> tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)).count();
+
+            long sellExecuted = sellTrades.stream().map(tradeOrder -> tradeOrderRepository.findOne(tradeOrder.getId())
+            ).filter( tradeOrder -> tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)).count();
+
+            System.out.println("BUY executed: " + buyExecuted);
+            System.out.println("SELL executed: " + sellExecuted);
+
+            System.out.println("Finished simulation");
+
+        }, 10,  100, TimeUnit.SECONDS);
+        try {
+            executorService.awaitTermination(120, TimeUnit.SECONDS);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

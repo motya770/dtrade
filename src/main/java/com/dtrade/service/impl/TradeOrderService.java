@@ -17,6 +17,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -76,6 +77,23 @@ public class TradeOrderService  implements ITradeOrderService{
         bookOrderService.getBookOrders().entrySet().forEach((entry)->{
 
             long start1 = System.currentTimeMillis();
+
+            /*
+            Pair<TradeOrder, TradeOrder> pair = bookOrderService.findClosest(entry.getKey());
+            if(pair!=null){
+                    if(checkIfCanExecute(pair)) {
+
+                        quotesService.issueQuote(pair);
+
+                        logger.debug("EXECUTING TRADE PAIR");
+
+                        long start = System.currentTimeMillis();
+                        executeTradeOrders(pair);
+                        logger.info("execute trade time: {}", (System.currentTimeMillis() - start));
+                    }
+            }*/
+
+
             List<Pair<TradeOrder, TradeOrder>> pairs = bookOrderService.find10Closest(entry.getKey());
             if(pairs!=null && pairs.size()>0){
                 pairs.forEach(pair->{
@@ -273,6 +291,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
     //buy - sell
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
 
 //        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
@@ -288,14 +307,16 @@ public class TradeOrderService  implements ITradeOrderService{
                         5) work only during one minute
                      */
 
+                    System.out.println("1.1");
                     long start = System.currentTimeMillis();
 
                     TradeOrder buyOrder = tradeOrderRepository.findOne(pair.getFirst().getId());
                     TradeOrder sellOrder = tradeOrderRepository.findOne(pair.getSecond().getId());
-
+                    System.out.println("1.2");
                     if (buyOrder==null || sellOrder == null){
                         return;
                     }
+                    System.out.println("1.3");
 
                    // Hibernate.initialize(buyOrder.getDiamond());
                    // Hibernate.initialize(sellOrder.getDiamond());
@@ -303,20 +324,26 @@ public class TradeOrderService  implements ITradeOrderService{
                     if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
                         return;
                     }
+                    System.out.println("1.4");
 
                     if (!(buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                             || buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
                         return;
                     }
 
+                    System.out.println("1.5");
+
                     if (!(sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                             || sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
                         return;
                     }
+                    System.out.println("1.6");
 
                     if (!checkIfCanExecute(pair)) {
                         return;
                     }
+
+                    System.out.println("1.7");
 
                     Account buyAccount = buyOrder.getAccount();
                     Account sellAccount = sellOrder.getAccount();
@@ -327,6 +354,7 @@ public class TradeOrderService  implements ITradeOrderService{
                         return;
                     }*/
 
+                    System.out.println("1.8");
 
                     BigDecimal buyPrice = buyOrder.getPrice();
                     BigDecimal buyAmount = buyOrder.getAmount();
@@ -337,6 +365,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     Stock buyStock = stockService.getSpecificStock(buyAccount, buyOrder.getDiamond());
                     Stock sellStock = stockService.getSpecificStock(sellAccount, sellOrder.getDiamond());
 
+                    System.out.println("1.9");
                     //seller don't have enouth stocks
                     if (sellStock.getAmount().compareTo(realAmount) < 0) {
                         //TODO notify user
@@ -345,6 +374,8 @@ public class TradeOrderService  implements ITradeOrderService{
                         return;
                         // throw new TradeException("Not enougth stocks at " + sellStock);
                     }
+
+                    System.out.println("1.10");
 
                     BigDecimal cash = realAmount.multiply(buyPrice);
 
@@ -358,29 +389,36 @@ public class TradeOrderService  implements ITradeOrderService{
                         return;
                     }
 
+                    System.out.println("1.11");
+
                     logger.debug(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
 
                     buyStock.setAmount(buyStock.getAmount().add(realAmount));
                     sellStock.setAmount(sellStock.getAmount().subtract(realAmount));
 
+                    System.out.println("1.12");
                     stockActivityService.createStockActivity(buyOrder, sellOrder,
                             cash, realAmount);
 
                     buyOrder.setAmount(buyOrder.getAmount().subtract(realAmount));
                     sellOrder.setAmount(sellOrder.getAmount().subtract(realAmount));
 
+                    System.out.println("1.3");
                     checkIfExecuted(buyOrder);
                     checkIfExecuted(sellOrder);
 
                     stockService.save(buyStock);
                     stockService.save(sellStock);
 
+                    System.out.println("1.4");
                     tradeOrderRepository.save(buyOrder);
                     tradeOrderRepository.save(sellOrder);
 
+                    System.out.println("1.5");
                     accountService.save(buyAccount);
                     accountService.save(sellAccount);
 
+                    System.out.println("1.6");
                     long end = System.currentTimeMillis() - start;
 
                     logger.info("SUC EXEC TIME: " + end);
