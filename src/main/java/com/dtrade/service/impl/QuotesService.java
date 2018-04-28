@@ -8,6 +8,8 @@ import com.dtrade.model.quote.QuoteType;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.repository.quote.QuoteRepository;
 import com.dtrade.service.IQuotesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +31,8 @@ import java.util.*;
 public class QuotesService implements IQuotesService {
 
     private static long max_history =  2 *  30 *  24 *  60 * 60 * 1_000;
+
+    private static final Logger logger = LoggerFactory.getLogger(QuotesService.class);
 
     @Autowired
     private QuoteRepository quoteRepository;
@@ -59,9 +63,14 @@ public class QuotesService implements IQuotesService {
         quote.setTime(System.currentTimeMillis());
         quote.setDiamond(order.getDiamond());
         quote.setQuoteType(QuoteType.ACTION_QUOTE);
+
         if(ask!=null && bid != null) {
-            quote.setAvg(ask.add(bid).divide(new BigDecimal("2.0")));
+            BigDecimal avg = ask.add(bid).divide(new BigDecimal("2.0"));
+            logger.info("QUOTE AVG:  " + avg);
+            quote.setAvg(avg);
         }
+
+        logger.info("QUOTE:  " + bid + " " + ask + " ");
 
         Quote quote1 =  create(quote);
         System.out.println("QUOTE ISSUING: " + (System.currentTimeMillis() - start));

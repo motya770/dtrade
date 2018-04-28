@@ -26,8 +26,8 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
             "or to.traderOrderStatus = 'IN_MARKET' ) order by to.creationDate desc")
     Page<TradeOrder> getLiveTradeOrdersByAccount(@Param("account") Account account, Pageable pageable);
 
-    @Query("select to from TradeOrder to where to.account.id = :#{#account.id} and to.traderOrderStatus <> 'CREATED' " +
-            "and to.traderOrderStatus <> 'IN_MARKET' order by to.creationDate desc")
+    @Query(value = "select to from TradeOrder to where to.account.id = :#{#account.id} and ( to.traderOrderStatus = 'CANCELED' " +
+            " or to.traderOrderStatus = 'EXECUTED' or to.traderOrderStatus = 'REJECTED') order by to.creationDate desc")
     Page<TradeOrder> getHistoryTradeOrdersForAccount(@Param("account") Account account, Pageable pageable);
 
     @Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' and to.diamond.id = :#{#diamond.id} order by to.executionDate desc ")

@@ -5,6 +5,7 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderDTO;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * Created by kudelin on 6/27/17.
@@ -67,6 +69,31 @@ public class TradeOrderService  implements ITradeOrderService{
     public void setTransactionManager(PlatformTransactionManager transactionManager){
         transactionTemplate = new TransactionTemplate(transactionManager);
         transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+    }
+
+    @Override
+    public List<TradeOrderDTO> getTradeOrderDTO(List<TradeOrder> tradeOrders) {
+
+        List<TradeOrderDTO> tradeOrderDTOS = new ArrayList<>(tradeOrders.size());
+
+        if(tradeOrders.size() == 0){
+            return tradeOrderDTOS;
+        }
+
+        for(int i = 0; i < tradeOrders.size(); i++){
+            TradeOrder to = tradeOrders.get(i);
+
+            TradeOrderDTO tradeOrderDTO = new TradeOrderDTO();
+            tradeOrderDTO.setId(to.getId());
+            tradeOrderDTO.setAmount(to.getAmount());
+            tradeOrderDTO.setInitialAmount(to.getInitialAmount());
+            tradeOrderDTO.setPrice(to.getPrice());
+            tradeOrderDTO.setExecutionDate(to.getExecutionDate());
+            tradeOrderDTO.setTradeOrderType(to.getTradeOrderType());
+
+            tradeOrderDTOS.add(tradeOrderDTO);
+        }
+        return tradeOrderDTOS;
     }
 
     @Override

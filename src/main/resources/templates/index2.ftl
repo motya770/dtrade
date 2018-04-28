@@ -318,7 +318,7 @@
                                                             <img ng-src="/theme/app/img/down.png" alt="down">
 
                                                     </td>
-                                                <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+                                                <td>{{tradeOrder.executionDate | date:'dd/MM HH:mm:ss' }}</td>
                                             </tr>
                                             </tbody>
                                         </table>

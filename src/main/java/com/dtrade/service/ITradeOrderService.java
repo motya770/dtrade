@@ -2,6 +2,7 @@ package com.dtrade.service;
 
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.util.Pair;
 
@@ -11,6 +12,9 @@ import java.util.List;
  * Created by kudelin on 6/27/17.
  */
 public interface ITradeOrderService {
+
+
+    List<TradeOrderDTO> getTradeOrderDTO(List<TradeOrder> tradeOrders);
 
     List<TradeOrder> findAll();
 
