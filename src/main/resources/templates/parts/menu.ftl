@@ -7,7 +7,7 @@
             <li ng-class="getClass('/diamonds')" >
                 <a href="/diamonds">Diamonds</a>
             </li>
-            <li ng-class="getClass('/account')">
+            <li ng-show="vm.account" ng-class="getClass('/account')">
                 <a href="/account">My account</a>
             </li>
         </ul>
