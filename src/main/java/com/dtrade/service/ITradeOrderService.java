@@ -20,7 +20,7 @@ public interface ITradeOrderService {
 
     void calculateTradeOrders();
 
-    boolean fieldsNotEmpty(TradeOrder tradeOrder);
+    void validateFields(TradeOrder tradeOrder);
 
     Page<TradeOrder> getHistoryTradeOrdersByAccount(Integer pageNumber);
 
