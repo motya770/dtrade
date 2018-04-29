@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/bower_components/**").permitAll()
                 .antMatchers("/content/**").permitAll()
                 .antMatchers("/resources/**").permitAll()
-                .antMatchers("/account/**").permitAll()
+                .antMatchers("/account/**").authenticated()
                 .antMatchers("/balance-activity/**").authenticated()
                 .antMatchers("/customer/**").authenticated()//remove?
                 .antMatchers("/diamond/available").permitAll()
@@ -45,7 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/trade-order/**").authenticated()
                 .anyRequest().permitAll()
                 .and().formLogin().defaultSuccessUrl("/")
-                .loginPage("/login").permitAll()
+                .loginPage("/login-page").permitAll()
+                .loginProcessingUrl("/login")
                 .failureForwardUrl("/login-page?error=fail")
                 .and().logout().permitAll().logoutSuccessUrl("/");
     }
