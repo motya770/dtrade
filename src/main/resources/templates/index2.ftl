@@ -287,8 +287,8 @@
                             <div class="main-trade-graph" style="margin-top:0px; padding-bottom: 16px;">
 
                                 <div ng-controller="ChartController as vm">
-                                    <div class="row">
-                                        <div id="container"></div>
+                                    <div class="row" style="position: relative; width: 100%;">
+                                        <div id="container" style="position: relative; width: 100%;"></div>
                                     </div>
                                 </div>
                                 <!--
@@ -342,7 +342,7 @@
                                                             <img ng-src="/theme/app/img/down.png" alt="down">
 
                                                     </td>
-                                                <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                                <td>{{tradeOrder.executionDate | date:'dd/MM HH:mm:ss' }}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -368,9 +368,28 @@
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                                 </tr>
 
+                                                <thead style="border-top: 1px solid #e7e7e7;">
+                                                <tr>
+                                                    <th>Spread</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th>{{vm.spread}}</th>
+                                                </tr>
+                                                </thead>
+
+                                                <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders track by tradeOrder.id">
+                                                    <td style="padding-right: 20px;">{{tradeOrder.initialAmount | number : 4}}</td>
+                                                    <td style="padding-right: 20px" class="down">{{tradeOrder.price | number : 4}}</td>
+                                                    <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+                                                    <!--
+                                                    <td style="width: 114px;">{{tradeOrder.initialAmount | number : 4}}</td>
+                                                    <td style="width: 50px;" class="down">{{tradeOrder.price | number : 4}}</td>
+                                                    <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>-->
+                                                </tr>
                                                 </tbody>
                                             </table>
                                         </div>
+                                    <!--
                                         <div class="table-container table-container--btp">
                                             <table class="diamont-table">
                                                 <thead>
@@ -391,7 +410,7 @@
 
                                                 </tbody>
                                             </table>
-                                        </div>
+                                        </div>-->
                                 </div>
                             </div>
                         </div>
