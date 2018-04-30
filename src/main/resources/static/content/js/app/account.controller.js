@@ -9,5 +9,11 @@ diamondApp.controller("AccountController", function AccountController($scope, $r
         }else {
             self.account = account;
         }
+
+        $rootScope.$broadcast('accountReceived', account);
     });
 });
+
+
+
+

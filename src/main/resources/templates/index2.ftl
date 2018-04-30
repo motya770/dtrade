@@ -5,13 +5,37 @@
 
 <#include "parts/head.ftl">
 
+
 </head>
 
 <body class="page">
 
+<!--<page-loader flag="isLoading"> </page-loader> -->
+
+<!--  <page-loader latency="500"></page-loader>-->
 <!-- Custom HTML -->
 
-<div class="site">
+  <!--
+<md-progress-linear md-mode="indeterminate"></md-progress-linear>
+-->
+
+    <!--
+    <div layout="row" layout-sm="column" layout-align="space-around">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    -->
+
+
+
+<div class="site class="ng-cloak" ng-controller="TopController">
+ <div class="spinner" ng-hide="loaded">
+ <div class="rect1"></div>
+   <div class="rect2"></div>
+   <div class="rect3"></div>
+   <div class="rect4"></div>
+   <div class="rect5"></div>
+   </div>
+            <div ng-cloak="" ng-show="loaded">
 
     <#include "parts/caption.ftl">
     <#include "parts/menu.ftl">
@@ -536,10 +560,9 @@
         </div>
     </main>
     <#include "parts/footer.ftl">
-
+</div>
 </div>
 <#include "parts/bootom-scripts.ftl">
-
 
 </body>
 </html>
