@@ -182,6 +182,8 @@
                     <artifactId>dockerfile-maven-plugin</artifactId>
                     <version>1.3.6</version>
                     <configuration>
+                        <username>wallawalla</username>
+                        <password>pragma1</password>
                         <repository>${docker.image.prefix}/diaminds</repository>
                         <buildArgs>
                             <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>

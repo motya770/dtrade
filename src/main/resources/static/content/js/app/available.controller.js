@@ -10,19 +10,19 @@ diamondApp.controller('AvailableController', function AvailableController($scope
         getAvailable($scope.searchInputValue);
     }
 
-    var getLastDiamondsQuotes = function () {
-        return $http.post('/quote/get-diamond-last-quotes', self.availableDiamonds).then(function(response) {
-            console.log(response);
+    var getDiamondsSpreads = function () {
+        return $http.post('/book-order/get-diamonds-spread', self.availableDiamonds).then(function(response) {
+            //console.log(response);
             var pairs = response.data;
             for(var i in pairs){
                 var pair = pairs[i];
                 var diamond = pair.first;
-                var quote = pair.second;
+                var askBidPair = pair.second;
 
                 for(var j in self.availableDiamonds){
                     var currentDiamond = self.availableDiamonds[j];
                     if(currentDiamond.id == diamond.id){
-                        currentDiamond.quote = quote;
+                        currentDiamond.askBidPair = askBidPair;
                     }
                 }
             }
@@ -49,5 +49,5 @@ diamondApp.controller('AvailableController', function AvailableController($scope
     }
 
     getAvailable("");//all
-    window.setInterval(getLastDiamondsQuotes, 1000);
+    window.setInterval(getDiamondsSpreads, 1000);
 });

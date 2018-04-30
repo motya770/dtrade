@@ -138,6 +138,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
 
             self.graph = Highcharts.stockChart('container', {
                 chart: {
+
                     events: {
                         load:function () {
                             console.log("load1");
@@ -146,9 +147,9 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
                                 addNewPoints(that);
                             }, 1000, 0, false);
                         },
-                    }
-                },
+                    },
 
+                },
                 rangeSelector: {
                     buttons: [{
                         count: 1,

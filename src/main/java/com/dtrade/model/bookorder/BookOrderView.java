@@ -3,7 +3,6 @@ package com.dtrade.model.bookorder;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
-
 import java.util.List;
 
 @Data

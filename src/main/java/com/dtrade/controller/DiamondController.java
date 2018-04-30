@@ -42,8 +42,8 @@ public class DiamondController {
     */
 
     @RequestMapping(value = "/available")
-    public List<DiamondDTO> getAllAvailableDiamonds(@RequestParam(required = false) String name) {
-        List<DiamondDTO> diamonds = diamondService.getAllAvailable(name);
+    public List<Diamond> getAllAvailableDiamonds(@RequestParam(required = false) String name) {
+        List<Diamond> diamonds = diamondService.getAllAvailable(name);
         return diamonds;
     }
 
