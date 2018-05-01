@@ -2,7 +2,7 @@ package com.dtrade.service;
 
 public interface ICoinPaymentService {
 
-    void login();
+   // void login();
 
     void deposit();
 
