@@ -1,16 +1,12 @@
 package com.dtrade.service.impl;
 
 import com.dtrade.service.ICoinPaymentService;
-import com.sun.tools.javac.util.List;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
 import java.net.URI;
-import java.net.URL;
+import java.util.Collections;
 
 //@Service
 public class CoinPaymentService implements ICoinPaymentService {
@@ -36,11 +32,11 @@ public class CoinPaymentService implements ICoinPaymentService {
         try{
 
             HttpHeaders headers = new HttpHeaders();
-            headers.put("Content-Type", List.of("application/x-www-form-urlencoded"));
+            headers.put("Content-Type", Collections.singletonList("application/x-www-form-urlencoded"));
             String body = "version=1&cmd=rates&key=" + publicKey + "&format=json";
 
             String hmac = new HmacUtils(HmacAlgorithms.HMAC_SHA_512, privateKey).hmacHex(body);
-            headers.put("HMAC", List.of(hmac));
+            headers.put("HMAC", Collections.singletonList("hmac"));
             entity = new RequestEntity<>(body, headers, HttpMethod.POST,
                       new URI("https://www.coinpayments.net/api.php"));
 
