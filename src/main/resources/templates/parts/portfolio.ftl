@@ -1,4 +1,4 @@
-<div class="cabtop-info">
+<div class="cabtop-info" style="padding-top: 10px; padding-bottom: 10px;">
     <div ng-controller="AccountController as vm" class="cabtop-info__inner">
         <div ng-show="vm.account" class="cabtop-info__content">
                 <span class="cabtop-info__ico"></span>

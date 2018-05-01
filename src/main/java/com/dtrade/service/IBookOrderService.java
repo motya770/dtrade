@@ -25,5 +25,7 @@ public interface IBookOrderService {
 
      Pair<TradeOrder, TradeOrder> findClosest(Long diamondId);
 
+     List<Pair<TradeOrder, TradeOrder>> find10Closest(Long diamondId);
+
      List<Pair<?, ?>> getSpreadForDiamonds(List<Diamond> diamonds);
 }

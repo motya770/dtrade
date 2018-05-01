@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * Created by kudelin on 7/10/17.
@@ -82,6 +83,7 @@ public class BookOrderService implements IBookOrderService {
 
                 BookOrder bookOrder = this.getBookOrder(diamond);
 
+                /*
                 System.out.println("\\n \\n \\n");
                 System.out.println("{SELL : ");
                 bookOrder.getSellOrders().stream().limit(20).forEach(tradeOrder -> {
@@ -94,6 +96,7 @@ public class BookOrderService implements IBookOrderService {
                 });
 
                 System.out.println("\\n \\n \\n");
+                */
 
                 Pair<?, ?> pair = Pair.of(diamond, Pair.of(closest.getFirst().getPrice(), closest.getSecond().getPrice()));
                 response.add(pair);
@@ -102,10 +105,8 @@ public class BookOrderService implements IBookOrderService {
         return response;
     }
 
-    @Override
-    public Pair<TradeOrder, TradeOrder> findClosest(Long diamondId) {
-        Pair<TradeOrder, TradeOrder> pair = null;
 
+    private BookOrder checkDiamondInBook(Long diamondId){
         if(diamondId==null){
             throw new TradeException("Diamond is null!");
         }
@@ -125,6 +126,42 @@ public class BookOrderService implements IBookOrderService {
             return null;
         }
 
+        return bookOrder;
+    }
+
+    @Override
+    public List<Pair<TradeOrder, TradeOrder>> find10Closest(Long diamondId) {
+
+        BookOrder bookOrder = checkDiamondInBook(diamondId);
+        if(bookOrder==null){
+            return null;
+        }
+
+        List<TradeOrder> buyOrders = bookOrder.getBuyOrders().stream().limit(10).collect(Collectors.toList());
+        List<TradeOrder>  sellOrders= bookOrder.getSellOrders().stream().limit(10).collect(Collectors.toList());
+
+        if(buyOrders == null || sellOrders == null){
+            return null;
+        }
+
+        int maxSize = buyOrders.size() > sellOrders.size()  ? sellOrders.size() : buyOrders.size();
+
+        List<Pair<TradeOrder, TradeOrder>> result = new ArrayList<>();
+        for(int i = 0; i < maxSize; i++){
+            result.add(Pair.of(buyOrders.get(i), sellOrders.get(i)));
+        }
+
+        return result;
+    }
+
+    @Override
+    public Pair<TradeOrder, TradeOrder> findClosest(Long diamondId) {
+
+        BookOrder bookOrder = checkDiamondInBook(diamondId);
+        if(bookOrder==null){
+            return null;
+        }
+
         TradeOrder buyOrder = bookOrder.getBuyOrders().first();
         TradeOrder sellOrder = bookOrder.getSellOrders().first();
 
@@ -137,8 +174,15 @@ public class BookOrderService implements IBookOrderService {
 
     @Override
     public void remove(TradeOrder order){
-        logger.debug("remove D");
+
         BookOrder book = bookOrders.get(order.getDiamond().getId());
+
+        logger.info("remove D");
+        if(book!=null) {
+            logger.info("BUY SIZE {}", book.getBuyOrders().size());
+            logger.info("SELL SIZE {}", book.getSellOrders().size());
+        }
+
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
                  bookOrder.getBuyOrders().remove(order);
@@ -150,7 +194,7 @@ public class BookOrderService implements IBookOrderService {
 
     @Override
     public void update(TradeOrder order) {
-        logger.debug("update D");
+        logger.info("update D");
         BookOrder book = bookOrders.get(order.getDiamond().getId());
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
@@ -172,5 +216,7 @@ public class BookOrderService implements IBookOrderService {
         for(TradeOrder order: orders){
             addNew(order);
         }
+
+        logger.info("BookOrder loaded {} trade orders", orders.size());
     }
 }

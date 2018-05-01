@@ -246,6 +246,7 @@ CREATE TABLE `trade_order` (
   KEY `FKoo7xiemrnnd0hqg4jal2ohluj` (`account_id`),
   KEY `FKmst6y94vgg26prceqhxfx1dwq` (`diamond_id`),
   KEY `trade_order_execution_date_index` (`execution_date`) USING BTREE,
+  KEY `trade_order_creation_date_index` (`creation_date`) USING BTREE,
   CONSTRAINT `FKmst6y94vgg26prceqhxfx1dwq` FOREIGN KEY (`diamond_id`) REFERENCES `diamond` (`id`),
   CONSTRAINT `FKoo7xiemrnnd0hqg4jal2ohluj` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=231392 DEFAULT CHARSET=latin1;
@@ -260,4 +261,5 @@ CREATE TABLE `trade_order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+create index trade_order_trade_order_status on trade_order (trader_order_status) using HASH;
 -- Dump completed on 2018-04-12 22:53:48
