@@ -1,7 +1,6 @@
 package com.dtrade.service.impl;
 
 import com.dtrade.service.ICoinPaymentService;
-import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -35,8 +34,9 @@ public class CoinPaymentService implements ICoinPaymentService {
             headers.put("Content-Type", Collections.singletonList("application/x-www-form-urlencoded"));
             String body = "version=1&cmd=rates&key=" + publicKey + "&format=json";
 
-            String hmac = new HmacUtils(HmacAlgorithms.HMAC_SHA_512, privateKey).hmacHex(body);
-            headers.put("HMAC", Collections.singletonList("hmac"));
+            String hmac = HmacUtils.hmacSha512Hex(privateKey, body);
+
+            headers.put("HMAC", Collections.singletonList(hmac));
             entity = new RequestEntity<>(body, headers, HttpMethod.POST,
                       new URI("https://www.coinpayments.net/api.php"));
 

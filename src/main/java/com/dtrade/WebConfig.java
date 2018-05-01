@@ -18,7 +18,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
    public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/diamonds").setViewName("diamonds");
         registry.addViewController("/account").setViewName("account");
-        registry.addViewController("/").setViewName("index2");
+        registry.addViewController("/trade").setViewName("index2");
         registry.addViewController("/old").setViewName("index");
         registry.addViewController("/customer").setViewName("customer");
     }
