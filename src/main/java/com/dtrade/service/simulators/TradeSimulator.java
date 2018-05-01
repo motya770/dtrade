@@ -113,6 +113,9 @@ public class TradeSimulator {
 
         int randPrice = rand.nextInt(100);
         BigDecimal price = new BigDecimal(randPrice);
+        if(price==null){
+            price = new BigDecimal("99");
+        }
 
         TradeOrder tradeOrder = new TradeOrder();
         tradeOrder.setAmount(new BigDecimal("10.0"));
