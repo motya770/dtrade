@@ -69,19 +69,25 @@
 				</div>
 				<div class="versus__descr">
 					<h2>Comparing to other investment tools.</h2>
-					<p>Сырьевые товары могут рассматриваться как альтернативное вложение денег. Особенно золото и алмазы – предметы сравнительного анализа потенциальных инвесторов. Каждый алмаз уникален, и по своим свойствам он отличается от других алмазов, а золото однородно и может в большом объёме иметь одинаковое качество.</p>
+					<p>Diamond papers can be compared with other investment tools. But when we are looking into different instruments, we can understand that gold is too expensive, stocks are too hight, currencies has inflation and crypto is to volatile and unstable. Introducing this new investment tool creates opportunity
+						to speculate or to save money over time.</p>
 				</div>
 			</div>
 		</div>
 		<div class="make-invest">
 			<div class="make-invest__inner">
 				<div class="make-invest__descr">
-					<h2>Инвестируйте свой бюджет в акции</h2>
-					<blockquote>Наша миссия - максимизация возможности наших клиентов получить выгоду от приобретения и инвестирования в бриллианты.</blockquote>
+					<h2>Invest you budget into diamonds</h2>
+					<blockquote>Our mission is to maximize our client profits via investing into diamonds.</blockquote>
 					<ul>
-						<li>Вкладывайте в акции  у источника по наилучшей цене. Наши бриллианты оценены на основе их инвестиционной ценности во благо всех наших уважаемых клиентов во всем мире.</li>
-						<li>Из-за постоянно меняющихся курсов валют и материальных цен и из-за того, что алмазный рынок – быстроразвивающийся, все наши котировки действительны только в течение ограниченного времени и при наличии котируемых бриллиантов.</li>
-						<li>Мы входим в состав группы алмазных фондовых бирж, которые имеют прямой доступ к лучшим камням. Возможно это благодаря акционерам, часть которых занимается торговлей алмазами более 100 лет.</li>
+						<li>We developed special algorithm that allows to appreciate any diamond in the world. Invest
+							into papers at the best price after Initial Diamond Offering.</li>
+
+						<li>Our diamonds save there value over time, we choose statistically
+							best diamonds for us, so you can have safe investments.</li>
+
+						<li>We have partners with history on this market for more that 100 years.
+							Combining our innovative approach and their experience we managed to create something truly unique.</li>
 					</ul>
 				</div>
 				<div class="make-invest__icons">
@@ -102,7 +108,7 @@
 						<span>Cushion</span>
 					</span>
 					<span class="make-invest__ico">
-						<img src="img/stone5.png" alt="stone">
+						<img src="/theme/app/img/stone5.png" alt="stone">
 						<span>Oval</span>
 					</span>
 					<span class="make-invest__ico">
@@ -140,21 +146,21 @@
 							<div class="f-slider-carousel__item">
 								<span class="f-slider-carousel__image" style="background-image: url(img/feedback.jpg)"></span>
 								<div class="f-slider-carousel__info">
-									<h3>Николай Иванов</h3>
-									<p>Маркетолог<br>42 года</p>
+									<h3>John Wailters</h3>
+									<p>Marketing specialist<br>42 years</p>
 								</div>
 								<div class="f-slider-carousel__text">
-									<p>“ Удобный сервис по покупке / продаже акций бриллиантов на мировом рынке ”</p>
+									<p>“ Unique service for new type investing. Diamonds never were more accessible than ever. ”</p>
 								</div>
 							</div>
 							<div class="f-slider-carousel__item">
 								<span class="f-slider-carousel__image" style="background-image: url(img/feedback.jpg)"></span>
 								<div class="f-slider-carousel__info">
-									<h3>Николай Иванов</h3>
-									<p>Маркетолог<br>42 года</p>
+									<h3>Andrew Broklovsky</h3>
+									<p>Software developer<br>42 года</p>
 								</div>
 								<div class="f-slider-carousel__text">
-									<p>“ Удобный сервис по покупке / продаже акций бриллиантов на мировом рынке ”</p>
+									<p>“ Exiting tool for someone truly concentrated on investing and profits. ”</p>
 								</div>
 							</div>
 						</div>
@@ -167,7 +173,8 @@
 			</div>
 			<div class="sert">
 				<div class="sert__inner">
-					<h2 class="sert__heading">Сертификаты</h2>
+					<!--
+					<h2 class="sert__heading">Certificates</h2>
 					<div class="owl-carousel def-dots sert__carousel sert-carousel">
 						<div class="sert-carousel__item">
 							<div>
@@ -195,6 +202,7 @@
 							</div>
 						</div>
 					</div>
+					-->
 				</div>
 			</div>
 		</div>
@@ -202,7 +210,7 @@
 	<div class="footer">
 		<div class="footer__inner">
 			<div class="footer__content">
-				<p class="footer__copy">Инвестиционное бюро бриллиантов</p>
+				<p class="footer__copy">Financial diamonds exchange</p>
 				<img src="/theme/app/img/cards.png" alt="cards" class="footer__card">
 			</div>
 		</div>
