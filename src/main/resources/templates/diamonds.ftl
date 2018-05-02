@@ -40,7 +40,9 @@
                                 <th>Carats</th>
                                 <th>Clarity</th>
                                 <th>Σ stcks</th>
+                                <!--
                                 <th></th>
+                                -->
                             </tr>
                             </thead>
                             <tbody>
@@ -55,10 +57,13 @@
                                 <td>{{diamond.carats}}</td>
                                 <td>{{diamond.clarity}}</td>
                                 <td>{{diamond.totalStockAmount}}</td>
+                                <!--
                                 <td>
                                     <a href="#" data-open="1">More</a>
                                 </td>
+                                -->
                             </tr>
+                            <!--
                             <tr class="nopadding" data-show="1">
                                 <td colspan="9">
                                     <h2>Динамика стоимости акций 2017</h2>
@@ -69,7 +74,7 @@
                                     <h2>Как инвестировать</h2>
                                     <p>Дистанционно через Личный кабинет</p>
                                 </td>
-                            </tr>
+                            </tr>-->
                             <!--
                             <tr>
                                 <td>Brilliant Elizaveta II<br>ISIN: DE000520000</td>
