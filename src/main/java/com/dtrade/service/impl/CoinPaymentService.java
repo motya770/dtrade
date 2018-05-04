@@ -59,9 +59,6 @@ public class CoinPaymentService implements ICoinPaymentService {
         String publicKey = "0620c2e54f0fe72ca283b949d20b01089afcd225d7463283c2812ffc26d96402";
         double amount=10000;
         String buyer_email = "dovgri@mail.ru";
-        String currency1="1";
-        String currency2="2";
-
 
         RequestEntity<String> entity = null;
         try{
@@ -83,13 +80,13 @@ public class CoinPaymentService implements ICoinPaymentService {
         ResponseEntity<String> responce  = restTemplate.exchange(entity, String.class);
 
         System.out.println(responce);
-
     }
 
-    @Override
+    //@Override
     public void withdraw() {
 
     }
+
 
     public static void main(String... args){
         //login();

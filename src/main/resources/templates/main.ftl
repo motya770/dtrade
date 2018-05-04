@@ -34,7 +34,7 @@
 		<div class="hero" style="background-image: url(/theme/app/img/hero-bg.jpg)">
 			<div class="hero__inner">
 				<div class="hero__text">
-					<h1 class="hero__heading">Investing in financial papers backed by diamonds. </h1>
+					<h1 class="hero__heading">Investing in financial equity backed by diamonds. </h1>
 					<p class="hero__descr">Diamond papers created opportunity for new type of investing.
 						Now person can invest for speculative purpose and for saving those values after inflation.
 						Our exchange created this new instrument and allows you to buy and sell pappers in simple and secure way.   </p>
@@ -144,7 +144,7 @@
 					<div class="feedback__slider feedback-slider">
 						<div class="owl-carousel feedback-slider__carousel f-slider-carousel">
 							<div class="f-slider-carousel__item">
-								<span class="f-slider-carousel__image" style="background-image: url(img/feedback.jpg)"></span>
+								<span class="f-slider-carousel__image" style="background-image: url(/theme/app/img/feedback.jpg)"></span>
 								<div class="f-slider-carousel__info">
 									<h3>John Wailters</h3>
 									<p>Marketing specialist<br>42 years</p>
@@ -154,7 +154,7 @@
 								</div>
 							</div>
 							<div class="f-slider-carousel__item">
-								<span class="f-slider-carousel__image" style="background-image: url(img/feedback.jpg)"></span>
+								<span class="f-slider-carousel__image" style="background-image: url(/theme/app/img/feedback.jpg)"></span>
 								<div class="f-slider-carousel__info">
 									<h3>Andrew Broklovsky</h3>
 									<p>Software developer<br>42 года</p>

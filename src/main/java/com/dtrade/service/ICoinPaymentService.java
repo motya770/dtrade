@@ -4,8 +4,8 @@ public interface ICoinPaymentService {
 
    // void login();
 
-    void deposit();
+  //  void deposit();
 
-    void withdraw();
+   // void withdraw();
 
 }
