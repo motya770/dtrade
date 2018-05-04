@@ -49,8 +49,40 @@ public class CoinPaymentService implements ICoinPaymentService {
         System.out.println(responce);
     }
 
-    @Override
-    public void deposit() {
+
+
+    //@Override
+    public static void deposit() {
+        RestTemplate restTemplate = new RestTemplate();
+
+        String privateKey = "101a03C22c7864f6e8d52724B2A9Ccd495795CB6c45324a80a9EDf55e2A0fbF6";
+        String publicKey = "0620c2e54f0fe72ca283b949d20b01089afcd225d7463283c2812ffc26d96402";
+        double amount=10000;
+        String buyer_email = "dovgri@mail.ru";
+        String currency1="1";
+        String currency2="2";
+
+
+        RequestEntity<String> entity = null;
+        try{
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.put("Content-Type", Collections.singletonList("application/x-www-form-urlencoded"));
+            String body = "currency1=USD&currency2=BTC&version=1&cmd=create_transaction&key=" +publicKey+ "&amount=" + amount +
+                    "&buyer_email=" + buyer_email + "&format=json";
+
+            String hmac = HmacUtils.hmacSha512Hex(privateKey, body);
+            headers.put("HMAC", Collections.singletonList(hmac));
+            entity = new RequestEntity<>(body, headers, HttpMethod.POST,
+                    new URI("https://www.coinpayments.net/api.php"));
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        ResponseEntity<String> responce  = restTemplate.exchange(entity, String.class);
+
+        System.out.println(responce);
 
     }
 
@@ -60,6 +92,7 @@ public class CoinPaymentService implements ICoinPaymentService {
     }
 
     public static void main(String... args){
-        login();
+        //login();
+        deposit();
     }
 }
