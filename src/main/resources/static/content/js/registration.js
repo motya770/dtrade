@@ -1,5 +1,4 @@
-angular
-  .module('diamondApp', ['ngMaterial', 'ngAnimate', 'ngMessages'])
+diamondApp
   .config(function($mdIconProvider) {
       $mdIconProvider
          .iconSet('social', 'img/icons/sets/social-icons.svg', 24)

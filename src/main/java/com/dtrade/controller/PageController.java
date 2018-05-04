@@ -16,10 +16,11 @@ public class PageController {
         return "index2";
     }
 
+    /*
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test(){
         return "test";
-    }
+    }*/
 
     @RequestMapping(value = "/login-page", method = {RequestMethod.GET, RequestMethod.POST})
     public String loginPage(){

@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html ng-app="diamondApp">
 <head>
+
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <#include "parts/head.ftl">
+
     <script src="/content/js/registration.js" ></script>
+
 </head>
 
 <body class="page">

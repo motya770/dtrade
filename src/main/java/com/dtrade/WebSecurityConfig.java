@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/trade-order/history-orders").permitAll()
                 .antMatchers("/trade-order/**").authenticated()
                 .anyRequest().permitAll()
-                .and().formLogin().defaultSuccessUrl("/")
+                .and().formLogin().defaultSuccessUrl("/trade")
                 .loginPage("/login-page").permitAll()
                 .loginProcessingUrl("/login")
                 .failureForwardUrl("/login-page?error=fail")
