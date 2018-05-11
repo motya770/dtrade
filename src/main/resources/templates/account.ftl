@@ -163,7 +163,7 @@
                                     <input type="hidden" name="merchant" value="1fb3cd572acffff43b1c0356d5429f1c">
                                     <input type="hidden" name="item_name" value="Diaminds Deposit">
                                     <input type="hidden" name="currency" value="USD">
-                                    <input type="hidden" name="amountf" value="50.00000000">
+                                    <input type="hidden" name="amountf" value="5.00000000">
                                     <input type="hidden" name="quantity" value="1">
                                     <input type="hidden" name="allow_quantity" value="0">
                                     <input type="hidden" name="want_shipping" value="0">
