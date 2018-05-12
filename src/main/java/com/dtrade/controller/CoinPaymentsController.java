@@ -11,6 +11,17 @@ public class CoinPaymentsController {
     @RequestMapping(value = "/notify")
     public void notifyNew(HttpServletRequest httpServletRequest) {
         //return categoryTickService.getByScore(score);
-        System.out.println("NOTIFY: " + httpServletRequest);
+
+        System.out.println("!!!!!!!!!!!!!! ");
+        System.out.println("!!!!!!!!!!!!!! ");
+        System.out.println("!!!!!!!!!!!!!! ");
+        System.out.println("!!!!!!!!!!!!!! ");
+        System.out.println("NOTIFY: " + httpServletRequest.toString());
+        System.out.println("!!!!!!!!!!!!!! ");
+        System.out.println("!!!!!!!!!!!!!! ");
+        System.out.println("!!!!!!!!!!!!!! ");
+        System.out.println("!!!!!!!!!!!!!! ");
+        System.out.println("!!!!!!!!!!!!!! ");
+
     }
 }
