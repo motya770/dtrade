@@ -50,6 +50,7 @@ public class BalanceActivityService implements IBalanceActivityService {
     }
 
     @Override
+    @Transactional(noRollbackFor = NotEnoughMoney.class)
     public org.springframework.data.util.Pair<BalanceActivity, BalanceActivity> createBalanceActivities(Account buyer, Account seller, BigDecimal cash, TradeOrder buyOrder, TradeOrder sellOrder) {
 
         //buyer don't have enough money
