@@ -34,6 +34,8 @@ public class TradeOrderService  implements ITradeOrderService{
 
     private static final Logger logger = LoggerFactory.getLogger(TradeOrderService.class);
 
+    public final static BigDecimal ZERO_VALUE = new BigDecimal("0.00");
+
     @Autowired
     private TradeOrderRepository tradeOrderRepository;
 
@@ -54,8 +56,6 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Autowired
     private IQuotesService quotesService;
-
-    private BigDecimal zeroValue = new BigDecimal("0.00");
 
     private TransactionTemplate transactionTemplate;
 
@@ -176,7 +176,7 @@ public class TradeOrderService  implements ITradeOrderService{
     public void validateFields(TradeOrder tradeOrder){
 
         //TODO thing about exception and explanation and client validation
-        if(tradeOrder.getAmount()==null || (tradeOrder.getAmount().compareTo(zeroValue) <= 0)){
+        if(tradeOrder.getAmount()==null || (tradeOrder.getAmount().compareTo(ZERO_VALUE) <= 0)){
             throw new TradeException("Can't create trade order because amount value is empty.");
         }
 
@@ -188,7 +188,7 @@ public class TradeOrderService  implements ITradeOrderService{
             throw new TradeException("Can't create trade order because account is empty.");
         }
 
-        if(tradeOrder.getPrice()==null || (tradeOrder.getPrice().compareTo(zeroValue)<=0)){
+        if(tradeOrder.getPrice()==null || (tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0)){
             throw new TradeException("Can't create trade order because price is empty.");
         }
 
@@ -471,7 +471,7 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
     private void checkIfExecuted(TradeOrder tradeOrder){
-        if (tradeOrder.getAmount().equals(zeroValue)) {
+        if (tradeOrder.getAmount().equals(ZERO_VALUE)) {
             bookOrderService.remove(tradeOrder);
             tradeOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
             setExecutionDate(tradeOrder);

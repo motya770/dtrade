@@ -10,6 +10,7 @@ import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IQuotesService;
 import com.dtrade.service.ITradeOrderService;
+import com.dtrade.service.impl.TradeOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,7 +114,7 @@ public class TradeSimulator {
 
         int randPrice = rand.nextInt(100);
         BigDecimal price = new BigDecimal(randPrice);
-        if(price==null){
+        if(price==null || price.compareTo(TradeOrderService.ZERO_VALUE)<=0){
             price = new BigDecimal("99");
         }
 

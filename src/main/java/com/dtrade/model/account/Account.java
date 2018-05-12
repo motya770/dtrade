@@ -28,7 +28,7 @@ import java.util.List;
 public class Account implements UserDetails {
 
     public static final String F_ROLE_ACCOUNT = "ROLE_ACCOUNT";
-    public static final String F_ROLE_ADMIN = "F_ROLE_ADMIN";
+    public static final String F_ROLE_ADMIN = "ROLE_ADMIN";
 
     public static final String F_MAIL = "login";
     public static final String F_CONFIRMED = "confirmed";
