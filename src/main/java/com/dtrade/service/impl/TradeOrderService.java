@@ -1,5 +1,6 @@
 package com.dtrade.service.impl;
 
+import com.dtrade.exception.NotEnoughMoney;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
@@ -269,7 +270,7 @@ public class TradeOrderService  implements ITradeOrderService{
         if(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)
                 || tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.CANCELED))
         {
-            throw new TradeException("Can't cancel trader order with status " + tradeOrder.getTraderOrderStatus());
+            throw new TradeException("Can't reject trader order with status " + tradeOrder.getTraderOrderStatus());
         }
 
 
@@ -315,7 +316,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
     //buy - sell
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = NotEnoughMoney.class)
     public void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
 
 //        transactionTemplate.execute(new TransactionCallbackWithoutResult() {

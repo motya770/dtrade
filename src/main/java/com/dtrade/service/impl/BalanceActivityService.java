@@ -1,5 +1,6 @@
 package com.dtrade.service.impl;
 
+import com.dtrade.exception.NotEnoughMoney;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balanceactivity.BalanceActivity;
@@ -51,9 +52,9 @@ public class BalanceActivityService implements IBalanceActivityService {
     @Override
     public org.springframework.data.util.Pair<BalanceActivity, BalanceActivity> createBalanceActivities(Account buyer, Account seller, BigDecimal cash, TradeOrder buyOrder, TradeOrder sellOrder) {
 
-        //buyer don't have enougth money
+        //buyer don't have enough money
         if(buyer.getBalance().compareTo(cash) < 0){
-            throw new TradeException("Not enough money for this operation.");
+            throw new NotEnoughMoney();
         }
 
         BigDecimal minusCash = cash.multiply(new BigDecimal("-1"));
