@@ -257,6 +257,7 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public TradeOrder rejectTradeOrder(TradeOrder tradeOrder) {
         if(tradeOrder==null){
