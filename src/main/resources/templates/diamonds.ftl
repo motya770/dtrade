@@ -23,7 +23,7 @@
         <div class="def-cab-page">
             <div class="def-cab-page__inner">
                 <div class="def-cab-page__content">
-                    <h2 class="def-cab-page__heading">Diamonds derivatives</h2>
+                    <h2 class="def-cab-page__heading">Diamonds shares</h2>
 
                     <div ng-controller="DiamondController as vm">
                         <div class="table-container">

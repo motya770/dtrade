@@ -33,7 +33,7 @@
                         <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm" style="height:491px;">
                             <div class="sep-cab-page__heading">
                                 <h2>Diamonds listing</h2>
-                                <p>All diamonds derivates availiable</p>
+                                <p>All diamonds shares availiable</p>
                             </div>
 
                             <form class="searchform">
@@ -224,7 +224,7 @@
                         <div class="sep-cab-page__side sep-cab-page__right">
                             <div class="sep-cab-page__heading">
                                 <h2>Technical analysis</h2>
-                                <p>Graph of changes of diamond derivative price</p>
+                                <p>Graph of changes of diamond share price</p>
                             </div>
                             <!--
                             <form class="filterlist">
@@ -399,17 +399,16 @@
                         <div class="sep-cab-page__side sep-cab-page__bottom-right">
                             <ul class="sep-cab-tabs sep-cab-tabs--tables">
                                 <li class="active">
-                                    <a href="#tab01">Open Order</a>
+                                    <a href="#tab01">Open Orders</a>
                                 </li>
                                 <li>
-                                    <a href="#tab02">My derivates (stocks)</a>
+                                    <a href="#tab02">My shares</a>
                                 </li>
                             </ul>
                             <div class="sep-cab-tabs-container">
                                 <div ng-controller="TradeOrderController as vm" class="sep-cab-tab" id="tab01" >
                                     <div class="table-container">
-
-                                        <div >
+                                        <div>
                                             <table class="diamont-table">
                                             <thead>
                                             <tr>

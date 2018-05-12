@@ -34,10 +34,10 @@
 		<div class="hero" style="background-image: url(/theme/app/img/hero-bg.jpg)">
 			<div class="hero__inner">
 				<div class="hero__text">
-					<h1 class="hero__heading">Investing in financial equity backed by diamonds. </h1>
-					<p class="hero__descr">Diamond papers created opportunity for new type of investing.
+					<h1 class="hero__heading">Investing in financial shares backed by diamonds. </h1>
+					<p class="hero__descr">Diamond shares created opportunity for new type of investing.
 						Now person can invest for speculative purpose and for saving those values after inflation.
-						Our exchange created this new instrument and allows you to buy and sell pappers in simple and secure way.   </p>
+						Our exchange created this new instrument and allows you to buy and sell shares in simple and secure way.   </p>
 				</div>
 				<div class="hero__stat">
 					<div class="hero-stat-elem">
@@ -70,7 +70,7 @@
 				</div>
 				<div class="versus__descr">
 					<h2>Comparing to other investment tools.</h2>
-					<p>Diamond papers can be compared with other investment tools. But when we are looking into different instruments, we can understand that gold is too expensive, stocks are too hight, currencies has inflation and crypto is to volatile and unstable. Introducing this new investment tool creates opportunity
+					<p>Diamond shares can be compared with other investment tools. But when we are looking into different instruments, we can understand that gold is too expensive, stocks are too hight, currencies has inflation and crypto is to volatile and unstable. Introducing this new investment tool creates opportunity
 						to speculate or to save money over time.</p>
 				</div>
 			</div>
@@ -82,7 +82,7 @@
 					<blockquote>Our mission is to maximize our client profits via investing into diamonds.</blockquote>
 					<ul>
 						<li>We developed special algorithm that allows to appreciate any diamond in the world. Invest
-							into papers at the best price after Initial Diamond Offering.</li>
+							into shares at the best price after Initial Diamond Offering.</li>
 
 						<li>Our diamonds save there value over time, we choose statistically
 							best diamonds for us, so you can have safe investments.</li>
@@ -134,7 +134,7 @@
 		<div class="ctablock">
 			<div class="ctablock__inner">
 				<div class="ctablock__content">
-					<h2>Choose diamond derivatives</h2>
+					<h2>Choose diamond shares</h2>
 					<a href="/trade" class="btn btn--lg">Start to trade</a>
 				</div>
 			</div>
