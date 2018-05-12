@@ -148,17 +148,17 @@
 								<span class="f-slider-carousel__image" style="background-image: url(/theme/app/img/feedback.jpg)"></span>
 								<div class="f-slider-carousel__info">
 									<h3>John Wailters</h3>
-									<p>Marketing specialist<br>42 years</p>
+									<p>Marketing specialist<br>39 years</p>
 								</div>
 								<div class="f-slider-carousel__text">
 									<p>“ Unique service for new type investing. Diamonds never were more accessible than ever. ”</p>
 								</div>
 							</div>
 							<div class="f-slider-carousel__item">
-								<span class="f-slider-carousel__image" style="background-image: url(/theme/app/img/feedback.jpg)"></span>
+								<span class="f-slider-carousel__image" style="background-image: url(/theme/app/img/man-photo.jpeg)"></span>
 								<div class="f-slider-carousel__info">
 									<h3>Andrew Broklovsky</h3>
-									<p>Software developer<br>42 года</p>
+									<p>Professional trader<br>43 года</p>
 								</div>
 								<div class="f-slider-carousel__text">
 									<p>“ Exiting tool for someone truly concentrated on investing and profits. ”</p>
