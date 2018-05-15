@@ -62,15 +62,15 @@
 <link rel="stylesheet" href="/bower_components/highcharts-ng/dist/highcharts-ng.css ">
 -->
 
-<script async src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
+<script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
 <!--
 <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js" type="text/javascript"></script>
 -->
 <script src="/bower_components/less/dist/less.min.js" type="text/javascript"></script>
 
 <!-- Angular Material requires Angular.js Libraries -->
-<script src="/bower_components/angular-animate/angular-animate.js"></script>
-<script src="/bower_components/angular-aria/angular-aria.js"></script>
+<script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="/bower_components/angular-aria/angular-aria.min.js"></script>
 <script src="/bower_components/angular-messages/angular-messages.min.js"></script>
 
 <!-- Angular Material Library -->
