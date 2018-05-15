@@ -7,7 +7,7 @@
 
     <#include "parts/head.ftl">
 
-    <script src="/content/js/registration.js" ></script>
+
 
 </head>
 
@@ -117,6 +117,7 @@
 </div>
 
 <#include "parts/bootom-scripts.ftl">
+<script src="/content/js/registration.js" ></script>
 
 </body>
 </html>

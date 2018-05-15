@@ -4,8 +4,7 @@
 <head>
 
     <#include "parts/head.ftl">
-    <script src="/content/js/app/balanceactivity.service.js"></script>
-    <script src="/content/js/app/balanceactivity.controller.js"></script>
+
 
 </head>
 
@@ -206,7 +205,8 @@
 
 
 <#include "parts/bootom-scripts.ftl">
-
+<script src="/content/js/app/balanceactivity.service.js"></script>
+<script src="/content/js/app/balanceactivity.controller.js"></script>
 
 </body>
 </html>

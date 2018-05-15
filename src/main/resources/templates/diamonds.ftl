@@ -4,7 +4,7 @@
 <head>
 
     <#include "parts/head.ftl">
-    <script src="/content/js/app/diamond.controller.js"></script>
+
 
 </head>
 
@@ -136,6 +136,7 @@
 </div>
 
 <#include "parts/bootom-scripts.ftl">
+<script src="/content/js/app/diamond.controller.js"></script>
 
 </body>
 </html>
