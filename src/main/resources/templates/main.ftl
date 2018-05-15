@@ -2,7 +2,7 @@
 <html>
 
 <head>
-<#include "parts/head.ftl">
+<#include "parts/general.ftl">
 </head>
 
 <body>
