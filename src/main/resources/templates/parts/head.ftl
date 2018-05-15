@@ -62,7 +62,7 @@
 <link rel="stylesheet" href="/bower_components/highcharts-ng/dist/highcharts-ng.css ">
 -->
 
-<script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
+<script async src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
 <!--
 <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js" type="text/javascript"></script>
 -->
