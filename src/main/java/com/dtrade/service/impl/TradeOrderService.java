@@ -133,7 +133,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
                         long start = System.currentTimeMillis();
                         executeTradeOrders(pair);
-                        logger.info("execute trade time: {}", (System.currentTimeMillis() - start));
+                        logger.debug("execute trade time: {}", (System.currentTimeMillis() - start));
                     }
                 });
             }
@@ -228,7 +228,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.addNew(realOrder);
 
-        logger.info("Open Trade time {}", (System.currentTimeMillis() - start));
+        logger.debug("Open Trade time {}", (System.currentTimeMillis() - start));
         return realOrder;
     }
 
@@ -446,7 +446,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     //System.out.println("1.6");
                     long end = System.currentTimeMillis() - start;
 
-                    logger.info("SUC EXEC TIME: " + end);
+                    logger.debug("SUC EXEC TIME: " + end);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

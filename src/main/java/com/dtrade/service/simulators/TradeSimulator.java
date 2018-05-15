@@ -81,7 +81,7 @@ public class TradeSimulator {
 
     private Runnable getRunnable(String userName){
         Runnable r1 = ()->{
-            logger.info("First account simulation");
+            logger.debug("First account simulation");
             try{
                 startTrade(userName);
                 Thread.currentThread().sleep(1_000);}
@@ -108,7 +108,7 @@ public class TradeSimulator {
         Random rand = new Random();
         int random = rand.nextInt(2);
 
-        logger.info("rand value " + random);
+        //logger.info("rand value " + random);
         //random buy and random sell (simulation!! :-))
         TradeOrderType tradeOrderType = (random == 0) ? TradeOrderType.BUY : TradeOrderType.SELL;
 
