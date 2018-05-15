@@ -50,7 +50,7 @@
 						<p>assets<br>for investment</p>
 					</div>
 				</div>
-                <a href="/trade" class="btn btn--lg" style="margin-left: 126px; margin-bottom: 20px; width: 36%; margin-top:5px;">Start to trade</a>
+                <a href="/trade" class="btn btn--lg" style="margin-left: 126px; margin-bottom: 20px; width: 36%; margin-top:5px;">Start trading</a>
 			</div>
 		</div>
 		<div class="versus">
