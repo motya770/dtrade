@@ -36,7 +36,7 @@
                     <div class="lk-main-tabs">
                         <div class="lk-main-tab" id="tab01">
                             <div class="lk-main-tab__table" style="width: 692px;">
-                                <div class="table-container" ng-controller="BalanceActivityController as vm">
+                                <div class="table-container" ng-controller="BalanceActivityController as vm" ng-cloak>
                                     <div>
                                         <table class="diamont-table">
                                         <thead>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="lk-main-tab" id="tab02">
                             <div class="lk-main-tab__table" style="width: 692px;">
-                                <div class="table-container" ng-controller="TradeOrderAccountController as vm">
+                                <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
                                     <div >
                                         <table class="diamont-table">
                                         <thead>

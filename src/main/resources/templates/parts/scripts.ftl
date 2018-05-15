@@ -4,7 +4,6 @@
 -->
 <link rel="stylesheet" href= "/bower_components/angular-material/angular-material.min.css"/>
 
-<script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
 <script src="/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
 
 <!--
