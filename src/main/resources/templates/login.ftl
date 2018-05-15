@@ -60,7 +60,7 @@
                             <md-icon class="material-icons md-light md-48"> phone </md-icon>
 
                             <md-icon md-svg-src="img/icons/ic_phone_24px.svg"></md-icon>
-                            <input ng-model="account.phone" type="text" placeholder="Phone Number(Full format)">
+                            <input ng-model="account.phone" type="text" placeholder="Phone number(full format)">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <!-- Use floating placeholder instead of label -->
@@ -72,7 +72,7 @@
 
 
                         <md-input-container md-no-float="" class="md-block">
-                            <label for="newPassword">New Password</label>
+                            <label for="newPassword">New password</label>
                             <input type="password" name="newPassword" ng-model="account.password.new"
                                    ng-minlength="6" required />
                             <span class="help-block"
@@ -81,7 +81,7 @@
                         </span>
                         </md-input-container>
                         <md-input-container md-no-float="" class="md-block">
-                            <label for="newPasswordConfirm">Confirm New Password</label>
+                            <label for="newPasswordConfirm">Confirm new password</label>
                             <input type="password" name="newPasswordConfirm"
                                    ng-model="account.password.confirm" ng-minlength="6"
                                    value-matches="account.password.new" required />
@@ -97,7 +97,7 @@
                         </md-checkbox>
                         <div ng-messages="projectForm.tos.$error" multiple="" md-auto-hide="false">
                             <div ng-message="required">
-                                You must accept the terms of service before you can proceed.
+                                You must accept the terms of service before you may proceed.
                             </div>
                         </div>
                     </md-input-container>

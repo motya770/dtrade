@@ -33,7 +33,7 @@
                         <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm" style="height:491px;">
                             <div class="sep-cab-page__heading">
                                 <h2>Diamonds listing</h2>
-                                <p>All diamonds shares availiable</p>
+                                <p>All diamonds shares are available</p>
                             </div>
 
                             <form class="searchform">
@@ -224,7 +224,7 @@
                         <div class="sep-cab-page__side sep-cab-page__right">
                             <div class="sep-cab-page__heading">
                                 <h2>Technical analysis</h2>
-                                <p>Graph of changes of diamond share price</p>
+                                <p>Graph of diamond share prices</p>
                             </div>
                             <!--
                             <form class="filterlist">

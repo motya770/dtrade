@@ -157,6 +157,29 @@
                         </div>
                         <div class="lk-main-tab" id="tab03">
                             <div class="lk-main-tab__table" style="width: 692px; min-height: 400px;">
+
+                                <!--
+                                <a href="//www.free-kassa.ru/"><img src="//www.free-kassa.ru/img/fk_btn/7.png"></a>
+                                <a href="#" onclick="load_form()">Оплатить</a>
+                                <script src="//www.free-kassa.ru/widget/w.js"></script>
+                                <script type="text/javascript">
+                                    function load_form() {
+                                        var form = new FK();
+                                        form.loadWidget({
+                                            merchant_id: '75199',
+                                            amount: '10',
+                                            order_id: 'ORDER_ID',
+                                            email: 'EMAIL',
+                                            phone: 'PHONE',
+                                            sign: 'SIGN',
+                                            us_user: 1,
+                                            us_desc: 'Test',
+                                        });
+                                    }
+                                </script>
+                                <iframe src="http://www.free-kassa.ru/merchant/forms.php?gen_form=1&m=75199&default-sum=50&button-text=Оплатить&encoding=CP1251&type=v3&id=114257&lang=en"  width="590" height="320" frameBorder="0" target="_parent" ></iframe>
+                                -->
+
                                 <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
                                     <input type="hidden" name="cmd" value="_pay">
                                     <input type="hidden" name="reset" value="1">

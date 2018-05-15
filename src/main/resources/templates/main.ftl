@@ -10,7 +10,7 @@
 	<header class="header">
 		<div class="header__inner">
 			<div class="header__logo">
-				<a href="/">Diaminds<br>financial diamonds exchange</a>
+				<a href="/">Diaminds<br>financial diamond exchange</a>
 			</div>
 			<div class="header__right">
 				<!--
@@ -34,19 +34,20 @@
 		<div class="hero" style="background-image: url(/theme/app/img/hero-bg.jpg)">
 			<div class="hero__inner">
 				<div class="hero__text">
-					<h1 class="hero__heading">Investing in financial shares backed by diamonds. </h1>
-					<p class="hero__descr">Diamond shares created opportunity for new type of investing.
-						Now person can invest for speculative purpose and for saving those values after inflation.
-						Our exchange created this new instrument and allows you to buy and sell shares in simple and secure way.   </p>
+					<h1 class="hero__heading">Investing in financial shares backed by diamond </h1>
+					<p class="hero__descr">
+                        Diamond shares create an opportunity for a new type of investing.
+						Now, anyone can invest for speculative purposes and retain value even after inflation.
+						Our exchange created this new instrument, which allows you to buy and sell papers simply and securely.</p>
 				</div>
 				<div class="hero__stat">
 					<div class="hero-stat-elem">
 						<h3>38</h3>
-						<p>Countries<br>trading</p>
+						<p>countries<br>trading</p>
 					</div>
 					<div class="hero-stat-elem">
 						<h3>59</h3>
-						<p>assets<br>for investing</p>
+						<p>assets<br>for investment</p>
 					</div>
 				</div>
                 <a href="/trade" class="btn btn--lg" style="margin-left: 126px; margin-bottom: 20px; width: 36%; margin-top:5px;">Start to trade</a>
@@ -69,26 +70,28 @@
 					</span>
 				</div>
 				<div class="versus__descr">
-					<h2>Comparing to other investment tools.</h2>
-					<p>Diamond shares can be compared with other investment tools. But when we are looking into different instruments, we can understand that gold is too expensive, stocks are too hight, currencies has inflation and crypto is to volatile and unstable. Introducing this new investment tool creates opportunity
-						to speculate or to save money over time.</p>
+					<h2>COMPARED WITH OTHER INVESTMENT TOOLS</h2>
+					<p>
+                        Diamond shares can be compared with other investment tools. However, when we consider different instruments, we understand that gold is too expensive, stocks are too high, currencies inflate, and cryptocurrency is too volatile.
+						Introducing this new investment tool creates an opportunity to speculate or save money over time.
+					</p>
 				</div>
 			</div>
 		</div>
 		<div class="make-invest">
 			<div class="make-invest__inner">
 				<div class="make-invest__descr">
-					<h2>Invest you budget into diamonds</h2>
-					<blockquote>Our mission is to maximize our client profits via investing into diamonds.</blockquote>
+					<h2>INVEST YOUR BUDGET IN DIAMONDS</h2>
+					<blockquote>Our mission is to maximize our clients' profits through investing in diamonds.</blockquote>
 					<ul>
-						<li>We developed special algorithm that allows to appreciate any diamond in the world. Invest
-							into shares at the best price after Initial Diamond Offering.</li>
+						<li>We have developed a special algorithm that allows us to evaluate any diamond
+							in the world. Invest in papers at the best price after the Initial Diamond Offering.</li>
 
-						<li>Our diamonds save there value over time, we choose statistically
-							best diamonds for us, so you can have safe investments.</li>
+						<li>Our diamonds retain their value over time. We choose the statistically best diamonds,
+							so that you can have safe investments.</li>
 
-						<li>We have partners with history on this market for more that 100 years.
-							Combining our innovative approach and their experience we managed to create something truly unique.</li>
+						<li>Our partners have over 100 years of expertise in this market.
+							Combining our innovative approach and their prowess, we have created something truly unique.</li>
 					</ul>
 				</div>
 				<div class="make-invest__icons">
@@ -135,7 +138,7 @@
 			<div class="ctablock__inner">
 				<div class="ctablock__content">
 					<h2>Choose diamond shares</h2>
-					<a href="/trade" class="btn btn--lg">Start to trade</a>
+					<a href="/trade" class="btn btn--lg">Start trading</a>
 				</div>
 			</div>
 		</div>
@@ -151,7 +154,8 @@
 									<p>Marketing specialist<br>39 years</p>
 								</div>
 								<div class="f-slider-carousel__text">
-									<p>“ Unique service for new type investing. Diamonds never were more accessible than ever. ”</p>
+									<p>"This is a unique service for a new type of investment.
+										Diamonds are more accessible than ever."</p>
 								</div>
 							</div>
 							<div class="f-slider-carousel__item">
@@ -161,7 +165,7 @@
 									<p>Professional trader<br>43 года</p>
 								</div>
 								<div class="f-slider-carousel__text">
-									<p>“ Exiting tool for someone truly concentrated on investing and profits. ”</p>
+									<p>"An exciting tool for anyone who is truly focused on investment and profit."</p>
 								</div>
 							</div>
 						</div>
