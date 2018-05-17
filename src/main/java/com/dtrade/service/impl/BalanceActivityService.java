@@ -5,6 +5,7 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.balanceactivity.BalanceActivityType;
+import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.repository.balanceactivity.BalanceActivityRepository;
@@ -47,6 +48,27 @@ public class BalanceActivityService implements IBalanceActivityService {
     public Page<BalanceActivity> getAccountBalanceActivities(Integer pageInteger) {
         Account account = accountService.getStrictlyLoggedAccount();
         return balanceActivityRepository.getByAccount(account, new PageRequest(pageInteger, 10));
+    }
+
+    @Override
+    public BalanceActivity createDepositBalanceActivity(CoinPayment coinPayment) {
+
+        if(coinPayment.getAccount()==null){
+            throw new TradeException("Account is null");
+        }
+
+        Account account = accountService.find(coinPayment.getAccount().getId());
+
+        accountService.updateBalance(account, coinPayment.getAmount());
+
+        BalanceActivity ba = new BalanceActivity();
+        ba.setBalanceActivityType(BalanceActivityType.BUY);
+        ba.setAccount(account);
+        ba.setBalanceActivityType(BalanceActivityType.DEPOSIT);
+       //ba.setAmount(minusCash);
+        ba.setCreateDate(System.currentTimeMillis());
+        ba.setBalanceSnapshot(account.getBalance());
+        return balanceActivityRepository.save(ba);
     }
 
     @Override

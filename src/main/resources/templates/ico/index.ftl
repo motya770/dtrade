@@ -23,8 +23,8 @@
 		    <ul class="header-nav">
 		      <li class="header-nav__item"><a href="/" class="header-nav__link">Main</a></li>
 			  <li class="header-nav__item header-nav__item_icon"><a href="/trade" class="header-nav__link">Trading platform</a></li>
-			  <!--
-		      <li class="header-nav__item"><a href="/token" class="header-nav__link">Token</a></li>
+				<!--
+			 <li class="header-nav__item"><a href="/token" class="header-nav__link">Token</a></li>
 		      <li class="header-nav__item header-nav__item_icon"><a href="/trade" class="header-nav__link">Trade</a></li>
 		      <li class="header-nav__item"><a href="/" class="header-nav__link">Team</a></li>
 		      <li class="header-nav__item header-nav__item_icon"><a href="#" class="header-nav__link">WhitePapper</a></li>
@@ -38,7 +38,7 @@
 		<div class="content hidden">
 			<section class="diaminds">
 				<div class="diaminds-wrapper wrapper">
-					<p class="diaminds__text">Finencial diamond exchange</p>
+					<p class="diaminds__text">Financial diamond exchange</p>
 					<h1 class="diaminds__head">diaminds</h1>
 					<img src="/ico/build/img/diamond.png" alt="diamond" class="diaminds__img">
 					<div class="diaminds-diamond">
