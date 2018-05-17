@@ -27,6 +27,12 @@ public class TradeOrderController {
 
     private static final Logger logger = LoggerFactory.getLogger(TradeOrderController.class);
 
+    //TODO optimize breadwitdh (change to ID)
+    @RequestMapping(value = "/trade-order/live-orders-reread")
+    public List<TradeOrder> create(@RequestBody TradeOrder[] tradeOrders){
+        return tradeOrderService.rereadTradeOrders(tradeOrders);
+    }
+
     @RequestMapping(value = "/create")
     public TradeOrder create(@RequestBody TradeOrder tradeOrder){
         return tradeOrderService.createTradeOrder(tradeOrder);

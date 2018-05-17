@@ -20,19 +20,33 @@ diamondApp.controller("TradeOrderController", function TradeOrderController($sco
         self.liveTradeOrders = data;
     });
 
-    var poller = function() {
+    var poller1 = function() {
         if(DiamondService.getCurrentDiamond()==null){
-            $timeout(poller, 150, false);
+            $timeout(poller1, 150, false);
             return;
         }
         TradeOrderService.getHistoryOrders(DiamondService.getCurrentDiamond()).then(function (data) {
             self.historyTradeOrders = data;
             if(self.firstTimeOut) {
                 self.firstTimeOut = false;
-                window.setInterval(poller, 1000);
-               // $interval(poller, 1000, 0, false);
+                window.setInterval(poller1, 1000);
             }
         });
     };
-    poller();
+
+    var poller2 = function() {
+        var getLiveOrdersStatus = function () {
+            if(self.liveTradeOrders==null ||  self.liveTradeOrders.content==null){
+                return;
+            }
+            $http.post("/trade-order/live-orders-reread", self.liveTradeOrders.content).then(function (data) {
+                self.liveTradeOrders.content = data;
+            });
+        }
+        getLiveOrdersStatus();
+    };
+
+    poller1();
+    window.setInterval(poller2, 5000);
+
 });

@@ -490,7 +490,7 @@
                                         </thead>
                                         <tbody>
 
-                                        <tr ng-repeat="stock in vm.stocks">
+                                        <tr ng-repeat="stock in vm.stocks" ng-click="chooseStockDiamond(stock.diamond)">
                                             <!--
                                             <td>{{stock.id}}</td>
                                             <td>{{stock.diamond.id}}</td>

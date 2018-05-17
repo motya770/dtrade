@@ -66,6 +66,15 @@ public class TradeOrderService  implements ITradeOrderService{
         return tradeOrderRepository.findAll();
     }
 
+    @Override
+    public List<TradeOrder> rereadTradeOrders(TradeOrder[] tradeOrders){
+        List<Long> ids = new ArrayList<>();
+        for(TradeOrder to: tradeOrders){
+            ids.add(to.getId());
+        }
+        return tradeOrderRepository.findAll(ids);
+    }
+
     @Autowired
     public void setTransactionManager(PlatformTransactionManager transactionManager){
         transactionTemplate = new TransactionTemplate(transactionManager);
