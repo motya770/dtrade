@@ -1,6 +1,9 @@
 <header class="header header--page" style="background-color: 11132D;">
     <div class="header__inner">
         <div class="header__logo">
+            <!--
+            <a href="/" class="header-logo"><img src="/ico/build/img/logo.png" alt="logo"></a>
+            -->
             <a href="/">Diaminds<br><small>Financial diamond exchange</small></a>
         </div>
         <div ng-cloak class="header__right" ng-controller="AccountController as vm" >
