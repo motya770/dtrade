@@ -20,7 +20,7 @@
 		
 		<header class="header">
 		  <div class="header-wrapper wrapper">
-		    <a href="index.ftl" class="header-logo"><img src="/ico/build/img/logo.png" alt="logo"></a>
+		    <a href="/" class="header-logo"><img src="/ico/build/img/logo.png" alt="logo"></a>
 		    <div class="header-nav-btn">
 		      <span></span>
 		      <span></span>
