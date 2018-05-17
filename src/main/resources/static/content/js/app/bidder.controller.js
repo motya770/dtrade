@@ -12,7 +12,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
         initialAmount : '',
         price: null,
         account : null,
-        tradeOrderType: null
+        tradeOrderType: "BUY"
     };
 
     //TODO check it!
