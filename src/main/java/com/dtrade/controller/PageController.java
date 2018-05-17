@@ -29,7 +29,7 @@ public class PageController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String main(){
-        return "main";
+        return "ico/index";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
