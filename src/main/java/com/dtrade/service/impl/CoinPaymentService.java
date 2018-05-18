@@ -51,7 +51,7 @@ public class CoinPaymentService implements ICoinPaymentService {
 
        Integer status =  coinPayment.getCoinPaymentRequest().getStatus();
        if(status==null){
-           throw new TradeException("Status is node defined: " + coinPayment.getCoinPaymentRequest().getIpnId());
+           throw new TradeException("Status is note defined: " + coinPayment.getCoinPaymentRequest().getIpnId());
        }
 
        logger.debug("Status is {} for {}", status, coinPayment.getCoinPaymentRequest().getIpnId());

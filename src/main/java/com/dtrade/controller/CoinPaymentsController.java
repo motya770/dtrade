@@ -47,9 +47,12 @@ public class CoinPaymentsController {
         String txn_id = params.get("txn_id");
         Integer status =  Integer.parseInt(params.get("status"));
         String status_text = params.get("status_text");
-        String currency = params.get("currency");
+        String currencyUsd = params.get("currency1");
+        String currencyCoin = params.get("currency2");
+
         String confirms =   params.get("confirms");
-        BigDecimal amount =  new BigDecimal(params.get("amount"));
+        BigDecimal amountUsd =  new BigDecimal(params.get("amount1"));
+        BigDecimal amountCoin =  new BigDecimal(params.get("amount2"));
         String email =   params.get("email");
 
         coinPaymentRequest.setIpn_version(ipn_version);
@@ -60,10 +63,13 @@ public class CoinPaymentsController {
         coinPaymentRequest.setAddress(address);
         coinPaymentRequest.setTxn_id(txn_id);
         coinPaymentRequest.setStatus(status);
-        coinPaymentRequest.setCurrency(currency);
+        coinPaymentRequest.setCurrencyUsd(currencyUsd);
+        coinPaymentRequest.setCurrencyCoin(currencyCoin);
         coinPaymentRequest.setStatus_text(status_text);
         coinPaymentRequest.setConfirms(confirms);
-        coinPaymentRequest.setAmount(amount);
+
+        coinPaymentRequest.setAmountUsd(amountUsd);
+        coinPaymentRequest.setAmountCoin(amountCoin);
         coinPaymentRequest.setEmail(email);
 
         System.out.println("BODY " + body);

@@ -26,12 +26,21 @@ public class CoinPaymentRequest {
     private Integer status;
 
     private String status_text;
-    private String currency;
+    //private String currency;
     private String confirms;
-
-    @NotNull
-    private BigDecimal amount;
 
     @NotEmpty
     private String email;
+
+    @NotEmpty
+    private String currencyUsd;
+
+    @NotEmpty
+    private String currencyCoin;
+
+    @NotNull
+    private BigDecimal amountUsd;
+
+    @NotNull
+    private BigDecimal amountCoin;
 }
