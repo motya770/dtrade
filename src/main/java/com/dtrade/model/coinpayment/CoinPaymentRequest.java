@@ -1,6 +1,7 @@
 package com.dtrade.model.coinpayment;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ public class CoinPaymentRequest {
     private String ipn_type;
     private String ipn_mode;
 
-    @NotNull
+    @NotEmpty
     private String ipnId;
 
     private String merchant;
@@ -31,4 +32,6 @@ public class CoinPaymentRequest {
     @NotNull
     private BigDecimal amount;
 
+    @NotEmpty
+    private String email;
 }

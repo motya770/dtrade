@@ -41,7 +41,7 @@ public class CoinPaymentService implements ICoinPaymentService {
 
        CoinPayment coinPayment =  coinPaymentRepository.findByIpnId(coinPaymentRequest.getIpnId());
        if(coinPayment==null){
-            coinPayment = create(null, coinPaymentRequest);
+            coinPayment = create( coinPaymentRequest);
        }
 
        if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
@@ -84,20 +84,19 @@ public class CoinPaymentService implements ICoinPaymentService {
     }
 
     @Override
-    public CoinPayment create(String login, CoinPaymentRequest coinPaymentRequest) {
+    public CoinPayment create( CoinPaymentRequest coinPaymentRequest) {
 
         if(StringUtils.isEmpty(coinPaymentRequest.getIpnId())){
             throw new TradeException("IpnId is empty");
         }
 
-        Account account = accountService.findByMail(login);
+        Account account = accountService.findByMail(coinPaymentRequest.getEmail());
         if(account==null){
-            throw new TradeException("Account is empty: " + login);
+            throw new TradeException("Account is empty: " + coinPaymentRequest.getEmail());
         }
 
         CoinPayment coinPayment= new CoinPayment();
         coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CREATED);
-        coinPayment.setBalanceUpdated(false);
         coinPayment.setCreationDate(System.currentTimeMillis());
         coinPayment.setAccount(account);
         coinPayment = coinPaymentRepository.save(coinPayment);

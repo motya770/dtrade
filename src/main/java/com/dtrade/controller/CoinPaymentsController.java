@@ -50,6 +50,7 @@ public class CoinPaymentsController {
         String currency = params.get("currency");
         String confirms =   params.get("confirms");
         BigDecimal amount =  new BigDecimal(params.get("amount"));
+        String email =   params.get("email");
 
         coinPaymentRequest.setIpn_version(ipn_version);
         coinPaymentRequest.setIpn_type(ipn_type);
@@ -63,6 +64,7 @@ public class CoinPaymentsController {
         coinPaymentRequest.setStatus_text(status_text);
         coinPaymentRequest.setConfirms(confirms);
         coinPaymentRequest.setAmount(amount);
+        coinPaymentRequest.setEmail(email);
 
         System.out.println("BODY " + body);
         headers.forEach((k, v)-> System.out.println("K:" + k + ", " + "V: " + v));

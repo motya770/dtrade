@@ -9,7 +9,7 @@ public interface ICoinPaymentService {
 
     void proceed(CoinPaymentRequest coinPaymentRequest);
 
-    CoinPayment create(String login, CoinPaymentRequest coinPaymentRequest);
+    CoinPayment create(CoinPaymentRequest coinPaymentRequest);
 
     CoinPayment findByExternalId(String externalId);
 
