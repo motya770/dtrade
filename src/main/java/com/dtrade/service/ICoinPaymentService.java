@@ -2,19 +2,20 @@ package com.dtrade.service;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.coinpayment.CoinPayment;
+import com.dtrade.model.coinpayment.CoinPaymentRequest;
 import org.springframework.data.domain.Page;
 
 public interface ICoinPaymentService {
 
-    void proceed();
+    void proceed(CoinPaymentRequest coinPaymentRequest);
 
-    CoinPayment create(String login, String externalId);
+    CoinPayment create(String login, CoinPaymentRequest coinPaymentRequest);
 
     CoinPayment findByExternalId(String externalId);
 
     Page<CoinPayment> getAllByAccount(Account account);
 
-    CoinPayment confirmPayment(String externalId);
+    CoinPayment confirmPayment(CoinPayment coinPayment);
 
 
    // void login();

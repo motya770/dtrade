@@ -19,9 +19,6 @@ public class CoinPayment {
     private Long id;
 
     @NotNull
-    private String externalId;
-
-    @NotNull
     private Long creationDate;
 
     @NotNull
@@ -34,17 +31,7 @@ public class CoinPayment {
     @NotNull
     private Account account;
 
-    private BigDecimal amount;
+    @Embedded
+    private CoinPaymentRequest coinPaymentRequest;
 
-    private String ipn_version;
-    private String ipn_type;
-    private String ipn_mode;
-    private String ipn_id;
-    private String merchant;
-    private String address;
-    private String txn_id;
-    private String status;
-    private String status_text;
-    private String currency;
-    private String confirms;
 }

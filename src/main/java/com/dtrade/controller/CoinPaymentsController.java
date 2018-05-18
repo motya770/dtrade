@@ -1,4 +1,7 @@
 package com.dtrade.controller;
+import com.dtrade.model.coinpayment.CoinPayment;
+import com.dtrade.model.coinpayment.CoinPaymentRequest;
+import com.dtrade.repository.coinpayment.CoinPaymentRepository;
 import com.dtrade.service.ICoinPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +18,7 @@ public class CoinPaymentsController {
     private ICoinPaymentService coinPaymentService;
 
     @RequestMapping(value = "/notify")
-    public void notifyNew(@RequestBody String body, @RequestParam Map<String,String> allRequestParams,
+    public void notifyNew(@RequestBody String body, @RequestParam Map<String,String> params,
                           @RequestHeader HttpHeaders headers, HttpServletRequest httpServletRequest) {
         /*
         ipn_version	1.0	Yes
@@ -30,25 +33,41 @@ public class CoinPaymentsController {
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("NOTIFY: " + httpServletRequest.toString());
 
-        allRequestParams.forEach((k, v)->{
+        params.forEach((k, v)->{
             System.out.println("K:" + k + " V:" + v);
         });
 
-        String ipn_version = allRequestParams.get("ipn_version");
-        String ipn_type = allRequestParams.get("ipn_type");
-        String ipn_mode = allRequestParams.get("ipn_mode");
-        String ipn_id =  allRequestParams.get("ipn_id");
-        String merchant =  allRequestParams.get("merchant");
-        String address = allRequestParams.get("address");
-        String txn_id = allRequestParams.get("txn_id");
-        String status = allRequestParams.get("status");
-        String status_text = allRequestParams.get("status_text");
-        String currency = allRequestParams.get("currency");
-        String confirms =   allRequestParams.get("confirms");
-        BigDecimal amount =  new BigDecimal(allRequestParams.get("amount"));
+        CoinPaymentRequest coinPaymentRequest = new CoinPaymentRequest();
+        String ipn_version = params.get("ipn_version");
+        String ipn_type = params.get("ipn_type");
+        String ipn_mode = params.get("ipn_mode");
+        String ipn_id =  params.get("ipn_id");
+        String merchant =  params.get("merchant");
+        String address = params.get("address");
+        String txn_id = params.get("txn_id");
+        Integer status =  Integer.parseInt(params.get("status"));
+        String status_text = params.get("status_text");
+        String currency = params.get("currency");
+        String confirms =   params.get("confirms");
+        BigDecimal amount =  new BigDecimal(params.get("amount"));
+
+        coinPaymentRequest.setIpn_version(ipn_version);
+        coinPaymentRequest.setIpn_type(ipn_type);
+        coinPaymentRequest.setIpn_mode(ipn_mode);
+        coinPaymentRequest.setIpnId(ipn_id);
+        coinPaymentRequest.setMerchant(merchant);
+        coinPaymentRequest.setAddress(address);
+        coinPaymentRequest.setTxn_id(txn_id);
+        coinPaymentRequest.setStatus(status);
+        coinPaymentRequest.setCurrency(currency);
+        coinPaymentRequest.setStatus_text(status_text);
+        coinPaymentRequest.setConfirms(confirms);
+        coinPaymentRequest.setAmount(amount);
 
         System.out.println("BODY " + body);
         headers.forEach((k, v)-> System.out.println("K:" + k + ", " + "V: " + v));
+
+        coinPaymentService.proceed(coinPaymentRequest);
 
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");

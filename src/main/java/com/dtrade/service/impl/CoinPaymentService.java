@@ -3,12 +3,15 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.coinpayment.CoinPayment;
+import com.dtrade.model.coinpayment.CoinPaymentRequest;
 import com.dtrade.model.coinpayment.CoinPaymentStatus;
 import com.dtrade.repository.coinpayment.CoinPaymentRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
 import com.dtrade.service.ICoinPaymentService;
 import org.apache.commons.codec.digest.HmacUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +25,8 @@ import java.util.Collections;
 @Service
 public class CoinPaymentService implements ICoinPaymentService {
 
+    private static final Logger logger = LoggerFactory.getLogger(CoinPaymentService.class);
+
     @Autowired
     private CoinPaymentRepository coinPaymentRepository;
 
@@ -32,8 +37,27 @@ public class CoinPaymentService implements ICoinPaymentService {
     private IAccountService accountService;
 
     @Override
-    public void proceed() {
+    public void proceed(CoinPaymentRequest coinPaymentRequest) {
 
+       CoinPayment coinPayment =  coinPaymentRepository.findByIpnId(coinPaymentRequest.getIpnId());
+       if(coinPayment==null){
+            coinPayment = create(null, coinPaymentRequest);
+       }
+
+       if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
+            logger.debug("CoinPayment already confirmed {}", coinPayment.getCoinPaymentRequest().getIpnId());
+            return;
+       }
+
+       Integer status =  coinPayment.getCoinPaymentRequest().getStatus();
+       if(status==null){
+           throw new TradeException("Status is node defined: " + coinPayment.getCoinPaymentRequest().getIpnId());
+       }
+
+       logger.debug("Status is {} for {}", status, coinPayment.getCoinPaymentRequest().getIpnId());
+       if(status==100){
+           confirmPayment(coinPayment);
+       }
     }
 
     @Override
@@ -43,34 +67,27 @@ public class CoinPaymentService implements ICoinPaymentService {
 
     @Override
     public CoinPayment findByExternalId(String externalId) {
-        return coinPaymentRepository.findByExternalId(externalId);
+        return coinPaymentRepository.findByIpnId(externalId);
     }
 
     @Override
-    public CoinPayment confirmPayment(String externalId) {
+    public CoinPayment confirmPayment(CoinPayment coinPayment) {
 
-        CoinPayment coinPayment = findByExternalId(externalId);
         if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
             throw new TradeException("Already confirmed");
         }
 
-        if(coinPayment.isBalanceUpdated()){
-            throw new TradeException("Balance already updated");
-        }
-
         balanceActivityService.createDepositBalanceActivity(coinPayment);
 
-        coinPayment.setBalanceUpdated(true);
         coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CONFIRMED);
-
         return coinPaymentRepository.save(coinPayment);
     }
 
     @Override
-    public CoinPayment create(String login, String externalId) {
+    public CoinPayment create(String login, CoinPaymentRequest coinPaymentRequest) {
 
-        if(StringUtils.isEmpty(externalId)){
-            throw new TradeException("ExternalId is empty");
+        if(StringUtils.isEmpty(coinPaymentRequest.getIpnId())){
+            throw new TradeException("IpnId is empty");
         }
 
         Account account = accountService.findByMail(login);
@@ -82,7 +99,6 @@ public class CoinPaymentService implements ICoinPaymentService {
         coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CREATED);
         coinPayment.setBalanceUpdated(false);
         coinPayment.setCreationDate(System.currentTimeMillis());
-        coinPayment.setExternalId(externalId);
         coinPayment.setAccount(account);
         coinPayment = coinPaymentRepository.save(coinPayment);
         return coinPayment;
@@ -192,6 +208,6 @@ public class CoinPaymentService implements ICoinPaymentService {
 
     public static void main(String... args){
         //login();
-        deposit();
+        //deposit();
     }
 }
