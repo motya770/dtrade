@@ -25,6 +25,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 /**
  * Created by kudelin on 6/27/17.
@@ -67,12 +69,12 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
     @Override
-    public List<TradeOrder> rereadTradeOrders(TradeOrder[] tradeOrders){
-        List<Long> ids = new ArrayList<>();
-        for(TradeOrder to: tradeOrders){
-            ids.add(to.getId());
+    public List<TradeOrder> rereadTradeOrders(Long[] ids){
+        if(ids.length==0){
+            return null;
         }
-        return tradeOrderRepository.findAll(ids);
+        List<Long> tradeOrdersIds = Arrays.asList(ids);
+        return tradeOrderRepository.findAll(tradeOrdersIds);
     }
 
     @Autowired

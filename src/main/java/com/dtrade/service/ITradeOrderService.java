@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface ITradeOrderService {
 
-    List<TradeOrder> rereadTradeOrders(TradeOrder[] tradeOrders);
+    List<TradeOrder> rereadTradeOrders(Long[] tradeOrders);
 
     List<TradeOrderDTO> getTradeOrderDTO(List<TradeOrder> tradeOrders);
 

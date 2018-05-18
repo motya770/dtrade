@@ -39,14 +39,19 @@ diamondApp.controller("TradeOrderController", function TradeOrderController($sco
             if(self.liveTradeOrders==null ||  self.liveTradeOrders.content==null){
                 return;
             }
-            $http.post("/trade-order/live-orders-reread", self.liveTradeOrders.content).then(function (data) {
-                self.liveTradeOrders.content = data;
+            var ids = new Array();
+            console.log(self.liveTradeOrders.content)
+            for(var i in self.liveTradeOrders.content){
+                ids.push(self.liveTradeOrders.content[i].id)
+            }
+            $http.post("/trade-order/live-orders-reread", ids).then(function (responce) {
+                self.liveTradeOrders.content = responce.data;
             });
         }
         getLiveOrdersStatus();
     };
 
     poller1();
-    window.setInterval(poller2, 5000);
+    window.setInterval(poller2, 1000);
 
 });
