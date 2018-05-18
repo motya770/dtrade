@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(name = "externalId_unique", columnNames = "externalId"))
+@Table
 public class CoinPayment {
 
     @GeneratedValue
