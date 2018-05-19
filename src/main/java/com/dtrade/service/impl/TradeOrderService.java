@@ -25,6 +25,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 /**
  * Created by kudelin on 6/27/17.
@@ -64,6 +66,15 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public List<TradeOrder> findAll() {
         return tradeOrderRepository.findAll();
+    }
+
+    @Override
+    public List<TradeOrder> rereadTradeOrders(Long[] ids){
+        if(ids.length==0){
+            return null;
+        }
+        List<Long> tradeOrdersIds = Arrays.asList(ids);
+        return tradeOrderRepository.findAll(tradeOrdersIds);
     }
 
     @Autowired
@@ -133,7 +144,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
                         long start = System.currentTimeMillis();
                         executeTradeOrders(pair);
-                        logger.info("execute trade time: {}", (System.currentTimeMillis() - start));
+                        logger.debug("execute trade time: {}", (System.currentTimeMillis() - start));
                     }
                 });
             }
@@ -228,7 +239,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.addNew(realOrder);
 
-        logger.info("Open Trade time {}", (System.currentTimeMillis() - start));
+        logger.debug("Open Trade time {}", (System.currentTimeMillis() - start));
         return realOrder;
     }
 
@@ -446,7 +457,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     //System.out.println("1.6");
                     long end = System.currentTimeMillis() - start;
 
-                    logger.info("SUC EXEC TIME: " + end);
+                    logger.debug("SUC EXEC TIME: " + end);
                 }catch (Exception e){
                     e.printStackTrace();
                 }

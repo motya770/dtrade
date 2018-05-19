@@ -4,7 +4,7 @@
 <head>
 
     <#include "parts/head.ftl">
-    <script src="/content/js/app/diamond.controller.js"></script>
+
 
 </head>
 
@@ -25,7 +25,7 @@
                 <div class="def-cab-page__content">
                     <h2 class="def-cab-page__heading">Diamonds shares</h2>
 
-                    <div ng-controller="DiamondController as vm">
+                    <div ng-controller="DiamondController as vm" ng-cloak>
                         <div class="table-container">
                         <table class="diamont-table">
                             <thead>
@@ -136,6 +136,7 @@
 </div>
 
 <#include "parts/bootom-scripts.ftl">
+<script src="/content/js/app/diamond.controller.js"></script>
 
 </body>
 </html>

@@ -44,7 +44,7 @@
                         <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm" style="height:491px;">
                             <div class="sep-cab-page__heading">
                                 <h2>Diamonds listing</h2>
-                                <p>All diamonds shares availiable</p>
+                                <p>All diamonds shares are available</p>
                             </div>
 
                             <form class="searchform">
@@ -258,7 +258,7 @@
                         <div class="sep-cab-page__side sep-cab-page__right">
                             <div class="sep-cab-page__heading">
                                 <h2>Technical analysis</h2>
-                                <p>Graph of changes of diamond share price</p>
+                                <p>Graph of diamond share prices</p>
                             </div>
                             <!--
                             <form class="filterlist">
@@ -519,21 +519,25 @@
                                             <th>Цена продажи</th>
                                             -->
                                             <th>Amount</th>
+                                            <!--
                                             <th>Action</th>
+                                            -->
                                         </tr>
                                         </thead>
                                         <tbody>
 
-                                        <tr ng-repeat="stock in vm.stocks">
+                                        <tr ng-repeat="stock in vm.stocks" ng-click="chooseStockDiamond(stock.diamond)">
                                             <!--
                                             <td>{{stock.id}}</td>
                                             <td>{{stock.diamond.id}}</td>
                                             -->
                                             <td>{{stock.diamond.name}}</td>
                                             <td>{{stock.amount}}</td>
+                                            <!--
                                             <td>
                                                 <a href="#">Choose</a>
                                             </td>
+                                            -->
                                         </tr>
                                         <!--
                                         <tr>

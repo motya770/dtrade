@@ -3,6 +3,7 @@ package com.dtrade.service;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balanceactivity.BalanceActivity;
+import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,8 @@ public interface IBalanceActivityService {
     void createBalanceActivity(Account buyer, Account seller, Diamond diamond, BigDecimal price) throws TradeException;
 
     Pair<BalanceActivity, BalanceActivity> createBalanceActivities(Account buyer, Account seller, BigDecimal cash, TradeOrder buyOrder, TradeOrder sellOrder);
+
+    BalanceActivity createDepositBalanceActivity(CoinPayment coinPayment);
 
     Page<BalanceActivity> getAccountBalanceActivities(Integer pageInteger);
 

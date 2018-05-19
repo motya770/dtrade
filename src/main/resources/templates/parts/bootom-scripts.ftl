@@ -1,3 +1,4 @@
+<#include "/parts/scripts.ftl">
 <!-- Optimized loading JS Start -->
 <script>var scr = {"scripts":[
     {"src" : "/theme/app/js/libs.min.js", "async" : false},

@@ -3,7 +3,6 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
-import com.dtrade.model.quote.QuoteDTO;
 import com.dtrade.model.quote.QuoteType;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.repository.quote.QuoteRepository;
@@ -66,14 +65,14 @@ public class QuotesService implements IQuotesService {
 
         if(ask!=null && bid != null) {
             BigDecimal avg = ask.add(bid).divide(new BigDecimal("2.0"));
-            logger.info("QUOTE AVG:  " + avg);
+            logger.debug("QUOTE AVG: {}", avg);
             quote.setAvg(avg);
         }
 
-        logger.info("QUOTE:  " + bid + " " + ask + " ");
+        logger.debug("QUOTE:  {} {}", bid, ask);
 
         Quote quote1 =  create(quote);
-        System.out.println("QUOTE ISSUING: " + (System.currentTimeMillis() - start));
+        //System.out.println("QUOTE ISSUING: " + (System.currentTimeMillis() - start));
         return quote1;
     }
 

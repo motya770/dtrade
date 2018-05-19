@@ -4,8 +4,7 @@
 <head>
 
     <#include "parts/head.ftl">
-    <script src="/content/js/app/balanceactivity.service.js"></script>
-    <script src="/content/js/app/balanceactivity.controller.js"></script>
+
 
 </head>
 
@@ -37,7 +36,7 @@
                     <div class="lk-main-tabs">
                         <div class="lk-main-tab" id="tab01">
                             <div class="lk-main-tab__table" style="width: 692px;">
-                                <div class="table-container" ng-controller="BalanceActivityController as vm">
+                                <div class="table-container" ng-controller="BalanceActivityController as vm" ng-cloak>
                                     <div>
                                         <table class="diamont-table">
                                         <thead>
@@ -93,7 +92,7 @@
                         </div>
                         <div class="lk-main-tab" id="tab02">
                             <div class="lk-main-tab__table" style="width: 692px;">
-                                <div class="table-container" ng-controller="TradeOrderAccountController as vm">
+                                <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
                                     <div >
                                         <table class="diamont-table">
                                         <thead>
@@ -157,6 +156,62 @@
                         </div>
                         <div class="lk-main-tab" id="tab03">
                             <div class="lk-main-tab__table" style="width: 692px; min-height: 400px;">
+                                <div class="table-container" ng-controller="CoinPaymentController as vm">
+                                    <div >
+                                        <table class="diamont-table">
+                                            <thead>
+                                            <tr>
+                                                <th>№</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Fiat</th>
+                                                <th>Crypto coin</th>
+                                                <th>Sum in fiat</th>
+                                                <th>Sum in coin</th>
+                                                <th>Transaction Id</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            <tr ng-repeat="coinPayment in vm.coinPayments.content">
+                                                <td>{{coinPayment.id}}</td>
+                                                <td>{{coinPayment.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                                <td>{{coinPayment.coinPaymentStatus}}</td>
+                                                <td>{{coinPayment.coinPaymentRequest.currencyUsd}}</td>
+                                                <td>{{coinPayment.coinPaymentRequest.currencyCoin}}</td>
+                                                <td>{{coinPayment.coinPaymentRequest.amountUsd}}</td>
+                                                <td>{{coinPayment.coinPaymentRequest.amountCoin}}</td>
+                                                <th>{{coinPayment.coinPaymentRequest.transactionId}}</th>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                                <!--
+                                <a href="//www.free-kassa.ru/"><img src="//www.free-kassa.ru/img/fk_btn/7.png"></a>
+                                <a href="#" onclick="load_form()">Оплатить</a>
+                                <script src="//www.free-kassa.ru/widget/w.js"></script>
+                                <script type="text/javascript">
+                                    function load_form() {
+                                        var form = new FK();
+                                        form.loadWidget({
+                                            merchant_id: '75199',
+                                            amount: '10',
+                                            order_id: 'ORDER_ID',
+                                            email: 'EMAIL',
+                                            phone: 'PHONE',
+                                            sign: 'SIGN',
+                                            us_user: 1,
+                                            us_desc: 'Test',
+                                        });
+                                    }
+                                </script>
+                                <iframe src="http://www.free-kassa.ru/merchant/forms.php?gen_form=1&m=75199&default-sum=50&button-text=Оплатить&encoding=CP1251&type=v3&id=114257&lang=en"  width="590" height="320" frameBorder="0" target="_parent" ></iframe>
+                                -->
+                            </div>
+                            <div class="lk-main-tab__info" style="width:300px">
                                 <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
                                     <input type="hidden" name="cmd" value="_pay">
                                     <input type="hidden" name="reset" value="1">
@@ -183,7 +238,9 @@
 
 
 <#include "parts/bootom-scripts.ftl">
-
+<script src="/content/js/app/balanceactivity.service.js"></script>
+<script src="/content/js/app/balanceactivity.controller.js"></script>
+<script src="/content/js/app/coinpayment.controller.js"></script>
 
 </body>
 </html>

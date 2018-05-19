@@ -57,7 +57,7 @@ public class GraphController {
 //        }
         //logger.info("time:  size: " + quotes.size());
 
-        System.out.println("execution date: " +  (System.currentTimeMillis() - startRequest));
+        logger.debug("execution date: {}", (System.currentTimeMillis() - startRequest));
 
        // Stream.of().forEach();
         return quotes;

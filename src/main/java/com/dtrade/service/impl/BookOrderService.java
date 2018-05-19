@@ -177,10 +177,10 @@ public class BookOrderService implements IBookOrderService {
 
         BookOrder book = bookOrders.get(order.getDiamond().getId());
 
-        logger.info("remove D");
+        logger.debug("remove D");
         if(book!=null) {
-            logger.info("BUY SIZE {}", book.getBuyOrders().size());
-            logger.info("SELL SIZE {}", book.getSellOrders().size());
+            logger.debug("BUY SIZE {}", book.getBuyOrders().size());
+            logger.debug("SELL SIZE {}", book.getSellOrders().size());
         }
 
         Optional.ofNullable(book).ifPresent((bookOrder)->{
