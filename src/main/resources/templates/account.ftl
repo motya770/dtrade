@@ -167,6 +167,7 @@
                                                 <th>Fiat</th>
                                                 <th>Crypto coin</th>
                                                 <th>Sum in fiat</th>
+                                                <th>Sum in coin</th>
                                                 <th>Transaction Id</th>
                                             </tr>
                                             </thead>
@@ -180,7 +181,7 @@
                                                 <td>{{coinPayment.coinPaymentRequest.currencyCoin}}</td>
                                                 <td>{{coinPayment.coinPaymentRequest.amountUsd}}</td>
                                                 <td>{{coinPayment.coinPaymentRequest.amountCoin}}</td>
-                                                <th>{{coinPayment.coinPaymentRequest.trsansactionId}}</th>
+                                                <th>{{coinPayment.coinPaymentRequest.transactionId}}</th>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -209,8 +210,6 @@
                                 </script>
                                 <iframe src="http://www.free-kassa.ru/merchant/forms.php?gen_form=1&m=75199&default-sum=50&button-text=Оплатить&encoding=CP1251&type=v3&id=114257&lang=en"  width="590" height="320" frameBorder="0" target="_parent" ></iframe>
                                 -->
-
-
                             </div>
                             <div class="lk-main-tab__info" style="width:300px">
                                 <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
