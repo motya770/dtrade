@@ -71,7 +71,7 @@ public class CoinPaymentsController {
         coinPaymentRequest.setIpnId(ipn_id);
         coinPaymentRequest.setMerchant(merchant);
         coinPaymentRequest.setAddress(address);
-        coinPaymentRequest.setTxn_id(txn_id);
+        coinPaymentRequest.setTransactionId(txn_id);
         coinPaymentRequest.setStatus(status);
         coinPaymentRequest.setCurrencyUsd(currencyUsd);
         coinPaymentRequest.setCurrencyCoin(currencyCoin);

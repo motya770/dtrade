@@ -20,7 +20,7 @@ public class CoinPaymentRequest {
 
     private String merchant;
     private String address;
-    private String txn_id;
+    private String transactionId;
 
     @NotNull
     private Integer status;

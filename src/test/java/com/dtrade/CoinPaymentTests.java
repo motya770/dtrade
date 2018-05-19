@@ -1,5 +1,6 @@
 package com.dtrade;
 
+import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.coinpayment.CoinPaymentRequest;
 import com.dtrade.service.ICoinPaymentService;
 import org.hibernate.id.GUIDGenerator;
@@ -41,7 +42,7 @@ public class CoinPaymentTests extends BaseTest{
         coinPaymentRequest.setIpn_mode("hmac");
         coinPaymentRequest.setMerchant("merchant");
         coinPaymentRequest.setAddress("test");
-        coinPaymentRequest.setTxn_id("test");
+        coinPaymentRequest.setTransactionId("test1");
         coinPaymentRequest.setStatus(1);
         coinPaymentRequest.setStatus_text("test statussets");
         coinPaymentRequest.setConfirms("1");
@@ -49,8 +50,10 @@ public class CoinPaymentTests extends BaseTest{
         coinPaymentRequest.setCurrencyCoin("ETHER");
         coinPaymentRequest.setAmountCoin(new BigDecimal("10"));
         coinPaymentRequest.setAmountUsd(new BigDecimal("100"));
-
         coinPaymentService.proceed(coinPaymentRequest);
+
+
+
     }
 
 }

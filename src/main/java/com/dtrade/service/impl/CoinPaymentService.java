@@ -39,9 +39,13 @@ public class CoinPaymentService implements ICoinPaymentService {
     @Override
     public void proceed(CoinPaymentRequest coinPaymentRequest) {
 
-       CoinPayment coinPayment =  coinPaymentRepository.findByIpnId(coinPaymentRequest.getIpnId());
+       //Pay attention transaction has many coinPaymentRequest (in there system)
+
+       CoinPayment coinPayment =  coinPaymentRepository.findByTransactionId(coinPaymentRequest.getTransactionId());
        if(coinPayment==null){
             coinPayment = create( coinPaymentRequest);
+       }else{
+            coinPayment.setCoinPaymentRequest(coinPaymentRequest);
        }
 
        if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
@@ -51,7 +55,7 @@ public class CoinPaymentService implements ICoinPaymentService {
 
        Integer status =  coinPayment.getCoinPaymentRequest().getStatus();
        if(status==null){
-           throw new TradeException("Status is note defined: " + coinPayment.getCoinPaymentRequest().getIpnId());
+           throw new TradeException("Status is not defined: " + coinPayment.getCoinPaymentRequest().getIpnId());
        }
 
        logger.debug("Status is {} for {}", status, coinPayment.getCoinPaymentRequest().getIpnId());
@@ -66,8 +70,8 @@ public class CoinPaymentService implements ICoinPaymentService {
     }
 
     @Override
-    public CoinPayment findByExternalId(String externalId) {
-        return coinPaymentRepository.findByIpnId(externalId);
+    public CoinPayment findByExternalId(String transactionId) {
+        return coinPaymentRepository.findByTransactionId(transactionId);
     }
 
     @Override
