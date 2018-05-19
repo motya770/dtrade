@@ -156,7 +156,7 @@
                         </div>
                         <div class="lk-main-tab" id="tab03">
                             <div class="lk-main-tab__table" style="width: 692px; min-height: 400px;">
-                                <div class="table-container" ng-controller="CoinPaymentController as vm" ng-cloak>
+                                <div class="table-container" ng-controller="CoinPaymentController as vm">
                                     <div >
                                         <table class="diamont-table">
                                             <thead>
@@ -167,7 +167,7 @@
                                                 <th>Fiat</th>
                                                 <th>Crypto coin</th>
                                                 <th>Sum in fiat</th>
-                                                <th>Sum in crypto</th>
+                                                <th>Transaction Id</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -180,6 +180,7 @@
                                                 <td>{{coinPayment.coinPaymentRequest.currencyCoin}}</td>
                                                 <td>{{coinPayment.coinPaymentRequest.amountUsd}}</td>
                                                 <td>{{coinPayment.coinPaymentRequest.amountCoin}}</td>
+                                                <th>{{coinPayment.coinPaymentRequest.trsansactionId}}</th>
                                             </tr>
                                             </tbody>
                                         </table>
