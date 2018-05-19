@@ -30,6 +30,8 @@ public class CoinPaymentsController {
     @RequestMapping(value = "/notify")
     public void notifyNew(@RequestBody String body, @RequestParam Map<String,String> params,
                           @RequestHeader HttpHeaders headers, HttpServletRequest httpServletRequest) {
+
+        //add HMAC security
         /*
         ipn_version	1.0	Yes
         ipn_type	Currently: 'simple, 'button', 'cart', 'donation', 'deposit', or 'api'	Yes
