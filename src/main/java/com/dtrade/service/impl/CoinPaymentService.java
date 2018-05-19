@@ -99,6 +99,7 @@ public class CoinPaymentService implements ICoinPaymentService {
         coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CREATED);
         coinPayment.setCreationDate(System.currentTimeMillis());
         coinPayment.setAccount(account);
+        coinPayment.setCoinPaymentRequest(coinPaymentRequest);
         coinPayment = coinPaymentRepository.save(coinPayment);
         return coinPayment;
     }

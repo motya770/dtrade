@@ -485,7 +485,9 @@
                                             <th>Цена продажи</th>
                                             -->
                                             <th>Amount</th>
+                                            <!--
                                             <th>Action</th>
+                                            -->
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -497,9 +499,11 @@
                                             -->
                                             <td>{{stock.diamond.name}}</td>
                                             <td>{{stock.amount}}</td>
+                                            <!--
                                             <td>
                                                 <a href="#">Choose</a>
                                             </td>
+                                            -->
                                         </tr>
                                         <!--
                                         <tr>
