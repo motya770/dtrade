@@ -9,6 +9,7 @@ var diamondApp = angular.module('diamondApp', ['ngMaterial','ngMessages'])
         }
     });
 
+
 $scope.showAdvanced = function(ev) {
     $mdDialog.show({
       controller: DialogController,

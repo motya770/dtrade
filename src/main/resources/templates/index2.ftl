@@ -61,7 +61,6 @@
                                             <th>Diamond</th>
                                             <th></th>
 
-
                                             <th>Bid <!--<span class="inf">?</span>--></th>
                                             <th>Ask <!--<span class="inf">?</span>--></th>
 
