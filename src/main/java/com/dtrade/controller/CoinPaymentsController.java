@@ -2,8 +2,10 @@ package com.dtrade.controller;
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.coinpayment.CoinPaymentRequest;
 import com.dtrade.repository.coinpayment.CoinPaymentRepository;
+import com.dtrade.service.IAccountService;
 import com.dtrade.service.ICoinPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,14 @@ public class CoinPaymentsController {
 
     @Autowired
     private ICoinPaymentService coinPaymentService;
+
+    @Autowired
+    private IAccountService accountService;
+
+    @RequestMapping(value = "/get-by-account")
+    public Page<CoinPayment> getByAccount(){
+        return coinPaymentService.getAllByAccount(accountService.getStrictlyLoggedAccount());
+    }
 
     @RequestMapping(value = "/notify")
     public void notifyNew(@RequestBody String body, @RequestParam Map<String,String> params,

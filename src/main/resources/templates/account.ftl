@@ -156,6 +156,36 @@
                         </div>
                         <div class="lk-main-tab" id="tab03">
                             <div class="lk-main-tab__table" style="width: 692px; min-height: 400px;">
+                                <div class="table-container" ng-controller="CoinPaymentController as vm" ng-cloak>
+                                    <div >
+                                        <table class="diamont-table">
+                                            <thead>
+                                            <tr>
+                                                <th>№</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Fiat</th>
+                                                <th>Crypto coin</th>
+                                                <th>Sum in fiat</th>
+                                                <th>Sum in crypto</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            <tr ng-repeat="coinPayment in vm.coinPayments.content">
+                                                <td>{{coinPayment.id}}</td>
+                                                <td>{{coinPayment.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                                <td>{{coinPayment.coinPaymentStatus}}</td>
+                                                <td>{{coinPayment.coinPaymentRequest.currencyUsd}}</td>
+                                                <td>{{coinPayment.coinPaymentRequest.currencyCoin}}</td>
+                                                <td>{{coinPayment.coinPaymentRequest.amountUsd}}</td>
+                                                <td>{{coinPayment.coinPaymentRequest.amountCoin}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
 
                                 <!--
                                 <a href="//www.free-kassa.ru/"><img src="//www.free-kassa.ru/img/fk_btn/7.png"></a>
@@ -207,6 +237,7 @@
 <#include "parts/bootom-scripts.ftl">
 <script src="/content/js/app/balanceactivity.service.js"></script>
 <script src="/content/js/app/balanceactivity.controller.js"></script>
+<script src="/content/js/app/coinpayment.controller.js"></script>
 
 </body>
 </html>
