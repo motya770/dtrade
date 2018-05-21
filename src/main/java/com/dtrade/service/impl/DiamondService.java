@@ -3,12 +3,9 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.diamond.DiamondDTO;
 import com.dtrade.model.diamond.DiamondStatus;
-import com.dtrade.model.quote.Quote;
 import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

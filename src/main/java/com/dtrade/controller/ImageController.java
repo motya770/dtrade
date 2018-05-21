@@ -1,4 +1,5 @@
 package com.dtrade.controller;
+
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.image.Image;
 import com.dtrade.service.IImageService;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RequestMapping(value = "/image/", method = RequestMethod.POST)

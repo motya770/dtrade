@@ -1,6 +1,5 @@
 package com.dtrade.model.image;
 
-import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

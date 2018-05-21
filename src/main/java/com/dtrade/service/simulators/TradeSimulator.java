@@ -3,7 +3,6 @@ package com.dtrade.service.simulators;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.quote.Quote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.service.IAccountService;
@@ -26,7 +25,6 @@ import org.springframework.util.StringUtils;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.Random;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

@@ -3,7 +3,6 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.bookorder.BookOrder;
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.quote.Quote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.service.IBookOrderService;
