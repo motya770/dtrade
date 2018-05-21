@@ -113,7 +113,8 @@
         Description: <br/>
         <input type="text" name="description" style="width:350px;"/>
         <br/><br/>
-        Image to upload (1): <input type="file" name="files"/><br />
+        Image to upload (1): <input type="file" name="file"/><br />
+        Image to upload (1): <input type="text" name="diamond" value="${(diamond.id)!""}"/><br />
         <input type="submit" value="Submit" id="submitButton"/>
     </form>
     <h2>Upload Results:</h2>

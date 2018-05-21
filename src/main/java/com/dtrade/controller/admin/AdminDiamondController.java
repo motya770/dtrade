@@ -42,10 +42,11 @@ public class AdminDiamondController {
 
     @PostMapping("/image-upload")
     public @ResponseBody
-    ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+    ResponseEntity<?> handleFileUpload(@RequestParam("diamond") Diamond diamond,
+                                       @RequestParam("file") MultipartFile file) {
         Image image;
         try{
-            image = imageService.createImage(null, file);
+            image = imageService.createImage(diamond, file);
         }
         catch (Exception e){
           return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);

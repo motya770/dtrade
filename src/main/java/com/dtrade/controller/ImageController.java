@@ -27,7 +27,7 @@ public class ImageController {
     public ResponseEntity<?> getDiamondImage(@RequestParam Diamond diamond, @RequestParam Image image){
         image = imageService.getDiamondImage(diamond, image);
         return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.parseMediaType("image/" + image.getType()))
+                .contentType(MediaType.parseMediaType(image.getType()))
                 .contentLength(image.getPic().length)
                 .body(image.getPic());
     }
