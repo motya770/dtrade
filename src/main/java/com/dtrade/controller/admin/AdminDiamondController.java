@@ -2,10 +2,14 @@ package com.dtrade.controller.admin;
 
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondType;
+import com.dtrade.model.image.Image;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IImageService;
 import com.dtrade.service.IStockService;
+import com.dtrade.service.impl.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,18 +36,22 @@ public class AdminDiamondController {
     @Autowired
     private IImageService service;
 
+    @Autowired
+    private IImageService imageService;
+
 
     @PostMapping("/image-upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+    public @ResponseBody
+    ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        Image image;
+        try{
+            image = imageService.createImage(null, file);
+        }
+        catch (Exception e){
+          return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
 
-
-
-
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
-
-        return "redirect:/admin/diamond";
+        return new ResponseEntity<>("Uploaded to: <br/>" + image.getId(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/make-ipo/{id}", method = RequestMethod.GET)
