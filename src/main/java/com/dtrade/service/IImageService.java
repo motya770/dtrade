@@ -10,7 +10,7 @@ public interface IImageService {
 
     Image createImage(Diamond diamond, MultipartFile multipartFile);
 
-    Image getDiamondImage(Diamond diamond, Image image);
+    Image getDiamondImage(Image image);
 
     List<String> getDiamondImagesUrl(Diamond diamond);
 }

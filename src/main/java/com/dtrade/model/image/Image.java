@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 @Data
 public class Image {
 
+    //TODO get GUID for ui
+
     @Id
     @GeneratedValue
     private Long id;

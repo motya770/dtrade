@@ -50,21 +50,12 @@ public class ImageService implements IImageService {
     }
 
     @Override
-    public Image getDiamondImage(Diamond diamond, Image image) {
-        diamond =diamondService.find(diamond.getId());
-        if(diamond == null){
-            throw new TradeException("Diamond is null");
-        }
+    public Image getDiamondImage( Image image) {
 
         image = imageRepository.findOne(image.getId());
         if(image == null){
             throw new TradeException("Image is null");
         }
-
-        if(!diamond.getId().equals(image.getDiamond().getId())){
-            throw new TradeException("Image doesn't belong to the diamond");
-        }
-
         return image;
     }
 

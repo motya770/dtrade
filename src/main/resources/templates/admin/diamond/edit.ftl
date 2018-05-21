@@ -107,14 +107,21 @@
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 
+    <h1>Images already uploaded</h1>
+    <#if diamond.images??>
+        <#list diamond.images as image>
+            <div>
+                <img style="height: 100px; weight: 100px;" src="/image/diamond-image?image=${image.id}">
+            </div>
+        </#list>
+    </#if>
 
-    <h1>Spring Boot File Upload with jQuery Ajax</h1>
     <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
         Description: <br/>
         <input type="text" name="description" style="width:350px;"/>
         <br/><br/>
         Image to upload (1): <input type="file" name="file"/><br />
-        Image to upload (1): <input type="text" name="diamond" value="${(diamond.id)!""}"/><br />
+        <input type="hidden" name="diamond" value="${(diamond.id)!""}"/><br />
         <input type="submit" value="Submit" id="submitButton"/>
     </form>
     <h2>Upload Results:</h2>

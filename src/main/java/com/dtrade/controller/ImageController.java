@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping(value = "/image/", method = RequestMethod.POST)
+@RequestMapping(value = "/image/")
 @RestController
 public class ImageController {
 
     @Autowired
     private IImageService imageService;
 
-    @PostMapping(value = "/diamond-list")
+    @GetMapping(value = "/diamond-list")
     public List<String> getDiamondImagesUrl(@RequestParam Diamond diamond){
         return imageService.getDiamondImagesUrl(diamond);
     }
 
-    @PostMapping(value = "/diamond-image")
-    public ResponseEntity<?> getDiamondImage(@RequestParam Diamond diamond, @RequestParam Image image){
-        image = imageService.getDiamondImage(diamond, image);
+    @GetMapping(value = "/diamond-image")
+    public ResponseEntity<?> getDiamondImage(@RequestParam Image image){
+        image = imageService.getDiamondImage(image);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.parseMediaType(image.getType()))
                 .contentLength(image.getPic().length)
