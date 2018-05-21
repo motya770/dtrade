@@ -1,6 +1,7 @@
 package com.dtrade.model.diamond;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.image.Image;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by kudelin on 8/24/16.
@@ -52,6 +54,12 @@ public class Diamond implements Serializable {
 
    // @Embedded
    // private DiamondCategory diamondCategory;
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "diamond", fetch = FetchType.LAZY)
+    private List<Image> images;
+
 
     @Override
     public String toString(){
