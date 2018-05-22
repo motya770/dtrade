@@ -5,7 +5,9 @@
 <#include "parts/head.ftl">
 
 <script type="text/javascript">
-
+ function primitiveRotator1(el) {
+     el.src = "/image/diamond-image?image=" + 3;
+ }
 </script>
 
 </head>
@@ -88,9 +90,10 @@
                                                                 </md-toolbar>
                                                                 <md-dialog-content>
                                                                     <div class="md-dialog-content">
-
-                                                                        <img id="pix" ng-src="/image/diamond-image?image={{diamond.images[0].id}}" alt="" ng-click="primitiveRotator(this);"/>
-
+                                                                        <!--
+                                                                        <img id="pix" src="/image/diamond-image?image={{diamond.images[3].id}}" alt="" ng-click="primitiveRotator(this);"/>
+                                                                        -->
+                                                                        <img id="pix" src="{{diamondImage}}" alt="" ng-click="primitiveRotator(this);"/>
                                                                     </div>
                                                                 </md-dialog-content>
                                                             </form>

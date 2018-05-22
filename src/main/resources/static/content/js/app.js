@@ -1,6 +1,6 @@
 var diamondApp = angular.module('diamondApp', ['ngMaterial','ngMessages'])
 
-.controller("TopController", [ '$scope', '$timeout', '$mdDialog', function($scope, $timeout, $mdDialog, AccountSesrvice) {
+.controller("TopController", [ '$scope', '$timeout', '$mdDialog', function($scope, $timeout, $mdDialog, AccountSesrvice, DiamondService) {
     $scope.loaded = false;
    // $scope.title = "This is an App";
     $scope.$on('accountReceived', function (event, arg) {
@@ -9,8 +9,7 @@ var diamondApp = angular.module('diamondApp', ['ngMaterial','ngMessages'])
         }
     });
 
-
-$scope.showAdvanced = function(diamond, ev) {
+  $scope.showAdvanced = function(diamond, ev) {
     var self = this;
     self.currentDiamond = diamond;
 
@@ -23,16 +22,18 @@ $scope.showAdvanced = function(diamond, ev) {
     })
   };
 
-  function DialogController(DiamondService, $scope, $mdDialog) {
+  //$scope.diamondImage = "/image/diamond-image?image=" + 3;//"/image/diamond-image?image=" + DiamondService.getCurrentDiamond().images[0].id;
 
+  function DialogController(DiamondService, $scope, $mdDialog) {
       $scope.diamond = DiamondService.getCurrentDiamond();
+      $scope.diamondImage = "/image/diamond-image?image=" + $scope.diamond.images[0].id;
       var number = 0;
       var pic = $scope.diamond.images;
       var len = pic.length;
       $scope.primitiveRotator = function(element){
           number++;
           number = number == len ? 0 : number;
-          element.src = "/image/diamond-image?image=" + $scope.diamond.images[number].id;
+          $scope.diamondImage  = "/image/diamond-image?image=" + $scope.diamond.images[number].id;
       }
 
     $scope.hide = function() {
@@ -47,6 +48,7 @@ $scope.showAdvanced = function(diamond, ev) {
       $mdDialog.hide(answer);
     };
   }
+
 }]);
 
 
