@@ -2,12 +2,19 @@ package com.dtrade.controller.admin;
 
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondType;
+import com.dtrade.model.image.Image;
 import com.dtrade.service.IDiamondService;
+import com.dtrade.service.IImageService;
 import com.dtrade.service.IStockService;
+import com.dtrade.service.impl.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +32,28 @@ public class AdminDiamondController {
 
     @Autowired
     private IStockService stockService;
+
+    @Autowired
+    private IImageService service;
+
+    @Autowired
+    private IImageService imageService;
+
+
+    @PostMapping("/image-upload")
+    public @ResponseBody
+    ResponseEntity<?> handleFileUpload(@RequestParam("diamond") Diamond diamond,
+                                       @RequestParam("file") MultipartFile file) {
+        Image image;
+        try{
+            image = imageService.createImage(diamond, file);
+        }
+        catch (Exception e){
+          return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>("Uploaded to: <br/>" + image.getId(), HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/make-ipo/{id}", method = RequestMethod.GET)
     public String makeIPO(@PathVariable Long id, Model model) {

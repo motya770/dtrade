@@ -3,7 +3,6 @@ package com.dtrade.controller;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
-import com.dtrade.model.quote.QuoteDTO;
 import com.dtrade.service.IQuotesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

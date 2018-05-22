@@ -3,7 +3,6 @@ package com.dtrade.service;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.diamond.DiamondDTO;
 import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;

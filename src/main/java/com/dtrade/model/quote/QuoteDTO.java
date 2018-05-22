@@ -1,6 +1,7 @@
 package com.dtrade.model.quote;
 
 import lombok.Data;
+
 import java.math.BigDecimal;
 
 @Data

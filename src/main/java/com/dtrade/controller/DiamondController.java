@@ -1,13 +1,13 @@
 package com.dtrade.controller;
 
-import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.diamond.DiamondDTO;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
