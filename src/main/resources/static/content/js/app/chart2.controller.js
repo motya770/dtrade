@@ -111,14 +111,14 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
         var series = that.series[0];
         $http.post('/graph/get-quotes?diamond=' + DiamondService.getCurrentDiamond().id +  '&start=' + self.lastTimeQuote, null).then(function(response) {
             var result = parseQuotesToArray(response.data);
-            console.log(result.length);
+            //console.log(result.length);
             for(var i in result){
                 series.addPoint(result[i], true, true);
                 if(i == result.length - 1){
                     self.lastTimeQuote = result[i][0];
                 }
             }
-            console.log("last time: " + self.lastTimeQuote);
+           // console.log("last time: " + self.lastTimeQuote);
         });
     }
 

@@ -2,19 +2,11 @@
 <html ng-app="diamondApp">
 
 <head>
-
 <#include "parts/head.ftl">
 
 <script type="text/javascript">
-    var number = 0;
-    var pic = new Array ('/theme/app/img/test.jpg', '/theme/app/img/man-photo.jpeg');
-    var len = pic.length;
-    function primitiveRotator(element){
-        number++;
-        number=number==len?0:number;
-        element.src = pic[number];
-    }
-    </script>
+
+</script>
 
 </head>
 
@@ -70,21 +62,45 @@
                                         <tbody>
 
                                             <tr ng-repeat="diamond in vm.availableDiamonds" ng-click="chooseAvailableDiamond(diamond)">
-                                                <td>{{diamond.name}} <small>{{diamond.id}}, {{diamond.diamondType}}, {{diamond.carats}}, {{diamond.clarity}}</small></td>
-                                                <td>
-                                                    <img src="/theme/app/img/dia1.png" alt="diamond">
-                                                </td>
+                                                <td>{{diamond.name}} <small>{{diamond.id}}, {{diamond.diamondType}}, {{diamond.carats}}, {{diamond.clarity}}</small>
 
+                                                </td>
+                                                <td>
+                                                    <div class="dialog-demo-content" layout="row" layout-wrap="" >
+                                                         <input type="image" src="/theme/app/img/dia1.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
+                                                    </div>
+                                                </td>
                                                 <td>{{diamond.askBidPair.first}} </td>
                                                 <td>{{diamond.askBidPair.second}}</td>
-
                                                 <td>{{diamond.totalStockAmount/10000000 | number}} mln</td>
                                             </tr>
-                                              </form>
-                                            </md-dialog>
-                                            <tr >
+                                                    <script type="text/ng-template" id="dialog1.tmpl.html">
+                                                        <md-dialog aria-label="Diamond">
+                                                            <form ng-cloak>
+                                                                <md-toolbar>
+                                                                    <div class="md-toolbar-tools">
+                                                                        <h2>Diamond</h2>
+                                                                        <span flex></span>
+                                                                        <md-button class="md-icon-button" ng-click="cancel()">
+                                                                            <img src="/theme/app/img/ic_close.png" aria-label="Close dialog">
+                                                                        </md-button>
+                                                                    </div>
+                                                                </md-toolbar>
+                                                                <md-dialog-content>
+                                                                    <div class="md-dialog-content">
+
+                                                                        <img id="pix" ng-src="/image/diamond-image?image={{diamond.images[0].id}}" alt="" ng-click="primitiveRotator(this);"/>
+
+                                                                    </div>
+                                                                </md-dialog-content>
+                                                            </form>
+                                                        </md-dialog>
+                                                    </script>
+                                            <!--
+                                            <tr>
                                                 <td >Brilliant III <small>Rad, GIA - WS1, Cr-6</small></td>
                                                     <td>
+
                                                        <div class="dialog-demo-content" layout="row" layout-wrap="" >
                                                             <input type="image" src="/theme/app/img/dia3.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced($event)" />
 
@@ -113,7 +129,7 @@
                                                 <td>280</td>
                                             <td>11&nbsp;000</td>
                                             <td>14&nbsp;500</td>
-                                        </tr>
+                                        </tr>-->
                                         </tbody>
                                     </table>
                                     </div>

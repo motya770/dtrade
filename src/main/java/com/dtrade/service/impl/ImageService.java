@@ -37,7 +37,7 @@ public class ImageService implements IImageService {
             logger.error("Can't upload image", e);
             throw new TradeException("Can't upload image", e);
         }
-        String name =  multipartFile.getName();
+        String name =  multipartFile.getOriginalFilename();
         String imageType = multipartFile.getContentType();
 
         Image image = new Image();

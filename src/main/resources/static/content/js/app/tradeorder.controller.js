@@ -40,7 +40,7 @@ diamondApp.controller("TradeOrderController", function TradeOrderController($sco
                 return;
             }
             var ids = new Array();
-            console.log(self.liveTradeOrders.content)
+            //console.log(self.liveTradeOrders.content)
             for(var i in self.liveTradeOrders.content){
                 ids.push(self.liveTradeOrders.content[i].id)
             }

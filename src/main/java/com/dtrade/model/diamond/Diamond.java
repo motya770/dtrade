@@ -56,7 +56,7 @@ public class Diamond implements Serializable {
    // private DiamondCategory diamondCategory;
 
 
-    @JsonIgnore
+   // @JsonIgnore
     @OneToMany(mappedBy = "diamond", fetch = FetchType.LAZY)
     private List<Image> images;
 

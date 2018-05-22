@@ -10,7 +10,10 @@ var diamondApp = angular.module('diamondApp', ['ngMaterial','ngMessages'])
     });
 
 
-$scope.showAdvanced = function(ev) {
+$scope.showAdvanced = function(diamond, ev) {
+    var self = this;
+    self.currentDiamond = diamond;
+
     $mdDialog.show({
       controller: DialogController,
       templateUrl: 'dialog1.tmpl.html',
@@ -20,7 +23,18 @@ $scope.showAdvanced = function(ev) {
     })
   };
 
-  function DialogController($scope, $mdDialog) {
+  function DialogController(DiamondService, $scope, $mdDialog) {
+
+      $scope.diamond = DiamondService.getCurrentDiamond();
+      var number = 0;
+      var pic = $scope.diamond.images;
+      var len = pic.length;
+      $scope.primitiveRotator = function(element){
+          number++;
+          number = number == len ? 0 : number;
+          element.src = "/image/diamond-image?image=" + $scope.diamond.images[number].id;
+      }
+
     $scope.hide = function() {
       $mdDialog.hide();
     };
@@ -33,7 +47,6 @@ $scope.showAdvanced = function(ev) {
       $mdDialog.hide(answer);
     };
   }
-   //$timeout(function() { $scope.loaded = true; }, 100000);
 }]);
 
 

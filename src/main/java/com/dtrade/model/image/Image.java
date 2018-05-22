@@ -24,6 +24,7 @@ public class Image {
     @NotEmpty
     private String type;
 
+    @JsonIgnore
     @NotEmpty
     @Basic(fetch = FetchType.LAZY)
     @Lob
