@@ -14,7 +14,7 @@
 <body class="page">
 
 <!-- Custom HTML -->
-<div class="site">
+<div class="site" ng-cloak="">
     <#include "parts/caption.ftl">
     <main class="content">
 
@@ -27,12 +27,12 @@
                             <form action="/login" method="post">
                                 <md-input-container class="md-block">
                                     <!-- Use floating placeholder instead of label -->
-                                    <md-icon class="material-icons md-light md-48"> email </md-icon>
-                                    <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="username"></md-icon>
+                                    <md-icon src="/theme/app/img/round_email_black_24dp.png" > email </md-icon>
                                     <input type="email" name="username" placeholder="Email (required)" ng-required="true">
                                 </md-input-container>
 
                                 <md-input-container md-no-float="" class="md-block">
+                                <md-icon src="/theme/app/img/baseline_lock_black_24dp.png" > lock </md-icon>
                                     <label for="password">Password</label>
                                     <input type="password" name="password"
                                            ng-minlength="8" required />
@@ -59,19 +59,19 @@
 
                             <md-icon class="material-icons md-light md-48"> phone </md-icon>
 
-                            <md-icon md-svg-src="img/icons/ic_phone_24px.svg"></md-icon>
+                            <md-icon md-svg-src="/theme/app/img/round_call_black_24dp.png"></md-icon>
                             <input ng-model="account.phone" type="text" placeholder="Phone number(full format)">
                         </md-input-container>
                         <md-input-container class="md-block">
                             <!-- Use floating placeholder instead of label -->
-                            <md-icon class="material-icons md-light md-48"> email </md-icon>
-                            <md-icon md-svg-src="img/icons/ic_email_24px.svg" class="email"></md-icon>
+                              <md-icon src="/theme/app/img/round_email_black_24dp.png"> email </md-icon>
                             <input ng-model="account.email" type="email" placeholder="Email (required)" ng-required="true">
                         </md-input-container>
                         <form name="newPasswordForm" role="form" ng-submit="newPasswordForm.$valid && ok()" novalidate>
 
 
                         <md-input-container md-no-float="" class="md-block">
+                        <md-icon src="/theme/app/img/baseline_lock_black_24dp.png"> lock </md-icon>
                             <label for="newPassword">New password</label>
                             <input type="password" name="newPassword" ng-model="account.password.new"
                                    ng-minlength="6" required />
@@ -81,6 +81,7 @@
                         </span>
                         </md-input-container>
                         <md-input-container md-no-float="" class="md-block">
+                        <md-icon src="/theme/app/img/baseline_lock_black_24dp.png"> lock </md-icon>
                             <label for="newPasswordConfirm">Confirm new password</label>
                             <input type="password" name="newPasswordConfirm"
                                    ng-model="account.password.confirm" ng-minlength="6"
