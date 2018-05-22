@@ -8,7 +8,7 @@
 
 </head>
 
-<body class="page">
+<body class="page"  ng-cloak="">
 
 <!-- Custom HTML -->
 <div class="site">
