@@ -13,4 +13,6 @@ public interface IImageService {
     Image getDiamondImage(Image image);
 
     List<String> getDiamondImagesUrl(Diamond diamond);
+
+    Image removeImage(Diamond diamond, Image image);
 }

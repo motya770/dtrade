@@ -112,6 +112,13 @@ public class Account implements UserDetails {
        return enabled;
     }
 
+    public boolean isAdmin(){
+        return this.getAuthorities().stream()
+                .filter(ga ->
+                        ga.getAuthority().equals(F_ROLE_ADMIN)
+                    ).findFirst().isPresent();
+    }
+
     @Override
     public String toString(){
         return " account : " + id;

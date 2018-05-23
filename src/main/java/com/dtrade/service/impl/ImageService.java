@@ -27,6 +27,14 @@ public class ImageService implements IImageService {
     private ImageRepository imageRepository;
 
     @Override
+    public Image removeImage(Diamond diamond, Image image) {
+        diamond = diamondService.find(diamond.getId());
+        image = imageRepository.findOne(image.getId());
+        imageRepository.delete(image);
+        return image;
+    }
+
+    @Override
     public Image createImage(Diamond diamond, MultipartFile multipartFile) {
 
         diamond = diamondService.find(diamond.getId());

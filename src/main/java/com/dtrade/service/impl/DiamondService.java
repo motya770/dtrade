@@ -43,7 +43,9 @@ public class DiamondService implements IDiamondService {
 
     @Override
     public Diamond update(Diamond diamond) {
-        checkDiamondOwnship(accountService.getStrictlyLoggedAccount(), diamond);
+        if (!accountService.getStrictlyLoggedAccount().isAdmin()) {
+            checkDiamondOwnship(accountService.getStrictlyLoggedAccount(), diamond);
+        }
         return diamondRepository.save(diamond);
     }
 
