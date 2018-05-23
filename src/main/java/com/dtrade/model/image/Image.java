@@ -7,10 +7,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Data
-public class Image {
+public class Image implements Serializable {
 
     //TODO get GUID for ui
 
@@ -34,4 +35,17 @@ public class Image {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Diamond diamond;
+
+    public byte[] getPic(){
+        if(this.pic!=null){
+            return this.pic.clone();
+        }
+        return null;
+    }
+
+    public void setPic(byte[] pic){
+        if(pic!=null) {
+            this.pic = pic.clone();
+        }
+    }
 }

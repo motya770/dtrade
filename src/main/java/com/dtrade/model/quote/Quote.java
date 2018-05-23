@@ -6,13 +6,14 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 
 @Data
 @Entity
 //@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Quote  {
+public class Quote implements Serializable {
 
     public static final String F_TIME = "time";
     public static final String F_VALUE = "value";

@@ -40,7 +40,7 @@ public class QuotesService implements IQuotesService {
 
     @Override
     public Quote issueQuote(Pair<TradeOrder, TradeOrder> pair){
-       long start = System.currentTimeMillis();
+     //  long start = System.currentTimeMillis();
 
         if(pair==null){
             return null;
