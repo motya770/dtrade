@@ -31,9 +31,9 @@ public class CustomerController {
     @Autowired
     private IDiamondService diamondService;
 
+    /*
     @RequestMapping(value = "/upload-diamond", method = RequestMethod.POST)
     public Diamond uploadNewDiamond(Model model){
-        //TODO add
         return null;
     }
 
@@ -45,5 +45,5 @@ public class CustomerController {
     @RequestMapping(value = "/diamond-activities", method = RequestMethod.POST)
     public List<DiamondActivity> getDiamondActivity(Model model){
         return diamondActivityService.getAccountDiamondActivities();
-    }
+    }*/
 }

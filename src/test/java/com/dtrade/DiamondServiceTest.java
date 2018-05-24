@@ -123,7 +123,7 @@ public class DiamondServiceTest  extends BaseTest{
 
     }
 
-  //  @Test
+    @Test
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     public void testCreate(){
         Diamond diamond = createDiamond();
