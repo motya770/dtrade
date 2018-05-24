@@ -71,6 +71,25 @@
             }
         });
     }
+    
+    function produceIdo(diamondId) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/diamond/make-ipo/" + diamondId,
+            // prevent jQuery from automatically transforming the data into a query string
+            processData: false,
+            contentType: "json",
+            cache: false,
+            timeout: 1000000,
+            success: function(data, textStatus, jqXHR) {
+                console.log("SUCCESS : ", data);
+                window.location.reload();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("ERROR : ", jqXHR.responseText);
+            }
+        });
+    }
 </script>
 
 
@@ -93,30 +112,46 @@
         </div>
         <div class="form-group">
             <label for="name">Price</label>
-            <input type="number" class="form-control" name="price" id="price" placeholder="price" value="${(diamond.price)!""}">
+        ${(diamond.price)!""}
+            <input type="number" step="0.01" class="form-control" name="price" id="price" placeholder="price" value="${(diamond.price?replace(",", ""))!""}">
         </div>
         <div class="form-group">
             <label for="name">Total Stock Amount</label>
-            <input type="number" class="form-control" name="totalStockAmount" id="totalStockAmount" placeholder="totalStockAmount" value="${(diamond.totalStockAmount)!""}">
+            <input type="number" step="0.01" class="form-control" name="totalStockAmount" id="totalStockAmount" placeholder="totalStockAmount" value="${(diamond.totalStockAmount?replace(",", ""))!""}">
         </div>
         <div class="radio">
-
-        <#assign stringStatusValue = (diamond.diamondType)!"" />
-        <@spring.formRadioButtons "diamond.diamondType", diamondTypes, ""/><br><br>
-
+            <#assign stringStatusValue = (diamond.diamondType)!"" />
+            <@spring.formRadioButtons "diamond.diamondType", diamondTypes, ""/><br><br>
         </div>
+
         <div class="form-group">
             <label for="name">Carats</label>
-            <input type="number" class="form-control" id="carats" name="carats" placeholder="carats" value="${(diamond.carats)!""}">
+            <input type="number" step="0.01" class="form-control" id="carats" name="carats" placeholder="carats" value="${(diamond.carats)!""}">
         </div>
-        <div class="form-group">
-            <label for="clarity">Clarity</label>
-            <input type="number" class="form-control" id="clarity" name="clarity" placeholder="clarity" value="${(diamond.clarity)!""}">
+         ${diamond.color}
+        <div class="radio">
+            <label>Color</label><br/>
+            <#assign colorStatusValue = (diamond.color)!"" />
+            <@spring.formRadioButtons "diamond.color", colors, ""/><br><br>
         </div>
+
+        <div class="radio">
+            <label>Clarity</label><br/>
+            <#assign stringStatusValue = (diamond.clarity)!"" />
+            <@spring.formRadioButtons "diamond.clarity", clarities, ""/><br><br>
+         </div>
+         <div class="radio">
+                <label>Cut</label><br/>
+                <#assign stringStatusValue = (diamond.cut)!"" />
+                <@spring.formRadioButtons "diamond.cut", cuts, ""/><br><br>
+         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 
-    <h1>Images already uploaded</h1>
+    <h3>Produce Initial Diamond Offering</h3>
+    <input type="button" onclick="produceIdo(${diamond.id});preventDefault();" value="Produce IDO"></input>
+    <br/>
+    <h3>Images already uploaded</h3>
     <#if diamond.images??>
         <#list diamond.images as image>
             <div>
@@ -134,7 +169,7 @@
         <input type="hidden" name="diamond" value="${(diamond.id)!""}"/><br />
         <input type="submit" value="Submit" id="submitButton"/>
     </form>
-    <h2>Upload Results:</h2>
+    <h4>Upload Results:</h4>
     <div style="border:1px solid #ccc;padding: 5px;">
         <span id="result"></span>
     </div>

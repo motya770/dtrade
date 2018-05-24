@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Data
 @Embeddable
-public class CoinPaymentRequest {
+public class DepositRequest {
 
     private String ipn_version;
     private String ipn_type;

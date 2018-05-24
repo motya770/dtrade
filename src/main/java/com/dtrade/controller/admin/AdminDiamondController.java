@@ -1,7 +1,6 @@
 package com.dtrade.controller.admin;
 
-import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.diamond.DiamondType;
+import com.dtrade.model.diamond.*;
 import com.dtrade.model.image.Image;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IImageService;
@@ -62,24 +61,34 @@ public class AdminDiamondController {
         return new ResponseEntity<>("Uploaded to: <br/>" + image.getId(), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/make-ipo/{id}", method = RequestMethod.GET)
-    public String makeIPO(@PathVariable Long id, Model model) {
+    @RequestMapping(value = "/make-ipo/{diamondId}", method = RequestMethod.POST)
+    public String makeIPO(@PathVariable Long diamondId, Model model) {
 
-        stockService.makeIPO(id);
+        stockService.makeIPO(diamondId);
 
         return "redirect:/admin/diamond/list";
     }
 
     @RequestMapping(value = "/new-entity", method = RequestMethod.GET)
     public String newEntity(@ModelAttribute Diamond diamond, Model model) {
-        model.addAttribute("diamondTypes", Stream.of(DiamondType.values()).collect(Collectors.toMap(DiamondType::name, DiamondType::name)));
+
+        model = addAttributes(model);
+
         return "admin/diamond/edit";
+    }
+
+    private  Model addAttributes(Model model){
+        model.addAttribute("diamondTypes", Stream.of(DiamondType.values()).collect(Collectors.toMap(DiamondType::name, DiamondType::name)));
+        model.addAttribute("colors", Stream.of(Color.values()).collect(Collectors.toMap(Color::name, Color::name)));
+        model.addAttribute("cuts", Stream.of(Cut.values()).collect(Collectors.toMap(Cut::name, Cut::name)));
+        model.addAttribute("clarities", Stream.of(Clarity.values()).collect(Collectors.toMap(Clarity::name, Clarity::name)));
+        return model;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String edit(@RequestParam(value = "id")  Long diamondId, Model model) {
 
-        model.addAttribute("diamondTypes", Stream.of(DiamondType.values()).collect(Collectors.toMap(DiamondType::name, DiamondType::name)));
+        model = addAttributes(model);
         model.addAttribute("diamond",  diamondService.find(diamondId));
 
         return "admin/diamond/edit";

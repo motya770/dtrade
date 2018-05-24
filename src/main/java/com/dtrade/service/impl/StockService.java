@@ -3,6 +3,7 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.repository.stock.StockRepository;
 import com.dtrade.service.IAccountService;
@@ -51,18 +52,21 @@ public class StockService  implements IStockService {
         diamondService.checkDiamondOwnship(accountService.getStrictlyLoggedAccount(), diamond);
 
         if(diamond.getTotalStockAmount()==null){
-            throw new TradeException("Can't produce IPO for diamond " + diamond + " where totalStockAmount is not defined");
+            throw new TradeException("Can't produce IPO for diamond " + diamond + " where totalStockAmount is not defined.");
         }
 
-       // Hibernate.initialize(diamond.getAccount());
+        if(diamond.getDiamondStatus().equals(DiamondStatus.ENLISTED)){
+            throw new TradeException("Diamond " + diamond + " already enlisted.");
+        }
 
         Stock stock = new Stock();
         stock.setAmount(diamond.getTotalStockAmount());
         stock.setAccount(diamond.getAccount());
         stock.setDiamond(diamond);
 
+        diamond.setDiamondStatus(DiamondStatus.ENLISTED);
 
-
+        diamondService.update(diamond);
         stockRepository.save(stock);
     }
 

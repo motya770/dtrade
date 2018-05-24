@@ -16,6 +16,6 @@ public interface CoinPaymentRepository extends JpaRepository<CoinPayment, Long> 
 
     Page<CoinPayment> findByAccount(Account account, Pageable pageable);
 
-    @Query("select cp from CoinPayment as cp where cp.coinPaymentRequest.transactionId = :#{#transactionId} ")
+    @Query("select cp from CoinPayment as cp where cp.depositRequest.transactionId = :#{#transactionId} ")
     CoinPayment findByTransactionId(@Param("transactionId") String transactionId);
 }

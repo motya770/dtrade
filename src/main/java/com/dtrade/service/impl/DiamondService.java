@@ -162,7 +162,7 @@ public class DiamondService implements IDiamondService {
     @Override
     public Diamond create(Diamond diamond) {
         //Diamond diamond = new Diamond();
-        diamond.setDiamondStatus(DiamondStatus.ENLISTED);
+        diamond.setDiamondStatus(DiamondStatus.CREATED);
         diamond.setAccount(accountService.getStrictlyLoggedAccount());
 
         diamond.setScore(scoreService.calculateScore(diamond));

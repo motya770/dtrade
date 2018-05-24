@@ -3,8 +3,9 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.coinpayment.CoinPayment;
-import com.dtrade.model.coinpayment.CoinPaymentRequest;
+import com.dtrade.model.coinpayment.DepositRequest;
 import com.dtrade.model.coinpayment.CoinPaymentStatus;
+import com.dtrade.model.coinpayment.WithdrawRequest;
 import com.dtrade.repository.coinpayment.CoinPaymentRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
@@ -41,28 +42,39 @@ public class CoinPaymentService implements ICoinPaymentService {
     private IAccountService accountService;
 
     @Override
-    public void proceed(CoinPaymentRequest coinPaymentRequest) {
+    public CoinPayment createWithdraw() {
+        return null;
+    }
 
-       //Pay attention transaction has many coinPaymentRequest (in there system)
+    @Override
+    public void proceedWithdraw(WithdrawRequest withdrawRequest) {
 
-       CoinPayment coinPayment =  coinPaymentRepository.findByTransactionId(coinPaymentRequest.getTransactionId());
+    }
+
+    //receive money
+    @Override
+    public void proceedDeposit(DepositRequest depositRequest) {
+
+       //Pay attention transaction has many depositRequest (in there system)
+
+       CoinPayment coinPayment =  coinPaymentRepository.findByTransactionId(depositRequest.getTransactionId());
        if(coinPayment==null){
-            coinPayment = create( coinPaymentRequest);
+            coinPayment = create(depositRequest);
        }else{
-            coinPayment.setCoinPaymentRequest(coinPaymentRequest);
+            coinPayment.setDepositRequest(depositRequest);
        }
 
        if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
-            logger.debug("CoinPayment already confirmed {}", coinPayment.getCoinPaymentRequest().getIpnId());
+            logger.debug("CoinPayment already confirmed {}", coinPayment.getDepositRequest().getIpnId());
             return;
        }
 
-       Integer status =  coinPayment.getCoinPaymentRequest().getStatus();
+       Integer status =  coinPayment.getDepositRequest().getStatus();
        if(status==null){
-           throw new TradeException("Status is not defined: " + coinPayment.getCoinPaymentRequest().getIpnId());
+           throw new TradeException("Status is not defined: " + coinPayment.getDepositRequest().getIpnId());
        }
 
-       logger.debug("Status is {} for {}", status, coinPayment.getCoinPaymentRequest().getIpnId());
+       logger.debug("Status is {} for {}", status, coinPayment.getDepositRequest().getIpnId());
        if(status==100){
            confirmPayment(coinPayment);
        }
@@ -92,22 +104,22 @@ public class CoinPaymentService implements ICoinPaymentService {
     }
 
     @Override
-    public CoinPayment create( CoinPaymentRequest coinPaymentRequest) {
+    public CoinPayment create( DepositRequest depositRequest) {
 
-        if(StringUtils.isEmpty(coinPaymentRequest.getIpnId())){
+        if(StringUtils.isEmpty(depositRequest.getIpnId())){
             throw new TradeException("IpnId is empty");
         }
 
-        Account account = accountService.findByMail(coinPaymentRequest.getEmail());
+        Account account = accountService.findByMail(depositRequest.getEmail());
         if(account==null){
-            throw new TradeException("Account is empty: " + coinPaymentRequest.getEmail());
+            throw new TradeException("Account is empty: " + depositRequest.getEmail());
         }
 
         CoinPayment coinPayment= new CoinPayment();
         coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CREATED);
         coinPayment.setCreationDate(System.currentTimeMillis());
         coinPayment.setAccount(account);
-        coinPayment.setCoinPaymentRequest(coinPaymentRequest);
+        coinPayment.setDepositRequest(depositRequest);
         coinPayment = coinPaymentRepository.save(coinPayment);
         return coinPayment;
     }

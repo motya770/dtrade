@@ -1,7 +1,7 @@
 package com.dtrade.controller;
 
 import com.dtrade.model.coinpayment.CoinPayment;
-import com.dtrade.model.coinpayment.CoinPaymentRequest;
+import com.dtrade.model.coinpayment.DepositRequest;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.ICoinPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,27 @@ public class CoinPaymentsController {
         return coinPaymentService.getAllByAccount(accountService.getStrictlyLoggedAccount());
     }
 
+    @RequestMapping(value = "/withdraw")
+    public void createWithdraw(){
+
+    }
+
+    /*
+    cmd	create_withdrawal	Yes
+    amount	The amount of the withdrawal in the currency below.	Yes
+    add_tx_fee	If set to 1, add the coin TX fee to the withdrawal amount so the sender pays the TX fee instead of the receiver.	No
+    currency	The cryptocurrency to withdraw. (BTC, LTC, etc.)	Yes
+    currency2	Optional currency to use to to withdraw 'amount' worth of 'currency2' in 'currency' coin. This is for exchange rate calculation only and will not convert coins or change which currency is withdrawn.
+    For example, to withdraw 1.00 USD worth of BTC you would specify 'currency'='BTC', 'currency2'='USD', and 'amount'='1.00'	No
+    address	The address to send the funds to, either this OR pbntag must be specified.
+            Remember: this must be an address in currency's network.	See Desc
+    pbntag	The $PayByName tag to send the withdrawal to, either this OR address must be specified. This will also override any destination tag specified.	See Desc
+    dest_tag	The extra tag to use for the withdrawal for coins that need it (Destination Tag for Ripple, Payment ID for Monero, Message for XEM, etc.)	No
+    ipn_url	URL for your IPN callbacks. If not set it will use the IPN URL in your Edit Settings page if you have one set.	No
+    auto_confirm	If set to 1, withdrawal will complete without email confirmation.	No
+    note	This lets you set the note for the withdrawal.
+   */
+
     @RequestMapping(value = "/notify")
     public void notifyNew(@RequestBody String body, @RequestParam Map<String,String> params,
                           @RequestHeader HttpHeaders headers, HttpServletRequest httpServletRequest) {
@@ -50,7 +71,7 @@ public class CoinPaymentsController {
             System.out.println("K:" + k + " V:" + v);
         });
 
-        CoinPaymentRequest coinPaymentRequest = new CoinPaymentRequest();
+        DepositRequest depositRequest = new DepositRequest();
         String ipn_version = params.get("ipn_version");
         String ipn_type = params.get("ipn_type");
         String ipn_mode = params.get("ipn_mode");
@@ -68,27 +89,27 @@ public class CoinPaymentsController {
         BigDecimal amountCoin =  new BigDecimal(params.get("amount2"));
         String email =   params.get("email");
 
-        coinPaymentRequest.setIpn_version(ipn_version);
-        coinPaymentRequest.setIpn_type(ipn_type);
-        coinPaymentRequest.setIpn_mode(ipn_mode);
-        coinPaymentRequest.setIpnId(ipn_id);
-        coinPaymentRequest.setMerchant(merchant);
-        coinPaymentRequest.setAddress(address);
-        coinPaymentRequest.setTransactionId(txn_id);
-        coinPaymentRequest.setStatus(status);
-        coinPaymentRequest.setCurrencyUsd(currencyUsd);
-        coinPaymentRequest.setCurrencyCoin(currencyCoin);
-        coinPaymentRequest.setStatus_text(status_text);
-        coinPaymentRequest.setConfirms(confirms);
+        depositRequest.setIpn_version(ipn_version);
+        depositRequest.setIpn_type(ipn_type);
+        depositRequest.setIpn_mode(ipn_mode);
+        depositRequest.setIpnId(ipn_id);
+        depositRequest.setMerchant(merchant);
+        depositRequest.setAddress(address);
+        depositRequest.setTransactionId(txn_id);
+        depositRequest.setStatus(status);
+        depositRequest.setCurrencyUsd(currencyUsd);
+        depositRequest.setCurrencyCoin(currencyCoin);
+        depositRequest.setStatus_text(status_text);
+        depositRequest.setConfirms(confirms);
 
-        coinPaymentRequest.setAmountUsd(amountUsd);
-        coinPaymentRequest.setAmountCoin(amountCoin);
-        coinPaymentRequest.setEmail(email);
+        depositRequest.setAmountUsd(amountUsd);
+        depositRequest.setAmountCoin(amountCoin);
+        depositRequest.setEmail(email);
 
         System.out.println("BODY " + body);
         headers.forEach((k, v)-> System.out.println("K:" + k + ", " + "V: " + v));
 
-        coinPaymentService.proceed(coinPaymentRequest);
+        coinPaymentService.proceedDeposit(depositRequest);
 
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");

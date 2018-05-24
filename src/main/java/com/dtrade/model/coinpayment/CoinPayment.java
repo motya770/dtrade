@@ -23,14 +23,14 @@ public class CoinPayment {
     @NotNull
     private CoinPaymentStatus coinPaymentStatus;
 
-   // private boolean balanceUpdated;
-
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     private Account account;
 
     @Embedded
-    private CoinPaymentRequest coinPaymentRequest;
+    private DepositRequest depositRequest;
 
+   // @Embedded
+    //private WithdrawRequest withdrawRequest;
 }

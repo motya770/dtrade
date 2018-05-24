@@ -75,14 +75,14 @@ public class ScoreService implements IScoreService {
     @Override
     public Integer calculateScore(Diamond diamond) {
         //TODO write formula for scoring
-
         //DiamondType diamondType = diamond.getDiamondType();
+        return 0;
 
-        BigDecimal carats = diamond.getCarats();
-
-        BigDecimal clarity = diamond.getClarity();
-
-        int result = (int) carats.multiply(clarity).doubleValue() % 100;
-        return result;
+//        BigDecimal carats = diamond.getCarats();
+//
+//        BigDecimal clarity = diamond.getClarity();
+//
+//        int result = (int) carats.multiply(clarity).doubleValue() % 100;
+//        return result;
     }
 }

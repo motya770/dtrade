@@ -1,8 +1,7 @@
 package com.dtrade;
 
 import com.dtrade.model.account.Account;
-import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.diamond.DiamondType;
+import com.dtrade.model.diamond.*;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.service.impl.AccountService;
@@ -38,7 +37,9 @@ public class BaseTest {
         diamond.setPrice(new BigDecimal("20"));
         diamond.setDiamondType(DiamondType.ASSCHER);
         diamond.setCarats(new BigDecimal("2"));
-        diamond.setClarity(new BigDecimal("10"));
+        diamond.setClarity(Clarity.SI2);
+        diamond.setColor(Color.D);
+        diamond.setCut(Cut.EXCELLENT);
         diamond.setTotalStockAmount(new BigDecimal("40000000"));
 
         diamond = diamondService.create(diamond);

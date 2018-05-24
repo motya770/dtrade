@@ -58,13 +58,13 @@ public class BalanceActivityService implements IBalanceActivityService {
         }
 
         Account account = accountService.find(coinPayment.getAccount().getId());
-        accountService.updateBalance(account, coinPayment.getCoinPaymentRequest().getAmountUsd());
+        accountService.updateBalance(account, coinPayment.getDepositRequest().getAmountUsd());
 
         BalanceActivity ba = new BalanceActivity();
         ba.setBalanceActivityType(BalanceActivityType.BUY);
         ba.setAccount(account);
         ba.setBalanceActivityType(BalanceActivityType.DEPOSIT);
-        ba.setAmount(coinPayment.getCoinPaymentRequest().getAmountUsd());
+        ba.setAmount(coinPayment.getDepositRequest().getAmountUsd());
         ba.setCreateDate(System.currentTimeMillis());
         ba.setBalanceSnapshot(account.getBalance());
         return balanceActivityRepository.save(ba);
