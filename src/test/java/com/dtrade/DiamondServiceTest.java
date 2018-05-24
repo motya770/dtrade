@@ -128,7 +128,6 @@ public class DiamondServiceTest  extends BaseTest{
     public void testCreate(){
         Diamond diamond = createDiamond();
         Assert.assertNotNull(diamond);
-        //TODO fix this bug
         Assert.assertTrue(diamond.getDiamondStatus().equals(DiamondStatus.CREATED));
     }
 
