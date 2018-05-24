@@ -263,9 +263,8 @@ public class TradeOrderServiceTest extends BaseTest {
        TradeOrder buyOrder = createTestBuyTradeOrder();
        TradeOrder sellOrder = createTestSellTradeOrder();
 
-       org.springframework.data.util.Pair<TradeOrder, TradeOrder> pair = org.springframework.data.util.Pair.of(buyOrder, sellOrder);
-
-       //tradeOrderService.executeTradeOrders(pair);
+       Pair<TradeOrder, TradeOrder> pair = Pair.of(buyOrder, sellOrder);
+       tradeOrderService.executeTradeOrders(pair);
     }
 
     @Test
