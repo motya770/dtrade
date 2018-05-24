@@ -177,11 +177,11 @@
                                                 <td>{{coinPayment.id}}</td>
                                                 <td>{{coinPayment.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                                 <td>{{coinPayment.coinPaymentStatus}}</td>
-                                                <td>{{coinPayment.coinPaymentRequest.currencyUsd}}</td>
-                                                <td>{{coinPayment.coinPaymentRequest.currencyCoin}}</td>
-                                                <td>{{coinPayment.coinPaymentRequest.amountUsd}}</td>
-                                                <td>{{coinPayment.coinPaymentRequest.amountCoin}}</td>
-                                                <th>{{coinPayment.coinPaymentRequest.transactionId}}</th>
+                                                <td>{{coinPayment.depositRequest.currencyUsd}}</td>
+                                                <td>{{coinPayment.depositRequest.currencyCoin}}</td>
+                                                <td>{{coinPayment.depositRequest.amountUsd}}</td>
+                                                <td>{{coinPayment.depositRequest.amountCoin}}</td>
+                                                <th>{{coinPayment.depositRequest.transactionId}}</th>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -224,6 +224,9 @@
                                     <input type="hidden" name="want_shipping" value="0">
                                     <input type="hidden" name="success_url" value="www.diaminds.io">
                                     <input type="hidden" name="allow_extra" value="0">
+                                    <!--
+                                    <input type="hidden" name="email" value="motya770@gmail.com">
+                                    -->
                                     <input type="image" src="https://www.coinpayments.net/images/pub/buynow.png" alt="Buy Now with CoinPayments.net">
                                 </form>
                             </div>
