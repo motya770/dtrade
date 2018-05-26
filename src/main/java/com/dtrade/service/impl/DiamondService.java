@@ -3,9 +3,11 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.diamond.DiamondDTO;
 import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -182,6 +185,24 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
+    public List<DiamondDTO> getAllAvailableDTO(String name){
+
+        List<Diamond> diamonds = getAllAvailable(name);
+        if(diamonds==null){
+            return null;
+        }
+
+        List<DiamondDTO> diamondDTOS = new LinkedList<>();
+        diamonds.forEach((diamond)->{
+            DiamondDTO diamondDTO = new DiamondDTO();
+            BeanUtils.copyProperties(diamond, diamondDTO);
+            diamondDTOS.add(diamondDTO);
+
+        });
+        return diamondDTOS;
+    }
+
+    @Override
     public List<Diamond> getAllAvailable(String name) {
         if(StringUtils.isEmpty(name)){
             name = ""; //all enlisted diamonds
@@ -189,28 +210,6 @@ public class DiamondService implements IDiamondService {
 
         List<Diamond> diamonds = diamondRepository.getAllAvailableByName(name);
         return diamonds;
-
-        /*
-        if(diamonds==null){
-            return null;
-        }
-
-        List<DiamondDTO> diamondDTOS = new LinkedList<>();
-        diamonds.forEach((diamond)->{
-
-                Quote quote = quotesService.getLastQuote(diamond);
-
-
-                    DiamondDTO diamondDTO = new DiamondDTO();
-
-                    BeanUtils.copyProperties(diamond, diamondDTO);
-                    diamondDTO.setQuote(quote);
-                    diamondDTOS.add(diamondDTO);
-
-        });
-
-        return diamondDTOS;
-        */
     }
 
     //@Override

@@ -1,7 +1,9 @@
 package com.dtrade.controller;
 
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.diamond.DiamondDTO;
 import com.dtrade.service.IDiamondService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,8 +44,8 @@ public class DiamondController {
     */
 
     @RequestMapping(value = "/available")
-    public List<Diamond> getAllAvailableDiamonds(@RequestParam(required = false) String name) {
-        List<Diamond> diamonds = diamondService.getAllAvailable(name);
+    public List<DiamondDTO> getAllAvailableDiamonds(@RequestParam(required = false) String name) {
+        List<DiamondDTO> diamonds = diamondService.getAllAvailableDTO(name);
         return diamonds;
     }
 

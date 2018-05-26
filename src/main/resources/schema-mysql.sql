@@ -261,5 +261,14 @@ CREATE TABLE `trade_order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+
 create index trade_order_trade_order_status on trade_order (trader_order_status) using HASH;
+create index trade_order_execution_date_index on trade_order (execution_date) using BTREE;
+create index trade_order_creation_date_index on trade_order (execution_date) using BTREE;
+create index quote_time_index on quote (time) using BTREE;
+create index balance_activity_create_date_index on balance_activity (create_date) using BTREE;
+
+
+
+
 -- Dump completed on 2018-04-12 22:53:48
