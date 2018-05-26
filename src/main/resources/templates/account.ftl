@@ -91,14 +91,15 @@
                             </div>
                         </div>
                         <div class="lk-main-tab" id="tab02">
-                            <div class="lk-main-tab__table" style="width: 692px;">
+                            <div class="lk-main-tab__table" style="width: 900px;">
                                 <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
                                     <div >
                                         <table class="diamont-table">
                                         <thead>
                                         <tr>
                                             <th>№</th>
-                                            <th>Date</th>
+                                            <th>Date created</th>
+                                            <th>Date executed</th>
                                             <th>Name</th>
                                             <th>№ Amount</th>
                                             <th>Price</th>
@@ -112,11 +113,12 @@
                                         <tbody>
                                         <tr ng-repeat="tradeOrder in vm.accountHistoryTradeOrders.content">
                                             <td>{{tradeOrder.id}}</td>
+                                            <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             <td>{{tradeOrder.executionDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             <td>{{tradeOrder.diamond.name}}</td>
                                             <td>{{tradeOrder.initialAmount}}</td>
                                             <td>{{tradeOrder.price}}</td>
-                                            <td>{{tradeOrder.price * tradeOrder.amount}}</td>
+                                            <td>{{tradeOrder.price * tradeOrder.initialAmount}}</td>
                                             <td>{{tradeOrder.traderOrderStatus}}</td>
                                             <!--
                                             <td>{{tradeOrder.}} </td>
