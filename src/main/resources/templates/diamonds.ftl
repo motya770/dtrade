@@ -39,6 +39,8 @@
                                 <th>Status</th>
                                 <th>Carats</th>
                                 <th>Clarity</th>
+                                <th>Cut</th>
+                                <th>Color</th>
                                 <th>Σ stcks</th>
                                 <!--
                                 <th></th>
@@ -56,6 +58,8 @@
                                 <td>{{diamond.diamondStatus}}</td>
                                 <td>{{diamond.carats}}</td>
                                 <td>{{diamond.clarity}}</td>
+                                <td>{{diamond.cut}}</td>
+                                <td>{{diamond.color}}</td>
                                 <td>{{diamond.totalStockAmount}}</td>
                                 <!--
                                 <td>
