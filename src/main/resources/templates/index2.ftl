@@ -64,7 +64,8 @@
                                         <tbody>
 
                                             <tr ng-repeat="diamond in vm.availableDiamonds" ng-click="chooseAvailableDiamond(diamond)">
-                                                <td>{{diamond.name}} <small>{{diamond.id}}, {{diamond.diamondType}}, {{diamond.carats}}, {{diamond.clarity}}</small>
+                                                <td>{{diamond.name}} <small>{{diamond.diamondType}}, {{diamond.carats}},
+                                                    {{diamond.clarity}} </small>
 
                                                 </td>
                                                 <td>
