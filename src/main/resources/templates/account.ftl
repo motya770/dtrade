@@ -156,10 +156,10 @@
                                 </div>-->
                             </div>
                         </div>
-                        <div class="lk-main-tab" id="tab03">
+                        <div class="lk-main-tab" id="tab03" ng-controller="CoinPaymentController as vm">
                             <div class="lk-main-tab__table" style="width: 692px; min-height: 400px;">
-                                <div class="table-container" ng-controller="CoinPaymentController as vm">
-                                    <div >
+                                <div class="table-container" >
+                                    <div>
                                         <table class="diamont-table">
                                             <thead>
                                             <tr>
@@ -231,6 +231,17 @@
                                     -->
                                     <input type="image" src="https://www.coinpayments.net/images/pub/buynow.png" alt="Buy Now with CoinPayments.net">
                                 </form>
+                            </div>
+
+
+                            <div>
+                                {{vm.withdrawRequest}}
+                                <div><input type="text" ng-model="vm.withdrawRequest.currencyCoin"></div>
+                                <div><input type="text" ng-model="vm.withdrawRequest.currencyFiat"></div>
+                                <div><input type="text" ng-model="vm.withdrawRequest.address"></div>
+                                <div><input type="text" ng-model="vm.withdrawRequest.note"></div>
+                                <div></div>
+                                <input type="button" value="Create Withdraw" ng-click="createWithdraw(vm.withdrawRequest);">
                             </div>
                         </div>
                     </div>

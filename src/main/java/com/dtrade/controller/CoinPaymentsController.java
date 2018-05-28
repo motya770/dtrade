@@ -2,6 +2,7 @@ package com.dtrade.controller;
 
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.coinpayment.DepositRequest;
+import com.dtrade.model.coinpayment.WithdrawRequest;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.ICoinPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,12 @@ public class CoinPaymentsController {
         return coinPaymentService.getAllByAccount(accountService.getStrictlyLoggedAccount());
     }
 
-    @RequestMapping(value = "/withdraw")
-    public void createWithdraw(){
-
+    @RequestMapping(value = "/create-withdraw")
+    public CoinPayment createWithdraw(@RequestParam String currencyCoin, @RequestParam String currencyFiat,
+                                      @RequestParam String address, @RequestParam String note){
+       return coinPaymentService.createWithdraw(
+               WithdrawRequest.build(currencyCoin, currencyFiat, address, note)
+       );
     }
 
     /*
@@ -66,6 +70,10 @@ public class CoinPaymentsController {
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("NOTIFY: " + httpServletRequest.toString());
+
+        String hmac = headers.getFirst("hmac");
+
+        coinPaymentService.checkHmac(hmac, body);
 
         params.forEach((k, v)->{
             System.out.println("K:" + k + " V:" + v);
@@ -116,9 +124,5 @@ public class CoinPaymentsController {
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
-
-
-
-
     }
 }

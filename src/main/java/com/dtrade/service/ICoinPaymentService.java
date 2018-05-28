@@ -12,6 +12,8 @@ public interface ICoinPaymentService {
 
     void proceedWithdraw(WithdrawRequest withdrawRequest);
 
+    CoinPayment createWithdraw(WithdrawRequest withdrawRequest);
+
     CoinPayment create(DepositRequest depositRequest);
 
     CoinPayment findByExternalId(String externalId);
@@ -20,8 +22,7 @@ public interface ICoinPaymentService {
 
     CoinPayment confirmPayment(CoinPayment coinPayment);
 
-    CoinPayment createWithdraw();
-
+    void checkHmac(String hmac, String body);
 
    // void login();
 

@@ -31,6 +31,8 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -243,8 +245,6 @@ public class TradeOrderServiceTest extends BaseTest {
         Assert.assertTrue(savedTradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED));
     }
 
-
-
     @Test
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     public void testCancelTradeOrder(){
@@ -275,7 +275,7 @@ public class TradeOrderServiceTest extends BaseTest {
         TradeOrder sellOrder = createTestSellTradeOrder();
         org.springframework.data.util.Pair<TradeOrder, TradeOrder> pair = org.springframework.data.util.Pair.of(buyOrder, sellOrder);
 
-         Assert.assertTrue(tradeOrderService.checkIfCanExecute(pair));
+        Assert.assertTrue(tradeOrderService.checkIfCanExecute(pair));
     }
 }
 

@@ -2,10 +2,7 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
-import com.dtrade.model.coinpayment.CoinPayment;
-import com.dtrade.model.coinpayment.DepositRequest;
-import com.dtrade.model.coinpayment.CoinPaymentStatus;
-import com.dtrade.model.coinpayment.WithdrawRequest;
+import com.dtrade.model.coinpayment.*;
 import com.dtrade.repository.coinpayment.CoinPaymentRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
@@ -42,8 +39,16 @@ public class CoinPaymentService implements ICoinPaymentService {
     private IAccountService accountService;
 
     @Override
-    public CoinPayment createWithdraw() {
-        return null;
+    public CoinPayment createWithdraw(WithdrawRequest withdrawRequest) {
+        Account account = accountService.getStrictlyLoggedAccount();
+        CoinPayment coinPayment= new CoinPayment();
+        coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CREATED);
+        coinPayment.setCreationDate(System.currentTimeMillis());
+        coinPayment.setAccount(account);
+        coinPayment.setCoinPaymentType(CoinPaymentType.WITHDRAW);
+        coinPayment.setWithdrawRequest(withdrawRequest);
+        coinPayment = coinPaymentRepository.save(coinPayment);
+        return coinPayment;
     }
 
     @Override
@@ -78,6 +83,19 @@ public class CoinPaymentService implements ICoinPaymentService {
        if(status==100){
            confirmPayment(coinPayment);
        }
+    }
+
+    @Override
+    public void checkHmac(String hmac, String body) {
+        if(StringUtils.isEmpty(hmac) || StringUtils.isEmpty(body)){
+            throw new TradeException("Hmac or body is empty");
+        }
+
+        String calculatedHmac = HmacUtils.hmacSha512Hex(privateKey, body);
+
+        if(!calculatedHmac.equals(hmac)){
+            throw new TradeException("Hmac is not equals");
+        }
     }
 
     @Override
@@ -119,6 +137,7 @@ public class CoinPaymentService implements ICoinPaymentService {
         coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CREATED);
         coinPayment.setCreationDate(System.currentTimeMillis());
         coinPayment.setAccount(account);
+        coinPayment.setCoinPaymentType(CoinPaymentType.DEPOSIT);
         coinPayment.setDepositRequest(depositRequest);
         coinPayment = coinPaymentRepository.save(coinPayment);
         return coinPayment;
