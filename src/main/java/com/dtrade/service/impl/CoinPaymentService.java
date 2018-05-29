@@ -48,8 +48,36 @@ public class CoinPaymentService implements ICoinPaymentService {
         coinPayment.setCoinPaymentType(CoinPaymentType.WITHDRAW);
         coinPayment.setWithdrawRequest(withdrawRequest);
         coinPayment = coinPaymentRepository.save(coinPayment);
+
+        sendWithdraw(withdrawRequest);
         return coinPayment;
     }
+
+    private void sendWithdraw(WithdrawRequest withdrawRequest){
+        RestTemplate restTemplate = new RestTemplate();
+        RequestEntity<String> entity = null;
+        try{
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.put("Content-Type", Collections.singletonList("application/x-www-form-urlencoded"));
+            String body = "currency=" + withdrawRequest.getCurrencyCoin() +
+                    "&currency2="  + withdrawRequest.getCurrencyFiat() + "&version=1&cmd=create_withdrawal&key=" + publicKey+
+                    "&amount=" + withdrawRequest.getAmount()
+                    + "&format=json" + "&address="+withdrawRequest.getAddress();
+
+            String hmac = HmacUtils.hmacSha512Hex(privateKey, body);
+            headers.put("HMAC", Collections.singletonList(hmac));
+            entity = new RequestEntity<>(body, headers, HttpMethod.POST,
+                    new URI("https://www.coinpayments.net/api.php"));
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        ResponseEntity<String> responce  = restTemplate.exchange(entity, String.class);
+        System.out.println(responce);
+    }
+
 
     @Override
     public void proceedWithdraw(WithdrawRequest withdrawRequest) {

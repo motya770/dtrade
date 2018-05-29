@@ -31,9 +31,10 @@ public class CoinPaymentsController {
 
     @RequestMapping(value = "/create-withdraw")
     public CoinPayment createWithdraw(@RequestParam String currencyCoin, @RequestParam String currencyFiat,
-                                      @RequestParam String address, @RequestParam String note){
+                                      @RequestParam String address,
+                                      @RequestParam String amount){
        return coinPaymentService.createWithdraw(
-               WithdrawRequest.build(currencyCoin, currencyFiat, address, note)
+               WithdrawRequest.build(currencyCoin, currencyFiat, address, amount)
        );
     }
 

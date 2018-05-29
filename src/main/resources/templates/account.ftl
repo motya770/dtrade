@@ -239,7 +239,7 @@
                                 <div><input type="text" ng-model="vm.withdrawRequest.currencyCoin"></div>
                                 <div><input type="text" ng-model="vm.withdrawRequest.currencyFiat"></div>
                                 <div><input type="text" ng-model="vm.withdrawRequest.address"></div>
-                                <div><input type="text" ng-model="vm.withdrawRequest.note"></div>
+                                <div><input type="text" ng-model="vm.withdrawRequest.amount"></div>
                                 <div></div>
                                 <input type="button" value="Create Withdraw" ng-click="createWithdraw(vm.withdrawRequest);">
                             </div>

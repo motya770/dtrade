@@ -38,14 +38,17 @@ public class WithdrawRequest {
     @Column(name = "withdraw_note")
     private String note;
 
+    @Column(name = "withdraw_amount")
+    private BigDecimal amount;
+
     public static WithdrawRequest build(String currencyCoin, String currencyFiat,
-                                        String address, String note){
+                                        String address, String amount){
 
        WithdrawRequest withdrawRequest = new WithdrawRequest();
        withdrawRequest.setCurrencyCoin(currencyCoin);
        withdrawRequest.setCurrencyFiat(currencyFiat);
        withdrawRequest.setAddress(address);
-       withdrawRequest.setNote(note);
+       withdrawRequest.setAmount(new BigDecimal(amount));
        return withdrawRequest;
     }
 }
