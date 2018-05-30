@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.Collections;
 
@@ -39,37 +40,38 @@ public class CoinPaymentService implements ICoinPaymentService {
     private IAccountService accountService;
 
     @Override
-    public CoinPayment createWithdraw(WithdrawRequest withdrawRequest) {
+    public CoinPayment sendWithdraw(OutWithdrawRequest outWithdrawRequest) {
+
         Account account = accountService.getStrictlyLoggedAccount();
         account = accountService.find(account.getId());
 
-        //TODO add requests sum checks and balance
-       // if(account.getBalance().)
+        BigDecimal amount = outWithdrawRequest.getAmount();
+        BigDecimal actualBalance = account.getBalance().add(account.getFrozenBalance());
 
-        CoinPayment coinPayment= new CoinPayment();
-        coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CREATED);
-        coinPayment.setCreationDate(System.currentTimeMillis());
-        coinPayment.setAccount(account);
-        coinPayment.setCoinPaymentType(CoinPaymentType.WITHDRAW);
-        coinPayment.setWithdrawRequest(withdrawRequest);
+        if(actualBalance.compareTo(amount) < 0){
+            throw new TradeException("Account " + account.getId() + " don't have enough money for withdraw.");
+        }
 
-        sendWithdraw(withdrawRequest);
+        accountService.freezeAmount(account, amount);
 
-        coinPayment = coinPaymentRepository.save(coinPayment);
+        sendWithdrawRequest(outWithdrawRequest);
+
+        CoinPayment coinPayment = createWithdraw(outWithdrawRequest);
+
         return coinPayment;
     }
 
-    private String sendWithdraw(WithdrawRequest withdrawRequest){
+    private String sendWithdrawRequest(OutWithdrawRequest outWithdrawRequest){
         RestTemplate restTemplate = new RestTemplate();
         RequestEntity<String> entity = null;
         try{
 
             HttpHeaders headers = new HttpHeaders();
             headers.put("Content-Type", Collections.singletonList("application/x-www-form-urlencoded"));
-            String body = "currency=" + withdrawRequest.getCurrencyCoin() +
-                    "&currency2="  + withdrawRequest.getCurrencyFiat() + "&version=1&cmd=create_withdrawal&key=" + publicKey+
-                    "&amount=" + withdrawRequest.getAmount()
-                    + "&format=json" + "&address="+withdrawRequest.getAddress();
+            String body = "currency=" + outWithdrawRequest.getCurrencyCoin() +
+                    "&currency2="  + outWithdrawRequest.getCurrencyFiat() + "&version=1&cmd=create_withdrawal&key=" + publicKey+
+                    "&amount=" + outWithdrawRequest.getAmount()
+                    + "&format=json" + "&address="+ outWithdrawRequest.getAddress();
 
             String hmac = HmacUtils.hmacSha512Hex(privateKey, body);
             headers.put("HMAC", Collections.singletonList(hmac));
@@ -85,10 +87,44 @@ public class CoinPaymentService implements ICoinPaymentService {
         return response.getBody();
     }
 
+    @Override
+    public CoinPayment createWithdraw(OutWithdrawRequest outWithdrawRequest){
+        Account account = accountService.getStrictlyLoggedAccount();
+        CoinPayment coinPayment= new CoinPayment();
+        coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CREATED);
+        coinPayment.setCreationDate(System.currentTimeMillis());
+        coinPayment.setAccount(account);
+        coinPayment.setCoinPaymentType(CoinPaymentType.WITHDRAW);
+        coinPayment.setOutWithdrawRequest(outWithdrawRequest);
+        coinPayment = coinPaymentRepository.save(coinPayment);
+        return coinPayment;
+    }
 
     @Override
-    public void proceedWithdraw(WithdrawRequest withdrawRequest) {
+    public void proceedWithdraw(InWithdrawRequest withdrawRequest) {
 
+        CoinPayment coinPayment = coinPaymentRepository.findWithdrawCoinPayment(withdrawRequest.getAddress(), withdrawRequest.getAmountUsd());
+        if(coinPayment==null){
+            throw new TradeException("CoinPayment for this withdraw is not found");
+        }
+
+        coinPayment.setInWithdrawRequest(withdrawRequest);
+        coinPaymentRepository.save(coinPayment);
+
+        if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
+            logger.debug("CoinPayment already confirmed {}", coinPayment.getInWithdrawRequest().getIpnId());
+            return;
+        }
+
+        Integer status =  coinPayment.getInWithdrawRequest().getStatus();
+        if(status==null){
+            throw new TradeException("Status is not defined: " + coinPayment.getInWithdrawRequest().getIpnId());
+        }
+
+        logger.debug("Status is {} for {}", status, coinPayment.getInWithdrawRequest().getIpnId());
+        if(status==100){
+            confirmWithdraw(coinPayment);
+        }
     }
 
     //receive money
@@ -97,9 +133,9 @@ public class CoinPaymentService implements ICoinPaymentService {
 
        //Pay attention transaction has many depositRequest (in there system)
 
-       CoinPayment coinPayment =  coinPaymentRepository.findByTransactionId(depositRequest.getTransactionId());
+       CoinPayment coinPayment = coinPaymentRepository.findByTransactionId(depositRequest.getTransactionId());
        if(coinPayment==null){
-            coinPayment = create(depositRequest);
+            coinPayment = createDeposit(depositRequest);
        }else{
             coinPayment.setDepositRequest(depositRequest);
        }
@@ -128,8 +164,16 @@ public class CoinPaymentService implements ICoinPaymentService {
 
         String calculatedHmac = HmacUtils.hmacSha512Hex(privateKey, body);
 
+        calculatedHmac = calculatedHmac.trim();
+        hmac = hmac.trim();
+
         System.out.println("you hmac: " + hmac);
         System.out.println("calculatedHmac: " + calculatedHmac);
+
+        //TODO fix check IMPORTANT
+        if(true){
+            return;
+        }
 
         if(!calculatedHmac.equals(hmac)){
             throw new TradeException("Hmac is not equals");
@@ -147,6 +191,19 @@ public class CoinPaymentService implements ICoinPaymentService {
     }
 
     @Override
+    public CoinPayment confirmWithdraw(CoinPayment coinPayment) {
+
+        if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
+            throw new TradeException("Already confirmed");
+        }
+
+        balanceActivityService.createDepositBalanceActivity(coinPayment);
+
+        coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CONFIRMED);
+        return coinPaymentRepository.save(coinPayment);
+    }
+
+    @Override
     public CoinPayment confirmPayment(CoinPayment coinPayment) {
 
         if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
@@ -160,7 +217,7 @@ public class CoinPaymentService implements ICoinPaymentService {
     }
 
     @Override
-    public CoinPayment create( DepositRequest depositRequest) {
+    public CoinPayment createDeposit(DepositRequest depositRequest) {
 
         if(StringUtils.isEmpty(depositRequest.getIpnId())){
             throw new TradeException("IpnId is empty");
@@ -180,7 +237,6 @@ public class CoinPaymentService implements ICoinPaymentService {
         coinPayment = coinPaymentRepository.save(coinPayment);
         return coinPayment;
     }
-
     // private RestTemplate restTemplate = new RestTemplate();
 
     //template

@@ -154,10 +154,22 @@ public class AccountService implements IAccountService, UserDetailsService {
         account.setConfirmed(true);
         account.setEnabled(true);
         accountRepository.save(account);
-
         //TODO enable after restart
         //mailService.sendRegistrationMail(account);
+        return account;
+    }
 
+    @Override
+    public Account unfreezeAmount(Account account, BigDecimal amount) {
+        account.setFrozenBalance(account.getFrozenBalance().subtract(amount));
+        accountRepository.save(account);
+        return account;
+    }
+
+    @Override
+    public Account freezeAmount(Account account, BigDecimal amount) {
+        account.setFrozenBalance(account.getFrozenBalance().add(amount));
+        accountRepository.save(account);
         return account;
     }
 
@@ -165,13 +177,14 @@ public class AccountService implements IAccountService, UserDetailsService {
     public Account buildAccount(String mail, String pwd, String phone, String curr) throws TradeException {
         Account anotherAccount = accountRepository.findByMail(mail);
         if (anotherAccount != null) {
-            throw new TradeException("Can't create account with this login!");
+            throw new TradeException("Can't createDeposit account with this login!");
         }
 
         pwd = passwordEncoder.encodePassword(pwd, null);
         Account account = new Account(mail, pwd);
 
         account.setBalance(new BigDecimal("0.0"));
+        account.setFrozenBalance(new BigDecimal("0.0"));
         account.setPhone(phone);
         account.setGuid(UUID.randomUUID().toString());
         account.setRole(Account.F_ROLE_ACCOUNT);

@@ -4,7 +4,6 @@ package com.dtrade.model.coinpayment;
 import com.dtrade.model.account.Account;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -38,5 +37,8 @@ public class CoinPayment {
     private DepositRequest depositRequest;
 
     @Embedded
-    private WithdrawRequest withdrawRequest;
+    private OutWithdrawRequest outWithdrawRequest;
+
+    @Embedded
+    private InWithdrawRequest inWithdrawRequest;
 }

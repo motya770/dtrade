@@ -2,21 +2,26 @@ package com.dtrade.controller;
 
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.coinpayment.DepositRequest;
-import com.dtrade.model.coinpayment.WithdrawRequest;
+import com.dtrade.model.coinpayment.InWithdrawRequest;
+import com.dtrade.model.coinpayment.OutWithdrawRequest;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.ICoinPaymentService;
+import com.dtrade.service.impl.TradeOrderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/coin-payment/", method = RequestMethod.POST)
 public class CoinPaymentsController {
+
+    private static final Logger logger = LoggerFactory.getLogger(TradeOrderService.class);
 
     @Autowired
     private ICoinPaymentService coinPaymentService;
@@ -33,8 +38,8 @@ public class CoinPaymentsController {
     public CoinPayment createWithdraw(@RequestParam String currencyCoin, @RequestParam String currencyFiat,
                                       @RequestParam String address,
                                       @RequestParam String amount){
-       return coinPaymentService.createWithdraw(
-               WithdrawRequest.build(currencyCoin, currencyFiat, address, amount)
+       return coinPaymentService.sendWithdraw(
+               OutWithdrawRequest.build(currencyCoin, currencyFiat, address, amount)
        );
     }
 
@@ -80,49 +85,20 @@ public class CoinPaymentsController {
             System.out.println("First header " +  headers.getFirst(k));
         });
 
-
         String hmac = headers.getFirst("hmac");
         coinPaymentService.checkHmac(hmac, body);
 
-        DepositRequest depositRequest = new DepositRequest();
-        String ipn_version = params.get("ipn_version");
         String ipn_type = params.get("ipn_type");
-        String ipn_mode = params.get("ipn_mode");
-        String ipn_id =  params.get("ipn_id");
-        String merchant =  params.get("merchant");
-        String address = params.get("address");
-        String txn_id = params.get("txn_id");
-        Integer status =  Integer.parseInt(params.get("status"));
-        String status_text = params.get("status_text");
-        String currencyUsd = params.get("currency1");
-        String currencyCoin = params.get("currency2");
-
-        String confirms =   params.get("confirms");
-        BigDecimal amountUsd =  new BigDecimal(params.get("amount1"));
-        BigDecimal amountCoin =  new BigDecimal(params.get("amount2"));
-        String email =   params.get("email");
-
-        depositRequest.setIpn_version(ipn_version);
-        depositRequest.setIpn_type(ipn_type);
-        depositRequest.setIpn_mode(ipn_mode);
-        depositRequest.setIpnId(ipn_id);
-        depositRequest.setMerchant(merchant);
-        depositRequest.setAddress(address);
-        depositRequest.setTransactionId(txn_id);
-        depositRequest.setStatus(status);
-        depositRequest.setCurrencyUsd(currencyUsd);
-        depositRequest.setCurrencyCoin(currencyCoin);
-        depositRequest.setStatus_text(status_text);
-        depositRequest.setConfirms(confirms);
-
-        depositRequest.setAmountUsd(amountUsd);
-        depositRequest.setAmountCoin(amountCoin);
-        depositRequest.setEmail(email);
+        if(ipn_type.equals("withdrawal")){
+            coinPaymentService.proceedWithdraw(InWithdrawRequest.build(params));
+        }else if(ipn_type.equals("deposit")){
+            coinPaymentService.proceedDeposit(DepositRequest.build(params));
+        }else{
+            logger.error("Type " + ipn_type + " is unknown");
+        }
 
         System.out.println("BODY " + body);
         headers.forEach((k, v)-> System.out.println("K:" + k + ", " + "V: " + v));
-
-        coinPaymentService.proceedDeposit(depositRequest);
 
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");

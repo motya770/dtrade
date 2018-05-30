@@ -11,6 +11,10 @@ import java.math.BigDecimal;
  */
 public interface IAccountService {
 
+    Account freezeAmount(Account account, BigDecimal amount);
+
+    Account unfreezeAmount(Account account, BigDecimal amount);
+
     Account buildAccount(String mail, String pwd, String phone, String curr);
 
     void checkCurrentAccount(Account account) throws TradeException;

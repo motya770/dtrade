@@ -10,9 +10,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 @Repository
 @Transactional
 public interface CoinPaymentRepository extends JpaRepository<CoinPayment, Long> {
+
+    @Query("select cp from CoinPayment as cp where cp.outWithdrawRequest.address = :#{#address} " +
+            " and cp.outWithdrawRequest.amount = :#{#amount} order by cp.creationDate desc")
+    CoinPayment findWithdrawCoinPayment(@Param("address") String address, @Param("amount")  BigDecimal amount);
 
     Page<CoinPayment> findByAccount(Account account, Pageable pageable);
 

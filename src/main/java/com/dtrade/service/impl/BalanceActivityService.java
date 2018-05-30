@@ -50,6 +50,28 @@ public class BalanceActivityService implements IBalanceActivityService {
         return balanceActivityRepository.getByAccount(account, new PageRequest(pageInteger, 10));
     }
 
+
+    @Override
+    public BalanceActivity createWithdrawBalanceActivity(CoinPayment coinPayment) {
+
+        if(coinPayment.getAccount()==null){
+            throw new TradeException("Account is null");
+        }
+
+        Account account = accountService.find(coinPayment.getAccount().getId());
+        accountService.updateBalance(account, coinPayment.getInWithdrawRequest().getAmountUsd().multiply(new BigDecimal("-1")));
+
+        accountService.unfreezeAmount(account, coinPayment.getInWithdrawRequest().getAmountUsd());
+
+        BalanceActivity ba = new BalanceActivity();
+        ba.setAccount(account);
+        ba.setBalanceActivityType(BalanceActivityType.WITHDRAW);
+        ba.setAmount(coinPayment.getDepositRequest().getAmountUsd());
+        ba.setCreateDate(System.currentTimeMillis());
+        ba.setBalanceSnapshot(account.getBalance());
+        return balanceActivityRepository.save(ba);
+    }
+
     @Override
     public BalanceActivity createDepositBalanceActivity(CoinPayment coinPayment) {
 
@@ -61,7 +83,6 @@ public class BalanceActivityService implements IBalanceActivityService {
         accountService.updateBalance(account, coinPayment.getDepositRequest().getAmountUsd());
 
         BalanceActivity ba = new BalanceActivity();
-        ba.setBalanceActivityType(BalanceActivityType.BUY);
         ba.setAccount(account);
         ba.setBalanceActivityType(BalanceActivityType.DEPOSIT);
         ba.setAmount(coinPayment.getDepositRequest().getAmountUsd());

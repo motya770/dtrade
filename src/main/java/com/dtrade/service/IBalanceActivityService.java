@@ -23,6 +23,8 @@ public interface IBalanceActivityService {
 
     BalanceActivity createDepositBalanceActivity(CoinPayment coinPayment);
 
+    BalanceActivity createWithdrawBalanceActivity(CoinPayment coinPayment);
+
     Page<BalanceActivity> getAccountBalanceActivities(Integer pageInteger);
 
     //TODO add paging and protecting

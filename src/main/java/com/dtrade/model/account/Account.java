@@ -68,6 +68,8 @@ public class Account implements UserDetails {
     @NotNull
     private BigDecimal balance;
 
+    private BigDecimal frozenBalance;
+
     private String phone;
 
     private String role;
