@@ -70,15 +70,19 @@ public class CoinPaymentsController {
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
-        System.out.println("NOTIFY: " + httpServletRequest.toString());
-
-        String hmac = headers.getFirst("hmac");
-
-        coinPaymentService.checkHmac(hmac, body);
+        System.out.println("NOTIFY! ");
 
         params.forEach((k, v)->{
             System.out.println("K:" + k + " V:" + v);
         });
+
+        headers.keySet().forEach(k->{
+            System.out.println("First header " +  headers.getFirst(k));
+        });
+
+
+        String hmac = headers.getFirst("hmac");
+        coinPaymentService.checkHmac(hmac, body);
 
         DepositRequest depositRequest = new DepositRequest();
         String ipn_version = params.get("ipn_version");

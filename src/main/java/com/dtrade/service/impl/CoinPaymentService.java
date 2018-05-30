@@ -41,19 +41,25 @@ public class CoinPaymentService implements ICoinPaymentService {
     @Override
     public CoinPayment createWithdraw(WithdrawRequest withdrawRequest) {
         Account account = accountService.getStrictlyLoggedAccount();
+        account = accountService.find(account.getId());
+
+        //TODO add requests sum checks and balance
+       // if(account.getBalance().)
+
         CoinPayment coinPayment= new CoinPayment();
         coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CREATED);
         coinPayment.setCreationDate(System.currentTimeMillis());
         coinPayment.setAccount(account);
         coinPayment.setCoinPaymentType(CoinPaymentType.WITHDRAW);
         coinPayment.setWithdrawRequest(withdrawRequest);
-        coinPayment = coinPaymentRepository.save(coinPayment);
 
         sendWithdraw(withdrawRequest);
+
+        coinPayment = coinPaymentRepository.save(coinPayment);
         return coinPayment;
     }
 
-    private void sendWithdraw(WithdrawRequest withdrawRequest){
+    private String sendWithdraw(WithdrawRequest withdrawRequest){
         RestTemplate restTemplate = new RestTemplate();
         RequestEntity<String> entity = null;
         try{
@@ -74,8 +80,9 @@ public class CoinPaymentService implements ICoinPaymentService {
             e.printStackTrace();
         }
 
-        ResponseEntity<String> responce  = restTemplate.exchange(entity, String.class);
-        System.out.println(responce);
+        ResponseEntity<String> response  = restTemplate.exchange(entity, String.class);
+        System.out.println(response);
+        return response.getBody();
     }
 
 
@@ -120,6 +127,9 @@ public class CoinPaymentService implements ICoinPaymentService {
         }
 
         String calculatedHmac = HmacUtils.hmacSha512Hex(privateKey, body);
+
+        System.out.println("you hmac: " + hmac);
+        System.out.println("calculatedHmac: " + calculatedHmac);
 
         if(!calculatedHmac.equals(hmac)){
             throw new TradeException("Hmac is not equals");
