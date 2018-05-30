@@ -13,9 +13,9 @@ public interface ICoinPaymentService {
 
     void proceedWithdraw(InWithdrawRequest outWithdrawRequest);
 
-    CoinPayment sendWithdraw(OutWithdrawRequest outWithdrawRequest);
+    CoinPayment sendWithdraw(InWithdrawRequest outWithdrawRequest);
 
-    CoinPayment createWithdraw(OutWithdrawRequest outWithdrawRequest);
+    CoinPayment createWithdraw(InWithdrawRequest outWithdrawRequest);
 
     CoinPayment createDeposit(DepositRequest depositRequest);
 

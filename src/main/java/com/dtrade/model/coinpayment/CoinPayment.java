@@ -36,8 +36,8 @@ public class CoinPayment {
     @Embedded
     private DepositRequest depositRequest;
 
-    @Embedded
-    private OutWithdrawRequest outWithdrawRequest;
+   // @Embedded
+   // private OutWithdrawRequest outWithdrawRequest;
 
     @Embedded
     private InWithdrawRequest inWithdrawRequest;

@@ -39,7 +39,7 @@ public class CoinPaymentsController {
                                       @RequestParam String address,
                                       @RequestParam String amount){
        return coinPaymentService.sendWithdraw(
-               OutWithdrawRequest.build(currencyCoin, currencyFiat, address, amount)
+               InWithdrawRequest.initiliazeRequest(currencyCoin, currencyFiat, address, amount)
        );
     }
 

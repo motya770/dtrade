@@ -58,6 +58,17 @@ public class InWithdrawRequest {
     @NotNull
     private BigDecimal amountCoin;
 
+    public static InWithdrawRequest initiliazeRequest(String currencyCoin, String currencyUsd,
+                                                      String address, String amountUsd){
+
+            InWithdrawRequest request = new InWithdrawRequest();
+            request.setCurrencyCoin(currencyCoin);
+            request.setCurrencyUsd(currencyUsd);
+            request.setAddress(address);
+            request.setAmountUsd(new BigDecimal(amountUsd));
+            return request;
+    }
+
     public static InWithdrawRequest build(Map<String, String> params){
         /*
                         K:address V:0x10D75F90b0F483942aDd5a947b71D8617BB012eD

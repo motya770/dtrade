@@ -7,6 +7,8 @@ import com.dtrade.repository.coinpayment.CoinPaymentRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
 import com.dtrade.service.ICoinPaymentService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,12 +42,12 @@ public class CoinPaymentService implements ICoinPaymentService {
     private IAccountService accountService;
 
     @Override
-    public CoinPayment sendWithdraw(OutWithdrawRequest outWithdrawRequest) {
+    public CoinPayment sendWithdraw(InWithdrawRequest withdrawRequest) {
 
         Account account = accountService.getStrictlyLoggedAccount();
         account = accountService.find(account.getId());
 
-        BigDecimal amount = outWithdrawRequest.getAmount();
+        BigDecimal amount = withdrawRequest.getAmountUsd();
         BigDecimal actualBalance = account.getBalance().add(account.getFrozenBalance());
 
         if(actualBalance.compareTo(amount) < 0){
@@ -54,24 +56,24 @@ public class CoinPaymentService implements ICoinPaymentService {
 
         accountService.freezeAmount(account, amount);
 
-        sendWithdrawRequest(outWithdrawRequest);
+        withdrawRequest  = sendWithdrawRequest(withdrawRequest);
 
-        CoinPayment coinPayment = createWithdraw(outWithdrawRequest);
+        CoinPayment coinPayment = createWithdraw(withdrawRequest);
 
         return coinPayment;
     }
 
-    private String sendWithdrawRequest(OutWithdrawRequest outWithdrawRequest){
+    private InWithdrawRequest sendWithdrawRequest(InWithdrawRequest withdrawRequest){
         RestTemplate restTemplate = new RestTemplate();
         RequestEntity<String> entity = null;
         try{
 
             HttpHeaders headers = new HttpHeaders();
             headers.put("Content-Type", Collections.singletonList("application/x-www-form-urlencoded"));
-            String body = "currency=" + outWithdrawRequest.getCurrencyCoin() +
-                    "&currency2="  + outWithdrawRequest.getCurrencyFiat() + "&version=1&cmd=create_withdrawal&key=" + publicKey+
-                    "&amount=" + outWithdrawRequest.getAmount()
-                    + "&format=json" + "&address="+ outWithdrawRequest.getAddress();
+            String body = "currency=" + withdrawRequest.getCurrencyCoin() +
+                    "&currency2="  + withdrawRequest.getCurrencyUsd() + "&version=1&cmd=create_withdrawal&key=" + publicKey+
+                    "&amount=" + withdrawRequest.getAmountUsd()
+                    + "&format=json" + "&address="+ withdrawRequest.getAddress();
 
             String hmac = HmacUtils.hmacSha512Hex(privateKey, body);
             headers.put("HMAC", Collections.singletonList(hmac));
@@ -79,23 +81,47 @@ public class CoinPaymentService implements ICoinPaymentService {
                     new URI("https://www.coinpayments.net/api.php"));
 
         }catch(Exception e){
+            logger.error("{}", e);
             e.printStackTrace();
         }
 
         ResponseEntity<String> response  = restTemplate.exchange(entity, String.class);
-        System.out.println(response);
-        return response.getBody();
+
+        String result = response.getBody();
+        if(!result.contains("ok")){
+            throw new TradeException(result);
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualObj = null;
+        try {
+            actualObj  = mapper.readTree(result);
+        }catch (Exception e){
+            logger.error("{}", e);
+        }
+
+        String ipnId = actualObj.get("result").get("id").asText();
+        Integer status = actualObj.get("result").get("status").asInt();
+        BigDecimal amountCoin = new BigDecimal(actualObj.get("result").get("status").asText());
+
+        withdrawRequest.setIpnId(ipnId);
+        withdrawRequest.setStatus(status);
+        withdrawRequest.setAmountCoin(amountCoin);
+
+        //{"error":"ok","result":{"id":"CWCE4YN0MICCWCYAETRQQQK92L","status":0,"amount":"0.00365765"}},
+
+        return withdrawRequest;
     }
 
     @Override
-    public CoinPayment createWithdraw(OutWithdrawRequest outWithdrawRequest){
+    public CoinPayment createWithdraw(InWithdrawRequest withdrawRequest){
         Account account = accountService.getStrictlyLoggedAccount();
         CoinPayment coinPayment= new CoinPayment();
         coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CREATED);
         coinPayment.setCreationDate(System.currentTimeMillis());
         coinPayment.setAccount(account);
         coinPayment.setCoinPaymentType(CoinPaymentType.WITHDRAW);
-        coinPayment.setOutWithdrawRequest(outWithdrawRequest);
+        coinPayment.setInWithdrawRequest(withdrawRequest);
         coinPayment = coinPaymentRepository.save(coinPayment);
         return coinPayment;
     }
@@ -103,13 +129,14 @@ public class CoinPaymentService implements ICoinPaymentService {
     @Override
     public void proceedWithdraw(InWithdrawRequest withdrawRequest) {
 
-        CoinPayment coinPayment = coinPaymentRepository.findWithdrawCoinPayment(withdrawRequest.getAddress(), withdrawRequest.getAmountUsd());
+        CoinPayment coinPayment = coinPaymentRepository.findInWithdrawByIpnId(withdrawRequest.getIpnId());
         if(coinPayment==null){
             throw new TradeException("CoinPayment for this withdraw is not found address: |" + withdrawRequest.getAddress()
                     + "| amount |" + withdrawRequest.getAmountUsd() + "|" );
         }
 
         coinPayment.setInWithdrawRequest(withdrawRequest);
+
         coinPaymentRepository.save(coinPayment);
 
         if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
@@ -134,7 +161,10 @@ public class CoinPaymentService implements ICoinPaymentService {
 
        //Pay attention transaction has many depositRequest (in there system)
 
-       CoinPayment coinPayment = coinPaymentRepository.findByTransactionId(depositRequest.getTransactionId());
+       CoinPayment coinPayment = coinPaymentRepository.findDepositByIpnId(depositRequest.getIpnId());
+       //TODO check
+       //coinPaymentRepository.findByTransactionId(depositRequest.getTransactionId());
+
        if(coinPayment==null){
             coinPayment = createDeposit(depositRequest);
        }else{
@@ -191,30 +221,29 @@ public class CoinPaymentService implements ICoinPaymentService {
         return coinPaymentRepository.findByTransactionId(transactionId);
     }
 
-    @Override
-    public CoinPayment confirmWithdraw(CoinPayment coinPayment) {
-
+    private void checkConfirmed(CoinPayment coinPayment){
         if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
             throw new TradeException("Already confirmed");
         }
+    }
 
-        balanceActivityService.createDepositBalanceActivity(coinPayment);
+    @Override
+    public CoinPayment confirmWithdraw(CoinPayment coinPayment) {
+        checkConfirmed(coinPayment);
+        balanceActivityService.createWithdrawBalanceActivity(coinPayment);
+        return confirm(coinPayment);
+    }
 
+    private CoinPayment confirm(CoinPayment coinPayment){
         coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CONFIRMED);
         return coinPaymentRepository.save(coinPayment);
     }
 
     @Override
     public CoinPayment confirmPayment(CoinPayment coinPayment) {
-
-        if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
-            throw new TradeException("Already confirmed");
-        }
-
+        checkConfirmed(coinPayment);
         balanceActivityService.createDepositBalanceActivity(coinPayment);
-
-        coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CONFIRMED);
-        return coinPaymentRepository.save(coinPayment);
+        return confirm(coinPayment);
     }
 
     @Override
