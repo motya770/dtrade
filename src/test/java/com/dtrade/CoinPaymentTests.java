@@ -1,6 +1,8 @@
 package com.dtrade;
 
+import com.dtrade.controller.CoinPaymentsController;
 import com.dtrade.model.coinpayment.DepositRequest;
+import com.dtrade.model.coinpayment.InWithdrawRequest;
 import com.dtrade.service.ICoinPaymentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -24,7 +27,7 @@ public class CoinPaymentTests extends BaseTest{
     @Transactional
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
-    public void processTest(){
+    public void processDeposit(){
 
         DepositRequest depositRequest = new DepositRequest();
         depositRequest.setEmail(F_DEFAULT_TEST_ACCOUNT);
@@ -44,9 +47,23 @@ public class CoinPaymentTests extends BaseTest{
         depositRequest.setAmountCoin(new BigDecimal("10"));
         depositRequest.setAmountUsd(new BigDecimal("100"));
         coinPaymentService.proceedDeposit(depositRequest);
-
-
-
     }
 
+    @Transactional
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
+    @Test
+    public void createWithdrawTest(){
+
+        //{"currencyCoin":"ETH","currencyFiat":"USD","address":"0x10D75F90b0F483942aDd5a947b71D8617BB012eD","amount":"2"}
+
+        String currencyCoin ="ETH";
+        String currencyFiat = "USD";
+        String address = "0x10D75F90b0F483942aDd5a947b71D8617BB012eD";
+        String amount = "2";
+
+        coinPaymentService.createWithdraw(
+                InWithdrawRequest.initiliazeRequest(currencyCoin, currencyFiat, address, amount)
+        );
+
+    }
 }

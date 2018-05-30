@@ -16,10 +16,6 @@ import java.math.BigDecimal;
 @Transactional
 public interface CoinPaymentRepository extends JpaRepository<CoinPayment, Long> {
 
-    @Query("select cp from CoinPayment as cp where cp.outWithdrawRequest.address = :#{#address} " +
-            " and cp.outWithdrawRequest.amount = :#{#amount} order by cp.creationDate desc")
-    CoinPayment findWithdrawCoinPayment(@Param("address") String address, @Param("amount")  BigDecimal amount);
-
     Page<CoinPayment> findByAccount(Account account, Pageable pageable);
 
     @Deprecated
