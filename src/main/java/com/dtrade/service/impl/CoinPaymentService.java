@@ -194,7 +194,7 @@ public class CoinPaymentService implements ICoinPaymentService {
             throw new TradeException("Hmac or body is empty");
         }
 
-        String calculatedHmac = HmacUtils.hmacSha512Hex(privateKey, body);
+        String calculatedHmac =  new String(HmacUtils.hmacSha512(privateKey.getBytes(), body.getBytes()));
 
         calculatedHmac = calculatedHmac.trim();
         hmac = hmac.trim();
@@ -373,5 +373,15 @@ public class CoinPaymentService implements ICoinPaymentService {
     public static void main(String... args){
         //login();
         //deposit();
+
+     // 823351a2b4253fb78057c2c9e242983eee706d6ab659bc8eb72f13fc2c0d155f1bde8927fe3fabd8facbd3ac40d27026c60dcbe179621108099e8efd756ce00d
+     // b26440c7a9caf882086bcd436cc9c91f0f54eea4ba8cbba3c4df030c0dc93174e4974bf896588d8ea5dbac09b02ae6b1b035b31e02ba788da7a4069fbd46c7f6
+        String body = "address=0x10D75F90b0F483942aDd5a947b71D8617BB012eD&amount=0.00346037&amounti=346037&currency=ETH&id=CWCE3HFXINI8U1MC4TTQIDKEZ5&ipn_id=ecfa2ed41d24bf43b196ee99e890e876&ipn_mode=hmac&ipn_type=withdrawal&ipn_version=1.0&merchant=1fb3cd572acffff43b1c0356d5429f1c&status=2&status_text=Complete&txn_id=0x59cfe5aa7e027632e41c272e06cd6066fc0a1f625afad517082d96ead451d542";
+
+        //String body =
+
+        String calculatedHmac =  HmacUtils.hmacSha512Hex(privateKey, body);
+        System.out.println(calculatedHmac);
+
     }
 }

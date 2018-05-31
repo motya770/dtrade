@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,8 +61,8 @@ public class CoinPaymentsController {
    */
 
     @RequestMapping(value = "/notify")
-    public void notifyNew(@RequestBody String body, @RequestParam Map<String,String> params,
-                          @RequestHeader HttpHeaders headers, HttpServletRequest httpServletRequest) {
+    public void notifyNew(@RequestParam Map<String,String> params,
+                          @RequestHeader HttpHeaders headers, RequestEntity<String> requestt) {
 
         //add HMAC security
         /*
@@ -76,6 +77,8 @@ public class CoinPaymentsController {
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("NOTIFY! ");
+
+        String body = requestt.getBody();
 
         params.forEach((k, v)->{
             System.out.println("K:" + k + " V:" + v);
