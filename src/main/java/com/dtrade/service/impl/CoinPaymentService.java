@@ -131,8 +131,7 @@ public class CoinPaymentService implements ICoinPaymentService {
 
         CoinPayment coinPayment = coinPaymentRepository.findInWithdrawByIpnId(withdrawRequest.getIpnId());
         if(coinPayment==null){
-            throw new TradeException("CoinPayment for this withdraw is not found address: |" + withdrawRequest.getAddress()
-                    + "| amount |" + withdrawRequest.getAmountUsd() + "|" );
+            throw new TradeException("CoinPayment for this withdraw is not found (ipnId: |" + withdrawRequest.getIpnId() + ")");
         }
 
         coinPayment.setInWithdrawRequest(withdrawRequest);

@@ -61,7 +61,7 @@ public class CoinPaymentTests extends BaseTest{
         String address = "0x10D75F90b0F483942aDd5a947b71D8617BB012eD";
         String amount = "2";
 
-        coinPaymentService.createWithdraw(
+        coinPaymentService.sendWithdraw(
                 InWithdrawRequest.initiliazeRequest(currencyCoin, currencyFiat, address, amount)
         );
 
