@@ -28,6 +28,6 @@ public interface CoinPaymentRepository extends JpaRepository<CoinPayment, Long> 
     //@Query("select cp from CoinPayment as cp where cp.outWithdrawRequest.ipnId = :#{#ipnId} ")
     //CoinPayment findOutWithdrawByIpnId(@Param("ipnId") String ipnId);
 
-    @Query("select cp from CoinPayment as cp where cp.inWithdrawRequest.ipnId = :#{#ipnId} ")
-    CoinPayment findInWithdrawByIpnId(@Param("ipnId") String ipnId);
+    @Query("select cp from CoinPayment as cp where cp.inWithdrawRequest.id = :#{#id} ")
+    CoinPayment findInWithdrawById(@Param("id") String id);
 }

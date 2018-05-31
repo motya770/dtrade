@@ -100,11 +100,13 @@ public class CoinPaymentService implements ICoinPaymentService {
             logger.error("{}", e);
         }
 
-        String ipnId = actualObj.get("result").get("id").asText();
+        String id = actualObj.get("result").get("id").asText();
         Integer status = actualObj.get("result").get("status").asInt();
         BigDecimal amountCoin = new BigDecimal(actualObj.get("result").get("status").asText());
 
-        withdrawRequest.setIpnId(ipnId);
+        System.out.println("id: " + id + " status: " + status + " amountCoin:" + amountCoin);
+
+        withdrawRequest.setId(id);
         withdrawRequest.setStatus(status);
         withdrawRequest.setAmountCoin(amountCoin);
 
@@ -129,9 +131,9 @@ public class CoinPaymentService implements ICoinPaymentService {
     @Override
     public void proceedWithdraw(InWithdrawRequest withdrawRequest) {
 
-        CoinPayment coinPayment = coinPaymentRepository.findInWithdrawByIpnId(withdrawRequest.getIpnId());
+        CoinPayment coinPayment = coinPaymentRepository.findInWithdrawById(withdrawRequest.getId());
         if(coinPayment==null){
-            throw new TradeException("CoinPayment for this withdraw is not found (ipnId: |" + withdrawRequest.getIpnId() + ")");
+            throw new TradeException("CoinPayment for this withdraw is not found (id: |" + withdrawRequest.getId() + ")");
         }
 
         coinPayment.setInWithdrawRequest(withdrawRequest);

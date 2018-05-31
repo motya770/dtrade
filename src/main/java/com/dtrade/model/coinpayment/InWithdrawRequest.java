@@ -13,6 +13,10 @@ import java.util.Map;
 @Embeddable
 public class InWithdrawRequest {
 
+    @Column(name = "in_w_id")
+    @NotEmpty
+    private String id;
+
     @Column(name = "in_w_ipn_version")
     private String ipn_version;
 
@@ -85,6 +89,8 @@ public class InWithdrawRequest {
         app_1         | K:status_text V:Complete
         app_1         | K:txn_id V:0x4a025ceece1f4b23972b5c0d56b4638682fc263e1b49ae3debe2671b767cfaa6
 */
+
+        String id = params.get("id");
         String address = params.get("address");
         BigDecimal amountCoin = new BigDecimal(params.get("amount"));
         String currencyCoin =  params.get("currency");
@@ -99,6 +105,7 @@ public class InWithdrawRequest {
         //TODO check transaction id;
 
         InWithdrawRequest request= new InWithdrawRequest();
+        request.setId(id);
         request.setAddress(address);
         request.setAmountCoin(amountCoin);
         request.setCurrencyCoin(currencyCoin);
