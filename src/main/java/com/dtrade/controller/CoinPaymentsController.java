@@ -62,7 +62,7 @@ public class CoinPaymentsController {
 
     @RequestMapping(value = "/notify")
     public void notifyNew(@RequestParam Map<String,String> params,
-                          @RequestHeader HttpHeaders headers, RequestEntity<String> requestt) {
+                          @RequestHeader HttpHeaders headers, @RequestBody byte[] body,  RequestEntity<String> request) {
 
         //add HMAC security
         /*
@@ -78,7 +78,7 @@ public class CoinPaymentsController {
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("NOTIFY! ");
 
-        String body = requestt.getBody();
+       //String body = request.getBody();
 
         params.forEach((k, v)->{
             System.out.println("K:" + k + " V:" + v);
@@ -100,6 +100,7 @@ public class CoinPaymentsController {
             logger.error("Type " + ipn_type + " is unknown");
         }
 
+        //ceb65e9f035836b7477b2197d8bb8bc08f52515062d91e918c7ba097227d0b983bddbc6616fa00cf7538bb785297d433bd0a76c3355e3ffc4558d05b77b25f46
         System.out.println("BODY " + body);
         headers.forEach((k, v)-> System.out.println("K:" + k + ", " + "V: " + v));
 

@@ -189,12 +189,12 @@ public class CoinPaymentService implements ICoinPaymentService {
     }
 
     @Override
-    public void checkHmac(String hmac, String body) {
+    public void checkHmac(String hmac, byte[] body) {
         if(StringUtils.isEmpty(hmac) || StringUtils.isEmpty(body)){
             throw new TradeException("Hmac or body is empty");
         }
 
-        String calculatedHmac =  new String(HmacUtils.hmacSha512(privateKey.getBytes(), body.getBytes()));
+        String calculatedHmac =  HmacUtils.hmacSha512Hex(privateKey.getBytes(), body);
 
         calculatedHmac = calculatedHmac.trim();
         hmac = hmac.trim();
@@ -370,15 +370,14 @@ public class CoinPaymentService implements ICoinPaymentService {
         System.out.println(responce);
     }
 
-    public static void main(String... args){
-        //login();
-        //deposit();
+    public static void main(String... args) throws Exception{
 
-     // 823351a2b4253fb78057c2c9e242983eee706d6ab659bc8eb72f13fc2c0d155f1bde8927fe3fabd8facbd3ac40d27026c60dcbe179621108099e8efd756ce00d
-     // b26440c7a9caf882086bcd436cc9c91f0f54eea4ba8cbba3c4df030c0dc93174e4974bf896588d8ea5dbac09b02ae6b1b035b31e02ba788da7a4069fbd46c7f6
-        String body = "address=0x10D75F90b0F483942aDd5a947b71D8617BB012eD&amount=0.00346037&amounti=346037&currency=ETH&id=CWCE3HFXINI8U1MC4TTQIDKEZ5&ipn_id=ecfa2ed41d24bf43b196ee99e890e876&ipn_mode=hmac&ipn_type=withdrawal&ipn_version=1.0&merchant=1fb3cd572acffff43b1c0356d5429f1c&status=2&status_text=Complete&txn_id=0x59cfe5aa7e027632e41c272e06cd6066fc0a1f625afad517082d96ead451d542";
+       // you hmac: d7256fe01b4c64f230fa00132ee10fd423ddfeee139f046b730e95d0c3b4c794f81bca3f6d987a6bbe75630b0683a6c5812e3cc6dcf37205282e135dac1fd69f
+       // app_1         | calculatedHmac: ��U�A�]�hUu��߮!�EK����X�;c,5�˲�B�l�(�"�&�U5��-�z�
+       // app_1         | 2018-05-31 23:51:05.216 ERROR b49edc35a336 --- [io-8080-exec-33] c.d.s.i.TradeOrderService                : Type button is unknown
 
-        //String body =
+        //ceb65e9f035836b7477b2197d8bb8bc08f52515062d91e918c7ba097227d0b983bddbc6616fa00cf7538bb785297d433bd0a76c3355e3ffc4558d05b77b25f46
+        String body = "amount1=5&amount2=0.0087&currency1=USD&currency2=ETH&email=matvei.kudelin%40gmail.com&fee=4.0E-5&first_name=k&ipn_id=5e5ce1070495c6e423f197b2ef60d36c&ipn_mode=hmac&ipn_type=button&ipn_version=1.0&item_amount=5&item_name=Diaminds+Deposit&last_name=1&merchant=1fb3cd572acffff43b1c0356d5429f1c&quantity=1&received_amount=0&received_confirms=0&shipping=0&status=0&status_text=Waiting+for+buyer+funds...&subtotal=5&tax=0&txn_id=CPCE3JKDUUWVP299HSX9R2UQYR";
 
         String calculatedHmac =  HmacUtils.hmacSha512Hex(privateKey, body);
         System.out.println(calculatedHmac);
