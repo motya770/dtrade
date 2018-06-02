@@ -36,7 +36,8 @@ public class CoinPaymentsController {
     }
 
     @RequestMapping(value = "/create-withdraw")
-    public CoinPayment createWithdraw(@RequestParam String currencyCoin, @RequestParam String currencyFiat,
+    public CoinPayment createWithdraw(@RequestParam String currencyCoin,
+                                      @RequestParam String currencyFiat,
                                       @RequestParam String address,
                                       @RequestParam String amount){
        return coinPaymentService.sendWithdraw(
@@ -60,11 +61,7 @@ public class CoinPaymentsController {
     note	This lets you set the note for the withdrawal.
    */
 
-    @RequestMapping(value = "/notify")
-    public void notifyNew(@RequestParam Map<String,String> params,
-                          @RequestHeader HttpHeaders headers, @RequestBody byte[] body,  RequestEntity<String> request) {
-
-        //add HMAC security
+    //add HMAC security
         /*
         ipn_version	1.0	Yes
         ipn_type	Currently: 'simple, 'button', 'cart', 'donation', 'deposit', or 'api'	Yes
@@ -72,13 +69,17 @@ public class CoinPaymentsController {
         ipn_id	The unique identifier of this IPN	Yes
         merchant	Your merchant ID (you can find this on the My Account page).*/
 
+    @RequestMapping(value = "/notify")
+    public void notifyNew(@RequestParam Map<String,String> params,
+                          @RequestHeader HttpHeaders headers, @RequestBody byte[] body,  RequestEntity<String> request) {
+
+
+        //WE can't trust this request because i failed to dechiper HMAC - so making new request to the server
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("NOTIFY! ");
-
-       //String body = request.getBody();
 
         params.forEach((k, v)->{
             System.out.println("K:" + k + " V:" + v);
@@ -88,19 +89,19 @@ public class CoinPaymentsController {
             System.out.println("First header " +  headers.getFirst(k));
         });
 
-        String hmac = headers.getFirst("hmac");
-        coinPaymentService.checkHmac(hmac, body);
+        //String hmac = headers.getFirst("hmac");
+        //coinPaymentService.checkHmac(hmac, body);
+        //coinPaymentService.checkHmac(hmac, request.getBody().replaceAll("%40", "@").replaceAll("%20", "+").getBytes());
 
         String ipn_type = params.get("ipn_type");
         if(ipn_type.equals("withdrawal")){
-            coinPaymentService.proceedWithdraw(InWithdrawRequest.build(params));
+            coinPaymentService.requestWithdraw(params.get("id"));
         }else if(ipn_type.equals("deposit")){
-            coinPaymentService.proceedDeposit(DepositRequest.build(params));
+            coinPaymentService.requestDeposit(params.get("txn_id"));
         }else{
             logger.error("Type " + ipn_type + " is unknown");
         }
 
-        //ceb65e9f035836b7477b2197d8bb8bc08f52515062d91e918c7ba097227d0b983bddbc6616fa00cf7538bb785297d433bd0a76c3355e3ffc4558d05b77b25f46
         System.out.println("BODY " + body);
         headers.forEach((k, v)-> System.out.println("K:" + k + ", " + "V: " + v));
 

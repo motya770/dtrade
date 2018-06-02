@@ -11,7 +11,7 @@ public interface ICoinPaymentService {
 
     void proceedDeposit(DepositRequest depositRequest);
 
-    void proceedWithdraw(InWithdrawRequest outWithdrawRequest);
+    void proceedWithdraw(CoinPayment coinPayment);
 
     CoinPayment sendWithdraw(InWithdrawRequest outWithdrawRequest);
 
@@ -28,6 +28,11 @@ public interface ICoinPaymentService {
     CoinPayment confirmWithdraw(CoinPayment coinPayment);
 
     void checkHmac(String hmac, byte[] body);
+
+    void requestWithdraw(String id);
+
+    void requestDeposit(String id);
+
 
    // void login();
 

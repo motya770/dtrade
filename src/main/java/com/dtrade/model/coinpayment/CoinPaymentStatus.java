@@ -1,5 +1,5 @@
 package com.dtrade.model.coinpayment;
 
 public enum  CoinPaymentStatus {
-    CREATED, CONFIRMED
+    CREATED, CONFIRMED, REJECTED
 }

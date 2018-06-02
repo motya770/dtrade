@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -30,4 +31,7 @@ public interface CoinPaymentRepository extends JpaRepository<CoinPayment, Long> 
 
     @Query("select cp from CoinPayment as cp where cp.inWithdrawRequest.id = :#{#id} ")
     CoinPayment findInWithdrawById(@Param("id") String id);
+
+    @Query("select cp from CoinPayment as cp where cp.coinPaymentStatus = 'CREATED' ")
+    List<CoinPayment> getNotConfirmentCoinPayments();
 }
