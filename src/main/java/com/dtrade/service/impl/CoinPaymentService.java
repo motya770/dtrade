@@ -172,7 +172,7 @@ public class CoinPaymentService implements ICoinPaymentService {
 
         String id = actualObj.get("result").get("id").asText();
         Integer status = actualObj.get("result").get("status").asInt();
-        BigDecimal amountCoin = new BigDecimal(actualObj.get("result").get("status").asText());
+        BigDecimal amountCoin = new BigDecimal(actualObj.get("result").get("amount").asText());
 
         System.out.println("id: " + id + " status: " + status + " amountCoin:" + amountCoin);
 
