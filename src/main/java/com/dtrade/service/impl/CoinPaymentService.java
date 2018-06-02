@@ -69,10 +69,10 @@ public class CoinPaymentService implements ICoinPaymentService {
         withdrawRequest  = sendWithdrawRequest(withdrawRequest);
 
         CoinPayment coinPayment = createWithdraw(withdrawRequest);
-
         return coinPayment;
     }
 
+    /*
     private void poolDeposit(String transactionId){
         String body = "&version=1&cmd=get_tx_info&key=" + publicKey+
                 "&txid=" + transactionId
@@ -104,7 +104,7 @@ public class CoinPaymentService implements ICoinPaymentService {
         String currencyCoin =actualObj.get("result").get("coin").asText();
 
         //DepositRequest.build()
-        /*
+
         {"error":"ok","result":
             {"time_created":1527935482,
             "time_expires":1528021882,
@@ -114,9 +114,10 @@ public class CoinPaymentService implements ICoinPaymentService {
                     "coin":"ETH"
                     "amount":337000,"amountf":"0.00337000",
                     "received":337000,"receivedf":"0.00337000","recv_confirms":3,
-                    "payment_address":"0x46cd27c57e8d41f80142c3fcf98c63cacd16c7d5","time_completed":1527936185}}*/
+                    "payment_address":"0x46cd27c57e8d41f80142c3fcf98c63cacd16c7d5","time_completed":1527936185}}
 
     }
+    */
 
     private String requestServer(String body){
         RestTemplate restTemplate = new RestTemplate();
@@ -138,6 +139,7 @@ public class CoinPaymentService implements ICoinPaymentService {
        return response.getBody();
     }
 
+    /*
     private void poolWithdraw(CoinPayment coinPayment){
 
         InWithdrawRequest withdrawRequest = coinPayment.getInWithdrawRequest();
@@ -157,7 +159,7 @@ public class CoinPaymentService implements ICoinPaymentService {
             logger.error("{}", e);
         }
 
-        /*
+
                 "time_created":1391924372,
                 "status":2,
                 "status_text":"Complete",
@@ -166,7 +168,6 @@ public class CoinPaymentService implements ICoinPaymentService {
                 "amountf":"0.40000000",
                 "send_address":"1BitcoinAddress",
                 "send_txid":"hex_txid"
-        */
 
         logger.info(" {}");
         Integer status = actualObj.get("result").get("status").asInt();
@@ -186,7 +187,7 @@ public class CoinPaymentService implements ICoinPaymentService {
         coinPayment = coinPaymentRepository.save(coinPayment);
 
         proceedWithdraw(coinPayment);
-    }
+    }*/
 
     private InWithdrawRequest sendWithdrawRequest(InWithdrawRequest withdrawRequest){
 
@@ -237,7 +238,9 @@ public class CoinPaymentService implements ICoinPaymentService {
     }
 
     @Override
-    public void proceedWithdraw(CoinPayment coinPayment) {
+    public void proceedWithdraw(InWithdrawRequest withdrawRequest) {
+
+        CoinPayment coinPayment = coinPaymentRepository.findInWithdrawById(withdrawRequest.getId());
 
         if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
             logger.debug("CoinPayment already confirmed {}", coinPayment.getInWithdrawRequest().getIpnId());
@@ -256,6 +259,7 @@ public class CoinPaymentService implements ICoinPaymentService {
         }
     }
 
+    /*
     @Override
     public void requestWithdraw(String id){
         CoinPayment coinPayment = coinPaymentRepository.findInWithdrawById(id);
@@ -265,17 +269,14 @@ public class CoinPaymentService implements ICoinPaymentService {
     @Override
     public void requestDeposit(String transactionId){
         poolDeposit(transactionId);
-    }
+    }*/
 
     //receive money
     @Override
     public void proceedDeposit(DepositRequest depositRequest) {
 
        //Pay attention transaction has many depositRequest (in there system)
-
        CoinPayment coinPayment = coinPaymentRepository.findDepositByIpnId(depositRequest.getIpnId());
-       //TODO check
-       //coinPaymentRepository.findByTransactionId(depositRequest.getTransactionId());
 
        if(coinPayment==null){
             coinPayment = createDeposit(depositRequest);
@@ -321,11 +322,6 @@ public class CoinPaymentService implements ICoinPaymentService {
     @Override
     public Page<CoinPayment> getAllByAccount(Account account) {
         return coinPaymentRepository.findByAccount(account, new PageRequest(0, 10));
-    }
-
-    @Override
-    public CoinPayment findByExternalId(String transactionId) {
-        return coinPaymentRepository.findByTransactionId(transactionId);
     }
 
     private void checkConfirmed(CoinPayment coinPayment){

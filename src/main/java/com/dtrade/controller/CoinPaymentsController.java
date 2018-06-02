@@ -93,9 +93,9 @@ public class CoinPaymentsController {
 
         String ipn_type = params.get("ipn_type");
         if(ipn_type.equals("withdrawal")){
-            coinPaymentService.requestWithdraw(params.get("id"));
+            coinPaymentService.proceedWithdraw(InWithdrawRequest.build(params)); //.requestWithdraw(params.get("id"));
         }else if(ipn_type.equals("deposit")){
-            coinPaymentService.requestDeposit(params.get("txn_id"));
+            coinPaymentService.proceedDeposit(DepositRequest.build(params)); //.requestDeposit(params.get("txn_id"));
         }else{
             logger.error("Type " + ipn_type + " is unknown");
         }

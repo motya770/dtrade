@@ -11,15 +11,13 @@ public interface ICoinPaymentService {
 
     void proceedDeposit(DepositRequest depositRequest);
 
-    void proceedWithdraw(CoinPayment coinPayment);
+    void proceedWithdraw(InWithdrawRequest inWithdrawRequest);
 
     CoinPayment sendWithdraw(InWithdrawRequest outWithdrawRequest);
 
     CoinPayment createWithdraw(InWithdrawRequest outWithdrawRequest);
 
     CoinPayment createDeposit(DepositRequest depositRequest);
-
-    CoinPayment findByExternalId(String externalId);
 
     Page<CoinPayment> getAllByAccount(Account account);
 
@@ -29,10 +27,11 @@ public interface ICoinPaymentService {
 
     void checkHmac(String hmac, String body);
 
+    /*
     void requestWithdraw(String id);
 
     void requestDeposit(String id);
-
+*/
 
    // void login();
 
