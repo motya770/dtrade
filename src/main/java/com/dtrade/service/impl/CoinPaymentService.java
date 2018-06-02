@@ -305,18 +305,17 @@ public class CoinPaymentService implements ICoinPaymentService {
             throw new TradeException("Hmac or body is empty");
         }
 
-        String calculatedHmac =  HmacUtils.hmacSha512Hex(privateKey, body);
+        String calculatedHmac =  HmacUtils.hmacSha512Hex(privateKeyIpn, body);
 
         calculatedHmac = calculatedHmac.trim();
         hmac = hmac.trim();
 
         System.out.println("you hmac: " + hmac);
         System.out.println("calculatedHmac: " + calculatedHmac);
-        /*
+
         if(!calculatedHmac.equals(hmac)){
             throw new TradeException("Hmac is not equals");
         }
-        */
     }
 
     @Override
@@ -376,6 +375,7 @@ public class CoinPaymentService implements ICoinPaymentService {
         return coinPayment;
     }
 
+   private static String privateKeyIpn = "wekjqijw7834yfr98y43jfv";
    private static String privateKey = "101a03C22c7864f6e8d52724B2A9Ccd495795CB6c45324a80a9EDf55e2A0fbF6";
    private static String publicKey = "0620c2e54f0fe72ca283b949d20b01089afcd225d7463283c2812ffc26d96402";
 
@@ -410,6 +410,13 @@ public class CoinPaymentService implements ICoinPaymentService {
             logger.error("{}", e);
             e.printStackTrace();
         }
+        /*{"error":"ok","result":{"time_created":1527935482,
+        "time_expires":1528021882,
+        "status":100,"status_text":"Complete","type":"coins","coin":"ETH",
+        "amount":337000,"amountf":"0.00337000","received":337000,"receivedf":"0.00337000",
+        "recv_confirms":3,"payment_address":"0x46cd27c57e8d41f80142c3fcf98c63cacd16c7d5","time_completed":1527936185}}
+         */
+
         ResponseEntity<String> response  = restTemplate.exchange(entity, String.class);
         System.out.println(response.getBody());
 

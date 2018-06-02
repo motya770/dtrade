@@ -71,8 +71,7 @@ public class CoinPaymentsController {
 
     @RequestMapping(value = "/notify")
     public void notifyNew(@RequestParam Map<String,String> params,
-                          @RequestHeader HttpHeaders headers, @RequestBody String body, RequestEntity<String> request) {
-
+                          @RequestHeader HttpHeaders headers, @RequestBody String body) {
 
         //WE can't trust this request because i failed to decipher HMAC - so making new request to the server
         System.out.println("!!!!!!!!!!!!!! ");
@@ -91,7 +90,7 @@ public class CoinPaymentsController {
 
         String hmac = headers.getFirst("hmac");
         coinPaymentService.checkHmac(hmac, body);
-        //coinPaymentService.checkHmac(hmac, request.getBody().replaceAll("%40", "@").replaceAll("%20", "+").getBytes());
+
         String ipn_type = params.get("ipn_type");
         if(ipn_type.equals("withdrawal")){
             coinPaymentService.requestWithdraw(params.get("id"));
