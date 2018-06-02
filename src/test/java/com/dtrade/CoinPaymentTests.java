@@ -66,4 +66,15 @@ public class CoinPaymentTests extends BaseTest{
         );
 
     }
+
+
+    @Transactional
+    @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
+    @Test
+    public void checkHmacTest(){
+
+
+        coinPaymentService.checkHmac("1", "");
+
+    }
 }

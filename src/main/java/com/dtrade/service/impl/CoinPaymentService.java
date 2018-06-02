@@ -77,8 +77,45 @@ public class CoinPaymentService implements ICoinPaymentService {
         String body = "&version=1&cmd=get_tx_info&key=" + publicKey+
                 "&txid=" + transactionId
                 + "&format=json";
-        String response  = requestServer(body);
-        System.out.println("deposit response: " + response);
+        String result  = requestServer(body);
+       logger.info("deposit response: " + result);
+
+        if(!result.contains("ok")){
+            throw new TradeException(result);
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode actualObj = null;
+        try {
+            actualObj  = mapper.readTree(result);
+        }catch (Exception e){
+            logger.error("{}", e);
+        }
+
+        logger.info(" {}");
+        Long timeCreated = actualObj.get("result").get("time_created").asLong();
+        Long timeExpires = actualObj.get("result").get("time_expires").asLong();
+        Integer status = actualObj.get("result").get("status").asInt();
+        String statusText = actualObj.get("result").get("status_text").asText();
+        BigDecimal amount =new BigDecimal(actualObj.get("result").get("amount").asText());
+        Integer confirmed =actualObj.get("result").get("recv_confirms").asInt();
+        String address =actualObj.get("result").get("payment_address").asText();
+        Long  timeCompleted =actualObj.get("result").get("time_completed").asLong();
+        String currencyCoin =actualObj.get("result").get("coin").asText();
+
+        //DepositRequest.build()
+        /*
+        {"error":"ok","result":
+            {"time_created":1527935482,
+            "time_expires":1528021882,
+                    "status":100,
+                    "status_text":"Complete",
+                    "type":"coins",
+                    "coin":"ETH"
+                    "amount":337000,"amountf":"0.00337000",
+                    "received":337000,"receivedf":"0.00337000","recv_confirms":3,
+                    "payment_address":"0x46cd27c57e8d41f80142c3fcf98c63cacd16c7d5","time_completed":1527936185}}*/
+
     }
 
     private String requestServer(String body){
@@ -131,6 +168,7 @@ public class CoinPaymentService implements ICoinPaymentService {
                 "send_txid":"hex_txid"
         */
 
+        logger.info(" {}");
         Integer status = actualObj.get("result").get("status").asInt();
         String statusText = actualObj.get("result").get("status_text").asText();
         String currencyCoin = actualObj.get("result").get("coin").asText();
@@ -262,22 +300,23 @@ public class CoinPaymentService implements ICoinPaymentService {
     }
 
     @Override
-    public void checkHmac(String hmac, byte[] body) {
+    public void checkHmac(String hmac, String body) {
         if(StringUtils.isEmpty(hmac) || StringUtils.isEmpty(body)){
             throw new TradeException("Hmac or body is empty");
         }
 
-        String calculatedHmac =  HmacUtils.hmacSha512Hex(privateKey.getBytes(), body);
+        String calculatedHmac =  HmacUtils.hmacSha512Hex(privateKey, body);
 
         calculatedHmac = calculatedHmac.trim();
         hmac = hmac.trim();
 
         System.out.println("you hmac: " + hmac);
         System.out.println("calculatedHmac: " + calculatedHmac);
-
+        /*
         if(!calculatedHmac.equals(hmac)){
             throw new TradeException("Hmac is not equals");
         }
+        */
     }
 
     @Override
@@ -337,8 +376,44 @@ public class CoinPaymentService implements ICoinPaymentService {
         return coinPayment;
     }
 
-    private static String privateKey = "101a03C22c7864f6e8d52724B2A9Ccd495795CB6c45324a80a9EDf55e2A0fbF6";
-    private static String publicKey = "0620c2e54f0fe72ca283b949d20b01089afcd225d7463283c2812ffc26d96402";
+   private static String privateKey = "101a03C22c7864f6e8d52724B2A9Ccd495795CB6c45324a80a9EDf55e2A0fbF6";
+   private static String publicKey = "0620c2e54f0fe72ca283b949d20b01089afcd225d7463283c2812ffc26d96402";
 
+    //private static String privateKey =  "Fb695eB4da60bC40BF38F5bab20f5734D1808Fb5155f99CfFCb87F16D51cf18e";
+    //private static String publicKey = "f9ddad523eee45368a45a62fbf8858002f90ff1f7b608cd2506e5334e05ff664";
+
+
+    public static void main(String... args){
+
+
+        String body = "&version=1&cmd=get_tx_info&key=" + publicKey+
+                "&txid=" + "CPCF57LPWJWW4MRRQMJNG92B6V"
+                + "&format=json";
+
+        /*
+        String body = "&version=1&cmd=get_deposit_address&key=" + publicKey+
+                "&currency=" + "ETH"
+                + "&format=json";*/
+
+        RestTemplate restTemplate = new RestTemplate();
+        RequestEntity<String> entity = null;
+        try{
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.put("Content-Type", Collections.singletonList("application/x-www-form-urlencoded"));
+            String hmac = HmacUtils.hmacSha512Hex(privateKey, body);
+            headers.put("HMAC", Collections.singletonList(hmac));
+            entity = new RequestEntity<>(body, headers, HttpMethod.POST,
+                    new URI("https://www.coinpayments.net/api.php"));
+
+        }catch(Exception e){
+            logger.error("{}", e);
+            e.printStackTrace();
+        }
+        ResponseEntity<String> response  = restTemplate.exchange(entity, String.class);
+        System.out.println(response.getBody());
+
+
+    }
 
 }

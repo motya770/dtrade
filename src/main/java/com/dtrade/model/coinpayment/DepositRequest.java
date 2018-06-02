@@ -65,7 +65,6 @@ public class DepositRequest {
         String email =   params.get("email");
 
         DepositRequest depositRequest = new DepositRequest();
-
         depositRequest.setIpn_version(ipn_version);
         depositRequest.setIpn_type(ipn_type);
         depositRequest.setIpn_mode(ipn_mode);

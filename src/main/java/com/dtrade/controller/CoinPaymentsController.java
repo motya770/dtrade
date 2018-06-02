@@ -71,10 +71,10 @@ public class CoinPaymentsController {
 
     @RequestMapping(value = "/notify")
     public void notifyNew(@RequestParam Map<String,String> params,
-                          @RequestHeader HttpHeaders headers, @RequestBody byte[] body,  RequestEntity<String> request) {
+                          @RequestHeader HttpHeaders headers, @RequestBody String body, RequestEntity<String> request) {
 
 
-        //WE can't trust this request because i failed to dechiper HMAC - so making new request to the server
+        //WE can't trust this request because i failed to decipher HMAC - so making new request to the server
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
         System.out.println("!!!!!!!!!!!!!! ");
@@ -89,10 +89,9 @@ public class CoinPaymentsController {
             System.out.println("First header " +  headers.getFirst(k));
         });
 
-        //String hmac = headers.getFirst("hmac");
-        //coinPaymentService.checkHmac(hmac, body);
+        String hmac = headers.getFirst("hmac");
+        coinPaymentService.checkHmac(hmac, body);
         //coinPaymentService.checkHmac(hmac, request.getBody().replaceAll("%40", "@").replaceAll("%20", "+").getBytes());
-
         String ipn_type = params.get("ipn_type");
         if(ipn_type.equals("withdrawal")){
             coinPaymentService.requestWithdraw(params.get("id"));
@@ -102,7 +101,7 @@ public class CoinPaymentsController {
             logger.error("Type " + ipn_type + " is unknown");
         }
 
-        System.out.println("BODY " + body);
+        System.out.println("BODY: " + body);
         headers.forEach((k, v)-> System.out.println("K:" + k + ", " + "V: " + v));
 
         System.out.println("!!!!!!!!!!!!!! ");
