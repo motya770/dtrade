@@ -159,13 +159,14 @@
                         <div class="lk-main-tab" id="tab03" ng-controller="CoinPaymentController as vm">
                             <div class="lk-main-tab__table" style="width: 692px; min-height: 400px;">
                                 <div class="table-container" >
-                                    <div>
+                                    <span>
                                         <table class="diamont-table">
                                             <thead>
                                             <tr>
                                                 <th>№</th>
                                                 <th>Date</th>
                                                 <th>Status</th>
+                                                <th>Type</th>
                                                 <th>Fiat</th>
                                                 <th>Crypto coin</th>
                                                 <th>Sum in fiat</th>
@@ -176,14 +177,27 @@
                                             <tbody>
 
                                             <tr ng-repeat="coinPayment in vm.coinPayments.content">
+
                                                 <td>{{coinPayment.id}}</td>
                                                 <td>{{coinPayment.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                                 <td>{{coinPayment.coinPaymentStatus}}</td>
-                                                <td>{{coinPayment.depositRequest.currencyUsd}}</td>
-                                                <td>{{coinPayment.depositRequest.currencyCoin}}</td>
-                                                <td>{{coinPayment.depositRequest.amountUsd}}</td>
-                                                <td>{{coinPayment.depositRequest.amountCoin}}</td>
-                                                <th>{{coinPayment.depositRequest.transactionId}}</th>
+                                                <td>{{coinPayment.coinPaymentType}}</td>
+
+                                                <span ng-if="coinPayment.depositRequest">
+                                                    <td>{{coinPayment.depositRequest.currencyUsd}}</td>
+                                                    <td>{{coinPayment.depositRequest.currencyCoin}}</td>
+                                                    <td>{{coinPayment.depositRequest.amountUsd}}</td>
+                                                    <td>{{coinPayment.depositRequest.amountCoin}}</td>
+                                                    <td>{{coinPayment.depositRequest.transactionId}}</td>
+                                                </span>
+                                                <span ng-if="coinPayment.inWithdrawRequest">
+                                                    <td>{{coinPayment.inWithdrawRequest.currencyUsd}}</td>
+                                                    <td>{{coinPayment.inWithdrawRequest.currencyCoin}}</td>
+                                                    <td>{{coinPayment.inWithdrawRequest.amountUsd}}</td>
+                                                    <td>{{coinPayment.inWithdrawRequest.amountCoin}}</td>
+                                                    <td>{{coinPayment.inWithdrawRequest.transactionId}}</td>
+                                                </span>
+
                                             </tr>
                                             </tbody>
                                         </table>
@@ -220,7 +234,7 @@
                                     <input type="hidden" name="merchant" value="1fb3cd572acffff43b1c0356d5429f1c">
                                     <input type="hidden" name="item_name" value="Diaminds Deposit">
                                     <input type="hidden" name="currency" value="USD">
-                                    <input type="hidden" name="amountf" value="5.00000000">
+                                    <input type="hidden" name="amountf" value="2.00000000">
                                     <input type="hidden" name="quantity" value="1">
                                     <input type="hidden" name="allow_quantity" value="0">
                                     <input type="hidden" name="want_shipping" value="0">
