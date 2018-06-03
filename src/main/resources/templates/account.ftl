@@ -175,7 +175,7 @@
                                             </thead>
                                             <tbody>
 
-                                            <tr ng-repeat="coinPayment in vm.coinPayments.content">
+                                            <tr ng-repeat="coinPayment in vm.coinPayments.content track by coinPayment.id">
 
                                                 <td>{{coinPayment.id}}</td>
                                                 <td>{{coinPayment.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
