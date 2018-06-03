@@ -2,10 +2,7 @@
 <html ng-app="diamondApp">
 
 <head>
-
     <#include "parts/head.ftl">
-
-
 </head>
 
 <body class="page">
@@ -167,11 +164,13 @@
                                                 <th>Date</th>
                                                 <th>Status</th>
                                                 <th>Type</th>
-                                                <th>Fiat</th>
-                                                <th>Crypto coin</th>
+                                                <th>Fiat currency</th>
                                                 <th>Sum in fiat</th>
+                                                <th>Crypto coin</th>
                                                 <th>Sum in coin</th>
                                                 <th>Transaction Id</th>
+                                                <th>Ipn ID</th>
+                                                <th>External ID</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -183,20 +182,21 @@
                                                 <td>{{coinPayment.coinPaymentStatus}}</td>
                                                 <td>{{coinPayment.coinPaymentType}}</td>
 
-                                                <span ng-if="coinPayment.depositRequest">
-                                                    <td>{{coinPayment.depositRequest.currencyUsd}}</td>
-                                                    <td>{{coinPayment.depositRequest.currencyCoin}}</td>
-                                                    <td>{{coinPayment.depositRequest.amountUsd}}</td>
-                                                    <td>{{coinPayment.depositRequest.amountCoin}}</td>
-                                                    <td>{{coinPayment.depositRequest.transactionId}}</td>
-                                                </span>
-                                                <span ng-if="coinPayment.inWithdrawRequest">
-                                                    <td>{{coinPayment.inWithdrawRequest.currencyUsd}}</td>
-                                                    <td>{{coinPayment.inWithdrawRequest.currencyCoin}}</td>
-                                                    <td>{{coinPayment.inWithdrawRequest.amountUsd}}</td>
-                                                    <td>{{coinPayment.inWithdrawRequest.amountCoin}}</td>
-                                                    <td>{{coinPayment.inWithdrawRequest.transactionId}}</td>
-                                                </span>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.currencyUsd}}</td>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.amountUsd}}</td>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.currencyCoin}}</td>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.amountCoin}}</td>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.transactionId}}</td>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.ipnId}}</td>
+                                                <td></td>
+
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.currencyUsd}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.amountUsd}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.currencyCoin}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.amountCoin}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.transactionId}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.ipnId}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.id}}</td>
 
                                             </tr>
                                             </tbody>
