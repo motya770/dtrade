@@ -154,7 +154,7 @@
                             </div>
                         </div>
                         <div class="lk-main-tab" id="tab03" ng-controller="CoinPaymentController as vm">
-                            <div class="lk-main-tab__table" style="width: 692px; min-height: 400px;">
+                            <div class="lk-main-tab__table" style="width: 1175px; min-height: 400px;">
                                 <div class="table-container" >
                                     <div>
                                         <table class="diamont-table">
