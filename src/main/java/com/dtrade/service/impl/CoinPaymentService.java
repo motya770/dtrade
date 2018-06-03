@@ -255,11 +255,17 @@ public class CoinPaymentService implements ICoinPaymentService {
 
         logger.debug("Status is {} for {}", status, coinPayment.getInWithdrawRequest().getIpnId());
 
-        updateStatus(coinPayment, status);
-
-        if(status==100) {
+        if(status == 0){
+            coinPayment.setCoinPaymentStatus(CoinPaymentStatus.WAITING_FOR_EMAIL);
+        }else if(status==1){
+            coinPayment.setCoinPaymentStatus(CoinPaymentStatus.PENDING);
+        }else if(status==2) {
             confirmWithdraw(coinPayment);
+        }else {
+            throw new TradeException("Unknown withdraw status " + status);
         }
+
+        coinPaymentRepository.save(coinPayment);
     }
 
     private void updateStatus(CoinPayment coinPayment, Integer status){
