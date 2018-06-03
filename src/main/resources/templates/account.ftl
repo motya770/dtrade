@@ -159,7 +159,7 @@
                         <div class="lk-main-tab" id="tab03" ng-controller="CoinPaymentController as vm">
                             <div class="lk-main-tab__table" style="width: 692px; min-height: 400px;">
                                 <div class="table-container" >
-                                    <span>
+                                    <div>
                                         <table class="diamont-table">
                                             <thead>
                                             <tr>
@@ -204,48 +204,49 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-controller="AccountController as vm" class="lk-main-tab__info" style="width:300px">
-                                <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
-                                    <input type="hidden" name="cmd" value="_pay">
-                                    <input type="hidden" name="reset" value="1">
-                                    <input type="hidden" name="merchant" value="1fb3cd572acffff43b1c0356d5429f1c">
-                                    <input type="hidden" name="item_name" value="Diaminds Deposit">
-                                    <input type="hidden" name="currency" value="USD">
-                                    <input type="hidden" name="first_name" value="Trading platform">
-                                    <input type="hidden" name="last_name" value="user">
-                                    <input type="hidden" name="amountf" value="2.00000000">
-                                    <input type="hidden" name="quantity" value="1">
-                                    <input type="hidden" name="allow_quantity" value="1">
-                                    <input type="hidden" name="want_shipping" value="0">
-                                    <input type="hidden" name="success_url" value="www.diaminds.io">
-                                    <input type="hidden" name="allow_extra" value="0">
-                                    <input type="hidden" name="email" value="{{vm.account.mail}}">
-                                    <input type="image" src="https://www.coinpayments.net/images/pub/buynow.png" alt="Buy Now with CoinPayments.net">
-                                </form>
-                            </div>
+                            <div class="lk-main-tab__info">
+                                <div ng-controller="AccountController as vm" class="lk-main-tab__info" style="width:300px">
+                                    <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
+                                        <input type="hidden" name="cmd" value="_pay">
+                                        <input type="hidden" name="reset" value="1">
+                                        <input type="hidden" name="merchant" value="1fb3cd572acffff43b1c0356d5429f1c">
+                                        <input type="hidden" name="item_name" value="Diaminds Deposit">
+                                        <input type="hidden" name="currency" value="USD">
+                                        <input type="hidden" name="first_name" value="Trading platform">
+                                        <input type="hidden" name="last_name" value="user">
+                                        <input type="hidden" name="amountf" value="2.00000000">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <input type="hidden" name="allow_quantity" value="1">
+                                        <input type="hidden" name="want_shipping" value="0">
+                                        <input type="hidden" name="success_url" value="www.diaminds.io">
+                                        <input type="hidden" name="allow_extra" value="0">
+                                        <input type="hidden" name="email" value="{{vm.account.mail}}">
+                                        <input type="image" src="https://www.coinpayments.net/images/pub/buynow.png" alt="Buy Now with CoinPayments.net">
+                                    </form>
+                                </div>
+                                <div>
+                                    <md-content class="md-no-momentum" style="min-width: 500px;">
+                                        <md-input-container class="md-icon-float md-block">
+                                            <label>Currency</label>
+                                            <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="currency"></md-icon>
+                                            <input ng-model="vm.withdrawRequest.currencyFiat" type="text">
+                                        </md-input-container>
 
-                            <div>
-                                <md-content class="md-no-momentum" style="min-width: 500px;">
-                                    <md-input-container class="md-icon-float md-block">
-                                        <label>Currency</label>
-                                        <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="currency"></md-icon>
-                                        <input ng-model="vm.withdrawRequest.currencyFiat" type="text">
-                                    </md-input-container>
+                                        <md-input-container class="md-icon-float md-block">
+                                            <label>Address</label>
+                                            <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="address"></md-icon>
+                                            <input ng-model="vm.withdrawRequest.address" type="text">
+                                        </md-input-container>
 
-                                    <md-input-container class="md-icon-float md-block">
-                                        <label>Address</label>
-                                        <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="address"></md-icon>
-                                        <input ng-model="vm.withdrawRequest.address" type="text">
-                                    </md-input-container>
-
-                                    <md-input-container class="md-icon-float md-icon-right md-block">
-                                        <label>Withdraw Amount</label>
-                                        <md-icon md-svg-src="/theme/app/img/icons/ic_card_giftcard_24px.svg"></md-icon>
-                                        <input ng-model="vm.withdrawRequest.amount" type="number" step="0.01">
-                                        <md-icon md-svg-src="/theme/app/img/icons/ic_euro_24px.svg"></md-icon>
-                                    </md-input-container>
-                                    <md-button class="md-raised md-primary" ng-click="createWithdraw(vm.withdrawRequest);">Withdraw</md-button>
-                                </md-content>
+                                        <md-input-container class="md-icon-float md-icon-right md-block">
+                                            <label>Withdraw Amount</label>
+                                            <md-icon md-svg-src="/theme/app/img/icons/ic_card_giftcard_24px.svg"></md-icon>
+                                            <input ng-model="vm.withdrawRequest.amount" type="number" step="0.01">
+                                            <md-icon md-svg-src="/theme/app/img/icons/ic_euro_24px.svg"></md-icon>
+                                        </md-input-container>
+                                        <md-button class="md-raised md-primary" ng-click="createWithdraw(vm.withdrawRequest);">Withdraw</md-button>
+                                    </md-content>
+                                </div>
                             </div>
                         </div>
                     </div>
