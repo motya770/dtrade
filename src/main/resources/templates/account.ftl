@@ -256,6 +256,32 @@
                                 <div><input type="text" ng-model="vm.withdrawRequest.amount"></div>
                                 <div></div>
                                 <input type="button" value="Create Withdraw" ng-click="createWithdraw(vm.withdrawRequest);">
+
+
+
+                                <md-content class="md-no-momentum">
+                                    <md-input-container class="md-icon-float md-block">
+                                        <label>Currency</label>
+                                        <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="currency"></md-icon>
+                                        <input ng-model="vm.withdrawRequest.currencyFiat" type="text">
+                                    </md-input-container>
+
+                                    <md-input-container class="md-icon-float md-block">
+                                        <label>Address</label>
+                                        <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="address"></md-icon>
+                                        <input ng-model="vm.withdrawRequest.address" type="text">
+                                    </md-input-container>
+
+                                    <md-input-container class="md-icon-float md-icon-right md-block">
+                                        <label>Withdraw Amount</label>
+                                        <md-icon md-svg-src="/theme/app/img/icons/ic_card_giftcard_24px.svg"></md-icon>
+                                        <input ng-model="vm.withdrawRequest.amount" type="number" step="0.01">
+                                        <md-icon md-svg-src="/theme/app/img/icons/ic_euro_24px.svg"></md-icon>
+                                    </md-input-container>
+
+
+                                    <md-button class="md-raised md-primary" ng-click="createWithdraw(vm.withdrawRequest);">Withdraw</md-button>
+                                </md-content>
                             </div>
                         </div>
                     </div>
