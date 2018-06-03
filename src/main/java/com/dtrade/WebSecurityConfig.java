@@ -20,6 +20,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        //TODO investingate
         http.csrf().disable().
                  authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -33,10 +35,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/diamond/available").permitAll()
                 .antMatchers("/diamond/**").denyAll()//remove?
                 .antMatchers("/quote/**").permitAll()
+                .antMatchers("/graph/**").permitAll()
+                .antMatchers("/book-order/**").permitAll()
                 .antMatchers("/stock/**").authenticated()
+                .antMatchers("/trade-order/get-quotes").permitAll()
                 .antMatchers("/trade-order/history-orders").permitAll()
                 .antMatchers("/trade-order/**").authenticated()
-                .anyRequest().permitAll()
+                .antMatchers("/trade-order/").authenticated()
+                .antMatchers("/coin-payment/notify").permitAll()
+                .antMatchers("/coin-payment/**").authenticated()
+                .antMatchers("/ico/**").permitAll()
+                .antMatchers("/theme/**").permitAll()
+                .antMatchers("/trade").permitAll()
+                .antMatchers("/diamonds").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/**").permitAll()
                 .and().formLogin().defaultSuccessUrl("/trade")
                 .loginPage("/login-page").permitAll()
                 .loginProcessingUrl("/login")

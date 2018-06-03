@@ -244,7 +244,7 @@ public class CoinPaymentService implements ICoinPaymentService {
         CoinPayment coinPayment = coinPaymentRepository.findInWithdrawById(withdrawRequest.getId());
 
         if(coinPayment.getCoinPaymentStatus().equals(CoinPaymentStatus.CONFIRMED)){
-            logger.debug("CoinPayment already confirmed {}", coinPayment.getInWithdrawRequest().getIpnId());
+            logger.error("CoinPayment already confirmed {}", coinPayment.getInWithdrawRequest().getIpnId());
             return;
         }
 
