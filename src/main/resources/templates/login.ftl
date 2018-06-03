@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html ng-app="diamondApp">
 <head>
-
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
     <#include "parts/head.ftl">
-
-
-
 </head>
 
 <body class="page">
@@ -16,8 +10,9 @@
 <!-- Custom HTML -->
 <div class="site" ng-cloak="">
     <#include "parts/caption.ftl">
+    <#include "parts/menu.ftl">
     <main class="content">
-
+        <#include "parts/portfolio.ftl">
         <div class="def-cab-page">
             <div class="def-cab-page__inner">
                 <div class="def-cab-page__content">

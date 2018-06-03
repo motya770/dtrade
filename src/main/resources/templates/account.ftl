@@ -203,29 +203,6 @@
                                         </table>
                                     </div>
                                 </div>
-
-
-                                <!--
-                                <a href="//www.free-kassa.ru/"><img src="//www.free-kassa.ru/img/fk_btn/7.png"></a>
-                                <a href="#" onclick="load_form()">Оплатить</a>
-                                <script src="//www.free-kassa.ru/widget/w.js"></script>
-                                <script type="text/javascript">
-                                    function load_form() {
-                                        var form = new FK();
-                                        form.loadWidget({
-                                            merchant_id: '75199',
-                                            amount: '10',
-                                            order_id: 'ORDER_ID',
-                                            email: 'EMAIL',
-                                            phone: 'PHONE',
-                                            sign: 'SIGN',
-                                            us_user: 1,
-                                            us_desc: 'Test',
-                                        });
-                                    }
-                                </script>
-                                <iframe src="http://www.free-kassa.ru/merchant/forms.php?gen_form=1&m=75199&default-sum=50&button-text=Оплатить&encoding=CP1251&type=v3&id=114257&lang=en"  width="590" height="320" frameBorder="0" target="_parent" ></iframe>
-                                -->
                             </div>
                             <div ng-controller="AccountController as vm" class="lk-main-tab__info" style="width:300px">
                                 <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
@@ -247,19 +224,8 @@
                                 </form>
                             </div>
 
-
                             <div>
-                                {{vm.withdrawRequest}}
-                                <div><input type="text" ng-model="vm.withdrawRequest.currencyCoin"></div>
-                                <div><input type="text" ng-model="vm.withdrawRequest.currencyFiat"></div>
-                                <div><input type="text" ng-model="vm.withdrawRequest.address"></div>
-                                <div><input type="text" ng-model="vm.withdrawRequest.amount"></div>
-                                <div></div>
-                                <input type="button" value="Create Withdraw" ng-click="createWithdraw(vm.withdrawRequest);">
-
-
-
-                                <md-content class="md-no-momentum">
+                                <md-content class="md-no-momentum" style="min-width: 500px;">
                                     <md-input-container class="md-icon-float md-block">
                                         <label>Currency</label>
                                         <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="currency"></md-icon>
@@ -278,8 +244,6 @@
                                         <input ng-model="vm.withdrawRequest.amount" type="number" step="0.01">
                                         <md-icon md-svg-src="/theme/app/img/icons/ic_euro_24px.svg"></md-icon>
                                     </md-input-container>
-
-
                                     <md-button class="md-raised md-primary" ng-click="createWithdraw(vm.withdrawRequest);">Withdraw</md-button>
                                 </md-content>
                             </div>
@@ -300,3 +264,14 @@
 
 </body>
 </html>
+
+
+<!--
+                                {{vm.withdrawRequest}}
+                                <div><input type="text" ng-model="vm.withdrawRequest.currencyCoin"></div>
+                                <div><input type="text" ng-model="vm.withdrawRequest.currencyFiat"></div>
+                                <div><input type="text" ng-model="vm.withdrawRequest.address"></div>
+                                <div><input type="text" ng-model="vm.withdrawRequest.amount"></div>
+                                <div></div>
+                                <input type="button" value="Create Withdraw" ng-click="createWithdraw(vm.withdrawRequest);">
+                                -->
