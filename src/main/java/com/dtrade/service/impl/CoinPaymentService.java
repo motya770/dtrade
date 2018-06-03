@@ -253,11 +253,48 @@ public class CoinPaymentService implements ICoinPaymentService {
         }
 
         logger.debug("Status is {} for {}", status, coinPayment.getInWithdrawRequest().getIpnId());
-        //confirmed
-        if(status==100){
+
+        updateStatus(coinPayment, status);
+
+        if(status==100) {
             confirmWithdraw(coinPayment);
         }
     }
+
+    private void updateStatus(CoinPayment coinPayment, Integer status){
+        if(status == -2){
+
+            coinPayment.setCoinPaymentStatus(CoinPaymentStatus.REFUND);
+
+        }else if (status == -1){
+
+            coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CANCELED);
+
+        }else if(status == 0){
+
+            coinPayment.setCoinPaymentStatus(CoinPaymentStatus.WAITING_FOR_FUNDS);
+
+        }else if(status == 1){
+
+            coinPayment.setCoinPaymentStatus(CoinPaymentStatus.COIN_RECEIVED);
+
+        }else if(status == 2){
+
+            coinPayment.setCoinPaymentStatus(CoinPaymentStatus.QUEUED_FOR_NIGHT);
+
+        }else if(status == 3){
+
+            coinPayment.setCoinPaymentStatus(CoinPaymentStatus.PENDING);
+
+        }else if (status==100){
+            //update status later
+        }else {
+            throw new TradeException("Status is not in the range: " + status);
+        }
+
+        coinPaymentRepository.save(coinPayment);
+    }
+
 
     /*
     @Override
@@ -276,7 +313,7 @@ public class CoinPaymentService implements ICoinPaymentService {
     public void proceedDeposit(DepositRequest depositRequest) {
 
        //Pay attention transaction has many depositRequest (in there system)
-       CoinPayment coinPayment = coinPaymentRepository.findDepositByIpnId(depositRequest.getIpnId());
+       CoinPayment coinPayment = coinPaymentRepository.findDepositByTransactionId(depositRequest.getTransactionId());
 
        if(coinPayment==null){
             coinPayment = createDeposit(depositRequest);
@@ -295,6 +332,8 @@ public class CoinPaymentService implements ICoinPaymentService {
        }
 
        logger.debug("Status is {} for {}", status, coinPayment.getDepositRequest().getIpnId());
+       updateStatus(coinPayment, status);
+
        if(status==100){
            confirmPayment(coinPayment);
        }

@@ -23,16 +23,9 @@ public interface CoinPaymentRepository extends JpaRepository<CoinPayment, Long> 
     @Query("select cp from CoinPayment as cp where cp.depositRequest.transactionId = :#{#transactionId} ")
     CoinPayment findByTransactionId(@Param("transactionId") String transactionId);
 
-    @Query("select cp from CoinPayment as cp where cp.depositRequest.ipnId = :#{#ipnId} ")
-    CoinPayment findDepositByIpnId(@Param("ipnId") String ipnId);
-
-    //@Query("select cp from CoinPayment as cp where cp.outWithdrawRequest.ipnId = :#{#ipnId} ")
-    //CoinPayment findOutWithdrawByIpnId(@Param("ipnId") String ipnId);
+    @Query("select cp from CoinPayment as cp where cp.depositRequest.transactionId = :#{#transactionId} ")
+    CoinPayment findDepositByTransactionId(@Param("transactionId") String transactionId);
 
     @Query("select cp from CoinPayment as cp where cp.inWithdrawRequest.id = :#{#id} ")
     CoinPayment findInWithdrawById(@Param("id") String id);
-
-    /*
-    @Query("select cp from CoinPayment as cp where cp.coinPaymentStatus = 'CREATED' ")
-    List<CoinPayment> getNotConfirmentCoinPayments();*/
 }
