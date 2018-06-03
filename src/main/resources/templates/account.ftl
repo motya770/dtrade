@@ -227,22 +227,22 @@
                                 <iframe src="http://www.free-kassa.ru/merchant/forms.php?gen_form=1&m=75199&default-sum=50&button-text=Оплатить&encoding=CP1251&type=v3&id=114257&lang=en"  width="590" height="320" frameBorder="0" target="_parent" ></iframe>
                                 -->
                             </div>
-                            <div class="lk-main-tab__info" style="width:300px">
+                            <div ng-controller="AccountController as vm" class="lk-main-tab__info" style="width:300px">
                                 <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
                                     <input type="hidden" name="cmd" value="_pay">
                                     <input type="hidden" name="reset" value="1">
                                     <input type="hidden" name="merchant" value="1fb3cd572acffff43b1c0356d5429f1c">
                                     <input type="hidden" name="item_name" value="Diaminds Deposit">
                                     <input type="hidden" name="currency" value="USD">
+                                    <input type="hidden" name="first_name" value="Trading platform">
+                                    <input type="hidden" name="last_name" value="user">
                                     <input type="hidden" name="amountf" value="2.00000000">
                                     <input type="hidden" name="quantity" value="1">
-                                    <input type="hidden" name="allow_quantity" value="0">
+                                    <input type="hidden" name="allow_quantity" value="1">
                                     <input type="hidden" name="want_shipping" value="0">
                                     <input type="hidden" name="success_url" value="www.diaminds.io">
                                     <input type="hidden" name="allow_extra" value="0">
-                                    <!--
-                                    <input type="hidden" name="email" value="motya770@gmail.com">
-                                    -->
+                                    <input type="hidden" name="email" value="{{vm.account.mail}}">
                                     <input type="image" src="https://www.coinpayments.net/images/pub/buynow.png" alt="Buy Now with CoinPayments.net">
                                 </form>
                             </div>
