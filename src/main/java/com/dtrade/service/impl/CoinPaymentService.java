@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -360,7 +361,8 @@ public class CoinPaymentService implements ICoinPaymentService {
 
     @Override
     public Page<CoinPayment> getAllByAccount(Account account) {
-        return coinPaymentRepository.findByAccount(account, new PageRequest(0, 10));
+        return coinPaymentRepository.findByAccount(account, new PageRequest(0, 10, new Sort(
+                new Sort.Order(Sort.Direction.DESC, "creationDate"))));
     }
 
     private void checkConfirmed(CoinPayment coinPayment){
