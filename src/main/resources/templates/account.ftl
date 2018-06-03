@@ -153,7 +153,7 @@
                                 </div>-->
                             </div>
                         </div>
-                        <div class="lk-main-tab" id="tab03" ng-controller="CoinPaymentController as vm">
+                        <div class="lk-main-tab" id="tab03" ng-controller="CoinPaymentController as vm" ng-cloak>
                             <div class="lk-main-tab__table" style="width: 1175px; min-height: 400px;">
                                 <div class="table-container" >
                                     <div>
@@ -205,7 +205,7 @@
                                 </div>
                             </div>
                             <div class="lk-main-tab__info">
-                                <div ng-controller="AccountController as vm" class="lk-main-tab__info" style="width:300px">
+                                <div ng-controller="AccountController as vm" class="lk-main-tab__info" style="width:300px" ng-cloak>
                                     <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
                                         <input type="hidden" name="cmd" value="_pay">
                                         <input type="hidden" name="reset" value="1">
