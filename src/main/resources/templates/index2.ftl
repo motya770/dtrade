@@ -64,8 +64,12 @@
                                         <tbody>
 
                                             <tr ng-repeat="diamond in vm.availableDiamonds" ng-click="chooseAvailableDiamond(diamond)">
-                                                <td>{{diamond.name}} <small>{{diamond.diamondType}}, {{diamond.carats}},
-                                                    {{diamond.clarity}} </small>
+                                                <td>{{diamond.name}}
+                                                    <small>
+                                                    {{diamond.diamondType | diamondTypeFilter }},
+                                                     GIA - {{diamond.clarity}},
+                                                     Cr - {{diamond.carats}}
+                                                    </small>
 
                                                 </td>
                                                 <td>
@@ -176,8 +180,8 @@
                                         <div class="form-tabs__boxes">
                                             <div class="form-tabs__info-top diamond-bid-name">
                                                 <div>{{vm.diamond.name}}</div>
-                                                <p>{{vm.diamond.id}}, {{vm.diamond.diamondType}},
-                                                {{vm.diamond.carats}}, {{vm.diamond.clarity}}</p>
+                                                <p>{{vm.diamond.diamondType | diamondTypeFilter}},
+                                               Cr - {{vm.diamond.carats}}, GIA - {{vm.diamond.clarity}}</p>
                                             </div>
                                         </div>
                                         <div class="form-tabs__boxes">
@@ -437,8 +441,8 @@
                                                 <td>{{tradeOrder.price}}</td>
                                                 <td>{{tradeOrder.initialAmount}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-                                                <td>{{tradeOrder.traderOrderStatus}}</td>
-                                                <td>{{tradeOrder.tradeOrderType}}</td>
+                                                <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
+                                                <td>{{tradeOrder.tradeOrderType | lowercase}}</td>
                                                 <!--
                                                 <td>{{tradeOrder.amount}}</td>
                                                 -->

@@ -1,5 +1,20 @@
 var diamondApp = angular.module('diamondApp', ['ngMaterial','ngMessages'])
-
+    .filter('diamondTypeFilter', function() {
+        return function(input) {
+            input = input || '';
+            var out = '';
+            for (var i = 0; i < 4; i++) {
+                var nextChar;
+                if(i==0){
+                    nextChar = input.charAt(i).toUpperCase();
+                }else{
+                    nextChar =input.charAt(i).toLowerCase();
+                }
+                out = out + nextChar;
+            }
+            return out;
+        };
+    })
 .controller("TopController", [ '$scope', '$timeout', '$mdDialog', function($scope, $timeout, $mdDialog, AccountSesrvice, DiamondService) {
     $scope.loaded = false;
    // $scope.title = "This is an App";
