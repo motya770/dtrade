@@ -168,9 +168,9 @@
                                         <input type="hidden" name="last_name" value="user">
                                         <input type="hidden" name="amountf" value="2.00000000">
                                         <input type="hidden" name="quantity" value="1">
-                                        <input type="hidden" name="allow_quantity" value="1">
+                                        <input type="hidden" name="allow_quantity" value="0">
                                         <input type="hidden" name="want_shipping" value="0">
-                                        <input type="hidden" name="success_url" value="www.diaminds.io">
+                                        <input type="hidden" name="success_url" value="www.diaminds.io/trade">
                                         <input type="hidden" name="allow_extra" value="0">
                                         <input type="hidden" name="email" value="{{vm.account.mail}}">
                                         <input type="image" src="https://www.coinpayments.net/images/pub/buynow.png" alt="Buy Now with CoinPayments.net">
