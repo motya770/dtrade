@@ -109,3 +109,12 @@
     -webkit-transform: scaleY(1.0);
   }
 }
+.capitalize {
+  text-transform: capitalize;
+}
+
+.coming-soon{
+  padding-top: 20px;
+  padding-left: 20px;
+  font-family: PFBeauSansPro-SemiBold,sans-serif;
+}

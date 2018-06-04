@@ -101,42 +101,32 @@
                                                             </form>
                                                         </md-dialog>
                                                     </script>
-                                            <!--
+
                                             <tr>
-                                                <td >Brilliant III <small>Rad, GIA - WS1, Cr-6</small></td>
+
+                                                <!--
+                                                <td>
+                                                We are going to produce new Initial Diamond Offering
+                                                </td>-->
+                                                    <!--
+                                                    <td style="width: 100%;">Brilliant III <small>Rad, GIA - WS1, Cr-6</small></td>
                                                     <td>
-
-                                                       <div class="dialog-demo-content" layout="row" layout-wrap="" >
-                                                            <input type="image" src="/theme/app/img/dia3.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced($event)" />
-
-                                                            <script type="text/ng-template" id="dialog1.tmpl.html"><md-dialog aria-label="Diamond">
-                                                              <form ng-cloak>
-                                                                <md-toolbar>
-                                                                  <div class="md-toolbar-tools">
-                                                                    <h2>Diamond</h2>
-                                                                    <span flex></span>
-                                                                    <md-button class="md-icon-button" ng-click="cancel()">
-                                                                      <img src="/theme/app/img/ic_close.png" aria-label="Close dialog">
-                                                                    </md-button>
-                                                                  </div>
-                                                                </md-toolbar>
-
-                                                                <md-dialog-content >
-                                                                  <div class="md-dialog-content">
-                                                                   <img id="pix" src="/theme/app/img/test.jpg" alt="" onclick="primitiveRotator(this);"/>
-                                                                  </div>
-                                                                </md-dialog-content>
-                                                              </form>
-                                                            </md-dialog>
-                                                            </script>
+                                                       <div layout="row" layout-wrap="" >
+                                                            <input type="image" src="/theme/app/img/dia3.png" />
                                                         </div>
                                                     </td>
-                                                <td>280</td>
+                                                    -->
+
+                                                <!--
+                                                    <td>280</td>
+                                                -->
+                                            <!--
                                             <td>11&nbsp;000</td>
-                                            <td>14&nbsp;500</td>
-                                        </tr>-->
+                                            <td>14&nbsp;500</td>-->
+                                        </tr>
                                         </tbody>
                                     </table>
+                                        <div class="coming-soon">New Initial Diamond Offerings coming soon ... </div>
                                     </div>
                                 </div>
                             </div>
@@ -438,8 +428,8 @@
                                             <tr ng-repeat="tradeOrder in vm.liveTradeOrders.content">
 
                                                 <td>{{tradeOrder.diamond.name}}</td>
-                                                <td>{{tradeOrder.price}}</td>
-                                                <td>{{tradeOrder.initialAmount}}</td>
+                                                <td>{{tradeOrder.price | number : 4 }}</td>
+                                                <td>{{tradeOrder.initialAmount | number : 4}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                                 <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
                                                 <td>{{tradeOrder.tradeOrderType | lowercase}}</td>
@@ -447,7 +437,7 @@
                                                 <td>{{tradeOrder.amount}}</td>
                                                 -->
 
-                                                <td><a ng-if="tradeOrder.traderOrderStatus == 'CREATED'" href="#" class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">CANCEL</a></td>
+                                                <td><a ng-if="tradeOrder.traderOrderStatus == 'CREATED'" href="#" class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">Cancel</a></td>
                                             </tr>
 
                                             <!--
