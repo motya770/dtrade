@@ -12,8 +12,8 @@ diamondApp.controller("CoinPaymentController", function CoinPaymentController($s
     self.withdrawRequest = {
         currencyCoin: "ETH",
         currencyFiat: "USD",
-        address: "0x10D75F90b0F483942aDd5a947b71D8617BB012eD",
-        amount: 5
+        address: "",
+        amount: 10
     }
 
     $scope.createWithdraw = function (withdrawRequest) {

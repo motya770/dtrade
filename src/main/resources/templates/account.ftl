@@ -156,7 +156,8 @@
                         <div class="lk-main-tab" id="tab03" ng-controller="CoinPaymentController as vm" ng-cloak>
                             <div class="lk-main-tab__table" style="width: 1175px; min-height: 400px;">
 
-                                <div ng-controller="AccountController as vm" class="lk-main-tab__info" style="width:300px" ng-cloak>
+                                <div ng-controller="AccountController as vm" class="lk-main-tab__info" style="width:800px; margin-left: 20px;" ng-cloak>
+                                    <h2 class="account-withdraw">Deposit</h2>
                                     <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
                                         <input type="hidden" name="cmd" value="_pay">
                                         <input type="hidden" name="reset" value="1">
@@ -175,26 +176,39 @@
                                         <input type="image" src="https://www.coinpayments.net/images/pub/buynow.png" alt="Buy Now with CoinPayments.net">
                                     </form>
                                 </div>
-                                <div>
+
+                                <div style="margin: 20px; width: 600px">
                                     <md-content class="md-no-momentum" style="min-width: 500px;">
+                                        <h2 class="account-withdraw">Withdraw</h2>
                                         <md-input-container class="md-icon-float md-block">
                                             <label>Currency</label>
                                             <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="currency"></md-icon>
-                                            <input ng-model="vm.withdrawRequest.currencyFiat" type="text">
-                                        </md-input-container>
-
-                                        <md-input-container class="md-icon-float md-block">
-                                            <label>Address</label>
-                                            <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="address"></md-icon>
-                                            <input ng-model="vm.withdrawRequest.address" type="text">
+                                            <input ng-model="vm.withdrawRequest.currencyFiat" type="text" disabled>
                                         </md-input-container>
 
                                         <md-input-container class="md-icon-float md-icon-right md-block">
-                                            <label>Withdraw Amount</label>
+                                            <label>Withdraw Amount (in USD)</label>
                                             <md-icon md-svg-src="/theme/app/img/icons/ic_card_giftcard_24px.svg"></md-icon>
                                             <input ng-model="vm.withdrawRequest.amount" type="number" step="0.01">
                                             <md-icon md-svg-src="/theme/app/img/icons/ic_euro_24px.svg"></md-icon>
                                         </md-input-container>
+
+                                        <md-input-container style="margin-left: 34px; margin-bottom: 28px; width: 100px;">
+                                            <label>Crypto Coin</label>
+                                            <md-select ng-model="vm.withdrawRequest.currencyCoin">
+                                                <md-option><em>None</em></md-option>
+                                                <md-option ng-repeat="state in ['BTC', 'ETH', 'USDT']" ng-value="state" ng-disabled="$index === 1">
+                                                    {{state}}
+                                                </md-option>
+                                            </md-select>
+                                        </md-input-container>
+
+                                        <md-input-container class="md-icon-float md-block">
+                                            <label>Your crypto currency address</label>
+                                            <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="address"></md-icon>
+                                            <input ng-model="vm.withdrawRequest.address" type="text">
+                                        </md-input-container>
+
                                         <md-button class="md-raised md-primary" ng-click="createWithdraw(vm.withdrawRequest);">Withdraw</md-button>
                                     </md-content>
                                 </div>
