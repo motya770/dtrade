@@ -50,17 +50,17 @@
                             <tbody>
                             <tr ng-repeat="diamond in vm.diamonds">
                                 <td>{{diamond.name}}<br>ISIN: {{diamond.id}}</td>
-                                <td>{{diamond.price}}</td>
+                                <td>{{diamond.price | number }}</td>
                                 <!--
                                 <td>{{diamond.amount}}</td>
                                 -->
-                                <td>{{diamond.diamondType}}</td>
-                                <td>{{diamond.diamondStatus}}</td>
+                                <td>{{diamond.diamondType | lowercase}}</td>
+                                <td>{{diamond.diamondStatus | lowercase}}</td>
                                 <td>{{diamond.carats}}</td>
                                 <td>{{diamond.clarity}}</td>
-                                <td>{{diamond.cut}}</td>
+                                <td>{{diamond.cut | lowercase}}</td>
                                 <td>{{diamond.color}}</td>
-                                <td>{{diamond.totalStockAmount}}</td>
+                                <td>{{diamond.totalStockAmount | number}}</td>
                                 <!--
                                 <td>
                                     <a href="#" data-open="1">More</a>

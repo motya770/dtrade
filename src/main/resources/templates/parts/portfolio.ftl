@@ -4,7 +4,7 @@
                 <span class="cabtop-info__ico"></span>
                 <div class="cabtop-info__text">
                     <h3>Account:  {{vm.account.mail}}</h3>
-                    <p><span class="accent">Balance</span>  <span class="accent">{{vm.account.balance}}  $.</span></p>
+                    <p><span class="accent">Balance</span>  <span class="accent">{{vm.account.balance | number}}  $.</span></p>
                 </div>
         </div>
         <!--
