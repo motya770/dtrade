@@ -50,9 +50,9 @@
                                         <tr ng-repeat="balanceActivity in vm.balanceActivities.content">
                                             <td>{{balanceActivity.id}}</td>
                                             <td>{{balanceActivity.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                            <td>{{balanceActivity.balanceActivityType}}</td>
-                                            <td>{{balanceActivity.amount}}</td>
-                                            <td>{{balanceActivity.balanceSnapshot}}</td>
+                                            <td>{{balanceActivity.balanceActivityType | lowercase}}</td>
+                                            <td>{{balanceActivity.amount | number}}</td>
+                                            <td>{{balanceActivity.balanceSnapshot | number}}</td>
                                         </tr>
 
                                         </tbody>
@@ -113,10 +113,10 @@
                                             <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             <td>{{tradeOrder.executionDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                             <td>{{tradeOrder.diamond.name}}</td>
-                                            <td>{{tradeOrder.initialAmount}}</td>
-                                            <td>{{tradeOrder.price}}</td>
-                                            <td>{{tradeOrder.price * tradeOrder.initialAmount}}</td>
-                                            <td>{{tradeOrder.traderOrderStatus}}</td>
+                                            <td>{{tradeOrder.initialAmount | number : 2}}</td>
+                                            <td>{{tradeOrder.price | number : 2}}</td>
+                                            <td>{{tradeOrder.price * tradeOrder.initialAmount | number : 2}}</td>
+                                            <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
                                             <!--
                                             <td>{{tradeOrder.}} </td>
                                             -->
@@ -155,56 +155,7 @@
                         </div>
                         <div class="lk-main-tab" id="tab03" ng-controller="CoinPaymentController as vm" ng-cloak>
                             <div class="lk-main-tab__table" style="width: 1175px; min-height: 400px;">
-                                <div class="table-container" >
-                                    <div>
-                                        <table class="diamont-table">
-                                            <thead>
-                                            <tr>
-                                                <th>№</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Type</th>
-                                                <th>Fiat currency</th>
-                                                <th>Sum in fiat</th>
-                                                <th>Crypto coin</th>
-                                                <th>Sum in coin</th>
-                                                <th>Transaction Id</th>
-                                                <th>Ipn ID</th>
-                                                <th>External ID</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
 
-                                            <tr ng-repeat="coinPayment in vm.coinPayments.content track by coinPayment.id">
-
-                                                <td>{{coinPayment.id}}</td>
-                                                <td>{{coinPayment.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-                                                <td>{{coinPayment.coinPaymentStatus}}</td>
-                                                <td>{{coinPayment.coinPaymentType}}</td>
-
-                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.currencyUsd}}</td>
-                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.amountUsd}}</td>
-                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.currencyCoin}}</td>
-                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.amountCoin}}</td>
-                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.transactionId}}</td>
-                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.ipnId}}</td>
-                                                <td></td>
-
-                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.currencyUsd}}</td>
-                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.amountUsd}}</td>
-                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.currencyCoin}}</td>
-                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.amountCoin}}</td>
-                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.transactionId}}</td>
-                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.ipnId}}</td>
-                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.id}}</td>
-
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="lk-main-tab__info">
                                 <div ng-controller="AccountController as vm" class="lk-main-tab__info" style="width:300px" ng-cloak>
                                     <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
                                         <input type="hidden" name="cmd" value="_pay">
@@ -247,6 +198,59 @@
                                         <md-button class="md-raised md-primary" ng-click="createWithdraw(vm.withdrawRequest);">Withdraw</md-button>
                                     </md-content>
                                 </div>
+
+
+                                <div class="table-container" >
+                                    <div>
+                                        <table class="diamont-table">
+                                            <thead>
+                                            <tr>
+                                                <th>№</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Type</th>
+                                                <th>Fiat currency</th>
+                                                <th>Sum in fiat</th>
+                                                <th>Crypto coin</th>
+                                                <th>Sum in coin</th>
+                                                <th>Transaction Id</th>
+                                                <th>Ipn ID</th>
+                                                <th>External ID</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            <tr ng-repeat="coinPayment in vm.coinPayments.content track by coinPayment.id">
+
+                                                <td>{{coinPayment.id}}</td>
+                                                <td>{{coinPayment.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                                <td>{{coinPayment.coinPaymentStatus | lowercase}}</td>
+                                                <td>{{coinPayment.coinPaymentType | lowercase}}</td>
+
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.currencyUsd}}</td>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.amountUsd | number}}</td>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.currencyCoin}}</td>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.amountCoin | number : 6}}</td>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.transactionId}}</td>
+                                                <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.ipnId}}</td>
+                                                <td></td>
+
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.currencyUsd}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.amountUsd | number}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.currencyCoin}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.amountCoin | number : 6 }}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.transactionId}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.ipnId}}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.id}}</td>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lk-main-tab__info">
+
                             </div>
                         </div>
                     </div>
