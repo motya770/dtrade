@@ -1,5 +1,6 @@
 package com.dtrade.controller;
 
+import com.dtrade.exception.TradeException;
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.coinpayment.DepositRequest;
 import com.dtrade.model.coinpayment.InWithdrawRequest;
@@ -40,6 +41,10 @@ public class CoinPaymentsController {
                                       @RequestParam String currencyFiat,
                                       @RequestParam String address,
                                       @RequestParam String amount){
+       if(!currencyFiat.equals("USD")){
+           throw new TradeException("Only USD currently supported.");
+       }
+
        return coinPaymentService.sendWithdraw(
                InWithdrawRequest.initiliazeRequest(currencyCoin, currencyFiat, address, amount)
        );
