@@ -186,11 +186,11 @@
                                         </div>
                                         <div class="form-tabs__row">
                                             <label for="input01">Amount</label>
-                                            <input type="text" ng-model="vm.tradeOrder.amount" value="0.00" id="input01">
+                                            <input type="text" ng-init="vm.tradeOrder.amount=0" ng-model="vm.tradeOrder.amount" value="0.00" id="input01">
                                         </div>
                                         <div class="form-tabs__row">
                                             <label for="input02">Limit price</label>
-                                            <input type="text" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr">
+                                            <input type="text"  ng-init="vm.tradeOrder.price=0" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr">
                                             <small>USD</small>
                                         </div>
                                         <!--
@@ -202,7 +202,7 @@
                                             <p>Сообщение не выбрано. Эта сделка может выполняться только заказчиком</p>
                                         </div>-->
                                         <div class="form-tabs__submit">
-                                            <h3>Total (USD)</h3>
+                                            <h3>Total (USD): {{vm.tradeOrder.amount * vm.tradeOrder.price | number:2}}</h3>
                                             <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond)">Place order</button>
                                         </div>
                                     </form>
