@@ -157,24 +157,29 @@
                             <div class="lk-main-tab__table" style="width: 1175px; min-height: 400px;">
 
                                 <div ng-controller="AccountController as vm" class="lk-main-tab__info" style="width:800px; margin-left: 20px;" ng-cloak>
-                                    <h2 class="account-withdraw">Deposit</h2>
-                                    <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px;">
-                                        <input type="hidden" name="cmd" value="_pay">
-                                        <input type="hidden" name="reset" value="1">
-                                        <input type="hidden" name="merchant" value="1fb3cd572acffff43b1c0356d5429f1c">
-                                        <input type="hidden" name="item_name" value="Diaminds Deposit">
-                                        <input type="hidden" name="currency" value="USD">
-                                        <input type="hidden" name="first_name" value="Trading platform">
-                                        <input type="hidden" name="last_name" value="user">
-                                        <input type="hidden" name="amountf" value="2.00000000">
-                                        <input type="hidden" name="quantity" value="1">
-                                        <input type="hidden" name="allow_quantity" value="0">
-                                        <input type="hidden" name="want_shipping" value="0">
-                                        <input type="hidden" name="success_url" value="www.diaminds.io/trade">
-                                        <input type="hidden" name="allow_extra" value="0">
-                                        <input type="hidden" name="email" value="{{vm.account.mail}}">
-                                        <input type="image" src="https://www.coinpayments.net/images/pub/buynow.png" alt="Buy Now with CoinPayments.net">
-                                    </form>
+                                    <md-content class="md-no-momentum" style="min-width: 300px; margin-bottom: 20px; margin-top: 20px;">
+                                        <h2 class="account-withdraw">Deposit (PayPal and Crypto)</h2>
+                                        <form action="https://www.coinpayments.net/index.php" method="post" style="margin-left: 20px; margin-top: 20px; margin-bottom: 20px;">
+                                            <input type="hidden" name="cmd" value="_pay">
+                                            <input type="hidden" name="reset" value="1">
+                                            <input type="hidden" name="merchant" value="1fb3cd572acffff43b1c0356d5429f1c">
+                                            <input type="hidden" name="item_name" value="Diaminds Deposit">
+                                            <input type="hidden" name="currency" value="USD">
+                                            <input type="hidden" name="first_name" value="Trading platform">
+                                            <input type="hidden" name="last_name" value="user">
+                                            <input type="hidden" name="amountf" value="2.00000000">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <input type="hidden" name="allow_quantity" value="0">
+                                            <input type="hidden" name="want_shipping" value="0">
+                                            <input type="hidden" name="success_url" value="www.diaminds.io/trade">
+                                            <input type="hidden" name="allow_extra" value="0">
+                                            <input type="hidden" name="email" value="{{vm.account.mail}}">
+                                            <md-button class="md-raised md-primary" type="submit" >Deposit</md-button>
+                                            <!--
+                                            <input type="image" src="https://www.coinpayments.net/images/pub/buynow.png" alt="Buy Now with CoinPayments.net">
+                                            -->
+                                        </form>
+                                    </md-content>
                                 </div>
 
                                 <div style="margin: 20px; width: 600px">
