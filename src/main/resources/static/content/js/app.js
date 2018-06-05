@@ -3,7 +3,7 @@ var diamondApp = angular.module('diamondApp', ['ngMaterial','ngMessages'])
         return function(input) {
             input = input || '';
             var out = '';
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 3; i++) {
                 var nextChar;
                 if(i==0){
                     nextChar = input.charAt(i).toUpperCase();
