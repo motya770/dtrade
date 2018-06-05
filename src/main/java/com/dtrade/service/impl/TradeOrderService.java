@@ -180,7 +180,7 @@ public class TradeOrderService  implements ITradeOrderService{
             pageNumber=0;
         }
 
-        return tradeOrderRepository.getLiveTradeOrdersByAccount(account, new PageRequest(pageNumber, 12));
+        return tradeOrderRepository.getLiveTradeOrdersByAccount(account, new PageRequest(pageNumber, 10));
     }
 
     @Override
