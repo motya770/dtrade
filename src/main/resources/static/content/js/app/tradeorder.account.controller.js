@@ -1,4 +1,4 @@
-diamondApp.controller("TradeOrderAccountController", function BidderController($scope, $rootScope, $http, AccountService, TradeOrderAccountService){
+diamondApp.controller("TradeOrderAccountController", function TradeOrderAccountController($scope, $rootScope, $http, AccountService, TradeOrderAccountService){
 
     var self = this;
 

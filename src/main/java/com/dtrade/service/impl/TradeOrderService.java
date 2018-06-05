@@ -155,7 +155,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Override
     public List<TradeOrder> getHistoryTradeOrders(Diamond diamond) {
-        return tradeOrderRepository.getHistoryTradeOrders(diamond, new PageRequest(0, 20));
+        return tradeOrderRepository.getHistoryTradeOrders(diamond, new PageRequest(0, 23));
     }
 
     @Override

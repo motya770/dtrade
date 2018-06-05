@@ -403,12 +403,17 @@
                                 <li class="active">
                                     <a href="#tab01">Open Orders</a>
                                 </li>
+
                                 <li>
-                                    <a href="#tab02">My shares</a>
+                                    <a href="#tab02">History Orders</a>
+                                </li>
+
+                                <li>
+                                    <a href="#tab010">My shares</a>
                                 </li>
                             </ul>
                             <div class="sep-cab-tabs-container">
-                                <div ng-controller="TradeOrderController as vm" class="sep-cab-tab" id="tab01" >
+                                <div id="tab01" ng-controller="TradeOrderController as vm" class="sep-cab-tab"  >
                                     <div class="table-container">
                                         <div>
                                             <table class="diamont-table">
@@ -471,93 +476,129 @@
                                     </div>
                                     <a href="#" ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
                                 </div>
-                            </div>
-                            <div class="sep-cab-tab" id="tab02">
-                                <div class="table-container">
 
-                                    <div ng-controller="StockController as vm">
-                                        <table class="diamont-table">
-                                        <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <!--
-                                            <th>Цена</th>
-                                            <th>t покупки</th>
-                                            <th>Статус</th>
-                                            <th>Цена продажи</th>
-                                            -->
-                                            <th>Amount</th>
-                                            <!--
-                                            <th>Action</th>
-                                            -->
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <tr ng-repeat="stock in vm.stocks track by stock.id" ng-click="chooseStockDiamond(stock.diamond)">
-                                            <!--
-                                            <td>{{stock.id}}</td>
-                                            <td>{{stock.diamond.id}}</td>
-                                            -->
-                                            <td>{{stock.diamond.name}}</td>
-                                            <td>{{stock.amount}}</td>
-                                            <!--
-                                            <td>
-                                                <a href="#">Choose</a>
-                                            </td>
-                                            -->
-                                        </tr>
-                                        <!--
-                                        <tr>
-                                            <td>Brilliant Elizaveta</td>
-                                            <td>10 000</td>
-                                            <td>11:36:20</td>
-                                            <td>Резерв</td>
-                                            <td>-</td>
-                                            <td>-</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant Elis</td>
-                                            <td>12 000</td>
-                                            <td>10:42:14</td>
-                                            <td>На аукционе</td>
-                                            <td>15000</td>
-                                            <td>17900</td>
-                                            <td>
-                                                <a href="#">Продать</a>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Brilliant QITI</td>
-                                            <td>14 000</td>
-                                            <td>11:36:20</td>
-                                            <td>Резерв</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>
-                                                <a href="#">Начать</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Brilliant Elizaveta</td>
-                                            <td>10 000</td>
-                                            <td>11:36:20</td>
-                                            <td>Резерв</td>
-                                            <td>-</td>
-                                            <td>-</td>
-                                            <td>
-                                                <a href="#">Начать</a>
-                                            </td>
-                                        </tr>-->
-                                        </tbody>
-                                    </table>
+                                <div class="sep-cab-tab" id="tab02">
+                                    <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
+                                        <div>
+                                            <table class="diamont-table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Date created</th>
+                                                    <th>Date executed</th>
+                                                    <th>Name</th>
+                                                    <th>№ Amount</th>
+                                                    <th>Price</th>
+                                                    <th>Sum</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="tradeOrder in vm.accountHistoryTradeOrders.content">
+                                                    <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+                                                    <td>{{tradeOrder.executionDate | date:'dd/MM HH:mm:ss' }}</td>
+                                                    <td>{{tradeOrder.diamond.name}}</td>
+                                                    <td>{{tradeOrder.initialAmount | number : 2}}</td>
+                                                    <td>{{tradeOrder.price | number : 2}}</td>
+                                                    <td>{{tradeOrder.price * tradeOrder.initialAmount | number : 2}}</td>
+                                                    <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <a href="#" ng-click="getPreviousAccountHistoryOrders(vm.accountHistoryTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
                                     </div>
                                 </div>
-                                <!--
-                                <a href="#" class="sep-cab-tab__more">Показать предыдущие позиции</a>-->
+                                <div class="sep-cab-tab" id="tab010">
+                                    <div class="table-container">
+
+                                        <div ng-controller="StockController as vm">
+                                            <table class="diamont-table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <!--
+                                                    <th>Цена</th>
+                                                    <th>t покупки</th>
+                                                    <th>Статус</th>
+                                                    <th>Цена продажи</th>
+                                                    -->
+                                                    <th>Amount</th>
+                                                    <!--
+                                                    <th>Action</th>
+                                                    -->
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr ng-repeat="stock in vm.stocks track by stock.id" ng-click="chooseStockDiamond(stock.diamond)">
+                                                    <!--
+                                                    <td>{{stock.id}}</td>
+                                                    <td>{{stock.diamond.id}}</td>
+                                                    -->
+                                                    <td>{{stock.diamond.name}}</td>
+                                                    <td>{{stock.amount}}</td>
+                                                    <!--
+                                                    <td>
+                                                        <a href="#">Choose</a>
+                                                    </td>
+                                                    -->
+                                                </tr>
+                                                <!--
+                                                <tr>
+                                                    <td>Brilliant Elizaveta</td>
+                                                    <td>10 000</td>
+                                                    <td>11:36:20</td>
+                                                    <td>Резерв</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>Brilliant Elis</td>
+                                                    <td>12 000</td>
+                                                    <td>10:42:14</td>
+                                                    <td>На аукционе</td>
+                                                    <td>15000</td>
+                                                    <td>17900</td>
+                                                    <td>
+                                                        <a href="#">Продать</a>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Brilliant QITI</td>
+                                                    <td>14 000</td>
+                                                    <td>11:36:20</td>
+                                                    <td>Резерв</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>
+                                                        <a href="#">Начать</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Brilliant Elizaveta</td>
+                                                    <td>10 000</td>
+                                                    <td>11:36:20</td>
+                                                    <td>Резерв</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>
+                                                        <a href="#">Начать</a>
+                                                    </td>
+                                                </tr>-->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <!--
+                                    <a href="#" class="sep-cab-tab__more">Показать предыдущие позиции</a>-->
+                                </div>
+
                             </div>
+
+
+
                         </div>
                     </div>
                 </div>
