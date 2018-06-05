@@ -483,10 +483,10 @@
                                             <table class="diamont-table">
                                                 <thead>
                                                 <tr>
-                                                    <th>Date created</th>
-                                                    <th>Date executed</th>
                                                     <th>Name</th>
-                                                    <th>№ Amount</th>
+                                                    <th>t created</th>
+                                                    <th>t executed</th>
+                                                    <th>Amount</th>
                                                     <th>Price</th>
                                                     <th>Sum</th>
                                                     <th>Status</th>
@@ -494,9 +494,9 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr ng-repeat="tradeOrder in vm.accountHistoryTradeOrders.content">
+                                                    <td>{{tradeOrder.diamond.name}}</td>
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                                     <td>{{tradeOrder.executionDate | date:'dd/MM HH:mm:ss' }}</td>
-                                                    <td>{{tradeOrder.diamond.name}}</td>
                                                     <td>{{tradeOrder.initialAmount | number : 2}}</td>
                                                     <td>{{tradeOrder.price | number : 2}}</td>
                                                     <td>{{tradeOrder.price * tradeOrder.initialAmount | number : 2}}</td>
@@ -536,7 +536,7 @@
                                                     <td>{{stock.diamond.id}}</td>
                                                     -->
                                                     <td>{{stock.diamond.name}}</td>
-                                                    <td>{{stock.amount}}</td>
+                                                    <td>{{stock.amount | number}}</td>
                                                     <!--
                                                     <td>
                                                         <a href="#">Choose</a>
