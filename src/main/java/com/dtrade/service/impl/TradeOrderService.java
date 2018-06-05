@@ -187,8 +187,12 @@ public class TradeOrderService  implements ITradeOrderService{
     public void validateFields(TradeOrder tradeOrder){
 
         //TODO thing about exception and explanation and client validation
-        if(tradeOrder.getAmount()==null || (tradeOrder.getAmount().compareTo(ZERO_VALUE) <= 0)){
+        if(tradeOrder.getAmount()==null ){
             throw new TradeException("Can't create trade order because amount value is empty.");
+        }
+
+        if(tradeOrder.getAmount().compareTo(ZERO_VALUE) <= 0){
+            throw new TradeException("Can't create trade order because amount value is less than 0.");
         }
 
         if(tradeOrder.getDiamond()==null){
@@ -201,6 +205,14 @@ public class TradeOrderService  implements ITradeOrderService{
 
         if(tradeOrder.getPrice()==null || (tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0)){
             throw new TradeException("Can't create trade order because price is empty.");
+        }
+
+        if(tradeOrder.getPrice()==null ){
+            throw new TradeException("Can't create trade order because price is empty.");
+        }
+
+        if(tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0){
+            throw new TradeException("Can't create trade order because price is less than 0.");
         }
 
         if(tradeOrder.getTradeOrderType()==null){

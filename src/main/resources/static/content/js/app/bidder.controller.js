@@ -23,8 +23,22 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
         tradeOrder.tradeOrderType = $scope.tradeOrder.tradeOrderType;
 
         $http.post("/trade-order/create", tradeOrder, null).then(function (response) {
+            //TODO fix
+            if(response.data.error){
+                alert(response.data.message);
+                return;
+            }
+            if(response.data.id == null) {
+                alert("You should make login first.");
+                return;
+            }
             TradeOrderService.addLiveOrder(response.data);
-        })
+        }, function (response) {
+            if(response.data.error){
+                alert(response.data.message);
+                return;
+            }
+        });
     };
 
     $scope.sellOption = function (tradeOrder) {

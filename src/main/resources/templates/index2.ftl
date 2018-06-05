@@ -186,11 +186,11 @@
                                         </div>
                                         <div class="form-tabs__row">
                                             <label for="input01">Amount</label>
-                                            <input type="text" ng-init="vm.tradeOrder.amount=0" ng-model="vm.tradeOrder.amount" value="0.00" id="input01">
+                                            <input type="number" ng-init="vm.tradeOrder.amount=0" ng-model="vm.tradeOrder.amount" value="0.00" id="input01" min="0">
                                         </div>
                                         <div class="form-tabs__row">
                                             <label for="input02">Limit price</label>
-                                            <input type="text"  ng-init="vm.tradeOrder.price=0" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr">
+                                            <input type="number"  ng-init="vm.tradeOrder.price=0" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr" min="0">
                                             <small>USD</small>
                                         </div>
                                         <!--
