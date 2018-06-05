@@ -20,6 +20,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
 
         if(self.currentAccount == null){
             alert("You should make login first!");
+            return;
         }
 
         tradeOrder["account"] = self.currentAccount;
