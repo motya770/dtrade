@@ -90,6 +90,20 @@ public class InWithdrawRequest {
         app_1         | K:txn_id V:0x4a025ceece1f4b23972b5c0d56b4638682fc263e1b49ae3debe2671b767cfaa6
 */
 
+        /*
+
+              {"id":"CWCF4GUHUFJIFLBPS6EBCZDNGD",
+                "ipn_version":null,
+                "ipn_type":null,"ipn_mode":null,
+                "ipnId":null,"merchant":null,
+                "address":"0x10D75F90b0F483942aDd5a947b71D8617BB012eD",
+                "transactionId":null,"status":0,"status_text":null,
+                "currencyUsd":"USD",
+                "currencyCoin":"ETH",
+                "amountUsd":2,
+                "amountCoin":0}
+                */
+
         String id = params.get("id");
         String address = params.get("address");
         BigDecimal amountCoin = new BigDecimal(params.get("amount"));
@@ -101,7 +115,7 @@ public class InWithdrawRequest {
         String ipn_version = params.get("ipn_type");
         String merchant = params.get("merchant");
         Integer status =  Integer.parseInt(params.get("status"));
-        String status_text = params.get("status");
+        String status_text = params.get("status_text");
         //TODO check transaction id;
 
         InWithdrawRequest request= new InWithdrawRequest();

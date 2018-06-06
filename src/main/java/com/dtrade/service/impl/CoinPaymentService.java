@@ -265,6 +265,7 @@ public class CoinPaymentService implements ICoinPaymentService {
             throw new TradeException("Unknown withdraw status " + status);
         }
 
+        coinPayment.setInWithdrawRequest(withdrawRequest);
         coinPaymentRepository.save(coinPayment);
     }
 
