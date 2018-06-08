@@ -1,7 +1,10 @@
 package com.dtrade.model.coinpayment;
 
+import com.dtrade.service.impl.TradeOrderService;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -12,6 +15,8 @@ import java.util.Map;
 @Data
 @Embeddable
 public class InWithdrawRequest {
+
+    private static final Logger logger = LoggerFactory.getLogger(InWithdrawRequest.class);
 
     @Column(name = "in_w_id")
     @NotEmpty
@@ -62,9 +67,10 @@ public class InWithdrawRequest {
     @NotNull
     private BigDecimal amountCoin;
 
+
+
     public static InWithdrawRequest initiliazeRequest(String currencyCoin, String currencyUsd,
                                                       String address, String amountUsd){
-
             InWithdrawRequest request = new InWithdrawRequest();
             request.setCurrencyCoin(currencyCoin);
             request.setCurrencyUsd(currencyUsd);
@@ -104,6 +110,13 @@ public class InWithdrawRequest {
                 "amountCoin":0}
                 */
 
+        //{"id":"CWCF5HKGVVM7BL8YV9ODD1HJGC","ipn_version":
+        // "withdrawal","ipn_type":"1.0","ipn_mode":"hmac",
+        // "ipnId":"1e02cc489e4d25ec24bca56234a5b9a9","merchant":"1fb3cd572acffff43b1c0356d5429f1c",
+        // "address":"0x10D75F90b0F483942aDd5a947b71D8617BB012eD",
+        // "transactionId":"0x77c8aba9e2f184102ed8e1899708f0da0d1f055b1b3981922009f458f7e84332","status":2,
+        // "status_text":"Complete","currencyUsd":null,"currencyCoin":"ETH","amountUsd":null,"amountCoin":0}
+
         String id = params.get("id");
         String address = params.get("address");
         BigDecimal amountCoin = new BigDecimal(params.get("amount"));
@@ -116,7 +129,6 @@ public class InWithdrawRequest {
         String merchant = params.get("merchant");
         Integer status =  Integer.parseInt(params.get("status"));
         String status_text = params.get("status_text");
-        //TODO check transaction id;
 
         InWithdrawRequest request= new InWithdrawRequest();
         request.setId(id);
@@ -132,6 +144,31 @@ public class InWithdrawRequest {
         request.setStatus(status);
         request.setStatus_text(status_text);
 
+        logger.info("Withdraw request builded {}", request);
+
         return request;
+    }
+
+    public void update(InWithdrawRequest newRequest){
+        this.setId(newRequest.getId());
+        this.setAddress(newRequest.getAddress());
+        this.setAmountCoin(newRequest.getAmountCoin());
+        this.setCurrencyCoin(newRequest.getCurrencyCoin());
+        this.setTransactionId(newRequest.getTransactionId());
+        this.setIpnId(newRequest.getIpnId());
+        this.setIpn_mode(newRequest.getIpn_mode());
+        this.setIpn_type(newRequest.getIpn_type());
+        this.setIpn_version(newRequest.getIpn_version());
+        this.setMerchant(newRequest.getMerchant());
+        this.setStatus(newRequest.getStatus());
+        this.setStatus_text(newRequest.getStatus_text());
+
+        logger.info("Withdraw request update {}", newRequest);
+    }
+
+    public static void main(String... args){
+        String amount = "0.00876516";
+        BigDecimal bigDecimal = new BigDecimal(amount);
+        System.out.println(bigDecimal);
     }
 }

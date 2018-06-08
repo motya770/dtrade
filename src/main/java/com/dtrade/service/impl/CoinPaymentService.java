@@ -248,12 +248,14 @@ public class CoinPaymentService implements ICoinPaymentService {
             return;
         }
 
-        Integer status =  coinPayment.getInWithdrawRequest().getStatus();
+        Integer status =  withdrawRequest.getStatus();
         if(status==null){
             throw new TradeException("Status is not defined: " + coinPayment.getInWithdrawRequest().getIpnId());
         }
 
         logger.debug("Status is {} for {}", status, coinPayment.getInWithdrawRequest().getIpnId());
+
+        coinPayment.getInWithdrawRequest().update(withdrawRequest);
 
         if(status == 0){
             coinPayment.setCoinPaymentStatus(CoinPaymentStatus.WAITING_FOR_EMAIL);
@@ -265,7 +267,6 @@ public class CoinPaymentService implements ICoinPaymentService {
             throw new TradeException("Unknown withdraw status " + status);
         }
 
-        coinPayment.setInWithdrawRequest(withdrawRequest);
         coinPaymentRepository.save(coinPayment);
     }
 
@@ -386,6 +387,7 @@ public class CoinPaymentService implements ICoinPaymentService {
     }
 
     private CoinPayment confirm(CoinPayment coinPayment){
+
         coinPayment.setCoinPaymentStatus(CoinPaymentStatus.CONFIRMED);
         return coinPaymentRepository.save(coinPayment);
     }
