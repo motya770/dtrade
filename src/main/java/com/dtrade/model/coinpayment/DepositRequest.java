@@ -3,6 +3,7 @@ package com.dtrade.model.coinpayment;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -42,6 +43,7 @@ public class DepositRequest {
     @NotNull
     private BigDecimal amountUsd;
 
+    @Column(precision = 18, scale = 8)
     @NotNull
     private BigDecimal amountCoin;
 
