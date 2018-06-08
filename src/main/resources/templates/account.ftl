@@ -252,12 +252,12 @@
                                                 <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.amountCoin | number : 6}}</td>
                                                 <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.transactionId}}</td>
                                                 <td ng-if="coinPayment.depositRequest">{{coinPayment.depositRequest.ipnId}}</td>
-                                                <td>-</td>
+                                                <td ng-if="coinPayment.depositRequest">-</td>
 
                                                 <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.currencyUsd}}</td>
                                                 <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.amountUsd | number}}</td>
                                                 <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.currencyCoin}}</td>
-                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.amountCoin | number : 6 }}</td>
+                                                <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.amountCoin}}</td>
                                                 <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.transactionId}}</td>
                                                 <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.ipnId}}</td>
                                                 <td ng-if="coinPayment.inWithdrawRequest">{{coinPayment.inWithdrawRequest.id}}</td>
