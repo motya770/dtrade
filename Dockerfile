@@ -1,4 +1,5 @@
 FROM java:8
+RUN apt update && apt install -y vim && apt install less
 VOLUME /tmp
 ARG JAR_FILE
 ADD ${JAR_FILE} app.jar

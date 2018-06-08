@@ -2,6 +2,7 @@ package com.dtrade.model.coinpayment;
 
 import com.dtrade.service.impl.TradeOrderService;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Map;
 
+@ToString
 @Data
 @Embeddable
 public class InWithdrawRequest {
@@ -66,8 +68,6 @@ public class InWithdrawRequest {
     @Column(name = "in_w_amount_coin")
     @NotNull
     private BigDecimal amountCoin;
-
-
 
     public static InWithdrawRequest initiliazeRequest(String currencyCoin, String currencyUsd,
                                                       String address, String amountUsd){
@@ -144,7 +144,7 @@ public class InWithdrawRequest {
         request.setStatus(status);
         request.setStatus_text(status_text);
 
-        logger.info("Withdraw request builded {}", request);
+        logger.info("Withdraw request built {}", request);
 
         return request;
     }
@@ -163,7 +163,16 @@ public class InWithdrawRequest {
         this.setStatus(newRequest.getStatus());
         this.setStatus_text(newRequest.getStatus_text());
 
-        logger.info("Withdraw request update {}", newRequest);
+        /*
+        {"id":"CWCF35RVEVGCRTRM2SSNGITBEA",
+                "ipn_version":"withdrawal","ipn_type":"1.0",
+                "ipn_mode":"hmac","ipnId":"26c45b6b40fe26ff2f0f87ff7d8e6182",
+                "merchant":"1fb3cd572acffff43b1c0356d5429f1c",
+                "address":"0x10D75F90b0F483942aDd5a947b71D8617BB012eD",
+                "transactionId":"0x0bfbd91a4a99f1f567101da3a7395a80e6867e0a6ff83130c51f6902d620d631",
+                "status":2,"status_text":"Complete","currencyUsd":null,"currencyCoin":"ETH","amountUsd":null,"amountCoin":0}
+                */
+        logger.info("Withdraw request update {}", this);
     }
 
     public static void main(String... args){

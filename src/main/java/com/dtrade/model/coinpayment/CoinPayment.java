@@ -4,10 +4,12 @@ package com.dtrade.model.coinpayment;
 import com.dtrade.model.account.Account;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@ToString
 @Data
 @Entity
 @Table
@@ -38,4 +40,6 @@ public class CoinPayment {
 
     @Embedded
     private InWithdrawRequest inWithdrawRequest;
+
+
 }

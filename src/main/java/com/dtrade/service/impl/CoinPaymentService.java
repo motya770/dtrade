@@ -240,6 +240,7 @@ public class CoinPaymentService implements ICoinPaymentService {
 
     @Override
     public void proceedWithdraw(InWithdrawRequest withdrawRequest) {
+        System.out.println("1. Proceed: " + withdrawRequest);
 
         CoinPayment coinPayment = coinPaymentRepository.findInWithdrawById(withdrawRequest.getId());
 
@@ -248,14 +249,22 @@ public class CoinPaymentService implements ICoinPaymentService {
             return;
         }
 
+        System.out.println("2. Proceed: " + coinPayment);
+
         Integer status =  withdrawRequest.getStatus();
         if(status==null){
             throw new TradeException("Status is not defined: " + coinPayment.getInWithdrawRequest().getIpnId());
         }
 
+
+        System.out.println("3. Status: " + status);
+
         logger.debug("Status is {} for {}", status, coinPayment.getInWithdrawRequest().getIpnId());
 
         coinPayment.getInWithdrawRequest().update(withdrawRequest);
+
+
+        System.out.println("4. Updated: " + coinPayment.getInWithdrawRequest());
 
         if(status == 0){
             coinPayment.setCoinPaymentStatus(CoinPaymentStatus.WAITING_FOR_EMAIL);
@@ -266,6 +275,8 @@ public class CoinPaymentService implements ICoinPaymentService {
         }else {
             throw new TradeException("Unknown withdraw status " + status);
         }
+
+        System.out.println("5. New status: " + coinPayment);
 
         coinPaymentRepository.save(coinPayment);
     }
