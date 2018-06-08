@@ -65,7 +65,7 @@ public class InWithdrawRequest {
     @NotNull
     private BigDecimal amountUsd;
 
-    @Column(name = "in_w_amount_coin")
+    @Column(name = "in_w_amount_coin", precision = 18, scale = 8)
     @NotNull
     private BigDecimal amountCoin;
 
