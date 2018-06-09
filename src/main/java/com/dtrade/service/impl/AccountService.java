@@ -88,7 +88,9 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         Object principal = authentication.getPrincipal();
         if(principal instanceof Account){
-            return (Account) principal;
+            Account account = (Account) principal;
+            account = accountRepository.findOne(account.getId());
+            return account;
         }
 
         return null;
