@@ -1,4 +1,4 @@
-diamondApp.controller("CoinPaymentController", function CoinPaymentController($scope, $http){
+diamondApp.controller("CoinPaymentController", function CoinPaymentController($scope, $http, AccountService){
     var self = this;
 
     var poller1 = function() {
@@ -21,7 +21,18 @@ diamondApp.controller("CoinPaymentController", function CoinPaymentController($s
         $http({url: "/coin-payment/create-withdraw",
             method: "POST",
             params: withdrawRequest}).then(function (response) {
-            console.log(response);
+
+            AccountService.currentAccount();
+            if(response.data.error){
+                alert(response.data.message);
+                return;
+            }
+
+        }, function (response) {
+            if(response.data.error){
+                alert(response.data.message);
+                return;
+            }
         });
     }
 });
