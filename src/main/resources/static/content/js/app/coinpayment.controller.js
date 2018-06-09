@@ -1,6 +1,5 @@
 diamondApp.controller("CoinPaymentController", function CoinPaymentController($scope, $http, AccountService){
     var self = this;
-
     var poller1 = function() {
         $http.post('/coin-payment/get-by-account', null).then(function (response) {
             self.coinPayments =  response.data;
@@ -8,6 +7,10 @@ diamondApp.controller("CoinPaymentController", function CoinPaymentController($s
     };
 
     window.setInterval(poller1, 1000);
+
+    self.depositRequest = {
+        amount: 200
+    }
 
     self.withdrawRequest = {
         currencyCoin: "ETH",
