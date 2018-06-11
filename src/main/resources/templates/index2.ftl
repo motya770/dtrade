@@ -190,7 +190,7 @@
                                         </div>
                                         <div class="form-tabs__row">
                                             <label for="input02">Limit price</label>
-                                            <input type="number"  ng-init="vm.tradeOrder.price=0" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr" min="0">
+                                            <input type="number"  ng-init="vm.tradeOrder.price=0" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr" min="0" step="0.01">
                                             <small>USD</small>
                                         </div>
                                         <!--
@@ -302,7 +302,7 @@
                                 <div class="trades-tab" id="tab03">
                                     <div class="table-container">
 
-                                        <div ng-controller="TradeOrderController as vm">
+                                        <div ng-controller="HistoryTradeOrderController as vm">
                                         <table class="diamont-table">
                                             <thead>
                                             <tr>
@@ -357,7 +357,7 @@
                                                     <th>Spread</th>
                                                     <th></th>
                                                     <th></th>
-                                                    <th>{{vm.spread}}</th>
+                                                    <th>{{vm.spread | number : 4}}</th>
                                                 </tr>
                                                 </thead>
 
@@ -413,7 +413,7 @@
                                 </li>
                             </ul>
                             <div class="sep-cab-tabs-container">
-                                <div id="tab01" ng-controller="TradeOrderController as vm" class="sep-cab-tab"  >
+                                <div id="tab01" ng-controller="LiveTradeOrderController as vm" class="sep-cab-tab"  >
                                     <div class="table-container">
                                         <div>
                                             <table class="diamont-table">

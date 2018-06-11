@@ -72,6 +72,7 @@ public class Account implements UserDetails {
 
     private String phone;
 
+    @JsonIgnore
     private String role;
 
     public Account(){

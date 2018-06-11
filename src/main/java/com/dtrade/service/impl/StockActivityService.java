@@ -21,6 +21,20 @@ public class StockActivityService implements IStockActivityService {
     private StockActivityRepository stockActivityRepository;
 
     @Override
+    public StockActivity createSellStockActivity(TradeOrder tradeOrder) {
+
+        StockActivity stockActivity = new StockActivity();
+        stockActivity.setDiamond(tradeOrder.getDiamond());
+        stockActivity.setBuyOrder(null);
+        stockActivity.setSellOrder(tradeOrder);
+        stockActivity.setPrice(tradeOrder.getPrice());
+        stockActivity.setAmount(tradeOrder.getAmount());
+        stockActivity.setCreateDate(System.currentTimeMillis());
+
+        return stockActivityRepository.save(stockActivity);
+    }
+
+    @Override
     public StockActivity createStockActivity(TradeOrder buyOrder, TradeOrder sellOrder,
                                              BigDecimal price, BigDecimal amount) {
 
@@ -30,9 +44,7 @@ public class StockActivityService implements IStockActivityService {
         stockActivity.setSellOrder(sellOrder);
         stockActivity.setPrice(price);
         stockActivity.setAmount(amount);
-        //stockActivity.setTotalAmount();
         stockActivity.setCreateDate(System.currentTimeMillis());
-
         return stockActivityRepository.save(stockActivity);
     }
 

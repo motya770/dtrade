@@ -1,4 +1,4 @@
-diamondApp.controller("TradeOrderController", function TradeOrderController($scope, $rootScope, $http, $interval, $timeout, DiamondService, AccountService, TradeOrderService){
+diamondApp.controller("LiveTradeOrderController", function TradeOrderController($scope, $rootScope, $http, $interval, $timeout, DiamondService, AccountService, TradeOrderService){
 
     var self = this;
     self.firstTimeOut = true;
@@ -15,24 +15,10 @@ diamondApp.controller("TradeOrderController", function TradeOrderController($sco
             self.liveTradeOrders = data;
         });
     }
-    
+
     TradeOrderService.getLiveOrders().then(function (data) {
         self.liveTradeOrders = data;
     });
-
-    var poller1 = function() {
-        if(DiamondService.getCurrentDiamond()==null){
-            $timeout(poller1, 150, false);
-            return;
-        }
-        TradeOrderService.getHistoryOrders(DiamondService.getCurrentDiamond()).then(function (data) {
-            self.historyTradeOrders = data;
-            if(self.firstTimeOut) {
-                self.firstTimeOut = false;
-                window.setInterval(poller1, 1000);
-            }
-        });
-    };
 
     var poller2 = function() {
         var getLiveOrdersStatus = function () {
@@ -51,7 +37,6 @@ diamondApp.controller("TradeOrderController", function TradeOrderController($sco
         getLiveOrdersStatus();
     };
 
-    poller1();
+    console.log("START LIVE");
     window.setInterval(poller2, 1000);
-
 });

@@ -48,7 +48,8 @@
 <script src="/content/js/app/sale.controller.js"></script>
 <script src="/content/js/app/sale.service.js"></script>
 <script src="/content/js/app/owned.service.js"></script>
-<script src="/content/js/app/tradeorder.controller.js"></script>
+<script src="/content/js/app/livetradeorder.controller.js"></script>
+<script src="/content/js/app/historytradeorder.controller.js"></script>
 <script src="/content/js/app/tradeorder.service.js"></script>
 <script src="/content/js/app/utils.js"></script>
 <script src="/content/js/app/menu.controller.js"></script>

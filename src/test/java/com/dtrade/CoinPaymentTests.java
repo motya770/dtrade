@@ -26,9 +26,9 @@ public class CoinPaymentTests extends BaseTest{
 
     @Transactional
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
-    @Test
+    //@Test
     public void processDeposit(){
-
+//Process
         DepositRequest depositRequest = new DepositRequest();
         depositRequest.setEmail(F_DEFAULT_TEST_ACCOUNT);
         UUID uuid = UUID.randomUUID();
@@ -51,7 +51,7 @@ public class CoinPaymentTests extends BaseTest{
 
     @Transactional
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
-    @Test
+   // @Test
     public void createWithdrawTest(){
 
         //{"currencyCoin":"ETH","currencyFiat":"USD","address":"0x10D75F90b0F483942aDd5a947b71D8617BB012eD","amount":"2"}
@@ -67,10 +67,9 @@ public class CoinPaymentTests extends BaseTest{
 
     }
 
-
     @Transactional
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
-    @Test
+   // @Test
     public void checkHmacTest(){
 
 /*

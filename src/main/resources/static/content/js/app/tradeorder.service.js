@@ -1,9 +1,13 @@
 diamondApp.service("TradeOrderService", function ($http, $q) {
 
     var liveOrders = null;
+
     var historyOrders = [];
 
     var addLiveOrder = function(order){
+        if(liveOrders.content==""){
+            liveOrders.content = new Array();
+        }
         liveOrders.content.push(order);
     };
 
@@ -43,6 +47,7 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
 
             return $http.post(url, null, null).then(function (response) {
                 liveOrders = response.data;
+                console.log("LO: " + liveOrders.content);
                 return liveOrders;
             });
         //}

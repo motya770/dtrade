@@ -18,6 +18,7 @@ import java.util.List;
 @Repository
 public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
+
     @Query("select to from TradeOrder to where to.traderOrderStatus = 'CREATED' " +
             "or to.traderOrderStatus = 'IN_MARKET'  order by to.creationDate desc")
     List<TradeOrder> getLiveTradeOrders();
@@ -25,6 +26,18 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
     @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} and (to.traderOrderStatus = 'CREATED' " +
             "or to.traderOrderStatus = 'IN_MARKET' ) order by to.creationDate desc")
     Page<TradeOrder> getLiveTradeOrdersByAccount(@Param("account") Account account, Pageable pageable);
+
+    @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} " +
+            " and to.diamond.id = :#{#diamond.id}" +
+            " and to.tradeOrderType = 'BUY' and (to.traderOrderStatus = 'CREATED' " +
+            "or to.traderOrderStatus = 'IN_MARKET' ) ")
+    List<TradeOrder> getBuyOpenTradesByAccountAndDiamond(@Param("account") Account account, @Param("diamond") Diamond diamond);
+
+    @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} " +
+            " and to.diamond.id = :#{#diamond.id}" +
+            " and to.tradeOrderType = 'SELL' and (to.traderOrderStatus = 'CREATED' " +
+            "or to.traderOrderStatus = 'IN_MARKET' ) ")
+    List<TradeOrder> getSellTradesByAccountAndDiamond(@Param("account") Account account, @Param("diamond") Diamond diamond);
 
     @Query(value = "select to from TradeOrder to where to.account.id = :#{#account.id} and ( to.traderOrderStatus = 'CANCELED' " +
             " or to.traderOrderStatus = 'EXECUTED' or to.traderOrderStatus = 'REJECTED') order by to.creationDate desc")

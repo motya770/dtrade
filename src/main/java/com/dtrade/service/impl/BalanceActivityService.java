@@ -8,6 +8,7 @@ import com.dtrade.model.balanceactivity.BalanceActivityType;
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.repository.balanceactivity.BalanceActivityRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
@@ -129,6 +130,37 @@ public class BalanceActivityService implements IBalanceActivityService {
     }
 
 
+    @Override
+    public BalanceActivity createBuyBalanceActivity(TradeOrder tradeOrder) {
+
+        if(!tradeOrder.getTradeOrderType().equals(TradeOrderType.BUY)){
+            return null;
+        }
+
+        BigDecimal cash = tradeOrder.getPrice().multiply(tradeOrder.getAmount());
+
+        Account account = tradeOrder.getAccount();
+        account = accountService.find(account.getId());
+
+        //buyer don't have enough money
+        if(account.getBalance().compareTo(cash) < 0){
+            throw new NotEnoughMoney();
+        }
+
+        BigDecimal minusCash = cash.multiply(new BigDecimal("-1"));
+        accountService.updateBalance(account, minusCash);
+
+        BalanceActivity activity = new BalanceActivity();
+        activity.setBalanceActivityType(BalanceActivityType.BUY);
+        activity.setAccount(account);
+        activity.setAmount(minusCash);
+        activity.setCreateDate(System.currentTimeMillis());
+        activity.setBuyOrder(tradeOrder);
+        activity.setBalanceSnapshot(account.getBalance());
+        balanceActivityRepository.save(activity);
+
+        return activity;
+    }
 
     @Override
     public void createBalanceActivity(Account buyer, Account seller,  Diamond diamond, BigDecimal price) throws TradeException{
