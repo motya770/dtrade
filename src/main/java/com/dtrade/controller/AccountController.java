@@ -2,6 +2,7 @@ package com.dtrade.controller;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.account.AccountDTO;
 import com.dtrade.model.account.RegistrationAccount;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.ITuringService;
@@ -88,11 +89,9 @@ public class AccountController {
     @RequestMapping(value = "/get-current", method = RequestMethod.POST)
     @ResponseBody
     public Object getCurrentAccount() throws IOException {
-        if (accountService.getCurrentAccount() != null) {
-            Account account = accountService.getCurrentAccount();
-            if (account != null) {
-                return accountService.find(account.getId());
-            }
+         AccountDTO accountDTO = accountService.getCurrentAccountDTO();
+        if(accountDTO!=null){
+            return accountDTO;
         }
         return mapper.readTree("{\"account\" : \"empty\"}");
     }

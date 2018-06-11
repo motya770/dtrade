@@ -2,6 +2,7 @@ package com.dtrade.service;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.account.AccountDTO;
 import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
@@ -10,6 +11,8 @@ import java.math.BigDecimal;
  * Created by kudelin on 8/24/16.
  */
 public interface IAccountService {
+
+    AccountDTO getCurrentAccountDTO();
 
     Account freezeAmount(Account account, BigDecimal amount);
 

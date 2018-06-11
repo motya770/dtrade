@@ -2,9 +2,11 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.account.AccountDTO;
 import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IMailService;
+import com.dtrade.service.ITradeOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class AccountService implements IAccountService, UserDetailsService {
 
 
     private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
+
+    @Autowired
+    private ITradeOrderService tradeOrderService;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -166,6 +171,24 @@ public class AccountService implements IAccountService, UserDetailsService {
         account.setFrozenBalance(account.getFrozenBalance().subtract(amount));
         accountRepository.save(account);
         return account;
+    }
+
+    @Override
+    public AccountDTO getCurrentAccountDTO() {
+        Account account = getCurrentAccount();
+        if(account==null) {
+            return null;
+        }
+
+        //TODO performance hell fix
+        BigDecimal openedOrdersSum  = tradeOrderService.getAllOpenedTradesSum(account);
+
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.setId(account.getId());
+        accountDTO.setMail(account.getMail());
+        accountDTO.setBalance(account.getBalance().subtract(account.getFrozenBalance()).subtract(openedOrdersSum));
+
+        return accountDTO;
     }
 
     @Override
