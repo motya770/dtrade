@@ -17,7 +17,7 @@ public interface ITradeOrderService {
 
     BigDecimal getAllOpenedTradesSum(Account account);
 
-    BigDecimal getOpenedTradesSum(Account account, Diamond diamond);
+    //BigDecimal getOpenedTradesSum(Account account, Diamond diamond);
 
     BigDecimal getOpenedStocksAmount(Account account, Diamond diamond);
 

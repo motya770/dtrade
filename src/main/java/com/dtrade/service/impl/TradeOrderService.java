@@ -98,6 +98,7 @@ public class TradeOrderService  implements ITradeOrderService{
         return sum;
     }
 
+    /*
     @Override
     public BigDecimal getOpenedTradesSum(Account account, Diamond diamond) {
         //TODO fix performance
@@ -107,7 +108,7 @@ public class TradeOrderService  implements ITradeOrderService{
             sum = sum.add(order.getPrice().multiply(order.getAmount()));
         }
         return sum;
-    }
+    }*/
 
     @Autowired
     public void setTransactionManager(PlatformTransactionManager transactionManager){
@@ -255,7 +256,7 @@ public class TradeOrderService  implements ITradeOrderService{
         accountService.checkCurrentAccount(tradeOrder.getAccount());
 
         if(tradeOrder.getTradeOrderType().equals(TradeOrderType.BUY)) {
-            BigDecimal openedSum = getOpenedTradesSum(tradeOrder.getAccount(), tradeOrder.getDiamond());
+            BigDecimal openedSum = getAllOpenedTradesSum(tradeOrder.getAccount());
             Account account = accountService.find(tradeOrder.getAccount().getId());
             BigDecimal balance = account.getBalance();
             BigDecimal cash = tradeOrder.getPrice().multiply(tradeOrder.getAmount());
