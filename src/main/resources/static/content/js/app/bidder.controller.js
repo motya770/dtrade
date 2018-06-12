@@ -1,5 +1,5 @@
 diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http,
-                                                                    AccountService, TradeOrderService){
+                                                                    AccountService, TradeOrderService, AlertService){
     var self= this;
     self.buyOrder = {};
     self.sellOrder = {};
@@ -20,7 +20,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
     $scope.createTradeOrder = function (tradeOrder, diamond) {
 
         if(self.currentAccount == null){
-            alert("You should make login first!");
+            AlertService.showAlert("You should make login first!");
             return;
         }
 
@@ -31,11 +31,11 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
         $http.post("/trade-order/create", tradeOrder, null).then(function (response) {
             //TODO fix
             if(response.data.error){
-                alert(response.data.message);
+                AlertService.showAlert(response.data.message);
                 return;
             }
             if(response.data.id == null) {
-                alert("You should make login first.");
+                AlertService.showAlert("You should make login first.");
                 return;
             }
             TradeOrderService.addLiveOrder(response.data);
@@ -47,7 +47,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
             //TODO add stock service
         }, function (response) {
             if(response.data.error){
-                alert(response.data.message);
+                AlertService.showAlert(response.data.message);
                 return;
             }
         });

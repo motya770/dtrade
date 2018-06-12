@@ -1,4 +1,4 @@
-diamondApp.controller("CoinPaymentController", function CoinPaymentController($scope, $http, AccountService){
+diamondApp.controller("CoinPaymentController", function CoinPaymentController($scope, $http, AccountService, AlertService){
     var self = this;
     var poller1 = function() {
         $http.post('/coin-payment/get-by-account', null).then(function (response) {
@@ -27,13 +27,13 @@ diamondApp.controller("CoinPaymentController", function CoinPaymentController($s
 
             AccountService.currentAccount();
             if(response.data.error){
-                alert(response.data.message);
+                AlertService.showAlert(response.data.message);
                 return;
             }
 
         }, function (response) {
             if(response.data.error){
-                alert(response.data.message);
+                AlertService.showAlert(response.data.message);
                 return;
             }
         });

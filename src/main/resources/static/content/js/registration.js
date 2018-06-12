@@ -21,7 +21,7 @@ diamondApp
           }
         };
       }])
-  .controller('RegistrationController', function($scope, $http) {
+  .controller('RegistrationController', function($scope, $http, AlertService) {
     $scope.account = {
       email: '',
       phone: '',
@@ -35,7 +35,7 @@ diamondApp
           account.pwd = account.password.confirm;
           $http.post("/accounts/register", account, null).then(function (response) {
             //console.log(response);
-            window.alert("Your account was registered. Please, make login.");
+              AlertService.showAlert("Your account was registered. Please, make login.");
           });
       };
 
