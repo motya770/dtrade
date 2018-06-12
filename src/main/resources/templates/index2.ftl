@@ -357,7 +357,7 @@
                                                     <th>Spread</th>
                                                     <th></th>
                                                     <th></th>
-                                                    <th>{{vm.spread | number : 4}}</th>
+                                                    <th>{{vm.spread | number : 2}}</th>
                                                 </tr>
                                                 </thead>
 
