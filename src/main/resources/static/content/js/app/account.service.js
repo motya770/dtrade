@@ -2,14 +2,24 @@
 diamondApp.factory( 'AccountService', ["$http", function($http) {
 
     var self = this;
-    var currentAccount;
+    self.currentAccount;
 
     var currentAccountCall = function() {
         return $http.post('/accounts/get-current').then(function(response){
-            currentAccount = response.data;
-            return currentAccount;
+            if(self.currentAccount!=null){
+                self.currentAccount.balance = response.data.balance;
+            }else{
+                self.currentAccount = response.data;
+            }
+            return self.currentAccount;
         });
     };
+
+    return {
+        currentAccount: currentAccountCall,
+        refreshCurrentAccount: currentAccountCall
+    }
+    /*
 
     if(currentAccount!=null) {
         return {
@@ -29,5 +39,5 @@ diamondApp.factory( 'AccountService', ["$http", function($http) {
                 return currentAccountCall();
             }
         }
-    }
+    }*/
 }]);

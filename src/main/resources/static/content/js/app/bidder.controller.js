@@ -1,4 +1,5 @@
-diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http, AccountService, TradeOrderService){
+diamondApp.controller("BidderController", function BidderController($scope, $rootScope, $http,
+                                                                    AccountService, TradeOrderService){
     var self= this;
     self.buyOrder = {};
     self.sellOrder = {};
@@ -38,6 +39,12 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
                 return;
             }
             TradeOrderService.addLiveOrder(response.data);
+
+            if(response.data.tradeOrderType=="BUY") {
+                AccountService.refreshCurrentAccount();
+            }
+
+            //TODO add stock service
         }, function (response) {
             if(response.data.error){
                 alert(response.data.message);

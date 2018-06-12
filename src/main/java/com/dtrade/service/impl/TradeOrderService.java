@@ -406,7 +406,7 @@ public class TradeOrderService  implements ITradeOrderService{
                         5) work only during one minute
                      */
 
-                    System.out.println("1.1");
+                    //System.out.println("1.1");
                     long start = System.currentTimeMillis();
 
                     TradeOrder buyOrder = tradeOrderRepository.findOne(pair.getFirst().getId());
@@ -415,7 +415,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     if (buyOrder==null || sellOrder == null){
                         return;
                     }
-                    System.out.println("1.3");
+                   // System.out.println("1.3");
 
                    // Hibernate.initialize(buyOrder.getDiamond());
                    // Hibernate.initialize(sellOrder.getDiamond());
@@ -423,26 +423,26 @@ public class TradeOrderService  implements ITradeOrderService{
                     if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
                         return;
                     }
-                    System.out.println("1.4");
+                   // System.out.println("1.4");
 
                     if (!(buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                             || buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
                         return;
                     }
 
-                    System.out.println("1.5");
+                   // System.out.println("1.5");
 
                     if (!(sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                             || sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
                         return;
                     }
-                    System.out.println("1.6");
+                   // System.out.println("1.6");
 
                     if (!checkIfCanExecute(pair)) {
                         return;
                     }
 
-                    System.out.println("1.7");
+                   // System.out.println("1.7");
 
                     Account buyAccount = buyOrder.getAccount();
                     Account sellAccount = sellOrder.getAccount();
@@ -453,7 +453,7 @@ public class TradeOrderService  implements ITradeOrderService{
                         return;
                     }*/
 
-                    System.out.println("1.8");
+                  //  System.out.println("1.8");
 
                     BigDecimal buyPrice = buyOrder.getPrice();
                     BigDecimal buyAmount = buyOrder.getAmount();
@@ -464,7 +464,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     Stock buyStock = stockService.getSpecificStock(buyAccount, buyOrder.getDiamond());
                     Stock sellStock = stockService.getSpecificStock(sellAccount, sellOrder.getDiamond());
 
-                    System.out.println("1.9");
+                   // System.out.println("1.9");
                     //seller don't have enouth stocks
                     if (sellStock.getAmount().compareTo(realAmount) < 0) {
                         //TODO notify user
@@ -474,7 +474,7 @@ public class TradeOrderService  implements ITradeOrderService{
                         // throw new TradeException("Not enougth stocks at " + sellStock);
                     }
 
-                    System.out.println("1.10");
+                   // System.out.println("1.10");
 
                     BigDecimal cash = realAmount.multiply(buyPrice);
 
@@ -488,7 +488,7 @@ public class TradeOrderService  implements ITradeOrderService{
                         return;
                     }
 
-                    System.out.println("1.11");
+                   // System.out.println("1.11");
 
                     logger.debug(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
 
@@ -502,22 +502,22 @@ public class TradeOrderService  implements ITradeOrderService{
                     buyOrder.setAmount(buyOrder.getAmount().subtract(realAmount));
                     sellOrder.setAmount(sellOrder.getAmount().subtract(realAmount));
 
-                    System.out.println("1.13");
+                   // System.out.println("1.13");
                     checkIfExecuted(buyOrder);
                     checkIfExecuted(sellOrder);
 
                     stockService.save(buyStock);
                     stockService.save(sellStock);
 
-                    System.out.println("1.14");
+                   // System.out.println("1.14");
                     tradeOrderRepository.save(buyOrder);
                     tradeOrderRepository.save(sellOrder);
 
-                    System.out.println("1.15");
+                   // System.out.println("1.15");
                     accountService.save(buyAccount);
                     accountService.save(sellAccount);
 
-                    System.out.println("1.17");
+                    //System.out.println("1.17");
                     long end = System.currentTimeMillis() - start;
 
                     logger.debug("SUC EXEC TIME: " + end);
