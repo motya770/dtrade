@@ -35,9 +35,18 @@ diamondApp
           account.pwd = account.password.confirm;
           $http.post("/accounts/register", account, null).then(function (response) {
             //console.log(response);
+              if(response.data.error){
+                  AlertService.showAlert(response.data.message);
+                  return;
+              }
               AlertService.showAlert("Your account was registered. Please, make login.");
+          }, function (response) {
+              if(response.data.error){
+                  AlertService.showAlert(response.data.message);
+                  return;
+              }else {
+                  AlertService.showAlert(response);
+              }
           });
       };
-
-
   });

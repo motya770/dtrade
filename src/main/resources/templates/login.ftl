@@ -23,7 +23,11 @@
                                 <md-input-container class="md-block">
                                     <!-- Use floating placeholder instead of label -->
                                     <md-icon src="/theme/app/img/round_email_black_24dp.png" > email </md-icon>
-                                    <input type="email" name="username" placeholder="Email (required)" ng-required="true">
+                                    <input type="email" name="email" placeholder="Email (required)" ng-required="true">
+                                    <span class="help-block"
+                                          ng-show="email.$dirty && email.$invalid">
+                                            Mail is invalid
+                                    </span>
                                 </md-input-container>
 
                                 <md-input-container md-no-float="" class="md-block">
@@ -33,7 +37,7 @@
                                            ng-minlength="8" required />
                                     <span class="help-block"
                                           ng-show="newPasswordForm.newPassword.$dirty && newPasswordForm.newPassword.$invalid">
-                                            Please enter a new password, it must be at least 6 characters long.
+                                            Please enter a new password, it must be at least 8 characters long.
                                     </span>
                                 </md-input-container>
 
@@ -71,17 +75,17 @@
                         <md-icon src="/theme/app/img/baseline_lock_black_24dp.png"> lock </md-icon>
                             <label for="newPassword">New password</label>
                             <input type="password" name="newPassword" ng-model="account.password.new"
-                                   ng-minlength="6" required />
+                                   ng-minlength="8" required />
                             <span class="help-block"
                                   ng-show="newPasswordForm.newPassword.$dirty && newPasswordForm.newPassword.$invalid">
-                               Please enter a new password, it must be at least 6 characters long.
+                               Please enter a new password, it must be at least 8 characters long.
                         </span>
                         </md-input-container>
                         <md-input-container md-no-float="" class="md-block">
                         <md-icon src="/theme/app/img/baseline_lock_black_24dp.png"> lock </md-icon>
                             <label for="newPasswordConfirm">Confirm new password</label>
                             <input type="password" name="newPasswordConfirm"
-                                   ng-model="account.password.confirm" ng-minlength="6"
+                                   ng-model="account.password.confirm" ng-minlength="8"
                                    value-matches="account.password.new" required />
                             <span class="help-block"
                                   ng-show="newPasswordForm.newPasswordConfirm.$dirty && newPasswordForm.newPasswordConfirm.$invalid">
