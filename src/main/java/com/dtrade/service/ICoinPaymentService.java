@@ -1,6 +1,7 @@
 package com.dtrade.service;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.coinpayment.DepositRequest;
 import com.dtrade.model.coinpayment.InWithdrawRequest;
@@ -8,6 +9,8 @@ import com.dtrade.model.coinpayment.OutWithdrawRequest;
 import org.springframework.data.domain.Page;
 
 public interface ICoinPaymentService {
+
+    Page<CoinPayment> findAll(Integer pageNumber);
 
     void proceedDeposit(DepositRequest depositRequest);
 

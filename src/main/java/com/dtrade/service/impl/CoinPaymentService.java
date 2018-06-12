@@ -2,6 +2,7 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.coinpayment.*;
 import com.dtrade.repository.coinpayment.CoinPaymentRepository;
 import com.dtrade.service.IAccountService;
@@ -327,6 +328,14 @@ public class CoinPaymentService implements ICoinPaymentService {
     public void requestDeposit(String transactionId){
         poolDeposit(transactionId);
     }*/
+
+    @Override
+    public Page<CoinPayment> findAll(Integer pageNumber) {
+        if(pageNumber==null){
+            pageNumber = 0;
+        }
+        return coinPaymentRepository.findAll(new PageRequest(pageNumber, 20));
+    }
 
     //receive money
     @Override

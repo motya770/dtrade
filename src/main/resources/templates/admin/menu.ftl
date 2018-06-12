@@ -6,6 +6,7 @@
         <li><a href="/admin/diamondactivity/list">Diamond Activities</a></li>
         <li><a href="/admin/tradeorder/list">Trade Orders</a></li>
         <li><a href="/admin/stock/list">Stocks</a></li>
+        <li><a href="/admin/coinpayment/list">Coin Payments</a></li>
         <li>Trade Settings</li>
         <li><a href="/admin/quote/history">Quotes</a></li>
     </ul>
