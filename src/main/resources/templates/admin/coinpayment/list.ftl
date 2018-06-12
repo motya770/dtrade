@@ -28,8 +28,8 @@
             </tr>
             </#list>
 
-            <a href="/admin/coinpayment/list?pageNumber=${coinpayments.number + 1}">
-               ${coinpayments.number + 1}
+            <a href="/admin/coinpayment/list?pageNumber=${coinPayments.number + 1}">
+               ${coinPayments.number + 1}
             </a>
         </#if>
         </tbody>
