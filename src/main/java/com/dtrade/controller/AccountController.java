@@ -39,15 +39,15 @@ public class AccountController {
     ) throws Exception {
         //TODO save mail phone country
 
-       validateCredentials(account.getEmail(), account.getPwd(), account.getPhone());
+       validateCredentials(account.getEmail(), account.getPwd(), null);// account.getPhone());
 
        String pwd = org.apache.commons.text.StringEscapeUtils.escapeJava(account.getPwd());
        String email = org.apache.commons.text.StringEscapeUtils.escapeJava(account.getEmail());
-       String phone = org.apache.commons.text.StringEscapeUtils.escapeJava(account.getPhone());
+       //String phone = org.apache.commons.text.StringEscapeUtils.escapeJava(account.getPhone());
 
-        //TODO return this thing
-        //turingService.check(account.getCaptcha(), request.getRemoteAddr());
-        return accountService.createRealAccount(email, pwd, phone, null);
+       //TODO return this thing
+       //turingService.check(account.getCaptcha(), request.getRemoteAddr());
+       return accountService.createRealAccount(email, pwd, null, null);
     }
 
     @RequestMapping(value = "/confirm-registration", method = RequestMethod.POST)
@@ -81,9 +81,10 @@ public class AccountController {
             throw new TradeException("Password should be 8 numbers at least");
         }
 
+        /*
         if (phone.length() < 6) {
             throw new TradeException("Phone should be at least 6 signs.");
-        }
+        }*/
     }
 
     @RequestMapping(value = "/get-current", method = RequestMethod.POST)

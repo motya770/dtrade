@@ -50,13 +50,15 @@
                     <h2 class="def-cab-page__heading">Registration</h2>
                         <div ng-controller="RegistrationController as vm" style="width:500px;" layout="column" layout-padding="" ng-cloak="" class="material-input", class="input-demo-Errors, ng-app="MyApp">
                          <br>
+                            <!--
                         <md-input-container md-no-float="" class="md-block">
 
                             <md-icon class="material-icons md-light md-48"> phone </md-icon>
 
                             <md-icon md-svg-src="/theme/app/img/round_call_black_24dp.png"></md-icon>
                             <input ng-model="account.phone" type="text" placeholder="Phone number(full format)">
-                        </md-input-container>
+                        </md-input-container>-->
+
                         <md-input-container class="md-block">
                             <!-- Use floating placeholder instead of label -->
                               <md-icon src="/theme/app/img/round_email_black_24dp.png"> email </md-icon>

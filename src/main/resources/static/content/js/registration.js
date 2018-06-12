@@ -24,7 +24,7 @@ diamondApp
   .controller('RegistrationController', function($scope, $http, AlertService) {
     $scope.account = {
       email: '',
-      phone: '',
+     // phone: '',
       password: null,
     };
 

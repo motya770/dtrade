@@ -13,7 +13,7 @@ public class RegistrationAccount {
 
     private String pwd;
 
-    private String phone;
+   // private String phone;
 
     private String captcha;
 
