@@ -5,16 +5,19 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.model.stock.Stock;
+import com.dtrade.model.stock.StockDTO;
 import com.dtrade.repository.stock.StockRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IStockService;
+import com.dtrade.service.ITradeOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by kudelin on 6/27/17.
@@ -32,15 +35,29 @@ public class StockService  implements IStockService {
     @Autowired
     private IAccountService accountService;
 
+    @Autowired
+    private ITradeOrderService tradeOrderService;
+
     @Override
     public List<Stock> findAll(){
         return stockRepository.findAll();
     }
 
     @Override
-    public List<Stock> getStocksByAccount() {
+    public List<StockDTO> getStocksByAccount() {
         Account account = accountService.getStrictlyLoggedAccount();
-        return stockRepository.findByAccount(account);
+        List<Stock> stocks = stockRepository.findByAccount(account);
+        return stocks.stream().map(stock -> {
+
+            //TODO performance!!!
+            BigDecimal stockInTradeAmount = tradeOrderService.getOpenedStocksAmount(stock.getAccount(), stock.getDiamond());
+
+            StockDTO stockDTO = new StockDTO();
+            stockDTO.setId(stock.getId());
+            stockDTO.setAmount(stock.getAmount().subtract(stockInTradeAmount));
+            stockDTO.setDiamond(stock.getDiamond());
+            return stockDTO;
+        }).collect(Collectors.toList());
     }
 
     //TODO refactor - add StockActivity

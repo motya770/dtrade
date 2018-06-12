@@ -3,6 +3,7 @@ package com.dtrade.service;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
+import com.dtrade.model.stock.StockDTO;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface IStockService {
 
-    List<Stock> getStocksByAccount();
+    List<StockDTO> getStocksByAccount();
 
     List<Stock> findAll();
 
