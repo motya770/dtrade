@@ -149,14 +149,14 @@
     </form>
 
     <h3>Produce Initial Diamond Offering</h3>
-    <input type="button" onclick="produceIdo(${diamond.id});preventDefault();" value="Produce IDO"></input>
+    <input type="button" onclick="produceIdo(${diamond.id!""});preventDefault();" value="Produce IDO"></input>
     <br/>
     <h3>Images already uploaded</h3>
     <#if diamond.images??>
         <#list diamond.images as image>
             <div>
-                <img style="height: 100px; weight: 100px;" src="/image/diamond-image?image=${image.id}">
-                <input type="button" onclick="removeImage(${diamond.id}, ${image.id}); preventDefault();"/>
+                <img style="height: 100px; weight: 100px;" src="/image/diamond-image?image=${image.id!""}">
+                <input type="button" onclick="removeImage(${diamond.id!""}, ${image.id!""}); preventDefault();"/>
             </div>
         </#list>
     </#if>
