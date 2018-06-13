@@ -23,11 +23,7 @@
                                 <md-input-container class="md-block">
                                     <!-- Use floating placeholder instead of label -->
                                     <md-icon src="/theme/app/img/round_email_black_24dp.png" > email </md-icon>
-                                    <input type="email" name="email" placeholder="Email (required)" ng-required="true">
-                                    <span class="help-block"
-                                          ng-show="email.$dirty && email.$invalid">
-                                            Mail is invalid
-                                    </span>
+                                    <input type="email" name="username" placeholder="Email (required)" ng-required="true">
                                 </md-input-container>
 
                                 <md-input-container md-no-float="" class="md-block">

@@ -20,7 +20,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
     $scope.createTradeOrder = function (tradeOrder, diamond) {
 
         if(self.currentAccount == null){
-            AlertService.showAlert("You should make login first!");
+            AlertService.showAlert("You should make login first!", "Notification");
             return;
         }
 
@@ -35,7 +35,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
                 return;
             }
             if(response.data.id == null) {
-                AlertService.showAlert("You should make login first.");
+                AlertService.showAlert("You should make login first.", "Notification");
                 return;
             }
             TradeOrderService.addLiveOrder(response.data);
