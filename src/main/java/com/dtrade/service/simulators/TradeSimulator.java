@@ -110,17 +110,24 @@ public class TradeSimulator {
         //random buy and random sell (simulation!! :-))
         TradeOrderType tradeOrderType = (random == 0) ? TradeOrderType.BUY : TradeOrderType.SELL;
 
+        String[] prices = {"0.97", "0.98", "0.99", "1.0", "1.1", "1.2", "1.3"};
+
+        /*
         int randPrice = rand.nextInt(100);
         BigDecimal price = new BigDecimal(randPrice);
         if(price==null || price.compareTo(TradeOrderService.ZERO_VALUE)<=0){
             price = new BigDecimal("99");
-        }
+        }*/
+
+
+        int randAmount = rand.nextInt(10);
+        int randPrice  = rand.nextInt(prices.length);
 
         TradeOrder tradeOrder = new TradeOrder();
-        tradeOrder.setAmount(new BigDecimal("10.0"));
+        tradeOrder.setAmount(new BigDecimal(randAmount));
         tradeOrder.setDiamond(diamond);
         tradeOrder.setAccount(accountService.getCurrentAccount());
-        tradeOrder.setPrice(price);
+        tradeOrder.setPrice(new BigDecimal(prices[randPrice]).setScale(2));
 
         tradeOrder.setTradeOrderType(tradeOrderType);
         tradeOrder = tradeOrderService.createTradeOrder(tradeOrder);
