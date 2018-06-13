@@ -34,7 +34,9 @@ diamondApp.controller("CoinPaymentController", function CoinPaymentController($s
         }, function (response) {
             if(response.data.error){
                 AlertService.showAlert(response.data.message);
-                return;
+
+            }else{
+                AlertService.showAlert(response);
             }
         });
     }
