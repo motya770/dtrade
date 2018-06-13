@@ -128,7 +128,7 @@
             <label for="name">Carats</label>
             <input type="number" step="0.01" class="form-control" id="carats" name="carats" placeholder="carats" value="${(diamond.carats)!""}">
         </div>
-         ${diamond.color}
+         ${diamond.color!""}
         <div class="radio">
             <label>Color</label><br/>
             <#assign colorStatusValue = (diamond.color)!"" />
