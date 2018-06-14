@@ -79,23 +79,34 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Override
     public BigDecimal getOpenedStocksAmount(Account account, Diamond diamond) {
-
-        List<TradeOrder> tradeOrders = tradeOrderRepository.getSellTradesByAccountAndDiamond(account, diamond);
+        BigDecimal stockAmount = tradeOrderRepository.getSellTradesByAccountAndDiamond(account, diamond);
+        if(stockAmount==null){
+            stockAmount = new BigDecimal("0.0");
+        }
+        return stockAmount;
+        /*
+        List<TradeOrder> tradeOrders =
         BigDecimal sumStocks = new BigDecimal("0.00");
         for(TradeOrder order: tradeOrders){
             sumStocks = sumStocks.add(order.getAmount());
         }
-        return sumStocks;
+        return sumStocks;*/
     }
 
     @Override
     public BigDecimal getAllOpenedTradesSum(Account account){
-        List<TradeOrder> tradeOrders = tradeOrderRepository.getBuyOpenTradesByAccount(account);
+        BigDecimal sum =  tradeOrderRepository.getBuyOpenTradesByAccount(account);
+        if(sum==null){
+            sum = new BigDecimal("0.0");
+        }
+        return sum;
+        /*
+        List<TradeOrder> tradeOrders =
         BigDecimal sum = new BigDecimal("0.00");
         for(TradeOrder order: tradeOrders){
             sum = sum.add(order.getPrice().multiply(order.getAmount()));
         }
-        return sum;
+        return sum;*/
     }
 
     /*

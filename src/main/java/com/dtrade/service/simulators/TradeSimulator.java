@@ -120,7 +120,7 @@ public class TradeSimulator {
         }*/
 
 
-        int randAmount = rand.nextInt(10);
+        int randAmount = rand.nextInt(10) + 1;
         int randPrice  = rand.nextInt(prices.length);
 
         TradeOrder tradeOrder = new TradeOrder();

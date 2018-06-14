@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -28,10 +29,10 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
     Page<TradeOrder> getLiveTradeOrdersByAccount(@Param("account") Account account, Pageable pageable);
 
 
-    @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} " +
+    @Query("select sum((to.amount * to.price))  from TradeOrder to where to.account.id =  :#{#account.id} " +
             " and to.tradeOrderType = 'BUY' and (to.traderOrderStatus = 'CREATED' " +
             "or to.traderOrderStatus = 'IN_MARKET' ) ")
-    List<TradeOrder> getBuyOpenTradesByAccount(@Param("account") Account account);
+    BigDecimal getBuyOpenTradesByAccount(@Param("account") Account account);
 
     /*
     @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} " +
@@ -41,11 +42,11 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
     List<TradeOrder> getBuyOpenTradesByAccountAndDiamond(@Param("account") Account account, @Param("diamond") Diamond diamond);
     */
 
-    @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} " +
+    @Query("select sum(to.amount) from TradeOrder to where to.account.id =  :#{#account.id} " +
             " and to.diamond.id = :#{#diamond.id}" +
             " and to.tradeOrderType = 'SELL' and (to.traderOrderStatus = 'CREATED' " +
             "or to.traderOrderStatus = 'IN_MARKET' ) ")
-    List<TradeOrder> getSellTradesByAccountAndDiamond(@Param("account") Account account, @Param("diamond") Diamond diamond);
+    BigDecimal getSellTradesByAccountAndDiamond(@Param("account") Account account, @Param("diamond") Diamond diamond);
 
     @Query(value = "select to from TradeOrder to where to.account.id = :#{#account.id} and ( to.traderOrderStatus = 'CANCELED' " +
             " or to.traderOrderStatus = 'EXECUTED' or to.traderOrderStatus = 'REJECTED') order by to.creationDate desc")

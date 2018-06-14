@@ -41,7 +41,7 @@
                                 <th>Clarity</th>
                                 <th>Cut</th>
                                 <th>Color</th>
-                                <th>Σ stcks</th>
+                                <th>Σ stocks</th>
                                 <!--
                                 <th></th>
                                 -->
