@@ -262,13 +262,18 @@ CREATE TABLE `trade_order` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 
+update trade_order set trader_order_status_index = 'HISTORY'
+where trader_order_status = 'REJECTED' or trader_order_status = 'CANCELED'
+      or trader_order_status = 'EXECUTED';
+
+update trade_order set trader_order_status_index = 'LIVE'
+where trader_order_status = 'CREATED' or trader_order_status = 'IN_MARKET';
+
 create index trade_order_trade_order_status on trade_order (trader_order_status) using HASH;
+create index trade_order_trade_order_status_index on trade_order (trader_order_status_index) using HASH;
 create index trade_order_execution_date_index on trade_order (execution_date) using BTREE;
 create index trade_order_creation_date_index on trade_order (execution_date) using BTREE;
 create index quote_time_index on quote (time) using BTREE;
 create index balance_activity_create_date_index on balance_activity (create_date) using BTREE;
-
-
-
 
 -- Dump completed on 2018-04-12 22:53:48

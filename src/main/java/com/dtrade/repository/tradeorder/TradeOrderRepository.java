@@ -20,18 +20,16 @@ import java.util.List;
 public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
 
-    @Query("select to from TradeOrder to where to.traderOrderStatus = 'CREATED' " +
-            "or to.traderOrderStatus = 'IN_MARKET'  order by to.creationDate desc")
+    @Query("select to from TradeOrder to where to.traderOrderStatusIndex = 'LIVE' order by to.creationDate desc")
     List<TradeOrder> getLiveTradeOrders();
 
-    @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} and (to.traderOrderStatus = 'CREATED' " +
-            "or to.traderOrderStatus = 'IN_MARKET' ) order by to.creationDate desc")
+    @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} and (to.traderOrderStatusIndex =  'LIVE') " +
+            " order by to.creationDate desc")
     Page<TradeOrder> getLiveTradeOrdersByAccount(@Param("account") Account account, Pageable pageable);
 
 
     @Query("select sum((to.amount * to.price))  from TradeOrder to where to.account.id =  :#{#account.id} " +
-            " and to.tradeOrderType = 'BUY' and (to.traderOrderStatus = 'CREATED' " +
-            "or to.traderOrderStatus = 'IN_MARKET' ) ")
+            " and to.tradeOrderType = 'BUY' and (to.traderOrderStatusIndex = 'LIVE' )")
     BigDecimal getBuyOpenTradesByAccount(@Param("account") Account account);
 
     /*
@@ -44,12 +42,11 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
     @Query("select sum(to.amount) from TradeOrder to where to.account.id =  :#{#account.id} " +
             " and to.diamond.id = :#{#diamond.id}" +
-            " and to.tradeOrderType = 'SELL' and (to.traderOrderStatus = 'CREATED' " +
-            "or to.traderOrderStatus = 'IN_MARKET' ) ")
+            " and to.tradeOrderType = 'SELL' and (to.traderOrderStatusIndex = 'LIVE' ) ")
     BigDecimal getSellTradesByAccountAndDiamond(@Param("account") Account account, @Param("diamond") Diamond diamond);
 
-    @Query(value = "select to from TradeOrder to where to.account.id = :#{#account.id} and ( to.traderOrderStatus = 'CANCELED' " +
-            " or to.traderOrderStatus = 'EXECUTED' or to.traderOrderStatus = 'REJECTED') order by to.creationDate desc")
+    @Query(value = "select to from TradeOrder to where to.account.id = :#{#account.id} and ( to.traderOrderStatusIndex = 'HISTORY') " +
+            " order by to.creationDate desc ")
     Page<TradeOrder> getHistoryTradeOrdersForAccount(@Param("account") Account account, Pageable pageable);
 
     @Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' and to.diamond.id = :#{#diamond.id} order by to.executionDate desc ")

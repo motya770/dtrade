@@ -47,11 +47,30 @@ public class TradeOrder implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @NotNull
+    private TradeOrderType tradeOrderType;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
     private TraderOrderStatus traderOrderStatus;
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private TradeOrderType tradeOrderType;
+    private TraderOrderStatusIndex traderOrderStatusIndex;
+
+    public void setTraderOrderStatus(TraderOrderStatus status){
+        this.traderOrderStatus = status;
+
+        if(this.traderOrderStatus.equals(TraderOrderStatus.CREATED) ||
+                traderOrderStatus.equals(TraderOrderStatus.IN_MARKET)){
+            this.traderOrderStatusIndex = TraderOrderStatusIndex.LIVE;
+        }
+
+        if(this.traderOrderStatus.equals(TraderOrderStatus.EXECUTED) ||
+                traderOrderStatus.equals(TraderOrderStatus.CANCELED) ||
+                traderOrderStatus.equals(TraderOrderStatus.REJECTED)){
+            this.traderOrderStatusIndex = TraderOrderStatusIndex.HISTORY;
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
