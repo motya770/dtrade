@@ -4,12 +4,11 @@ package com.dtrade.service.simulators;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.model.tradeorder.TradeOrderType;
+import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IQuotesService;
 import com.dtrade.service.ITradeOrderService;
-import com.dtrade.service.impl.TradeOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,7 +107,7 @@ public class TradeSimulator {
 
         //logger.info("rand value " + random);
         //random buy and random sell (simulation!! :-))
-        TradeOrderType tradeOrderType = (random == 0) ? TradeOrderType.BUY : TradeOrderType.SELL;
+        TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
 
         String[] prices = {"0.97", "0.98", "0.99", "1.0", "1.1", "1.2", "1.3"};
 
@@ -129,7 +128,7 @@ public class TradeSimulator {
         tradeOrder.setAccount(accountService.getCurrentAccount());
         tradeOrder.setPrice(new BigDecimal(prices[randPrice]).setScale(2));
 
-        tradeOrder.setTradeOrderType(tradeOrderType);
+        tradeOrder.setTradeOrderDirection(tradeOrderDirection);
         tradeOrder = tradeOrderService.createTradeOrder(tradeOrder);
         return tradeOrder;
     }

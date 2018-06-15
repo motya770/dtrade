@@ -4,7 +4,7 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.bookorder.BookOrder;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.model.tradeorder.TradeOrderType;
+import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.ITradeOrderService;
 import org.slf4j.Logger;
@@ -55,11 +55,11 @@ public class BookOrderService implements IBookOrderService {
             bookOrder = new BookOrder();
         }
 
-        if(TradeOrderType.BUY.equals(order.getTradeOrderType())){
+        if(TradeOrderDirection.BUY.equals(order.getTradeOrderDirection())){
             logger.debug("adding buy " + order.getId());
             bookOrder.getBuyOrders().add(order);
 
-        }else if(TradeOrderType.SELL.equals(order.getTradeOrderType())){
+        }else if(TradeOrderDirection.SELL.equals(order.getTradeOrderDirection())){
             logger.debug("adding sell " + order.getId());
             bookOrder.getSellOrders().add(order);
         }else{
@@ -183,9 +183,9 @@ public class BookOrderService implements IBookOrderService {
         }
 
         Optional.ofNullable(book).ifPresent((bookOrder)->{
-            if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
+            if(order.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
                  bookOrder.getBuyOrders().remove(order);
-            }else if(order.getTradeOrderType().equals(TradeOrderType.SELL)){
+            }else if(order.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
                 bookOrder.getSellOrders().remove(order);
             }
         });
@@ -196,10 +196,10 @@ public class BookOrderService implements IBookOrderService {
         logger.info("update D");
         BookOrder book = bookOrders.get(order.getDiamond().getId());
         Optional.ofNullable(book).ifPresent((bookOrder)->{
-            if(order.getTradeOrderType().equals(TradeOrderType.BUY)){
+            if(order.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
                 bookOrder.getBuyOrders().remove(order);
                 bookOrder.getBuyOrders().add(order);
-            }else if(order.getTradeOrderType().equals(TradeOrderType.SELL)){
+            }else if(order.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
                 bookOrder.getSellOrders().remove(order);
                 bookOrder.getSellOrders().add(order);
             }

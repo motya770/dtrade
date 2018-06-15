@@ -199,7 +199,7 @@
 
                             <div class="amount">AMOUNT: <input ng-model="vm.buyOrder.amount"></input></div>
 
-                            <input type="hidden" ng-model="vm.buyOrder.tradeOrderType" ng-init="vm.buyOrder.tradeOrderType='BUY'" />
+                            <input type="hidden" ng-model="vm.buyOrder.tradeOrderDirection" ng-init="vm.buyOrder.tradeOrderDirection='BUY'" />
 
                             <a class="button black" href="#" ng-click="$event.preventDefault(); createTradeOrder(vm.buyOrder, vm.buyDiamond)">BUY ORDER</a>
                         </div>
@@ -218,7 +218,7 @@
                             </div>
                             <div class="amount">AMOUNT: <input ng-model="vm.sellOrder.amount"></input></div>
 
-                            <input type="hidden" ng-model="vm.sellOrder.tradeOrderType" ng-init="vm.sellOrder.tradeOrderType='SELL'" />
+                            <input type="hidden" ng-model="vm.sellOrder.tradeOrderDirection" ng-init="vm.sellOrder.tradeOrderDirection='SELL'" />
                             <a href="#" class="button black" ng-click="$event.preventDefault(); createTradeOrder(vm.sellOrder, vm.sellDiamond)">SELL ORDER</a>
                         </div>
 
@@ -337,7 +337,7 @@
                             <td>{{tradeOrder.price}}</td>
                             <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                             <td>{{tradeOrder.traderOrderStatus}}</td>
-                            <td>{{tradeOrder.tradeOrderType}}</td>
+                            <td>{{tradeOrder.tradeOrderDirection}}</td>
                             <td><a href="#" class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">CANCEL</a></td>
                         </tr>
                         </tbody>
@@ -369,7 +369,7 @@
                             <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                             <td>{{tradeOrder.executionDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                             <td>{{tradeOrder.traderOrderStatus}}</td>
-                            <td>{{tradeOrder.tradeOrderType}}</td>
+                            <td>{{tradeOrder.tradeOrderDirection}}</td>
                         </tr>
                         </tbody>
                     </table>

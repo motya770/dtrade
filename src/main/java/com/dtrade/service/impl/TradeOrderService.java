@@ -7,7 +7,7 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDTO;
-import com.dtrade.model.tradeorder.TradeOrderType;
+import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
@@ -145,7 +145,7 @@ public class TradeOrderService  implements ITradeOrderService{
             tradeOrderDTO.setInitialAmount(to.getInitialAmount());
             tradeOrderDTO.setPrice(to.getPrice());
             tradeOrderDTO.setExecutionDate(to.getExecutionDate());
-            tradeOrderDTO.setTradeOrderType(to.getTradeOrderType());
+            tradeOrderDTO.setTradeOrderDirection(to.getTradeOrderDirection());
 
             tradeOrderDTOS.add(tradeOrderDTO);
         }
@@ -260,13 +260,13 @@ public class TradeOrderService  implements ITradeOrderService{
             throw new TradeException("Can't create trade order because price is less than 0.");
         }
 
-        if(tradeOrder.getTradeOrderType()==null){
+        if(tradeOrder.getTradeOrderDirection()==null){
             throw new TradeException("Can't create trade order because trade order type is empty.");
         }
 
         accountService.checkCurrentAccount(tradeOrder.getAccount());
 
-        if(tradeOrder.getTradeOrderType().equals(TradeOrderType.BUY)) {
+        if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
             BigDecimal openedSum = getAllOpenedTradesSum(tradeOrder.getAccount());
             Account account = accountService.find(tradeOrder.getAccount().getId());
             BigDecimal balance = account.getBalance();
@@ -276,7 +276,7 @@ public class TradeOrderService  implements ITradeOrderService{
             }
         }
 
-        if(tradeOrder.getTradeOrderType().equals(TradeOrderType.SELL)){
+        if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
             BigDecimal openAmount = getOpenedStocksAmount(tradeOrder.getAccount(), tradeOrder.getDiamond());
             Stock stock = stockService.getSpecificStock(tradeOrder.getAccount(), tradeOrder.getDiamond());
             if(stock.getAmount().subtract(openAmount).subtract(tradeOrder.getAmount()).compareTo(BigDecimal.ZERO) < 0){
@@ -302,7 +302,7 @@ public class TradeOrderService  implements ITradeOrderService{
         realOrder.setDiamond(tradeOrder.getDiamond());
         realOrder.setAccount(tradeOrder.getAccount());
         realOrder.setPrice(tradeOrder.getPrice());
-        realOrder.setTradeOrderType(tradeOrder.getTradeOrderType());
+        realOrder.setTradeOrderDirection(tradeOrder.getTradeOrderDirection());
         realOrder.setTraderOrderStatus(TraderOrderStatus.CREATED);
         realOrder.setCreationDate(System.currentTimeMillis());
 

@@ -29,20 +29,20 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
 
     @Query("select sum((to.amount * to.price))  from TradeOrder to where to.account.id =  :#{#account.id} " +
-            " and to.tradeOrderType = 'BUY' and (to.traderOrderStatusIndex = 'LIVE' )")
+            " and to.tradeOrderDirection = 'BUY' and (to.traderOrderStatusIndex = 'LIVE' )")
     BigDecimal getBuyOpenTradesByAccount(@Param("account") Account account);
 
     /*
     @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} " +
             " and to.diamond.id = :#{#diamond.id}" +
-            " and to.tradeOrderType = 'BUY' and (to.traderOrderStatus = 'CREATED' " +
+            " and to.tradeOrderDirection = 'BUY' and (to.traderOrderStatus = 'CREATED' " +
             "or to.traderOrderStatus = 'IN_MARKET' ) ")
     List<TradeOrder> getBuyOpenTradesByAccountAndDiamond(@Param("account") Account account, @Param("diamond") Diamond diamond);
     */
 
     @Query("select sum(to.amount) from TradeOrder to where to.account.id =  :#{#account.id} " +
             " and to.diamond.id = :#{#diamond.id}" +
-            " and to.tradeOrderType = 'SELL' and (to.traderOrderStatusIndex = 'LIVE' ) ")
+            " and to.tradeOrderDirection = 'SELL' and (to.traderOrderStatusIndex = 'LIVE' ) ")
     BigDecimal getSellTradesByAccountAndDiamond(@Param("account") Account account, @Param("diamond") Diamond diamond);
 
     @Query(value = "select to from TradeOrder to where to.account.id = :#{#account.id} and ( to.traderOrderStatusIndex = 'HISTORY') " +
@@ -55,7 +55,7 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
     /*
     @Query(" select sum(to.price * to.initialAmount) from TradeOrder to where " +
             "to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
-            " and to.tradeOrderType='SELL' " +
+            " and to.tradeOrderDirection='SELL' " +
             " and to.executionDate > :startOfTheMonth " +
             " order by to.creationDate desc ")
     long getSellSumForMonthForAccount(Account account, long startOfTheMonth);*/
@@ -63,7 +63,7 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
     /*
     @Query(" select sum(to.price * to.initialAmount) from TradeOrder to where " +
             "to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
-            " and to.tradeOrderType='SELL' " +
+            " and to.tradeOrderDirection='SELL' " +
             " and to.executionDate > :startOfTheMonth " +
             " order by to.creationDate desc ")
     long getBuySumForMonthForAccount();*/

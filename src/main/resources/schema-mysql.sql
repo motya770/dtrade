@@ -269,6 +269,14 @@ where trader_order_status = 'REJECTED' or trader_order_status = 'CANCELED'
 update trade_order set trader_order_status_index = 'LIVE'
 where trader_order_status = 'CREATED' or trader_order_status = 'IN_MARKET';
 
+UPDATE trade_order set trade_order_direction = 'SELL'
+WHERE trade_order_type = 'SELL' and id > 0;
+COMMIT;
+UPDATE trade_order set trade_order_direction = 'BUY'
+WHERE trade_order_type = 'BUY' and id > 0;
+COMMIT;
+ALTER TABLE dtrade.trade_order DROP trade_order_type;
+
 create index trade_order_trade_order_status on trade_order (trader_order_status) using HASH;
 create index trade_order_trade_order_status_index on trade_order (trader_order_status_index) using HASH;
 create index trade_order_execution_date_index on trade_order (execution_date) using BTREE;

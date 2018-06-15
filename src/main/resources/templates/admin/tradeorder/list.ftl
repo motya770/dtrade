@@ -30,7 +30,7 @@
                 <td>${tradeOrder.price}</td>
                 <td>${tradeOrder.creationDate?number_to_datetime}</td>
                 <td>${(tradeOrder.traderOrderStatus)!""}</td>
-                <td>${(tradeOrder.tradeOrderType)!""}</td>
+                <td>${(tradeOrder.tradeOrderDirection)!""}</td>
             </tr>
             </#list>
         </#if>

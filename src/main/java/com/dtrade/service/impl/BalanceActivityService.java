@@ -8,7 +8,7 @@ import com.dtrade.model.balanceactivity.BalanceActivityType;
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.model.tradeorder.TradeOrderType;
+import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.repository.balanceactivity.BalanceActivityRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
@@ -133,7 +133,7 @@ public class BalanceActivityService implements IBalanceActivityService {
     @Override
     public BalanceActivity createBuyBalanceActivity(TradeOrder tradeOrder) {
 
-        if(!tradeOrder.getTradeOrderType().equals(TradeOrderType.BUY)){
+        if(!tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
             return null;
         }
 

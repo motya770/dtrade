@@ -315,13 +315,13 @@
 
                                             <tr ng-repeat="tradeOrder in vm.historyTradeOrders track by tradeOrder.id">
                                                 <td>{{tradeOrder.initialAmount | number : 4}}</td>
-                                                    <td ng-if="tradeOrder.tradeOrderType == 'BUY'" class="up">
+                                                    <td ng-if="tradeOrder.tradeOrderDirection == 'BUY'" class="up">
                                                         {{tradeOrder.price | number : 4 }}
 
                                                             <img ng-src="/theme/app/img/up.png" alt="up">
 
                                                     </td>
-                                                    <td ng-if="tradeOrder.tradeOrderType == 'SELL'" class="down">
+                                                    <td ng-if="tradeOrder.tradeOrderDirection == 'SELL'" class="down">
                                                         {{tradeOrder.price | number : 4}}
                                                             <img ng-src="/theme/app/img/down.png" alt="down">
 
@@ -437,7 +437,7 @@
                                                 <td>{{tradeOrder.initialAmount | number : 4}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                                 <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
-                                                <td>{{tradeOrder.tradeOrderType | lowercase}}</td>
+                                                <td>{{tradeOrder.tradeOrderDirection | lowercase}}</td>
                                                 <!--
                                                 <td>{{tradeOrder.amount}}</td>
                                                 -->

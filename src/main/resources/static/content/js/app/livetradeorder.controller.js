@@ -28,7 +28,9 @@ diamondApp.controller("LiveTradeOrderController", function TradeOrderController(
             var ids = new Array();
             //console.log(self.liveTradeOrders.content)
             for(var i in self.liveTradeOrders.content){
-                ids.push(self.liveTradeOrders.content[i].id)
+                if(self.liveTradeOrders.content[i].id!=null) {
+                    ids.push(self.liveTradeOrders.content[i].id)
+                }
             }
             $http.post("/trade-order/live-orders-reread", ids).then(function (responce) {
                 self.liveTradeOrders.content = responce.data;

@@ -17,5 +17,5 @@ public class TradeOrderDTO {
 
     private Long executionDate;
 
-    private TradeOrderType tradeOrderType;
+    private TradeOrderDirection tradeOrderDirection;
 }

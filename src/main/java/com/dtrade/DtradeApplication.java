@@ -60,7 +60,7 @@ public class DtradeApplication  implements CommandLineRunner {
             tradeOrder.setAccount(a1);
             tradeOrder.setAmount(new BigDecimal("100"));
             tradeOrder.setPrice(new BigDecimal("20.0"));
-            tradeOrder.setTradeOrderType(TradeOrderType.BUY);
+            tradeOrder.setTradeOrderDirection(TradeOrderDirection.BUY);
 
             tradeOrderService.createTradeOrder(tradeOrder);
         }
@@ -73,7 +73,7 @@ public class DtradeApplication  implements CommandLineRunner {
             tradeOrder.setAccount(a2);
             tradeOrder.setAmount(new BigDecimal("100"));
             tradeOrder.setPrice(new BigDecimal("20.0"));
-            tradeOrder.setTradeOrderType(TradeOrderType.SELL);
+            tradeOrder.setTradeOrderDirection(TradeOrderDirection.SELL);
 
             tradeOrderService.createTradeOrder(tradeOrder);
         }*/

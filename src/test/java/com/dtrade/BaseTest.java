@@ -3,7 +3,7 @@ package com.dtrade;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.*;
 import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.model.tradeorder.TradeOrderType;
+import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.service.impl.AccountService;
 import com.dtrade.service.impl.DiamondService;
 import com.dtrade.service.impl.TradeOrderService;
@@ -50,26 +50,26 @@ public class BaseTest {
         return createTestTradeOrder(null);
     }
 
-    public TradeOrder createTestTradeOrder(TradeOrderType tradeOrderType){
+    public TradeOrder createTestTradeOrder(TradeOrderDirection tradeOrderDirection){
         TradeOrder tradeOrder = new TradeOrder();
         tradeOrder.setAmount(new BigDecimal("10.0"));
         tradeOrder.setDiamond(diamondService.getAvailable().stream().findFirst().get());
         tradeOrder.setAccount(accountService.getCurrentAccount());
         tradeOrder.setPrice(new BigDecimal("100.00"));
-        if(tradeOrderType==null){
-            tradeOrderType = TradeOrderType.BUY;
+        if(tradeOrderDirection ==null){
+            tradeOrderDirection = TradeOrderDirection.BUY;
         }
-        tradeOrder.setTradeOrderType(tradeOrderType);
+        tradeOrder.setTradeOrderDirection(tradeOrderDirection);
         tradeOrder = tradeOrderService.createTradeOrder(tradeOrder);
         return tradeOrder;
     }
 
     public TradeOrder createTestBuyTradeOrder(){
-        return createTestTradeOrder(TradeOrderType.BUY);
+        return createTestTradeOrder(TradeOrderDirection.BUY);
     }
 
     public TradeOrder createTestSellTradeOrder(){
-        return createTestTradeOrder(TradeOrderType.SELL);
+        return createTestTradeOrder(TradeOrderDirection.SELL);
     }
 
 }
