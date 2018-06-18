@@ -428,6 +428,7 @@
                                                 <th>Name</th>
                                                 <th>Price</th>
                                                 <th>Amount</th>
+                                                <th>Executed sum</th>
                                                 <th>t creation </th>
                                                 <th>Status</th>
                                                 <th>Type</th>
@@ -440,6 +441,7 @@
                                                 <td>{{tradeOrder.diamond.name}}</td>
                                                 <td>{{tradeOrder.price | number : 4 }}</td>
                                                 <td>{{tradeOrder.initialAmount | number : 4}}</td>
+                                                <td>{{tradeOrder.executionSum | number : 2}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                                 <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
                                                 <td>{{tradeOrder.tradeOrderDirection | lowercase}} {{tradeOrder.tradeOrderType | lowercase}}</td>
@@ -504,8 +506,8 @@
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                                     <td>{{tradeOrder.executionDate | date:'dd/MM HH:mm:ss' }}</td>
                                                     <td>{{tradeOrder.initialAmount | number : 2}}</td>
-                                                    <td><span ng-if="tradeOrder.tradeOrderType == 'MARKET' ">{{tradeOrder.price | number : 2}}</span></td>
-                                                    <td>{{tradeOrder.price * tradeOrder.initialAmount | number : 2}}</td>
+                                                    <td><span ng-if="tradeOrder.tradeOrderType == 'LIMIT' ">{{tradeOrder.price | number : 2}}</span></td>
+                                                    <td>{{tradeOrder.executionSum | number : 2}}</td>
                                                     <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
                                                     <td>{{tradeOrder.tradeOrderDirection | lowercase}} {{tradeOrder.tradeOrderType | lowercase}}</td>
                                                 </tr>

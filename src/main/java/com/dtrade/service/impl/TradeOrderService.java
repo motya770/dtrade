@@ -306,6 +306,7 @@ public class TradeOrderService  implements ITradeOrderService{
         realOrder.setTraderOrderStatus(TraderOrderStatus.CREATED);
         realOrder.setCreationDate(System.currentTimeMillis());
         realOrder.setTradeOrderType(tradeOrder.getTradeOrderType());
+        realOrder.setExecutionSum(new BigDecimal("0.00"));
 
         logger.debug("before save {}", tradeOrder);
 
@@ -539,6 +540,9 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     buyOrder.setAmount(buyOrder.getAmount().subtract(realAmount));
                     sellOrder.setAmount(sellOrder.getAmount().subtract(realAmount));
+
+                    buyOrder.setExecutionSum(buyOrder.getExecutionSum().add(cash));
+                    sellOrder.setExecutionSum(sellOrder.getExecutionSum().add(cash));
 
                    // System.out.println("1.13");
                     checkIfExecuted(buyOrder);

@@ -45,6 +45,9 @@ public class TradeOrder implements Serializable {
 
     private Long executionDate;
 
+    @NotNull
+    private BigDecimal executionSum;
+
     //BUY, SELL
     @Enumerated(EnumType.STRING)
     @NotNull
