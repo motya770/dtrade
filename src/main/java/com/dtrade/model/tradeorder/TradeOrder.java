@@ -45,13 +45,14 @@ public class TradeOrder implements Serializable {
 
     private Long executionDate;
 
-
+    //BUY, SELL
     @Enumerated(EnumType.STRING)
     @NotNull
     private TradeOrderDirection tradeOrderDirection;
 
-    //BUY, SELL
-
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private TradeOrderType tradeOrderType;
 
     @Enumerated(EnumType.STRING)
     @NotNull

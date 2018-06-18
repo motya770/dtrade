@@ -5,10 +5,7 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
-import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.model.tradeorder.TradeOrderDTO;
-import com.dtrade.model.tradeorder.TradeOrderDirection;
-import com.dtrade.model.tradeorder.TraderOrderStatus;
+import com.dtrade.model.tradeorder.*;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
 import org.slf4j.Logger;
@@ -27,6 +24,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 /**
  * Created by kudelin on 6/27/17.
@@ -294,6 +292,8 @@ public class TradeOrderService  implements ITradeOrderService{
 
         long start = System.currentTimeMillis();
 
+        defineMarketPrice(tradeOrder);
+
         validateFields(tradeOrder);
 
         TradeOrder realOrder = new TradeOrder();
@@ -305,9 +305,9 @@ public class TradeOrderService  implements ITradeOrderService{
         realOrder.setTradeOrderDirection(tradeOrder.getTradeOrderDirection());
         realOrder.setTraderOrderStatus(TraderOrderStatus.CREATED);
         realOrder.setCreationDate(System.currentTimeMillis());
+        realOrder.setTradeOrderType(tradeOrder.getTradeOrderType());
 
         logger.debug("before save {}", tradeOrder);
-
 
         realOrder = tradeOrderRepository.save(realOrder);
 
@@ -315,6 +315,23 @@ public class TradeOrderService  implements ITradeOrderService{
 
         logger.debug("Open Trade time {}", (System.currentTimeMillis() - start));
         return realOrder;
+    }
+
+    private void defineMarketPrice(TradeOrder tradeOrder){
+        if(tradeOrder.getTradeOrderType().equals(TradeOrderType.MARKET)) {
+
+            Pair<Diamond, Pair<BigDecimal, BigDecimal>> spread = bookOrderService.getSpread(tradeOrder.getDiamond());
+            if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
+                // for buy order we take sell price
+                tradeOrder.setPrice(spread.getSecond().getSecond());
+
+            } else if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
+                // for sell order we take buy price
+                tradeOrder.setPrice(spread.getSecond().getFirst());
+            }else {
+                throw new TradeException("Unexpected behavior");
+            }
+        }
     }
 
     @Override
@@ -380,6 +397,14 @@ public class TradeOrderService  implements ITradeOrderService{
 
         if(buyOrder==null || sellOrder == null){
             return false;
+        }
+
+        if(buyOrder.getTradeOrderType().equals(TradeOrderType.MARKET)){
+            return true;
+        }
+
+        if(sellOrder.getTradeOrderType().equals(TradeOrderType.MARKET)){
+            return true;
         }
 
         if(buyOrder.getPrice().compareTo(sellOrder.getPrice()) >= 0){
@@ -466,7 +491,9 @@ public class TradeOrderService  implements ITradeOrderService{
 
                   //  System.out.println("1.8");
 
-                    BigDecimal buyPrice = buyOrder.getPrice();
+                    //Decided to buy side to prevail on sell side
+                    BigDecimal orderPrice = definePrice(sellOrder, buyOrder);
+
                     BigDecimal buyAmount = buyOrder.getAmount();
                     BigDecimal sellAmount = sellOrder.getAmount();
 
@@ -476,18 +503,18 @@ public class TradeOrderService  implements ITradeOrderService{
                     Stock sellStock = stockService.getSpecificStock(sellAccount, sellOrder.getDiamond());
 
                    // System.out.println("1.9");
-                    //seller don't have enouth stocks
+                    //seller don't have enough stocks
                     if (sellStock.getAmount().compareTo(realAmount) < 0) {
                         //TODO notify user
-                        logger.error("Not enougth stocks at {}" + sellStock);
+                        logger.error("Not enough stocks at {}" + sellStock);
                         rejectTradeOrder(sellOrder);
                         return;
-                        // throw new TradeException("Not enougth stocks at " + sellStock);
+                        // throw new TradeException("Not enough stocks at " + sellStock);
                     }
 
                    // System.out.println("1.10");
 
-                    BigDecimal cash = realAmount.multiply(buyPrice);
+                    BigDecimal cash = realAmount.multiply(orderPrice);
 
                     long startActivity = System.currentTimeMillis();
                     try {
@@ -508,7 +535,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     //System.out.println("1.12");
                     stockActivityService.createStockActivity(buyOrder, sellOrder,
-                            cash, realAmount);
+                            cash, orderPrice, realAmount);
 
                     buyOrder.setAmount(buyOrder.getAmount().subtract(realAmount));
                     sellOrder.setAmount(sellOrder.getAmount().subtract(realAmount));
@@ -539,7 +566,18 @@ public class TradeOrderService  implements ITradeOrderService{
 //        });
     }
 
+    private BigDecimal definePrice(TradeOrder sellOrder, TradeOrder buyOrder){
 
+        if(buyOrder.getTradeOrderType().equals(TradeOrderType.MARKET)){
+            return sellOrder.getPrice();
+        }
+
+        if(sellOrder.getTradeOrderType().equals(TradeOrderType.MARKET)){
+            return buyOrder.getPrice();
+        }
+
+        return buyOrder.getPrice();
+    }
 
     @Override
     public long sellSumForMonthForAccount() {

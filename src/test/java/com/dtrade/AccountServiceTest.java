@@ -128,17 +128,13 @@ public class AccountServiceTest extends BaseTest{
         account = accountService.updateBalance(account, addedValue);
 
         Assert.assertTrue(account.getBalance().compareTo(oldBalance.add(addedValue)) == 0);
-
    }
 
    @Test
    public void testFindByMail(){
-
        Account account =  accountService.findByMail(F_DEFAULT_TEST_ACCOUNT);
        Assert.assertNotNull(account);
        Assert.assertNotNull(F_DEFAULT_TEST_ACCOUNT.equals(account.getMail()));
-
-
    }
 
 }

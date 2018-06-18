@@ -17,7 +17,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
     };
 
     //TODO check it!
-    $scope.createTradeOrder = function (tradeOrder, diamond) {
+    $scope.createTradeOrder = function (tradeOrder, diamond, tradeOrderType) {
 
         if(self.currentAccount == null || self.currentAccount.account == "empty"){
             AlertService.showAlert("You should make login first!", "Notification");
@@ -27,6 +27,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
         tradeOrder["account"] = self.currentAccount;
         tradeOrder["diamond"] = diamond;
         tradeOrder.tradeOrderDirection = $scope.tradeOrder.tradeOrderDirection;
+        tradeOrder.tradeOrderType = tradeOrderType;
 
         $http.post("/trade-order/create", tradeOrder, null).then(function (response) {
             //TODO fix

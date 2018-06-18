@@ -37,6 +37,9 @@ public class StockActivity {
     private BigDecimal price;
 
     @NotNull
+    private BigDecimal sum;
+
+    @NotNull
     private BigDecimal amount;
 
     @NotNull

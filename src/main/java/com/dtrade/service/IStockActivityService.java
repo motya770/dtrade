@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface IStockActivityService {
     StockActivity createStockActivity(TradeOrder buyOrder, TradeOrder sellOrder,
-                                      BigDecimal price, BigDecimal amount);
+                                      BigDecimal sum,  BigDecimal price, BigDecimal amount);
 
     @Deprecated
     StockActivity createSellStockActivity(TradeOrder tradeOrder);

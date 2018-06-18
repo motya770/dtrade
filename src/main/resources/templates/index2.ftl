@@ -134,19 +134,24 @@
                         <div class="sep-cab-page__mid">
                             <div class="sep-cab-page__form" style="height: 491px;">
                                 <ul class="sep-cab-tabs sep-cab-tabs--form">
-                                    <!--
                                     <li class="active">
                                         <a href="#tab05">Market</a>
-                                    </li>-->
-                                    <li class="active">
+                                    </li>
+                                    <li>
                                         <a href="#tab06">Limit</a>
                                     </li>
                                 </ul>
 
                                 <div ng-controller="BidderController as vm">
                                     <div class="form-tabs">
-                                        <!--
                                     <form class="form-tabs__tab" id="tab05">
+                                        <div class="form-tabs__boxes">
+                                            <div class="form-tabs__info-top diamond-bid-name">
+                                                <div>{{vm.diamond.name}}</div>
+                                                <p>{{vm.diamond.diamondType | diamondTypeFilter}},
+                                                    Cr - {{vm.diamond.carats}}, GIA - {{vm.diamond.clarity}}</p>
+                                            </div>
+                                        </div>
                                         <div class="form-tabs__boxes">
                                             <label class="typebox">
                                                 <input type="radio" class="typebox__input" name="type" checked>
@@ -163,9 +168,9 @@
                                         </div>
                                         <div class="form-tabs__submit">
                                             <h3>Total (USD)</h3>
-                                            <button class="form-tabs__subm" ng-click="alert('test'); createTradeOrder(vm.tradeOrder, vm.diamond);">Place order</button>
+                                            <button class="form-tabs__subm" ng-click="alert('test'); createTradeOrder(vm.tradeOrder, vm.diamond, 'MARKET');">Place order</button>
                                         </div>
-                                    </form>-->
+                                    </form>
                                     <form class="form-tabs__tab" id="tab06">
                                         <div class="form-tabs__boxes">
                                             <div class="form-tabs__info-top diamond-bid-name">
@@ -203,7 +208,7 @@
                                         </div>-->
                                         <div class="form-tabs__submit">
                                             <h3>Total (USD): {{vm.tradeOrder.amount * vm.tradeOrder.price | number:2}}</h3>
-                                            <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond)">Place order</button>
+                                            <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond, 'LIMIT')">Place order</button>
                                         </div>
                                     </form>
                                 </div>
@@ -425,7 +430,7 @@
                                                 <th>Amount</th>
                                                 <th>t creation </th>
                                                 <th>Status</th>
-                                                <th>Types</th>
+                                                <th>Type</th>
                                                 <th>Action</th>
                                             </tr>
                                             </thead>
@@ -437,7 +442,7 @@
                                                 <td>{{tradeOrder.initialAmount | number : 4}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
                                                 <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
-                                                <td>{{tradeOrder.tradeOrderDirection | lowercase}}</td>
+                                                <td>{{tradeOrder.tradeOrderDirection | lowercase}} {{tradeOrder.tradeOrderType | lowercase}}</td>
                                                 <!--
                                                 <td>{{tradeOrder.amount}}</td>
                                                 -->
@@ -490,6 +495,7 @@
                                                     <th>Price</th>
                                                     <th>Sum</th>
                                                     <th>Status</th>
+                                                    <th>Type</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -498,9 +504,10 @@
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                                     <td>{{tradeOrder.executionDate | date:'dd/MM HH:mm:ss' }}</td>
                                                     <td>{{tradeOrder.initialAmount | number : 2}}</td>
-                                                    <td>{{tradeOrder.price | number : 2}}</td>
+                                                    <td><ng-if="tradeOrder.tradeOrderType=='MARKET'">{{tradeOrder.price | number : 2}}</ng-if></td>
                                                     <td>{{tradeOrder.price * tradeOrder.initialAmount | number : 2}}</td>
                                                     <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
+                                                    <td>{{tradeOrder.tradeOrderDirection | lowercase}} {{tradeOrder.tradeOrderType | lowercase}}</td>
                                                 </tr>
                                                 </tbody>
                                             </table>

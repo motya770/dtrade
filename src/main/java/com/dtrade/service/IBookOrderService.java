@@ -5,6 +5,7 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.util.Pair;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,4 +29,6 @@ public interface IBookOrderService {
      List<Pair<TradeOrder, TradeOrder>> find10Closest(Long diamondId);
 
      List<Pair<?, ?>> getSpreadForDiamonds(List<Diamond> diamonds);
+
+     Pair<Diamond, Pair<BigDecimal, BigDecimal>>  getSpread(Diamond diamond);
 }

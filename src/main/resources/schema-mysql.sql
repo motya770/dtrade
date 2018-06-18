@@ -261,7 +261,6 @@ CREATE TABLE `trade_order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-
 update trade_order set trader_order_status_index = 'HISTORY'
 where trader_order_status = 'REJECTED' or trader_order_status = 'CANCELED'
       or trader_order_status = 'EXECUTED';
@@ -276,6 +275,10 @@ UPDATE trade_order set trade_order_direction = 'BUY'
 WHERE trade_order_type = 'BUY' and id > 0;
 COMMIT;
 ALTER TABLE dtrade.trade_order DROP trade_order_type;
+
+UPDATE trade_order set trade_order_type = 'MARKET'
+where id > 0;
+COMMIT;
 
 create index trade_order_trade_order_status on trade_order (trader_order_status) using HASH;
 create index trade_order_trade_order_status_index on trade_order (trader_order_status_index) using HASH;

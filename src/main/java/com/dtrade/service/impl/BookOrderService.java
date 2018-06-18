@@ -16,6 +16,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -73,33 +74,20 @@ public class BookOrderService implements IBookOrderService {
 
     @Transactional
     @Override
-    public List<Pair<?, ?>> getSpreadForDiamonds(List<Diamond> diamonds) {
-
-        List<Pair<?, ?>> response = new ArrayList<>();
-        for(Diamond diamond : diamonds){
+    public Pair<Diamond, Pair<BigDecimal, BigDecimal>> getSpread(Diamond diamond) {
             Pair<TradeOrder, TradeOrder> closest = this.findClosest(diamond.getId());
             if(closest!=null) {
-
-                BookOrder bookOrder = this.getBookOrder(diamond);
-
-                /*
-                System.out.println("\\n \\n \\n");
-                System.out.println("{SELL : ");
-                bookOrder.getSellOrders().stream().limit(20).forEach(tradeOrder -> {
-                    System.out.println(tradeOrder.getId() + " " + tradeOrder.getDiamond().getName() + " " + tradeOrder.getPrice());
-                });
-
-                System.out.println("{BUY : ");
-                bookOrder.getBuyOrders().stream().limit(20).forEach(tradeOrder -> {
-                    System.out.println(tradeOrder.getId() + " " + tradeOrder.getDiamond().getName() + " " + tradeOrder.getPrice());
-                });
-
-                System.out.println("\\n \\n \\n");
-                */
-
-                Pair<?, ?> pair = Pair.of(diamond, Pair.of(closest.getFirst().getPrice(), closest.getSecond().getPrice()));
-                response.add(pair);
+                return Pair.of(diamond, Pair.of(closest.getFirst().getPrice(), closest.getSecond().getPrice()));
             }
+        return null;
+    }
+
+    @Transactional
+    @Override
+    public List<Pair<?, ?>> getSpreadForDiamonds(List<Diamond> diamonds) {
+        List<Pair<?, ?>> response = new ArrayList<>();
+        for(Diamond diamond : diamonds){
+            response.add(getSpread(diamond));
         }
         return response;
     }

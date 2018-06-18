@@ -5,6 +5,7 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
+import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IQuotesService;
@@ -127,7 +128,7 @@ public class TradeSimulator {
         tradeOrder.setDiamond(diamond);
         tradeOrder.setAccount(accountService.getCurrentAccount());
         tradeOrder.setPrice(new BigDecimal(prices[randPrice]).setScale(2));
-
+        tradeOrder.setTradeOrderType(TradeOrderType.LIMIT);
         tradeOrder.setTradeOrderDirection(tradeOrderDirection);
         tradeOrder = tradeOrderService.createTradeOrder(tradeOrder);
         return tradeOrder;

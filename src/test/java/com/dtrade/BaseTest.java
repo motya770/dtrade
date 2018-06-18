@@ -4,6 +4,7 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.*;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
+import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.service.impl.AccountService;
 import com.dtrade.service.impl.DiamondService;
 import com.dtrade.service.impl.TradeOrderService;
@@ -55,6 +56,7 @@ public class BaseTest {
         tradeOrder.setAmount(new BigDecimal("10.0"));
         tradeOrder.setDiamond(diamondService.getAvailable().stream().findFirst().get());
         tradeOrder.setAccount(accountService.getCurrentAccount());
+        tradeOrder.setTradeOrderType(TradeOrderType.MARKET);
         tradeOrder.setPrice(new BigDecimal("100.00"));
         if(tradeOrderDirection ==null){
             tradeOrderDirection = TradeOrderDirection.BUY;

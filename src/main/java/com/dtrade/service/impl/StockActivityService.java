@@ -36,12 +36,13 @@ public class StockActivityService implements IStockActivityService {
 
     @Override
     public StockActivity createStockActivity(TradeOrder buyOrder, TradeOrder sellOrder,
-                                             BigDecimal price, BigDecimal amount) {
+                                             BigDecimal sum, BigDecimal price, BigDecimal amount) {
 
         StockActivity stockActivity = new StockActivity();
         stockActivity.setDiamond(buyOrder.getDiamond());
         stockActivity.setBuyOrder(buyOrder);
         stockActivity.setSellOrder(sellOrder);
+        stockActivity.setSum(sum);
         stockActivity.setPrice(price);
         stockActivity.setAmount(amount);
         stockActivity.setCreateDate(System.currentTimeMillis());
