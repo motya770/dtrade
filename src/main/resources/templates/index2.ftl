@@ -504,7 +504,7 @@
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                                     <td>{{tradeOrder.executionDate | date:'dd/MM HH:mm:ss' }}</td>
                                                     <td>{{tradeOrder.initialAmount | number : 2}}</td>
-                                                    <td><ng-if="tradeOrder.tradeOrderType=='MARKET'">{{tradeOrder.price | number : 2}}</ng-if></td>
+                                                    <td><span ng-if="tradeOrder.tradeOrderType == 'MARKET' ">{{tradeOrder.price | number : 2}}</span></td>
                                                     <td>{{tradeOrder.price * tradeOrder.initialAmount | number : 2}}</td>
                                                     <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
                                                     <td>{{tradeOrder.tradeOrderDirection | lowercase}} {{tradeOrder.tradeOrderType | lowercase}}</td>
