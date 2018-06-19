@@ -1,7 +1,6 @@
 package com.dtrade.model.diamond;
 
 import com.dtrade.model.image.Image;
-import com.dtrade.model.quote.Quote;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 

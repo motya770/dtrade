@@ -2,7 +2,6 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
-import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.coinpayment.*;
 import com.dtrade.repository.coinpayment.CoinPaymentRepository;
 import com.dtrade.service.IAccountService;
@@ -26,17 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.net.URI;
-import java.time.Duration;
-import java.time.temporal.Temporal;
 import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 @Transactional
 @Service

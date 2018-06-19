@@ -1,6 +1,5 @@
 package com.dtrade.controller;
 
-import com.dtrade.model.stock.Stock;
 import com.dtrade.model.stock.StockDTO;
 import com.dtrade.service.IStockService;
 import org.springframework.beans.factory.annotation.Autowired;

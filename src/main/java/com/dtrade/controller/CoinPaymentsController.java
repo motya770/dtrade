@@ -4,7 +4,6 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.coinpayment.DepositRequest;
 import com.dtrade.model.coinpayment.InWithdrawRequest;
-import com.dtrade.model.coinpayment.OutWithdrawRequest;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.ICoinPaymentService;
 import com.dtrade.service.impl.TradeOrderService;
@@ -13,10 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.RequestEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController

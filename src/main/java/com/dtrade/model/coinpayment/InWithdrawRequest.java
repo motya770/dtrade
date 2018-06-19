@@ -1,6 +1,5 @@
 package com.dtrade.model.coinpayment;
 
-import com.dtrade.service.impl.TradeOrderService;
 import lombok.Data;
 import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;

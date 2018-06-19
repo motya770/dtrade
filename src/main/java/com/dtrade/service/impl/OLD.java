@@ -1,7 +1,5 @@
 package com.dtrade.service.impl;
 
-import org.springframework.web.client.RestTemplate;
-
 public class OLD {
 
      /*
