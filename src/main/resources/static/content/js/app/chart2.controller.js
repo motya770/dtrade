@@ -222,5 +222,159 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
     });
 
 
-    //getGraphData();
+  var getDepthGraph = function () {
+      if(DiamondService.getCurrentDiamond()==null){
+          $timeout(getDepthGraph, 500, false);
+          return;
+      }
+
+
+     // {"first":[{"amount":18.0,"price":1.00},
+      // {"amount":19.00,"price":0.99},
+      // {"amount":8597.00,"price":0.98}],
+
+      // "second":[{"amount":8734.00,"price":1.20},
+      // {"amount":18889.00,"price":1.30}]}
+
+      $http.get('/graph/get-depth-quotes?diamond=' + DiamondService.getCurrentDiamond().id).then(function(response) {
+
+          var data = response.data;
+
+          var bidList = data["first"];
+          var askList = data["second"];
+
+          var bidData = new Array();
+          var askData = new Array();
+
+          for(var i = 0; i <bidList.length; i++){
+              var p = bidList[i];
+              var pointArr = new Array();
+              pointArr.push(p.price);
+              pointArr.push(p.amount);
+              bidData.push(pointArr);
+          }
+
+          for(var i = 0; i <askList.length; i++){
+              var p = askList[i];
+              var pointArr = new Array();
+              pointArr.push(p.price);
+              pointArr.push(p.amount);
+              askData.push(pointArr);
+          }
+
+          /*
+          for (var i = 0; i < askData.length; i++) {
+              askDepthTotal += askData[i][1];
+              askData[i][1] = askDepthTotal;
+          }
+
+          for (var i = 0; i < bidData.length; i++) {
+              bidDepthTotal += bidData[i][1];
+              bidData[i][1] = bidDepthTotal;
+          }*/
+
+
+          var chart = Highcharts.chart('containerDepth', {
+              chart: {
+                  type: 'area',
+                  zoomType: 'xy'
+              },
+              title: {
+                  text: '',
+                  style: {
+                      color: '#000000'
+                  }
+              },
+              subtitle: {
+                  text: '',
+                  style: {
+                      color: '#000000'
+                  }
+              },
+              xAxis: [{
+                  type: 'logarithmic',
+                  title: {
+                      text: 'Price',
+                      style: {
+                          color: '#000000'
+                      },
+                  },
+                  width: '50%',
+                  labels: {
+                      style: {
+                          color: 'green'
+                      }
+                  }
+              }, {
+                  type: 'logarithmic',
+                  title: {
+                      text: 'Price',
+                      style: {
+                          color: '#000000'
+                      },
+                  },
+                  labels: {
+                      style: {
+                          color: 'red'
+                      }
+                  },
+                  offset: 0,
+                  left: '50%',
+                  width: '50%'
+              }],
+              yAxis: {
+                  gridLineWidth: 0,
+                  title: {
+                      text: 'Depth',
+                      style: {
+                          color: '#000000'
+                      }
+                  }
+              },
+              legend: {
+                  enabled: false
+              },
+              plotOptions: {
+                  area: {
+                      softThreshold: true,
+                      marker: {
+                          radius: 2
+                      },
+                      lineWidth: 2,
+                      states: {
+                          hover: {
+                              lineWidth: 3
+                          }
+                      },
+                      threshold: null
+                  },
+              },
+
+              tooltip: {
+                  shared: true,
+                  useHTML: true,
+                  headerFormat: '<table>',
+                  pointFormat: '<tr><td>Price:</td><td style="text-align: right;">{point.x}</td></tr><tr><td>Sum ($):</td><td style="text-align: right;">{point.y}</td></tr>',
+                  footerFormat: '</table>',
+                  valueDecimals: 2
+              },
+
+              series: [{
+                  name: 'Bids',
+                  data: bidData,
+                  color: '#48d26f',
+                  fillColor: '#48d26f',
+                  xAxis: 0,
+              }, {
+                  name: 'Asks',
+                  data: askData,
+                  color: '#ff6565',
+                  fillColor: '#ff6565',
+                  xAxis: 1,
+              }]
+          });
+      });
+  };
+
+  getDepthGraph();
 });

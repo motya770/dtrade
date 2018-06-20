@@ -110,7 +110,7 @@ public class TradeSimulator {
         //random buy and random sell (simulation!! :-))
         TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
 
-        String[] prices = {"0.97", "0.98", "0.99", "1.0", "1.1", "1.2", "1.3"};
+        String[] prices = {"0.96", "0.97", "0.98", "0.99", "1.0", "1.1", "1.2", "1.3"};
 
         /*
         int randPrice = rand.nextInt(100);

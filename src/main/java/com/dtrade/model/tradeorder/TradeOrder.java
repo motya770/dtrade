@@ -4,6 +4,7 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -94,5 +95,22 @@ public class TradeOrder implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "TradeOrder{" +
+                "id=" + id +
+                ", amount=" + amount +
+                ", initialAmount=" + initialAmount +
+                ", price=" + price +
+                ", creationDate=" + creationDate +
+                ", executionDate=" + executionDate +
+                ", executionSum=" + executionSum +
+                ", tradeOrderDirection=" + tradeOrderDirection +
+                ", tradeOrderType=" + tradeOrderType +
+                ", traderOrderStatus=" + traderOrderStatus +
+                ", traderOrderStatusIndex=" + traderOrderStatusIndex +
+                '}';
     }
 }

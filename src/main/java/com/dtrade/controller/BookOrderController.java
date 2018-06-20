@@ -42,13 +42,13 @@ public class BookOrderController {
         }
         if(bookOrder.getBuyOrders()!=null) {
             buyOrders = bookOrder.getBuyOrders().stream().limit(10).collect(Collectors.toList());
-            Collections.reverse(buyOrders);
         }
 
         if(bookOrder.getSellOrders()!=null) {
             sellOrders = bookOrder.getSellOrders().stream().limit(10).collect(Collectors.toList());
+            Collections.reverse(sellOrders);
         }
-        return new BookOrderView(buyOrders, sellOrders);
 
+        return new BookOrderView(buyOrders, sellOrders);
     }
 }

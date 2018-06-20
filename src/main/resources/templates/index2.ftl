@@ -213,10 +213,7 @@
                                     </form>
                                 </div>
                                 </div>
-
-
                             </div>
-
                             <!--
                             <div class="sep-cab-page__activity">
                                 <div class="sep-cab-page__heading">
@@ -228,10 +225,19 @@
                                 </div>
                             </div>-->
                         </div>
-                        <div class="sep-cab-page__side sep-cab-page__right">
-                            <div class="sep-cab-page__heading">
+                        <div class="sep-cab-page__side sep-cab-page__right" style="height: 491px;">
+                            <div class="">
+                                <ul class="sep-cab-tabs sep-cab-tabs--graph">
+                                    <li class="active">
+                                        <a href="#tab11">Graph</a>
+                                    </li>
+                                    <li>
+                                        <a href="#tab12">Depth</a>
+                                    </li>
+                                </ul>
+                                <!--
                                 <h2>Technical analysis</h2>
-                                <p>Graph of diamond share prices</p>
+                                <p>Graph of diamond share prices</p>-->
                             </div>
                             <!--
                             <form class="filterlist">
@@ -274,10 +280,15 @@
                                 <span class="filterlist__date">26 ноября</span>
                             </form>-->
                             <div class="main-trade-graph" style="margin-top:0px; padding-bottom: 16px;">
+                                <div class="form-tabs">
+                                    <div ng-controller="ChartController as vm">
+                                        <div  class="graph__tab" id="tab11" class="row" style="position: relative; width: 100%;">
+                                            <div id="container" style="position: relative; width: 100%;"></div>
+                                        </div>
 
-                                <div ng-controller="ChartController as vm">
-                                    <div class="row" style="position: relative; width: 100%;">
-                                        <div id="container" style="position: relative; width: 100%;"></div>
+                                        <div  class="graph__tab" id="tab12" class="row" style="position: relative; width: 100%;">
+                                            <div id="containerDepth" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!--
@@ -351,11 +362,16 @@
                                                 </thead>
                                                 <tbody>
 
-                                                <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders track by tradeOrder.id">
-                                                    <td>{{tradeOrder.amount | number : 4}}</td>
-                                                    <td class="up">{{tradeOrder.price | number : 4 }}</td>
+                                                <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders track by tradeOrder.id">
+                                                    <td style="padding-right: 20px;">{{tradeOrder.amount | number : 4}}</td>
+                                                    <td style="padding-right: 20px" class="down">{{tradeOrder.price | number : 4}}</td>
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+                                                    <!--
+                                                    <td style="width: 114px;">{{tradeOrder.initialAmount | number : 4}}</td>
+                                                    <td style="width: 50px;" class="down">{{tradeOrder.price | number : 4}}</td>
+                                                    <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>-->
                                                 </tr>
+
 
                                                 <thead style="border-top: 1px solid #e7e7e7;">
                                                 <tr>
@@ -366,15 +382,13 @@
                                                 </tr>
                                                 </thead>
 
-                                                <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders track by tradeOrder.id">
-                                                    <td style="padding-right: 20px;">{{tradeOrder.amount | number : 4}}</td>
-                                                    <td style="padding-right: 20px" class="down">{{tradeOrder.price | number : 4}}</td>
+
+                                                <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders track by tradeOrder.id">
+                                                    <td>{{tradeOrder.amount | number : 4}}</td>
+                                                    <td class="up">{{tradeOrder.price | number : 4 }}</td>
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
-                                                    <!--
-                                                    <td style="width: 114px;">{{tradeOrder.initialAmount | number : 4}}</td>
-                                                    <td style="width: 50px;" class="down">{{tradeOrder.price | number : 4}}</td>
-                                                    <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>-->
                                                 </tr>
+
                                                 </tbody>
                                             </table>
                                         </div>

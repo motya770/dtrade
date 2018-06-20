@@ -4,6 +4,7 @@ package com.dtrade.service;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
+import com.dtrade.model.quote.depth.DepthQuote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -18,7 +19,7 @@ import java.util.List;
 public interface IQuotesService {
 
 
-    //void generateQuotes();
+    Pair<List<DepthQuote>, List<DepthQuote>>  getDepthQuotes(Diamond diamond);
 
     Quote issueQuote(Pair<TradeOrder, TradeOrder> pair);
 

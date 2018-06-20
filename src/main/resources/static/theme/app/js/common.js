@@ -86,6 +86,12 @@ $(function() {
 		hideFirst : true
 	});
 
+    $(".sep-cab-tabs--graph").webcTabs({
+        links : $(".sep-cab-tabs--graph a"),
+        tabContent : $(".graph__tab"),
+        hideFirst : true
+    });
+
 	$(".trades-tab, .type-diamond-table").niceScroll({
 		cursoropacitymin: 1,
 		cursorcolor: "#eaeaea",

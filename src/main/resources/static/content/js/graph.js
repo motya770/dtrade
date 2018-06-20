@@ -270,7 +270,7 @@ var Graph = {
         var positions = $(".open-positions-container .open-positions .open-position.option-id-" + optionId);
 
         var bidStartTime = parseInt($(".open-time", option).text());
-        var tradeTime = parseInt($(".trade-time", option).text())
+        var tradeTime = parseInt($(".trade-tFime", option).text())
         var closeTime = parseInt($(".close-time", option).text())
 
         var optionType = $(".option-type", option).text();
