@@ -61,7 +61,10 @@
 			<section class="about-us">
 				<div class="about-us-wrapper wrapper">
 					<div class="about-us-left">
+						<!--
 						<a data-fancybox href="https://www.youtube.com/watch?v=NM2wtte1JRE" class="about-us-left__link"><img src="/ico/build/img/d-video.png" alt="video" class="about-us-left__img"></a>
+						-->
+                        <img src="/ico/build/img/d-video.png" alt="video" class="about-us-left__img">
 						<div class="about-us-left-diamonds" data-stellar-ratio="1.5" data-stellar-vertical-offset="200">
 							<img src="/ico/build/img/diamonds/1.png" alt="diamond" class="about-us-left-diamonds__img about-us-left-diamonds__img_1">
 							<img src="/ico/build/img/diamonds/2.png" alt="diamond" class="about-us-left-diamonds__img about-us-left-diamonds__img_2">
