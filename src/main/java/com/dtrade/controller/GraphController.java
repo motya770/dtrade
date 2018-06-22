@@ -31,7 +31,11 @@ public class GraphController {
     @RequestMapping(value = "/get-depth-quotes", method = RequestMethod.GET)
     public Pair<List<DepthQuote>, List<DepthQuote>> getDepthQuotes(@RequestParam(required = true) Diamond diamond
     ) throws TradeException {
-        return quotesService.getDepthQuotes(diamond);
+
+        long start = System.currentTimeMillis();
+        Pair<?, ?> pair =  quotesService.getDepthQuotes(diamond);
+        System.out.println("depth quote difference: " + (System.currentTimeMillis() - start));
+        return (Pair<List<DepthQuote>, List<DepthQuote>>)pair;
     }
 
     @RequestMapping(value = "/get-quotes-last-year", method = RequestMethod.POST)

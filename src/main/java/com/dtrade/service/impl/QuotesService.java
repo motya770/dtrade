@@ -61,7 +61,7 @@ public class QuotesService implements IQuotesService {
     }
 
     private List<DepthQuote> buildBuyDepthQuotes(List<TradeOrder> orders){
-        System.out.println("\n\n START");
+       // System.out.println("\n\n START");
 
         DepthQuote depthQuote = new DepthQuote();
         List<DepthQuote> quotes  = new ArrayList<>();
@@ -90,19 +90,19 @@ public class QuotesService implements IQuotesService {
                 depthQuote.setAmount(amount);
             }
 
-            System.out.println("price: " + order.getPrice() + " am: " + order.getAmount() + " sum: " + amount);
+            //System.out.println("price: " + order.getPrice() + " am: " + order.getAmount() + " sum: " + amount);
 
             if(i==0){
                 quotes.add(depthQuote);
             }
         }
 
-        System.out.println("END \n\n\n");
+        //System.out.println("END \n\n\n");
         return quotes;
     }
 
     private List<DepthQuote> buildSellDepthQuotes(List<TradeOrder> orders){
-        System.out.println("\n\n START");
+       // System.out.println("\n\n START");
 
         DepthQuote depthQuote = new DepthQuote();
         List<DepthQuote> quotes  = new ArrayList<>();
@@ -131,14 +131,14 @@ public class QuotesService implements IQuotesService {
                 depthQuote.setAmount(amount);
             }
 
-            System.out.println("price: " + order.getPrice() + " am: " + order.getAmount() + " sum: " + amount);
+           // System.out.println("price: " + order.getPrice() + " am: " + order.getAmount() + " sum: " + amount);
 
             if(i==(orders.size()-1)){
                 quotes.add(depthQuote);
             }
         }
 
-        System.out.println("END \n\n\n");
+        //System.out.println("END \n\n\n");
         return quotes;
     }
 
