@@ -109,9 +109,9 @@
                                                             <input type="image" src="/theme/app/img/dia2.png" />
                                                         </div>
                                                     </td>
-                                                    <td>30</td>
-                                            <td>11&nbsp;000</td>
-                                            <td>14&nbsp;500</td>
+                                            <td>0.4</td>
+                                            <td>0.42&nbsp;</td>
+                                            <td>7 mln</td>
                                         </tr>
                                             <tr style="width: 100%; background-color: #e7e7e7">
                                                 <td style="width: 100%;">White Sea <small>Ova, GIA - VS2, Cr-3</small></td>
@@ -125,7 +125,7 @@
                                                 <td>4 mln</td>
                                             </tr>
                                             <tr style="width: 100%; background-color: #e7e7e7">
-                                                <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-43</small></td>
+                                                <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-5</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
                                                         <input type="image" src="/theme/app/img/dia3.png" />
@@ -135,8 +135,9 @@
                                                 <td>22.5&nbsp;</td>
                                                 <td>10 mln</td>
                                             </tr>
+                                            <!--
                                             <tr style="width: 100%; background-color: #e7e7e7">
-                                                <td style="width: 100%;">Brilliant III <small>Hea, GIA - VS1, Cr-8</small></td>
+                                                <td style="width: 100%;">Albert <small>Hea, GIA - VS1, Cr-8</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
                                                         <input type="image" src="/theme/app/img/dia2.png" />
@@ -145,7 +146,7 @@
                                                 <td>8.1</td>
                                                 <td>8.3&nbsp;</td>
                                                 <td>21 mln</td>
-                                            </tr>
+                                            </tr>-->
 
                                         </tbody>
                                     </table>
