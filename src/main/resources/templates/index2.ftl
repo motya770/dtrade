@@ -102,28 +102,51 @@
                                                         </md-dialog>
                                                     </script>
 
-                                            <tr>
-
-                                                <!--
-                                                <td>
-                                                We are going to produce new Initial Diamond Offering
-                                                </td>-->
-                                                    <!--
-                                                    <td style="width: 100%;">Brilliant III <small>Rad, GIA - WS1, Cr-6</small></td>
+                                        <tr style="width: 100%; background-color: #e7e7e7">
+                                            <td>Elisabeth III <small>Rad, GIA - VSS2, Cr-6</small></td>
                                                     <td>
                                                        <div layout="row" layout-wrap="" >
-                                                            <input type="image" src="/theme/app/img/dia3.png" />
+                                                            <input type="image" src="/theme/app/img/dia2.png" />
                                                         </div>
                                                     </td>
-                                                    -->
-
-                                                <!--
-                                                    <td>280</td>
-                                                -->
-                                            <!--
+                                                    <td>30</td>
                                             <td>11&nbsp;000</td>
-                                            <td>14&nbsp;500</td>-->
+                                            <td>14&nbsp;500</td>
                                         </tr>
+                                            <tr style="width: 100%; background-color: #e7e7e7">
+                                                <td style="width: 100%;">White Sea <small>Ova, GIA - VS2, Cr-3</small></td>
+                                                <td>
+                                                    <div layout="row" layout-wrap="" >
+                                                        <input type="image" src="/theme/app/img/dia1.png" />
+                                                    </div>
+                                                </td>
+                                                <td>0.4</td>
+                                                <td>0.43&nbsp;</td>
+                                                <td>4 mln</td>
+                                            </tr>
+                                            <tr style="width: 100%; background-color: #e7e7e7">
+                                                <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-43</small></td>
+                                                <td>
+                                                    <div layout="row" layout-wrap="" >
+                                                        <input type="image" src="/theme/app/img/dia3.png" />
+                                                    </div>
+                                                </td>
+                                                <td>21.4</td>
+                                                <td>22.5&nbsp;</td>
+                                                <td>10 mln</td>
+                                            </tr>
+                                            <tr style="width: 100%; background-color: #e7e7e7">
+                                                <td style="width: 100%;">Brilliant III <small>Hea, GIA - VS1, Cr-8</small></td>
+                                                <td>
+                                                    <div layout="row" layout-wrap="" >
+                                                        <input type="image" src="/theme/app/img/dia2.png" />
+                                                    </div>
+                                                </td>
+                                                <td>8.1</td>
+                                                <td>8.3&nbsp;</td>
+                                                <td>21 mln</td>
+                                            </tr>
+
                                         </tbody>
                                     </table>
                                         <div class="coming-soon">New Initial Diamond Offerings coming soon ... </div>
