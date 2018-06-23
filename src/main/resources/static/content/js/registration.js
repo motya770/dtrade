@@ -39,7 +39,8 @@ diamondApp
                   AlertService.showAlert(response.data.message);
                   return;
               }
-              AlertService.showAlert("Your account was registered. Please, make login.", "Registered successfully");
+              //AlertService.showAlert("Your account was registered.", "Registered successfully");
+              window.location.replace("/trade");
           }, function (response) {
               if(response.data.error){
                   AlertService.showAlert(response.data.message);

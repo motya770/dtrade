@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -163,8 +164,11 @@ public class AccountService implements IAccountService, UserDetailsService {
         accountRepository.save(account);
         //TODO enable after restart
         //mailService.sendRegistrationMail(account);
+        login(account);
         return account;
     }
+
+
 
     @Override
     public Account unfreezeAmount(Account account, BigDecimal amount) {
@@ -230,6 +234,14 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Override
     public Account findByMail(String login) {
         return accountRepository.findByMail(login);
+    }
+
+    @Override
+    public Account login(Account account) {
+        Authentication auth =
+                new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        return account;
     }
 
     @Override

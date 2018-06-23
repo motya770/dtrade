@@ -12,6 +12,8 @@ import java.math.BigDecimal;
  */
 public interface IAccountService {
 
+
+
     AccountDTO getCurrentAccountDTO();
 
     Account freezeAmount(Account account, BigDecimal amount);
@@ -48,5 +50,6 @@ public interface IAccountService {
 
     Account findByMail(String login);
 
+    Account login(Account account);
 
 }
