@@ -15,11 +15,11 @@ import java.util.List;
  */
 public interface ITradeOrderService {
 
-    BigDecimal getAllOpenedTradesSum(Account account);
+    //BigDecimal getAllOpenedTradesSum(Account account);
 
     //BigDecimal getOpenedTradesSum(Account account, Diamond diamond);
 
-    BigDecimal getOpenedStocksAmount(Account account, Diamond diamond);
+   // BigDecimal getOpenedStocksAmount(Account account, Diamond diamond);
 
     List<TradeOrder> rereadTradeOrders(Long[] tradeOrders);
 

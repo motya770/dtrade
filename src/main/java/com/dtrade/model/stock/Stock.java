@@ -29,4 +29,6 @@ public class Stock {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     private Account account;
+
+    private BigDecimal stockInTrade;
 }

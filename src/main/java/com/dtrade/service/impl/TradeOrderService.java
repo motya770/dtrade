@@ -35,6 +35,7 @@ public class TradeOrderService  implements ITradeOrderService{
     private static final Logger logger = LoggerFactory.getLogger(TradeOrderService.class);
 
     public final static BigDecimal ZERO_VALUE = new BigDecimal("0.00");
+    public final static BigDecimal MINUS_ONE_VALUE = new BigDecimal("-1.00");
 
     @Autowired
     private TradeOrderRepository tradeOrderRepository;
@@ -74,6 +75,8 @@ public class TradeOrderService  implements ITradeOrderService{
         return tradeOrderRepository.findAll(tradeOrdersIds);
     }
 
+/*
+
     @Override
     public BigDecimal getOpenedStocksAmount(Account account, Diamond diamond) {
         BigDecimal stockAmount = tradeOrderRepository.getSellTradesByAccountAndDiamond(account, diamond);
@@ -81,15 +84,10 @@ public class TradeOrderService  implements ITradeOrderService{
             stockAmount = new BigDecimal("0.0");
         }
         return stockAmount;
-        /*
-        List<TradeOrder> tradeOrders =
-        BigDecimal sumStocks = new BigDecimal("0.00");
-        for(TradeOrder order: tradeOrders){
-            sumStocks = sumStocks.add(order.getAmount());
-        }
-        return sumStocks;*/
     }
+   */
 
+    /*
     @Override
     public BigDecimal getAllOpenedTradesSum(Account account){
         BigDecimal sum =  tradeOrderRepository.getBuyOpenTradesByAccount(account);
@@ -97,14 +95,7 @@ public class TradeOrderService  implements ITradeOrderService{
             sum = new BigDecimal("0.0");
         }
         return sum;
-        /*
-        List<TradeOrder> tradeOrders =
-        BigDecimal sum = new BigDecimal("0.00");
-        for(TradeOrder order: tradeOrders){
-            sum = sum.add(order.getPrice().multiply(order.getAmount()));
-        }
-        return sum;*/
-    }
+    }*/
 
     /*
     @Override
@@ -154,7 +145,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         //logger.debug("CALCULATING TRADE ORDERS");
 
-        bookOrderService.getBookOrders().entrySet().forEach((entry)->{
+        bookOrderService.getBookOrders().entrySet().parallelStream().forEach((entry)->{
 
             long start1 = System.currentTimeMillis();
 
@@ -208,6 +199,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Override
     public List<TradeOrder> getLiveTradeOrders() {
+        logger.info("CALLING getLiveTradeOrders");
         return tradeOrderRepository.getLiveTradeOrders();
     }
 
@@ -264,8 +256,8 @@ public class TradeOrderService  implements ITradeOrderService{
         accountService.checkCurrentAccount(tradeOrder.getAccount());
 
         if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
-            BigDecimal openedSum = getAllOpenedTradesSum(tradeOrder.getAccount());
             Account account = accountService.find(tradeOrder.getAccount().getId());
+            BigDecimal openedSum = account.getOpenOrdersSum();
             BigDecimal balance = account.getBalance();
             BigDecimal cash = tradeOrder.getPrice().multiply(tradeOrder.getAmount());
             if(balance.subtract(openedSum).subtract(account.getFrozenBalance()).subtract(cash).compareTo(BigDecimal.ZERO) < 0){
@@ -274,8 +266,8 @@ public class TradeOrderService  implements ITradeOrderService{
         }
 
         if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
-            BigDecimal openAmount = getOpenedStocksAmount(tradeOrder.getAccount(), tradeOrder.getDiamond());
             Stock stock = stockService.getSpecificStock(tradeOrder.getAccount(), tradeOrder.getDiamond());
+            BigDecimal openAmount = stock.getStockInTrade();
             if(stock.getAmount().subtract(openAmount).subtract(tradeOrder.getAmount()).compareTo(BigDecimal.ZERO) < 0){
                 throw new TradeException("Already opened too many sell orders!");
             }
@@ -311,6 +303,10 @@ public class TradeOrderService  implements ITradeOrderService{
 
         realOrder = tradeOrderRepository.save(realOrder);
 
+        accountService.updateOpenSum(tradeOrder.getAccount(), tradeOrder.getAmount().multiply(tradeOrder.getPrice()));
+
+        stockService.updateStockInTrade(tradeOrder.getAccount(), tradeOrder.getDiamond(), tradeOrder.getAmount());
+
         bookOrderService.addNew(realOrder);
 
         logger.debug("Open Trade time {}", (System.currentTimeMillis() - start));
@@ -334,6 +330,7 @@ public class TradeOrderService  implements ITradeOrderService{
         }
     }
 
+
     @Override
     public TradeOrder cancelTradeOrder(TradeOrder tradeOrder) {
         if(tradeOrder==null){
@@ -355,6 +352,12 @@ public class TradeOrderService  implements ITradeOrderService{
         tradeOrder = tradeOrderRepository.save(tradeOrder);
 
         bookOrderService.remove(tradeOrder);
+
+        accountService.updateOpenSum(tradeOrder.getAccount(), tradeOrder.getAmount()
+                .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE));
+
+        stockService.updateStockInTrade(tradeOrder.getAccount(), tradeOrder.getDiamond(),
+                tradeOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
         return tradeOrder;
     }
@@ -381,6 +384,12 @@ public class TradeOrderService  implements ITradeOrderService{
         tradeOrder = tradeOrderRepository.save(tradeOrder);
 
         bookOrderService.remove(tradeOrder);
+
+        accountService.updateOpenSum(tradeOrder.getAccount(), tradeOrder.getAmount()
+                .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE));
+
+        stockService.updateStockInTrade(tradeOrder.getAccount(), tradeOrder.getDiamond(),
+                tradeOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
         return tradeOrder;
     }
@@ -547,12 +556,17 @@ public class TradeOrderService  implements ITradeOrderService{
                     checkIfExecuted(buyOrder);
                     checkIfExecuted(sellOrder);
 
+                    stockService.updateStockInTrade(sellOrder.getAccount(), sellOrder.getDiamond(),
+                            sellOrder.getAmount().multiply(MINUS_ONE_VALUE));
+
                     stockService.save(buyStock);
                     stockService.save(sellStock);
 
                    // System.out.println("1.14");
                     tradeOrderRepository.save(buyOrder);
                     tradeOrderRepository.save(sellOrder);
+
+                    accountService.updateOpenSum(buyOrder.getAccount(), cash.multiply(MINUS_ONE_VALUE));
 
                    // System.out.println("1.15");
                     accountService.save(buyAccount);

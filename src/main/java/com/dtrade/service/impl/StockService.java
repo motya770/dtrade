@@ -48,13 +48,9 @@ public class StockService  implements IStockService {
         Account account = accountService.getStrictlyLoggedAccount();
         List<Stock> stocks = stockRepository.findByAccount(account);
         return stocks.stream().map(stock -> {
-
-            //TODO performance!!!
-            BigDecimal stockInTradeAmount = tradeOrderService.getOpenedStocksAmount(stock.getAccount(), stock.getDiamond());
-
             StockDTO stockDTO = new StockDTO();
             stockDTO.setId(stock.getId());
-            stockDTO.setAmount(stock.getAmount().subtract(stockInTradeAmount));
+            stockDTO.setAmount(stock.getAmount().subtract(stock.getStockInTrade()));
             stockDTO.setDiamond(stock.getDiamond());
             return stockDTO;
         }).collect(Collectors.toList());
@@ -93,6 +89,18 @@ public class StockService  implements IStockService {
     }
 
     @Override
+    public Stock updateStockInTrade(Account account, Diamond diamond, BigDecimal stockAmount) {
+        Stock stock = getSpecificStock(account, diamond);
+        if(stock==null){
+            throw new TradeException("Can't find specific stock");
+        }
+
+        stock.setStockInTrade(stock.getStockInTrade().add(stockAmount));
+        stockRepository.save(stock);
+        return stock;
+    }
+
+    @Override
     public Stock getSpecificStock(Account account, Diamond diamond) {
         Stock stock = stockRepository.findByAccountAndDiamond(account, diamond);
         if(stock==null){
@@ -100,6 +108,7 @@ public class StockService  implements IStockService {
             stock.setAmount(new BigDecimal("0.0"));
             stock.setDiamond(diamond);
             stock.setAccount(account);
+            stockRepository.save(stock);
         }
         return stock;
     }

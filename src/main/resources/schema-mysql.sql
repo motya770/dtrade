@@ -285,6 +285,9 @@ UPDATE trade_order set trade_order_direction = 'SELL'
 WHERE trade_order_direction is NULL and id > 0;
 COMMIT;
 
+update account set open_orders_sum = 0.00;
+update stock set stock_in_trade = 0.00;
+
 select count(*) from trade_order where trade_order_direction is NULL or trade_order_type is null;
 
 

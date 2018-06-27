@@ -70,6 +70,8 @@ public class Account implements UserDetails {
 
     private BigDecimal frozenBalance;
 
+    private BigDecimal openOrdersSum;
+
     private String phone;
 
     @JsonIgnore

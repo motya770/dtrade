@@ -12,9 +12,9 @@ import java.math.BigDecimal;
  */
 public interface IAccountService {
 
-
-
     AccountDTO getCurrentAccountDTO();
+
+    Account updateOpenSum(Account account, BigDecimal amount);
 
     Account freezeAmount(Account account, BigDecimal amount);
 

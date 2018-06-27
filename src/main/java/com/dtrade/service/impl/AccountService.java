@@ -184,15 +184,19 @@ public class AccountService implements IAccountService, UserDetailsService {
             return null;
         }
 
-        //TODO performance hell fix
-        BigDecimal openedOrdersSum  = tradeOrderService.getAllOpenedTradesSum(account);
-
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(account.getId());
         accountDTO.setMail(account.getMail());
-        accountDTO.setBalance(account.getBalance().subtract(account.getFrozenBalance()).subtract(openedOrdersSum));
+        accountDTO.setBalance(account.getBalance().subtract(account.getFrozenBalance()).subtract(account.getOpenOrdersSum()));
 
         return accountDTO;
+    }
+
+    @Override
+    public Account updateOpenSum(Account account, BigDecimal amount) {
+        account.setOpenOrdersSum(account.getOpenOrdersSum().add(amount));
+        accountRepository.save(account);
+        return account;
     }
 
     @Override
