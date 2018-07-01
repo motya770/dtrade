@@ -297,5 +297,6 @@ create index trade_order_execution_date_index on trade_order (execution_date) us
 create index trade_order_creation_date_index on trade_order (execution_date) using BTREE;
 create index quote_time_index on quote (time) using BTREE;
 create index balance_activity_create_date_index on balance_activity (create_date) using BTREE;
+create index stock_account_diamond_index on stock (account_id, diamond_id) using HASH;
 
 -- Dump completed on 2018-04-12 22:53:48

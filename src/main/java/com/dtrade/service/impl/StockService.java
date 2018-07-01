@@ -102,7 +102,10 @@ public class StockService  implements IStockService {
 
     @Override
     public Stock getSpecificStock(Account account, Diamond diamond) {
-        Stock stock = stockRepository.findByAccountAndDiamond(account, diamond);
+       // System.out.println("AC: " + account);
+       // System.out.println("DI: " + diamond);
+
+        Stock stock = stockRepository.getSpecificStock(account, diamond);
         if(stock==null){
             stock = new Stock();
             stock.setAmount(new BigDecimal("0.0"));

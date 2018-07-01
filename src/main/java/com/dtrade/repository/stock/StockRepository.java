@@ -16,7 +16,8 @@ import java.util.List;
 @Repository
 public interface StockRepository  extends JpaRepository<Stock, Long>{
 
-    Stock findByAccountAndDiamond(Account account, Diamond diamond);
+    @Query("select s from Stock s where s.account.id =  :#{#account.id} and s.diamond.id =  :#{#diamond.id} ")
+    Stock getSpecificStock(@Param("account") Account account, @Param("diamond") Diamond diamond);
 
     @Query("select s from Stock s where s.account.id =  :#{#account.id}")
     List<Stock> findByAccount(@Param("account") Account account);

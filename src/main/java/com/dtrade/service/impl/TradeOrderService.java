@@ -25,6 +25,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * Created by kudelin on 6/27/17.
  */
@@ -59,6 +62,8 @@ public class TradeOrderService  implements ITradeOrderService{
     private IQuotesService quotesService;
 
     private TransactionTemplate transactionTemplate;
+
+    private ExecutorService executor = Executors.newFixedThreadPool(25);
 
     //TODO add paging
     @Override
@@ -170,7 +175,8 @@ public class TradeOrderService  implements ITradeOrderService{
                 pairs.forEach(pair->{
                     if(checkIfCanExecute(pair)) {
 
-                        quotesService.issueQuote(pair);
+                        Runnable r = () -> quotesService.issueQuote(pair);
+                        executor.execute(r);
 
                         logger.debug("EXECUTING TRADE PAIR");
 
