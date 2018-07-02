@@ -21,8 +21,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //TODO investingate
-        http.csrf().disable().
+        //TODO investigate
+        http
+                .csrf().disable().
                  authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/accounts/register").permitAll()
@@ -55,6 +56,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")
                 .failureForwardUrl("/login-page?error=fail")
                 .and().logout().permitAll().logoutSuccessUrl("/");
+
+        http.headers()
+                .frameOptions()
+                .sameOrigin();
     }
 
     @Bean

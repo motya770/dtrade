@@ -31,6 +31,11 @@ public class PageController {
         return "ico/index";
     }
 
+    @RequestMapping(value = "/widget", method = RequestMethod.GET)
+    public String widget(){
+        return "widget";
+    }
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(){
         return "registration";
