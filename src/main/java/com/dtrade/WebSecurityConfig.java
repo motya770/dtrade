@@ -58,8 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().logout().permitAll().logoutSuccessUrl("/trade");
 
         http.headers()
-                .frameOptions()
-                .sameOrigin();
+                .frameOptions().disable();
     }
 
     @Bean
