@@ -261,6 +261,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         accountService.checkCurrentAccount(tradeOrder.getAccount());
 
+        //TODO market price can be problematic
         if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
             Account account = accountService.find(tradeOrder.getAccount().getId());
             BigDecimal openedSum = account.getOpenOrdersSum();

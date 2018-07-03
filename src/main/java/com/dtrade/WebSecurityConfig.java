@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login-page").permitAll()
                 .loginProcessingUrl("/login")
                 .failureForwardUrl("/login-page?error=fail")
-                .and().logout().permitAll().logoutSuccessUrl("/");
+                .and().logout().permitAll().logoutSuccessUrl("/trade");
 
         http.headers()
                 .frameOptions()

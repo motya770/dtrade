@@ -10,6 +10,12 @@
             <li ng-show="vm.account" ng-class="getClass('/account')">
                 <a href="/account">My account</a>
             </li>
+            <li>
+                <a href="/login-page">Login</a>
+            </li>
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
         </ul>
     </div>
 </nav>
