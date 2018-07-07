@@ -376,5 +376,5 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
       });
   };
 
-  getDepthGraph();
+  $timeout(getGraphData, 2000, false);
 });
