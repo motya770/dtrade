@@ -137,7 +137,7 @@
                                             </tr>
 
                                             <tr ng-if="cc.config.assetType=='WINE'" style="width: 100%; background-color: #e7e7e7">
-                                                <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-5</small></td>
+                                                <td style="width: 100%;">Ashberg <small>Corton 1er cru</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
                                                         <input type="image" style="height: 30px;" src="/theme/app/img/bottle.png" />
@@ -150,7 +150,7 @@
 
 
                                             <tr ng-if="cc.config.assetType=='WINE'" style="width: 100%; background-color: #e7e7e7">
-                                                <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-5</small></td>
+                                                <td style="width: 100%;">Ashberg <small>Corton clos du chapitre</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
                                                         <input type="image" style="height: 30px;" src="/theme/app/img/bottle.png" />
@@ -163,7 +163,7 @@
 
 
                                             <tr ng-if="cc.config.assetType=='WINE'" style="width: 100%; background-color: #e7e7e7">
-                                                <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-5</small></td>
+                                                <td style="width: 100%;">Ashberg <small>Corton les valozieres</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
                                                         <input type="image"  style="height: 30px;" src="/theme/app/img/bottle.png" />
