@@ -22,12 +22,12 @@
        <div class="rect4"></div>
        <div class="rect5"></div>
      </div>
-   <div ng-cloak="" ng-show="loaded">
+   <div ng-cloak="" ng-show="loaded" ng-controller="ConfigController as cc">
 
     <#include "parts/caption.ftl">
     <#include "parts/menu.ftl">
 
-    <main class="content">
+    <main class="content" >
 
         <#include "parts/portfolio.ftl">
 
@@ -37,8 +37,8 @@
                     <div class="sep-cab-page__top">
                         <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm" style="height:491px;">
                             <div class="sep-cab-page__heading">
-                                <h2>Diamonds listing</h2>
-                                <p>All diamonds shares are available</p>
+                                <h2>{{cc.config.assetName}} listing</h2>
+                                <p>All {{cc.config.assetName}} shares are available</p>
                             </div>
 
                             <form class="searchform">
@@ -52,7 +52,7 @@
                                       <table class="diamont-table">
                                         <thead>
                                         <tr>
-                                            <th>Diamond</th>
+                                            <th>{{cc.config.assetNameForListing}}</th>
                                             <th></th>
 
                                             <th>Bid <!--<span class="inf">?</span>--></th>
@@ -65,16 +65,16 @@
 
                                             <tr ng-repeat="diamond in vm.availableDiamonds" ng-click="chooseAvailableDiamond(diamond)">
                                                 <td>{{diamond.name}}
-                                                    <small>
+                                                    <small ng-if="cc.config.assetType=='DIAMOND'">
                                                     {{diamond.diamondType | diamondTypeFilter }},
                                                      GIA - {{diamond.clarity}},
                                                      Cr - {{diamond.carats}}
                                                     </small>
-
                                                 </td>
                                                 <td>
                                                     <div class="dialog-demo-content" layout="row" layout-wrap="" >
-                                                         <input type="image" src="/theme/app/img/dia1.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
+                                                         <input ng-if="cc.config.assetType=='DIAMOND'" type="image" src="/theme/app/img/dia1.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
+                                                         <input ng-if="cc.config.assetType=='WINE'" style="height: 30px;" type="image" src="/theme/app/img/bottle.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
                                                     </div>
                                                 </td>
                                                 <td>{{diamond.askBidPair.first}} </td>
@@ -102,7 +102,7 @@
                                                         </md-dialog>
                                                     </script>
 
-                                        <tr style="width: 100%; background-color: #e7e7e7">
+                                        <tr ng-if="cc.config.assetType=='DIAMOND'" style="width: 100%; background-color: #e7e7e7">
                                             <td>Elisabeth III <small>Rad, GIA - VSS2, Cr-6</small></td>
                                                     <td>
                                                        <div layout="row" layout-wrap="" >
@@ -113,7 +113,7 @@
                                             <td>0.42&nbsp;</td>
                                             <td>7 mln</td>
                                         </tr>
-                                            <tr style="width: 100%; background-color: #e7e7e7">
+                                            <tr ng-if="cc.config.assetType=='DIAMOND'" style="width: 100%; background-color: #e7e7e7">
                                                 <td style="width: 100%;">White Sea <small>Ova, GIA - VS2, Cr-3</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
@@ -124,7 +124,7 @@
                                                 <td>0.43&nbsp;</td>
                                                 <td>4 mln</td>
                                             </tr>
-                                            <tr style="width: 100%; background-color: #e7e7e7">
+                                            <tr ng-if="cc.config.assetType=='DIAMOND'" style="width: 100%; background-color: #e7e7e7">
                                                 <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-5</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
@@ -134,6 +134,44 @@
                                                 <td>21.4</td>
                                                 <td>22.5&nbsp;</td>
                                                 <td>10 mln</td>
+                                            </tr>
+
+                                            <tr ng-if="cc.config.assetType=='WINE'" style="width: 100%; background-color: #e7e7e7">
+                                                <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-5</small></td>
+                                                <td>
+                                                    <div layout="row" layout-wrap="" >
+                                                        <input type="image" style="height: 30px;" src="/theme/app/img/bottle.png" />
+                                                    </div>
+                                                </td>
+                                                <td>1.1</td>
+                                                <td>1.2&nbsp;</td>
+                                                <td>80 k</td>
+                                            </tr>
+
+
+                                            <tr ng-if="cc.config.assetType=='WINE'" style="width: 100%; background-color: #e7e7e7">
+                                                <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-5</small></td>
+                                                <td>
+                                                    <div layout="row" layout-wrap="" >
+                                                        <input type="image" style="height: 30px;" src="/theme/app/img/bottle.png" />
+                                                    </div>
+                                                </td>
+                                                <td>2.4</td>
+                                                <td>3.5&nbsp;</td>
+                                                <td>50 k</td>
+                                            </tr>
+
+
+                                            <tr ng-if="cc.config.assetType=='WINE'" style="width: 100%; background-color: #e7e7e7">
+                                                <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-5</small></td>
+                                                <td>
+                                                    <div layout="row" layout-wrap="" >
+                                                        <input type="image"  style="height: 30px;" src="/theme/app/img/bottle.png" />
+                                                    </div>
+                                                </td>
+                                                <td>9.4</td>
+                                                <td>10.5&nbsp;</td>
+                                                <td>10 k</td>
                                             </tr>
                                             <!--
                                             <tr style="width: 100%; background-color: #e7e7e7">
@@ -150,7 +188,7 @@
 
                                         </tbody>
                                     </table>
-                                        <div class="coming-soon">New Initial Diamond Offerings coming soon ... </div>
+                                        <div class="coming-soon">New offerings coming soon ... </div>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +210,7 @@
                                         <div class="form-tabs__boxes">
                                             <div class="form-tabs__info-top diamond-bid-name">
                                                 <div>{{vm.diamond.name}}</div>
-                                                <p>{{vm.diamond.diamondType | diamondTypeFilter}},
+                                                <p ng-if="cc.config.assetType=='DIAMOND'" >{{vm.diamond.diamondType | diamondTypeFilter}},
                                                     Cr - {{vm.diamond.carats}}, GIA - {{vm.diamond.clarity}}</p>
                                             </div>
                                         </div>
@@ -199,7 +237,7 @@
                                         <div class="form-tabs__boxes">
                                             <div class="form-tabs__info-top diamond-bid-name">
                                                 <div>{{vm.diamond.name}}</div>
-                                                <p>{{vm.diamond.diamondType | diamondTypeFilter}},
+                                                <p ng-if="cc.config.assetType=='DIAMOND'">{{vm.diamond.diamondType | diamondTypeFilter}},
                                                Cr - {{vm.diamond.carats}}, GIA - {{vm.diamond.clarity}}</p>
                                             </div>
                                         </div>

@@ -8,7 +8,7 @@
 <body class="page">
 
 <!-- Custom HTML -->
-<div class="site">
+<div class="site" ng-controller="ConfigController as cc">
     <#include "parts/caption.ftl">
     <#include "parts/menu.ftl">
 
