@@ -10,12 +10,15 @@
             <li ng-show="vm.account" ng-class="getClass('/account')">
                 <a href="/account">My account</a>
             </li>
-            <li>
-                <a href="/login-page">Login</a>
-            </li>
-            <li>
-                <a href="/logout">Logout</a>
-            </li>
+
+            <span ng-controller="AccountController as ac" >
+                <li ng-hide="ac.account" >
+                    <a  href="/login-page">Login</a>
+                </li>
+                <li ng-show="ac.account">
+                    <a href="/logout">Logout</a>
+                </li>
+            </span>
         </ul>
     </div>
 </nav>
