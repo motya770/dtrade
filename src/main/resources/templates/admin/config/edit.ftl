@@ -28,6 +28,17 @@
         <@spring.formRadioButtons "config.assetType", assetTypes, ""/><br><br>
         </div>
 
+
+        <div class="form-group">
+            <label for="name">Active</label>
+
+            <#if config.active == true>
+            <input type="checkbox" class="form-control" name="active" id="active" placeholder="active"  checked>
+            <#else>
+            <input type="checkbox" class="form-control" name="active" id="active" placeholder="active">
+            </#if>
+        </div>
+
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 

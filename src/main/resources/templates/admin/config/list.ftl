@@ -8,7 +8,8 @@
             <th>Id</th>
             <th>Asset Type</th>
             <th>Asset Name</th>
-            <th>Asset Name Listing</th>
+            <th>Listing</th>
+            <th>Active</th>
         </tr>
         <#if configs??>
             <#list configs as config>
@@ -17,6 +18,7 @@
                 <td>${config.assetType}</td>
                 <td>${config.assetName}</td>
                 <td>${config.assetNameForListing}</td>
+                <td>${config.active?c}</td>
             </tr>
             </#list>
         </#if>
