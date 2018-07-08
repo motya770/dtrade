@@ -3,6 +3,7 @@ package com.dtrade.service;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
+import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
@@ -14,7 +15,7 @@ public interface IAccountService {
 
     AccountDTO getCurrentAccountDTO();
 
-    Account updateOpenSum(Account account, BigDecimal amount);
+    Account updateOpenSum(TradeOrder tradeOrder, Account account, BigDecimal amount);
 
     Account freezeAmount(Account account, BigDecimal amount);
 

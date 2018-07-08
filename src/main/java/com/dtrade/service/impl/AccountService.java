@@ -3,6 +3,8 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
+import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IMailService;
@@ -193,9 +195,15 @@ public class AccountService implements IAccountService, UserDetailsService {
     }
 
     @Override
-    public Account updateOpenSum(Account account, BigDecimal amount) {
-        account.setOpenOrdersSum(account.getOpenOrdersSum().add(amount));
-        accountRepository.save(account);
+    public Account updateOpenSum(TradeOrder tradeOrder, Account account, BigDecimal amount) {
+
+        if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
+            System.out.println("updating open sum " + account.getOpenOrdersSum() + " " + amount);
+            account.setOpenOrdersSum(account.getOpenOrdersSum().add(amount));
+            accountRepository.save(account);
+            return account;
+        }
+
         return account;
     }
 

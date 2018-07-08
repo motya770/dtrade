@@ -1,9 +1,11 @@
 package com.dtrade;
 
+import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
+import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBookOrderService;
@@ -33,6 +35,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -65,6 +68,9 @@ public class TradeOrderServiceTest extends BaseTest {
     private IBookOrderService bookOrderService;
 
     private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Autowired
     public void setTransactionManager(PlatformTransactionManager transactionManager){
@@ -102,7 +108,7 @@ public class TradeOrderServiceTest extends BaseTest {
     }
 
 
-    private static int MAX_TRADES_COUNT = 1_000;
+    private static int MAX_TRADES_COUNT = 10;
     private List<TradeOrder> createBuyOrderList(){
         List<TradeOrder> tradeOrders = new LinkedList<>();
         for(int j = 0; j<MAX_TRADES_COUNT; j++){
@@ -125,6 +131,19 @@ public class TradeOrderServiceTest extends BaseTest {
     @Test
     public void testCalculateTradeOrders() throws Exception{
 
+
+        final Account account = accountService.getCurrentAccount();
+
+        BigDecimal initialBalance = new BigDecimal("100000");
+        transactionTemplate.execute((TransactionStatus status)-> {
+            account.setFrozenBalance(BigDecimal.ZERO);
+            account.setOpenOrdersSum(BigDecimal.ZERO);
+            account.setBalance(initialBalance);
+            accountRepository.saveAndFlush(account);
+            return account;
+        });
+
+
         Pair<List<TradeOrder>, List<TradeOrder>> pair = transactionTemplate.execute((TransactionStatus status)-> {
             List<TradeOrder> buyOrders = createBuyOrderList();
             List<TradeOrder> sellOrders = createSellOrderList();
@@ -133,13 +152,14 @@ public class TradeOrderServiceTest extends BaseTest {
 
         System.out.println("START ");
         long start = System.currentTimeMillis();
+        /*
       pair.getFirst().parallelStream().forEach((tradeOrder)->{
           bookOrderService.addNew(tradeOrder);
       });
 
       pair.getSecond().parallelStream().forEach( tradeOrder -> {
           bookOrderService.addNew(tradeOrder);
-      });
+      });*/
 
        // tradeOrderService.calculateTradeOrders();
         System.out.println("END " + (System.currentTimeMillis() - start));
@@ -148,19 +168,48 @@ public class TradeOrderServiceTest extends BaseTest {
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         executorService.scheduleWithFixedDelay(()->{
 
+            try {
+                Thread.sleep(60_000);
+            }catch (Exception e){
+                throw new TradeException("Some problem", e);
+            }
             List<TradeOrder> buyTrades = pair.getFirst();
             List<TradeOrder> sellTrades = pair.getSecond();
 
             long buyExecuted = buyTrades.stream().map(tradeOrder -> tradeOrderRepository.findOne(tradeOrder.getId())
-            ).filter( tradeOrder -> tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)).count();
+            ).filter( tradeOrder -> {
+                System.out.println("status1: " + tradeOrder.getTraderOrderStatus());
+                return tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED);
 
-            long sellExecuted = sellTrades.stream().map(tradeOrder -> tradeOrderRepository.findOne(tradeOrder.getId())
-            ).filter( tradeOrder -> tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)).count();
+            }).count();
+
+            long sellExecuted = sellTrades.stream().map(tradeOrder -> tradeOrderRepository.findOne(tradeOrder.getId()))
+            .filter( tradeOrder -> {
+                System.out.println("status2: " + tradeOrder.getTraderOrderStatus());
+               return tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED);
+            }).count();
 
             System.out.println("BUY executed: " + buyExecuted);
             System.out.println("SELL executed: " + sellExecuted);
 
-            System.out.println("Finished simulation");
+            System.out.println("TEST1");
+            Account rereadAccount = accountRepository.findOne(account.getId());
+
+            System.out.println("TEST2");
+
+            System.out.println("B: " + rereadAccount.getBalance());
+            System.out.println("O: " + rereadAccount.getOpenOrdersSum());
+            System.out.println("F: " + rereadAccount.getFrozenBalance());
+
+            System.out.println("BALANCE: " + rereadAccount.getBalance() + " "
+                    + rereadAccount.getOpenOrdersSum() + " "
+                    + rereadAccount.getFrozenBalance());
+
+            Assert.assertEquals(0, initialBalance.compareTo(rereadAccount.getBalance()));
+            Assert.assertEquals(0, BigDecimal.ZERO.compareTo(rereadAccount.getOpenOrdersSum()));
+
+            System.out.println("TEST3");
+            System.out.println("Finished simulation...");
 
         }, 10,  100, TimeUnit.SECONDS);
         try {

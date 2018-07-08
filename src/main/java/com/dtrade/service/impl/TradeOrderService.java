@@ -310,9 +310,9 @@ public class TradeOrderService  implements ITradeOrderService{
 
         realOrder = tradeOrderRepository.save(realOrder);
 
-        accountService.updateOpenSum(tradeOrder.getAccount(), tradeOrder.getAmount().multiply(tradeOrder.getPrice()));
+        accountService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount().multiply(tradeOrder.getPrice()));
 
-        stockService.updateStockInTrade(tradeOrder.getAccount(), tradeOrder.getDiamond(), tradeOrder.getAmount());
+        stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(), tradeOrder.getAmount());
 
         bookOrderService.addNew(realOrder);
 
@@ -326,6 +326,11 @@ public class TradeOrderService  implements ITradeOrderService{
             Pair<Diamond, Pair<BigDecimal, BigDecimal>> spread = bookOrderService.getSpread(tradeOrder.getDiamond());
             if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
                 // for buy order we take sell price
+
+                if(spread == null){
+                    throw new TradeException("Can't define market price because spread is empty.");
+                }
+
                 tradeOrder.setPrice(spread.getSecond().getSecond());
 
             } else if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
@@ -360,10 +365,10 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.remove(tradeOrder);
 
-        accountService.updateOpenSum(tradeOrder.getAccount(), tradeOrder.getAmount()
+        accountService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount()
                 .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE));
 
-        stockService.updateStockInTrade(tradeOrder.getAccount(), tradeOrder.getDiamond(),
+        stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(),
                 tradeOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
         return tradeOrder;
@@ -385,17 +390,16 @@ public class TradeOrderService  implements ITradeOrderService{
             throw new TradeException("Can't reject trader order with status " + tradeOrder.getTraderOrderStatus());
         }
 
-
         tradeOrder.setTraderOrderStatus(TraderOrderStatus.REJECTED);
 
         tradeOrder = tradeOrderRepository.save(tradeOrder);
 
         bookOrderService.remove(tradeOrder);
 
-        accountService.updateOpenSum(tradeOrder.getAccount(), tradeOrder.getAmount()
+        accountService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount()
                 .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE));
 
-        stockService.updateStockInTrade(tradeOrder.getAccount(), tradeOrder.getDiamond(),
+        stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(),
                 tradeOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
         return tradeOrder;
@@ -563,7 +567,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     checkIfExecuted(buyOrder);
                     checkIfExecuted(sellOrder);
 
-                    stockService.updateStockInTrade(sellOrder.getAccount(), sellOrder.getDiamond(),
+                    stockService.updateStockInTrade(sellOrder, sellAccount, sellOrder.getDiamond(),
                             sellOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
                     stockService.save(buyStock);
@@ -573,7 +577,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     tradeOrderRepository.save(buyOrder);
                     tradeOrderRepository.save(sellOrder);
 
-                    accountService.updateOpenSum(buyOrder.getAccount(), cash.multiply(MINUS_ONE_VALUE));
+                    accountService.updateOpenSum(buyOrder, buyAccount, cash.multiply(MINUS_ONE_VALUE));
 
                    // System.out.println("1.15");
                     accountService.save(buyAccount);
