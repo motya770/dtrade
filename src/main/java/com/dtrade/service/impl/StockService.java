@@ -108,10 +108,10 @@ public class StockService  implements IStockService {
         Stock stock = stockRepository.getSpecificStock(account, diamond);
         if(stock==null){
             stock = new Stock();
-            stock.setAmount(new BigDecimal("0.0"));
+            stock.setAmount(BigDecimal.ZERO);
             stock.setDiamond(diamond);
             stock.setAccount(account);
-            stock.setStockInTrade(new BigDecimal("0.0"));
+            stock.setStockInTrade(BigDecimal.ZERO);
             stockRepository.save(stock);
         }
         return stock;
