@@ -243,17 +243,15 @@ public class TradeOrderService  implements ITradeOrderService{
             throw new TradeException("Can't create trade order because account is empty.");
         }
 
-        if(tradeOrder.getPrice()==null || (tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0)){
-            throw new TradeException("Can't create trade order because price is empty.");
-        }
 
-        if(tradeOrder.getPrice()==null ){
-            throw new TradeException("Can't create trade order because price is empty.");
-        }
+            if(tradeOrder.getPrice()==null ){
+                throw new TradeException("Can't create trade order because price is empty.");
+            }
 
-        if(tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0){
-            throw new TradeException("Can't create trade order because price is less than 0.");
-        }
+            if(tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0){
+                throw new TradeException("Can't create trade order because price is less than 0.");
+            }
+
 
         if(tradeOrder.getTradeOrderDirection()==null){
             throw new TradeException("Can't create trade order because trade order type is empty.");
@@ -324,20 +322,21 @@ public class TradeOrderService  implements ITradeOrderService{
         if(tradeOrder.getTradeOrderType().equals(TradeOrderType.MARKET)) {
 
             Pair<Diamond, Pair<BigDecimal, BigDecimal>> spread = bookOrderService.getSpread(tradeOrder.getDiamond());
-            if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
-                // for buy order we take sell price
 
-                if(spread == null){
-                    throw new TradeException("Can't define market price because spread is empty.");
+            if(spread == null) {
+                logger.info("Can't define market price because spread is empty.");
+                tradeOrder.setPrice(new BigDecimal("100"));
+            }else{
+                if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
+                    // for buy order we take sell price
+                    tradeOrder.setPrice(spread.getSecond().getSecond());
+
+                } else if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)) {
+                    // for sell order we take buy price
+                    tradeOrder.setPrice(spread.getSecond().getFirst());
+                } else {
+                    throw new TradeException("Unexpected behavior");
                 }
-
-                tradeOrder.setPrice(spread.getSecond().getSecond());
-
-            } else if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
-                // for sell order we take buy price
-                tradeOrder.setPrice(spread.getSecond().getFirst());
-            }else {
-                throw new TradeException("Unexpected behavior");
             }
         }
     }

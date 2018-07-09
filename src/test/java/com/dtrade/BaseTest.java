@@ -59,8 +59,8 @@ public class BaseTest {
 
         System.out.println("B: " + account.getBalance());
         tradeOrder.setAccount(account);
-        tradeOrder.setTradeOrderType(TradeOrderType.LIMIT);
-        tradeOrder.setPrice(new BigDecimal("100.00"));
+        tradeOrder.setTradeOrderType(TradeOrderType.MARKET);
+        //tradeOrder.setPrice(new BigDecimal("100.00"));
         if(tradeOrderDirection ==null){
             tradeOrderDirection = TradeOrderDirection.BUY;
         }
