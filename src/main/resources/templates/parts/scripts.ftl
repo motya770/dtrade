@@ -24,6 +24,8 @@
 <!-- Angular Material Library -->
 <script src="/bower_components/angular-material/angular-material.min.js"></script>
 
+<script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+
 <script src="/content/js/app.js"></script>
 
 <script src="/content/js/app/config.controller.js"></script>

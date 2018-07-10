@@ -1,10 +1,13 @@
 package com.dtrade.service;
 
+import com.dtrade.model.config.AssetType;
 import com.dtrade.model.config.Config;
 
 import java.util.List;
 
 public interface IConfigService {
+
+    Config findByAssetType(AssetType assetType);
 
     Config getActiveConfig();
 

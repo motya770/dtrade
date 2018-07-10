@@ -1,5 +1,6 @@
 package com.dtrade.service.impl;
 
+import com.dtrade.model.config.AssetType;
 import com.dtrade.model.config.Config;
 import com.dtrade.repository.config.ConfigRepository;
 import com.dtrade.service.IConfigService;
@@ -13,6 +14,11 @@ public class ConfigService implements IConfigService {
 
     @Autowired
     private ConfigRepository configRepository;
+
+    @Override
+    public Config findByAssetType(AssetType assetType) {
+        return configRepository.findByAssetType(assetType);
+    }
 
     @Override
     public Config getActiveConfig() {

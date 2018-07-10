@@ -23,7 +23,8 @@
     "angular-material": "^1.1.6",
     "highcharts": "hightcharts#^6.0.5",
     "angular-resource": "^1.6.9",
-    "less": "^2.7.3"
+    "less": "^2.7.3",
+    "angular-cookies": "^1.7.2"
   },
   "resolutions": {
     "angular": "1.6.9"
