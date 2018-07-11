@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/ico/build/css/chartist.min.css">
     <link rel="stylesheet" href="/ico/build/css/jquery.fancybox.min.css">
     <link rel="stylesheet" href="/ico/build/css/main.css">
-    <title>Токен</title>
+    <title>Trade</title>
 </head>
 
 <body>
