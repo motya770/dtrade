@@ -20,7 +20,7 @@
 
     <header class="header">
       <div class="header-wrapper wrapper">
-        <a href="index.html" class="header-logo"><img src="img/logo.png" alt="logo"></a>
+        <a href="index.html" class="header-logo"><img src="/theme/app/img/logo.png" alt="logo"></a>
         <div class="header-nav-btn">
           <span></span>
           <span></span>
@@ -337,7 +337,7 @@
 
   </div>
 
-  <script src="js/jquery-2.2.4.min.js"></script>
+  <script src="/ico/build/jsjs/jquery-2.2.4.min.js"></script>
   <script src="js/jquery.stellar.js"></script>
   <script src="js/chartist.min.js"></script>
   <script src="js/owl.carousel.min.js"></script>
