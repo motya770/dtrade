@@ -38,7 +38,7 @@
                         <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm" style="height:491px;">
                             <div class="sep-cab-page__heading">
                                 <h2>{{cc.config.assetName}} listing</h2>
-                                <p>All {{cc.config.assetName}} shares are available</p>
+                                <p>All {{cc.config.assetName}} are available</p>
                             </div>
 
                             <form class="searchform">
