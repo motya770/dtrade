@@ -7,6 +7,7 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.util.Pair;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +31,11 @@ public class BookOrderController {
         return bookOrderService.getSpreadForDiamonds(diamonds);
     }
 
+    @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/")
     public BookOrderView getBookOrder(@RequestBody Diamond diamond){
 
+        //long start = System.currentTimeMillis();
         BookOrder bookOrder = bookOrderService.getBookOrder(diamond);
         List<TradeOrder> buyOrders  = null;
         List<TradeOrder> sellOrders  = null;
@@ -48,6 +51,8 @@ public class BookOrderController {
             sellOrders = bookOrder.getSellOrders().stream().limit(10).collect(Collectors.toList());
             Collections.reverse(sellOrders);
         }
+
+        //System.out.println("BookOrder: " + (System.currentTimeMillis() - start));
 
         return new BookOrderView(buyOrders, sellOrders);
     }
