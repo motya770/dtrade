@@ -31,7 +31,7 @@ public interface ITradeOrderService {
 
     Page<TradeOrder> getHistoryTradeOrdersByAccount(Integer pageNumber);
 
-    List<TradeOrder> getHistoryTradeOrders(Diamond diamond);
+    List<TradeOrder> getHistoryTradeOrders(Long diamondId);
 
     List<TradeOrder> getLiveTradeOrders();
 

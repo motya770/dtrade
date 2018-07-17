@@ -26,8 +26,8 @@ public class CacheConfig extends CachingConfigurerSupport {
     public CacheManager timeoutCacheManager() {
         GuavaCacheManager cacheManager = new GuavaCacheManager();
         CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder()
-                .maximumSize(1000)
-                .expireAfterWrite(50, TimeUnit.MILLISECONDS);
+                .maximumSize(20000)
+                .expireAfterWrite(20, TimeUnit.MILLISECONDS);
         cacheManager.setCacheBuilder(cacheBuilder);
         return cacheManager;
     }

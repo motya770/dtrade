@@ -248,7 +248,7 @@ public class TradeOrderServiceTest extends BaseTest {
     public void testGetHistoryTradeOrders(){
         Diamond diamond = diamondService.getAllAvailable("").stream().findFirst().get();
 
-        List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders(diamond);
+        List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders(diamond.getId());
         tradeOrders.forEach(tradeOrder -> {
             Assert.assertTrue(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)
                     || tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.CANCELED)

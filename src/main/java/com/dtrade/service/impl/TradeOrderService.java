@@ -61,6 +61,9 @@ public class TradeOrderService  implements ITradeOrderService{
     @Autowired
     private IQuotesService quotesService;
 
+    @Autowired
+    private DiamondService diamondService;
+
     private TransactionTemplate transactionTemplate;
 
     private ExecutorService executor = Executors.newFixedThreadPool(25);
@@ -192,8 +195,11 @@ public class TradeOrderService  implements ITradeOrderService{
         });
     }
 
+
+
     @Override
-    public List<TradeOrder> getHistoryTradeOrders(Diamond diamond) {
+    public List<TradeOrder> getHistoryTradeOrders(Long diamondId) {
+        Diamond diamond = diamondService.find(diamondId);
         return tradeOrderRepository.getHistoryTradeOrders(diamond, new PageRequest(0, 23));
     }
 

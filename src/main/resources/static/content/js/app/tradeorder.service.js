@@ -25,7 +25,7 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
 
             // var diamond = {}
             // diamond["diamond"] = diamondObj;
-            return $http.post("/trade-order/history-orders", diamond, null).then(function (responce) {
+            return $http.post("/trade-order/history-orders", diamond.id, null).then(function (responce) {
                 historyOrders = responce.data;
                 return historyOrders;
             });

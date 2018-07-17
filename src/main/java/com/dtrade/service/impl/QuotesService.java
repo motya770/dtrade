@@ -49,7 +49,7 @@ public class QuotesService implements IQuotesService {
     @Override
     public Pair<List<DepthQuote>, List<DepthQuote>> getDepthQuotes(Diamond diamond) {
 
-        BookOrder bookOrder = bookOrderService.getBookOrder(diamond);
+        BookOrder bookOrder = bookOrderService.getBookOrder(diamond.getId());
         List<TradeOrder> buyOrders = bookOrder.getBuyOrders().stream().limit(50).collect(Collectors.toList());
         List<TradeOrder> sellOrders = bookOrder.getSellOrders().stream().limit(50).collect(Collectors.toList());
 

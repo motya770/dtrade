@@ -4,7 +4,7 @@ diamondApp.service('BookOrderService', function BookOrderService($http){
     self.sellPrice = null;
 
     var getBookOrder = function(diamond) {
-        return $http.post('/book-order/', diamond, null).then(function (response) {
+        return $http.post('/book-order/', diamond.id, null).then(function (response) {
             return response.data;
         });
     };

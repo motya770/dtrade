@@ -16,7 +16,7 @@ public interface IBookOrderService {
 
      ConcurrentHashMap<Long, BookOrder> getBookOrders();
 
-     BookOrder getBookOrder(Diamond diamond);
+     BookOrder getBookOrder(Long diamondId);
 
      void addNew(TradeOrder order);
 
@@ -28,7 +28,7 @@ public interface IBookOrderService {
 
      List<Pair<TradeOrder, TradeOrder>> find10Closest(Long diamondId);
 
-     List<Pair<?, ?>> getSpreadForDiamonds(List<Diamond> diamonds);
+     List<Pair<?, ?>> getSpreadForDiamonds(List<Long> diamonds);
 
      Pair<Diamond, Pair<BigDecimal, BigDecimal>>  getSpread(Diamond diamond);
 }
