@@ -61,6 +61,9 @@ public class TradeOrderService  implements ITradeOrderService{
     @Autowired
     private IQuotesService quotesService;
 
+    @Autowired
+    private DiamondService diamondService;
+
     private TransactionTemplate transactionTemplate;
 
     private ExecutorService executor = Executors.newFixedThreadPool(25);
@@ -192,8 +195,11 @@ public class TradeOrderService  implements ITradeOrderService{
         });
     }
 
+
+
     @Override
-    public List<TradeOrder> getHistoryTradeOrders(Diamond diamond) {
+    public List<TradeOrder> getHistoryTradeOrders(Long diamondId) {
+        Diamond diamond = diamondService.find(diamondId);
         return tradeOrderRepository.getHistoryTradeOrders(diamond, new PageRequest(0, 23));
     }
 
@@ -243,17 +249,15 @@ public class TradeOrderService  implements ITradeOrderService{
             throw new TradeException("Can't create trade order because account is empty.");
         }
 
-        if(tradeOrder.getPrice()==null || (tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0)){
-            throw new TradeException("Can't create trade order because price is empty.");
-        }
 
-        if(tradeOrder.getPrice()==null ){
-            throw new TradeException("Can't create trade order because price is empty.");
-        }
+            if(tradeOrder.getPrice()==null ){
+                throw new TradeException("Can't create trade order because price is empty.");
+            }
 
-        if(tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0){
-            throw new TradeException("Can't create trade order because price is less than 0.");
-        }
+            if(tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0){
+                throw new TradeException("Can't create trade order because price is less than 0.");
+            }
+
 
         if(tradeOrder.getTradeOrderDirection()==null){
             throw new TradeException("Can't create trade order because trade order type is empty.");
@@ -261,6 +265,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         accountService.checkCurrentAccount(tradeOrder.getAccount());
 
+        //TODO market price can be problematic
         if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
             Account account = accountService.find(tradeOrder.getAccount().getId());
             BigDecimal openedSum = account.getOpenOrdersSum();
@@ -309,9 +314,9 @@ public class TradeOrderService  implements ITradeOrderService{
 
         realOrder = tradeOrderRepository.save(realOrder);
 
-        accountService.updateOpenSum(tradeOrder.getAccount(), tradeOrder.getAmount().multiply(tradeOrder.getPrice()));
+        accountService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount().multiply(tradeOrder.getPrice()));
 
-        stockService.updateStockInTrade(tradeOrder.getAccount(), tradeOrder.getDiamond(), tradeOrder.getAmount());
+        stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(), tradeOrder.getAmount());
 
         bookOrderService.addNew(realOrder);
 
@@ -323,15 +328,21 @@ public class TradeOrderService  implements ITradeOrderService{
         if(tradeOrder.getTradeOrderType().equals(TradeOrderType.MARKET)) {
 
             Pair<Diamond, Pair<BigDecimal, BigDecimal>> spread = bookOrderService.getSpread(tradeOrder.getDiamond());
-            if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
-                // for buy order we take sell price
-                tradeOrder.setPrice(spread.getSecond().getSecond());
 
-            } else if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
-                // for sell order we take buy price
-                tradeOrder.setPrice(spread.getSecond().getFirst());
-            }else {
-                throw new TradeException("Unexpected behavior");
+            if(spread == null) {
+                logger.info("Can't define market price because spread is empty.");
+                tradeOrder.setPrice(new BigDecimal("100"));
+            }else{
+                if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
+                    // for buy order we take sell price
+                    tradeOrder.setPrice(spread.getSecond().getSecond());
+
+                } else if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)) {
+                    // for sell order we take buy price
+                    tradeOrder.setPrice(spread.getSecond().getFirst());
+                } else {
+                    throw new TradeException("Unexpected behavior");
+                }
             }
         }
     }
@@ -359,10 +370,10 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.remove(tradeOrder);
 
-        accountService.updateOpenSum(tradeOrder.getAccount(), tradeOrder.getAmount()
+        accountService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount()
                 .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE));
 
-        stockService.updateStockInTrade(tradeOrder.getAccount(), tradeOrder.getDiamond(),
+        stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(),
                 tradeOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
         return tradeOrder;
@@ -384,17 +395,16 @@ public class TradeOrderService  implements ITradeOrderService{
             throw new TradeException("Can't reject trader order with status " + tradeOrder.getTraderOrderStatus());
         }
 
-
         tradeOrder.setTraderOrderStatus(TraderOrderStatus.REJECTED);
 
         tradeOrder = tradeOrderRepository.save(tradeOrder);
 
         bookOrderService.remove(tradeOrder);
 
-        accountService.updateOpenSum(tradeOrder.getAccount(), tradeOrder.getAmount()
+        accountService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount()
                 .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE));
 
-        stockService.updateStockInTrade(tradeOrder.getAccount(), tradeOrder.getDiamond(),
+        stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(),
                 tradeOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
         return tradeOrder;
@@ -562,7 +572,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     checkIfExecuted(buyOrder);
                     checkIfExecuted(sellOrder);
 
-                    stockService.updateStockInTrade(sellOrder.getAccount(), sellOrder.getDiamond(),
+                    stockService.updateStockInTrade(sellOrder, sellAccount, sellOrder.getDiamond(),
                             sellOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
                     stockService.save(buyStock);
@@ -572,7 +582,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     tradeOrderRepository.save(buyOrder);
                     tradeOrderRepository.save(sellOrder);
 
-                    accountService.updateOpenSum(buyOrder.getAccount(), cash.multiply(MINUS_ONE_VALUE));
+                    accountService.updateOpenSum(buyOrder, buyAccount, cash.multiply(MINUS_ONE_VALUE));
 
                    // System.out.println("1.15");
                     accountService.save(buyAccount);

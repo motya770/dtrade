@@ -1,4 +1,4 @@
-package com.dtrade.config;
+package com.dtrade.configuration;
 
 import com.dtrade.service.simulators.QuotesSimulator;
 import org.slf4j.Logger;

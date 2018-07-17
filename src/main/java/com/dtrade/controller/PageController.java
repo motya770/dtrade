@@ -15,7 +15,7 @@ public class PageController {
         return "index2";
     }
 
-    /*
+    /*dc
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test(){
         return "test";

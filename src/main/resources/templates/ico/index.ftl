@@ -31,7 +31,7 @@
 		    </div>
 		    <ul class="header-nav">
 		      <li class="header-nav__item"><a href="/" class="header-nav__link">Main</a></li>
-			  <li class="header-nav__item header-nav__item_icon"><a href="/trade" class="header-nav__link">Trade</a></li>
+			  <li class="header-nav__item header-nav__item_icon"><a href="/widget" class="header-nav__link">Trade</a></li>
 				<!--
 			 <li class="header-nav__item"><a href="/token" class="header-nav__link">Token</a></li>
 		      <li class="header-nav__item header-nav__item_icon"><a href="/trade" class="header-nav__link">Trade</a></li>

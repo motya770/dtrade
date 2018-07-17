@@ -108,6 +108,9 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
 
     var addNewPoints = function (that){
 
+        if(that.series == null){
+            return;
+        }
         var series = that.series[0];
         $http.post('/graph/get-quotes?diamond=' + DiamondService.getCurrentDiamond().id +  '&start=' + self.lastTimeQuote, null).then(function(response) {
             var result = parseQuotesToArray(response.data);
@@ -376,5 +379,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
       });
   };
 
-  getDepthGraph();
+
+  getGraphData();
+   //$timeout(getGraphData, 2000, false);
 });

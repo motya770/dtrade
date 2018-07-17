@@ -6,6 +6,8 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.model.stock.StockDTO;
+import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.repository.stock.StockRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
@@ -89,15 +91,19 @@ public class StockService  implements IStockService {
     }
 
     @Override
-    public Stock updateStockInTrade(Account account, Diamond diamond, BigDecimal stockAmount) {
-        Stock stock = getSpecificStock(account, diamond);
-        if(stock==null){
-            throw new TradeException("Can't find specific stock");
-        }
+    public Stock updateStockInTrade(TradeOrder tradeOrder, Account account, Diamond diamond, BigDecimal stockAmount) {
 
-        stock.setStockInTrade(stock.getStockInTrade().add(stockAmount));
-        stockRepository.save(stock);
-        return stock;
+        if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
+            Stock stock = getSpecificStock(account, diamond);
+            if(stock==null){
+                throw new TradeException("Can't find specific stock");
+            }
+
+            stock.setStockInTrade(stock.getStockInTrade().add(stockAmount));
+            stockRepository.save(stock);
+            return stock;
+        }
+        return null;
     }
 
     @Override
@@ -108,10 +114,10 @@ public class StockService  implements IStockService {
         Stock stock = stockRepository.getSpecificStock(account, diamond);
         if(stock==null){
             stock = new Stock();
-            stock.setAmount(new BigDecimal("0.0"));
+            stock.setAmount(BigDecimal.ZERO);
             stock.setDiamond(diamond);
             stock.setAccount(account);
-            stock.setStockInTrade(new BigDecimal("0.0"));
+            stock.setStockInTrade(BigDecimal.ZERO);
             stockRepository.save(stock);
         }
         return stock;

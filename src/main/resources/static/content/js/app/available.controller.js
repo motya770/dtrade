@@ -11,7 +11,8 @@ diamondApp.controller('AvailableController', function AvailableController($scope
     }
 
     var getDiamondsSpreads = function () {
-        return $http.post('/book-order/get-diamonds-spread', self.availableDiamonds).then(function(response) {
+
+        return $http.post('/book-order/get-diamonds-spread', self.availableDiamondsIds).then(function(response) {
             //console.log(response);
             var pairs = response.data;
             for(var i in pairs){
@@ -41,6 +42,11 @@ diamondApp.controller('AvailableController', function AvailableController($scope
             }
 
             self.availableDiamonds = onlyFive;
+            self.availableDiamondsIds = new Array();
+            for(var i in  self.availableDiamonds ){
+                self.availableDiamondsIds.push(self.availableDiamonds[i].id);
+            }
+
             if(data!=null && data.length>0){
                 var firstDiamond = data[0];
                 $rootScope.$broadcast('buyDiamondChoosed', firstDiamond);

@@ -4,6 +4,7 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.model.stock.StockDTO;
+import com.dtrade.model.tradeorder.TradeOrder;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,7 +24,7 @@ public interface IStockService {
 
     Stock getSpecificStock(Account account, Diamond diamond);
 
-    Stock updateStockInTrade(Account account, Diamond diamond, BigDecimal stockAmount);
+    Stock updateStockInTrade(TradeOrder tradeOrder, Account account, Diamond diamond, BigDecimal stockAmount);
 
     void save(Stock stock);
 }

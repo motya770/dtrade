@@ -36,12 +36,15 @@ public class BookOrderService implements IBookOrderService {
     @Autowired
     private ITradeOrderService tradeOrderService;
 
+    @Autowired
+    private DiamondService diamondService;
+
     //THINK about equals for diamond
     private ConcurrentHashMap<Long, BookOrder> bookOrders = new ConcurrentHashMap<>();
 
     @Override
-    public BookOrder getBookOrder(Diamond diamond) {
-        return bookOrders.get(diamond.getId());
+    public BookOrder getBookOrder(Long diamondId) {
+        return bookOrders.get(diamondId);
     }
 
     @Override
@@ -82,11 +85,14 @@ public class BookOrderService implements IBookOrderService {
         return null;
     }
 
+
+
     @Transactional
     @Override
-    public List<Pair<?, ?>> getSpreadForDiamonds(List<Diamond> diamonds) {
+    public List<Pair<?, ?>> getSpreadForDiamonds(List<Long> diamonds) {
         List<Pair<?, ?>> response = new ArrayList<>();
-        for(Diamond diamond : diamonds){
+        for(Long id : diamonds){
+            Diamond diamond = diamondService.find(id);
             response.add(getSpread(diamond));
         }
         return response;

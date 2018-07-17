@@ -24,8 +24,11 @@
 <!-- Angular Material Library -->
 <script src="/bower_components/angular-material/angular-material.min.js"></script>
 
+<script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+
 <script src="/content/js/app.js"></script>
 
+<script src="/content/js/app/config.controller.js"></script>
 <script src="/content/js/app/diamond.service.js"></script>
 <script src="/content/js/app/account.controller.js"></script>
 <script src="/content/js/app/account.service.js"></script>

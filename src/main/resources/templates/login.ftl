@@ -8,7 +8,7 @@
 <body class="page">
 
 <!-- Custom HTML -->
-<div class="site" ng-cloak="">
+<div class="site" ng-cloak="" ng-controller="ConfigController as cc">
     <#include "parts/caption.ftl">
     <#include "parts/menu.ftl">
     <main class="content">
