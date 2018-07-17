@@ -27,7 +27,7 @@ public class TradeOrderController {
 
     private static final Logger logger = LoggerFactory.getLogger(TradeOrderController.class);
 
-    @Cacheable(value="A", cacheManager="timeoutCacheManager")
+   // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/live-orders-reread")
     public CompletableFuture<List<TradeOrder>> rereadLiveOrders(@RequestBody Long[] ids){
 
@@ -37,7 +37,7 @@ public class TradeOrderController {
         );
     }
 
-    @Cacheable(value="A", cacheManager="timeoutCacheManager")
+   // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/create")
     public CompletableFuture<TradeOrder> create(@RequestBody TradeOrder tradeOrder){
         return CompletableFuture.supplyAsync(() -> {
@@ -46,7 +46,7 @@ public class TradeOrderController {
         );
     }
 
-    @Cacheable(value="A", cacheManager="timeoutCacheManager")
+   // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/live-orders")
     public CompletableFuture<Page<TradeOrder>> getLiveOrdersByAccount(@RequestParam(required = false) Integer pageNumber ){
         return CompletableFuture.supplyAsync(() -> {
@@ -55,7 +55,7 @@ public class TradeOrderController {
         );
     }
 
-    @Cacheable(value="A", cacheManager="timeoutCacheManager")
+   // @Cacheable(value="getHistoryTradeOrders", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/history-orders")
     public CompletableFuture<List<TradeOrderDTO>> getHistoryTradeOrders(@RequestBody Long diamondId)throws Exception {
 
@@ -66,13 +66,16 @@ public class TradeOrderController {
 
         //logger.debug("TIME FOR getHistoryTradeOrders: {}", (start  - System.currentTimeMillis()));
 
+//        List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders(diamondId);
+//        return tradeOrderService.getTradeOrderDTO(tradeOrders);
+
         return  CompletableFuture.supplyAsync(()-> {
             List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders(diamondId);
             return tradeOrderService.getTradeOrderDTO(tradeOrders);
         });
     }
 
-    @Cacheable(value="A", cacheManager="timeoutCacheManager")
+   // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/account-history-orders")
     public CompletableFuture<Page<TradeOrder>> getHistoryTradeOrdersByAcount(@RequestParam Integer pageNumber){
         return CompletableFuture.supplyAsync(() -> {

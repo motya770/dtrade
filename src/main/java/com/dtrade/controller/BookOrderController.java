@@ -24,7 +24,7 @@ public class BookOrderController {
     @Autowired
     private IBookOrderService bookOrderService;
 
-    @Cacheable(value="A", cacheManager="timeoutCacheManager")
+   // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/get-diamonds-spread", method = RequestMethod.POST)
     public CompletableFuture<List<Pair<?, ?>>> getLastQuotesForDiamonds(@RequestBody(required = true) ArrayList<Long> diamonds){
 
@@ -34,7 +34,7 @@ public class BookOrderController {
         );
     }
 
-    @Cacheable(value="A", cacheManager="timeoutCacheManager")
+   // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/")
     public CompletableFuture<BookOrderView> getBookOrder(@RequestBody Long diamondId){
 
