@@ -19,6 +19,8 @@
             <AppenderRef ref="MyFile"/>
         </Logger>
 
+        <Logger name="org.springframework.boot.actuate.endpoint.mvc.EndpointHandlerMapping" level="INFO"/>
+
         <Logger name="org.springframework.boot.web.filter" level="INFO"/>
 
         <Root level="info">

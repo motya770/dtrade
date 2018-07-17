@@ -198,7 +198,7 @@ public class AccountService implements IAccountService, UserDetailsService {
     public Account updateOpenSum(TradeOrder tradeOrder, Account account, BigDecimal amount) {
 
         if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
-            System.out.println("updating open sum " + account.getOpenOrdersSum() + " " + amount);
+            //System.out.println("updating open sum " + account.getOpenOrdersSum() + " " + amount);
             account.setOpenOrdersSum(account.getOpenOrdersSum().add(amount));
             accountRepository.save(account);
             return account;
