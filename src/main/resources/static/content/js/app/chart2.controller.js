@@ -210,6 +210,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
             $interval.cancel(self.poolingPromise);
         }
         getGraphData();
+        getDepthGraph();
     }
 
     $scope.$on('buyDiamondChoosed', function (event, arg) {
@@ -230,14 +231,6 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
           $timeout(getDepthGraph, 500, false);
           return;
       }
-
-
-     // {"first":[{"amount":18.0,"price":1.00},
-      // {"amount":19.00,"price":0.99},
-      // {"amount":8597.00,"price":0.98}],
-
-      // "second":[{"amount":8734.00,"price":1.20},
-      // {"amount":18889.00,"price":1.30}]}
 
       $http.get('/graph/get-depth-quotes?diamond=' + DiamondService.getCurrentDiamond().id).then(function(response) {
 
@@ -380,6 +373,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
   };
 
 
+  getDepthGraph();
   getGraphData();
    //$timeout(getGraphData, 2000, false);
 });
