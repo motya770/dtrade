@@ -78,6 +78,7 @@ public class StockService  implements IStockService {
         stock.setAmount(diamond.getTotalStockAmount());
         stock.setAccount(diamond.getAccount());
         stock.setDiamond(diamond);
+        stock.setStockInTrade(BigDecimal.ZERO);
 
         diamond.setDiamondStatus(DiamondStatus.ENLISTED);
 

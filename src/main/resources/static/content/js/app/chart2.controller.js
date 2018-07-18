@@ -242,21 +242,27 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
           var bidData = new Array();
           var askData = new Array();
 
-          for(var i = 0; i <bidList.length; i++){
-              var p = bidList[i];
-              var pointArr = new Array();
-              pointArr.push(p.price);
-              pointArr.push(p.amount);
-              bidData.push(pointArr);
+          if(bidList != null) {
+              for (var i = 0; i < bidList.length; i++) {
+                  var p = bidList[i];
+                  var pointArr = new Array();
+                  pointArr.push(p.price);
+                  pointArr.push(p.amount);
+                  bidData.push(pointArr);
+              }
           }
 
-          for(var i = 0; i <askList.length; i++){
-              var p = askList[i];
-              var pointArr = new Array();
-              pointArr.push(p.price);
-              pointArr.push(p.amount);
-              askData.push(pointArr);
+          if(askList!=null) {
+              for (var i = 0; i < askList.length; i++) {
+                  var p = askList[i];
+                  var pointArr = new Array();
+                  pointArr.push(p.price);
+                  pointArr.push(p.amount);
+                  askData.push(pointArr);
+              }
           }
+
+
 
           /*
           for (var i = 0; i < askData.length; i++) {

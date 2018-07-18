@@ -229,6 +229,7 @@ public class AccountService implements IAccountService, UserDetailsService {
         account.setPhone(phone);
         account.setGuid(UUID.randomUUID().toString());
         account.setRole(Account.F_ROLE_ACCOUNT);
+        account.setOpenOrdersSum(BigDecimal.ZERO);
 
         return account;
     }

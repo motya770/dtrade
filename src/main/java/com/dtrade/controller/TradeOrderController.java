@@ -39,20 +39,24 @@ public class TradeOrderController {
 
    // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/create")
-    public CompletableFuture<TradeOrder> create(@RequestBody TradeOrder tradeOrder){
-        return CompletableFuture.supplyAsync(() -> {
-                    return tradeOrderService.createTradeOrder(tradeOrder);
-                }
-        );
+    public TradeOrder create(@RequestBody TradeOrder tradeOrder){
+
+        return tradeOrderService.createTradeOrder(tradeOrder);
+
+//        return CompletableFuture.supplyAsync(() -> {
+//
+//                }
+//        );
     }
 
    // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/live-orders")
-    public CompletableFuture<Page<TradeOrder>> getLiveOrdersByAccount(@RequestParam(required = false) Integer pageNumber ){
-        return CompletableFuture.supplyAsync(() -> {
-                    return tradeOrderService.getLiveTradeOrdersByAccount(pageNumber);
-                }
-        );
+    public Page<TradeOrder> getLiveOrdersByAccount(@RequestParam(required = false) Integer pageNumber ){
+        return tradeOrderService.getLiveTradeOrdersByAccount(pageNumber);
+//        return CompletableFuture.supplyAsync(() -> {
+//
+//                }
+//        );
     }
 
    // @Cacheable(value="getHistoryTradeOrders", cacheManager="timeoutCacheManager")
@@ -77,18 +81,22 @@ public class TradeOrderController {
 
    // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/account-history-orders")
-    public CompletableFuture<Page<TradeOrder>> getHistoryTradeOrdersByAcount(@RequestParam Integer pageNumber){
-        return CompletableFuture.supplyAsync(() -> {
-                    return tradeOrderService.getHistoryTradeOrdersByAccount(pageNumber);
-                }
-        );
+    public Page<TradeOrder> getHistoryTradeOrdersByAcount(@RequestParam Integer pageNumber){
+        return tradeOrderService.getHistoryTradeOrdersByAccount(pageNumber);
+
+//        return CompletableFuture.supplyAsync(() -> {
+//
+//                }
+//        );
     }
 
     @RequestMapping(value = "/cancel")
-    public CompletableFuture<TradeOrder> cancel(@RequestBody TradeOrder tradeOrder){
-        return CompletableFuture.supplyAsync(() -> {
-                      return tradeOrderService.cancelTradeOrder(tradeOrder);
-                }
-        );
+    public TradeOrder cancel(@RequestBody TradeOrder tradeOrder){
+        return tradeOrderService.cancelTradeOrder(tradeOrder);
+
+//        return CompletableFuture.supplyAsync(() -> {
+//
+//                }
+//        );
     }
 }

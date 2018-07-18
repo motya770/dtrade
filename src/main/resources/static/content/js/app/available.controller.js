@@ -17,6 +17,9 @@ diamondApp.controller('AvailableController', function AvailableController($scope
             var pairs = response.data;
             for(var i in pairs){
                 var pair = pairs[i];
+                if(pair==null){
+                    continue;
+                }
                 var diamond = pair.first;
                 var askBidPair = pair.second;
 

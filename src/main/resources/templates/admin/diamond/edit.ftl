@@ -146,8 +146,6 @@
                 <@spring.formRadioButtons "diamond.cut", cuts, ""/><br><br>
          </div>
 
-
-
             <div class="form-group">
                 <label for="hideTotalStockAmount">Hide Total Stock Amount</label>
 

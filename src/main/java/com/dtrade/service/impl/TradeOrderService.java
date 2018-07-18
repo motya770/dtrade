@@ -302,7 +302,10 @@ public class TradeOrderService  implements ITradeOrderService{
         realOrder.setAmount(tradeOrder.getAmount());
         realOrder.setInitialAmount(tradeOrder.getAmount());
         realOrder.setDiamond(tradeOrder.getDiamond());
-        realOrder.setAccount(tradeOrder.getAccount());
+
+        Account account = accountService.find(tradeOrder.getAccount().getId());
+        realOrder.setAccount(account);
+
         realOrder.setPrice(tradeOrder.getPrice());
         realOrder.setTradeOrderDirection(tradeOrder.getTradeOrderDirection());
         realOrder.setTraderOrderStatus(TraderOrderStatus.CREATED);
@@ -314,9 +317,9 @@ public class TradeOrderService  implements ITradeOrderService{
 
         realOrder = tradeOrderRepository.save(realOrder);
 
-        accountService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount().multiply(tradeOrder.getPrice()));
+        accountService.updateOpenSum(tradeOrder, account, tradeOrder.getAmount().multiply(tradeOrder.getPrice()));
 
-        stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(), tradeOrder.getAmount());
+        stockService.updateStockInTrade(tradeOrder, account, tradeOrder.getDiamond(), tradeOrder.getAmount());
 
         bookOrderService.addNew(realOrder);
 

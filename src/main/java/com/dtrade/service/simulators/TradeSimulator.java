@@ -99,18 +99,16 @@ public class TradeSimulator {
         createTradeOrderSimulated();
     }
 
-    private TradeOrder createTradeOrderSimulated() {
+    private void createTradeOrderSimulated() {
+        diamondService.getAllAvailable("").forEach(diamond -> {
+            Random rand = new Random();
+            int random = rand.nextInt(2);
 
-        Diamond diamond = diamondService.getAllAvailable("").stream().findFirst().get();
+            //logger.info("rand value " + random);
+            //random buy and random sell (simulation!! :-))
+            TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
 
-        Random rand = new Random();
-        int random = rand.nextInt(2);
-
-        //logger.info("rand value " + random);
-        //random buy and random sell (simulation!! :-))
-        TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
-
-        String[] prices = {"0.96", "0.97", "0.98", "0.99", "1.0", "1.1", "1.2", "1.3"};
+            String[] prices = {"0.96", "0.97", "0.98", "0.99", "1.0", "1.1", "1.2", "1.3"};
 
         /*
         int randPrice = rand.nextInt(100);
@@ -120,18 +118,18 @@ public class TradeSimulator {
         }*/
 
 
-        int randAmount = rand.nextInt(10) + 1;
-        int randPrice  = rand.nextInt(prices.length);
+            int randAmount = rand.nextInt(10) + 1;
+            int randPrice  = rand.nextInt(prices.length);
 
-        TradeOrder tradeOrder = new TradeOrder();
-        tradeOrder.setAmount(new BigDecimal(randAmount));
-        tradeOrder.setDiamond(diamond);
-        tradeOrder.setAccount(accountService.getCurrentAccount());
-        tradeOrder.setPrice(new BigDecimal(prices[randPrice]).setScale(2));
-        tradeOrder.setTradeOrderType(TradeOrderType.LIMIT);
-        tradeOrder.setTradeOrderDirection(tradeOrderDirection);
-        tradeOrder = tradeOrderService.createTradeOrder(tradeOrder);
-        return tradeOrder;
+            TradeOrder tradeOrder = new TradeOrder();
+            tradeOrder.setAmount(new BigDecimal(randAmount));
+            tradeOrder.setDiamond(diamond);
+            tradeOrder.setAccount(accountService.getCurrentAccount());
+            tradeOrder.setPrice(new BigDecimal(prices[randPrice]).setScale(2));
+            tradeOrder.setTradeOrderType(TradeOrderType.LIMIT);
+            tradeOrder.setTradeOrderDirection(tradeOrderDirection);
+            tradeOrderService.createTradeOrder(tradeOrder);
+        });
     }
 
     private void login(String userName){
