@@ -145,6 +145,19 @@
                 <#assign stringStatusValue = (diamond.cut)!"" />
                 <@spring.formRadioButtons "diamond.cut", cuts, ""/><br><br>
          </div>
+
+
+
+            <div class="form-group">
+                <label for="hideTotalStockAmount">Hide Total Stock Amount</label>
+
+                <#if diamond.hideTotalStockAmount == true>
+                    <input type="checkbox" class="form-control" name="hideTotalStockAmount" id="hideTotalStockAmount" placeholder="hideTotalStockAmount"  checked>
+                <#else>
+                    <input type="checkbox" class="form-control" name="hideTotalStockAmount" id="hideTotalStockAmount" placeholder="hideTotalStockAmount">
+                </#if>
+            </div>
+
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 

@@ -42,7 +42,7 @@
                             </div>
 
                             <form class="searchform">
-                                <input type="text" class="searchform__inp" ng-model="searchInputValue" placeholder="Enter the name of the diamond">
+                                <input type="text" class="searchform__inp" ng-model="searchInputValue" placeholder="Enter the name of the {{cc.config.assetName}}">
                                 <button class="searchform__btn" ng-click="getAvailableByName();">Find</button>
                             </form>
 
@@ -79,7 +79,7 @@
                                                 </td>
                                                 <td>{{diamond.askBidPair.first}} </td>
                                                 <td>{{diamond.askBidPair.second}}</td>
-                                                <td>{{diamond.totalStockAmount/10000000 | number}} mln</td>
+                                                <td><span ng-if="!diamond.hideTotalStockAmount">{{diamond.totalStockAmount/10000000 | number}} mln </span></td>
                                             </tr>
                                                     <script type="text/ng-template" id="dialog1.tmpl.html">
                                                         <md-dialog aria-label="Diamond">

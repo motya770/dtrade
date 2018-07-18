@@ -41,7 +41,7 @@
 
     <div class="content">
         <div class="token-top" style="padding-top: 65px;">
-            <iframe src="/trade?config=DIAMOND" style="width: 100%; min-height: 800px;"></iframe>
+            <iframe src="/trade?config=CRYPTO" style="width: 100%; min-height: 800px;"></iframe>
         </div>
     </div>
     <footer class="footer">

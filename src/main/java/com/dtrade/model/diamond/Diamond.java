@@ -63,6 +63,8 @@ public class Diamond implements Serializable {
     @NotNull
     private BigDecimal totalStockAmount;
 
+    private boolean hideTotalStockAmount;
+
    // @Embedded
    // private DiamondCategory diamondCategory;
 
