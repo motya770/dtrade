@@ -490,7 +490,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="#tab010">My shares</a>
+                                    <a href="#tab010">My {{cc.config.assetName}}</a>
                                 </li>
                             </ul>
                             <div class="sep-cab-tabs-container">
