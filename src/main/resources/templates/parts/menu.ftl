@@ -5,7 +5,7 @@
                     <a href="/trade">Trade</a>
                 </li>
                 <li ng-class="getClass('/diamonds')" >
-                    <a href="/diamonds">{{cc.config.assetName}}</a>
+                    <a href="/{{cc.config.assetType|lowercase}}">{{cc.config.assetName}}</a>
                 </li>
                 <li ng-show="vm.account" ng-class="getClass('/account')">
                     <a href="/account">My account</a>

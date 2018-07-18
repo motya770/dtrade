@@ -23,7 +23,7 @@
         <div class="def-cab-page">
             <div class="def-cab-page__inner">
                 <div class="def-cab-page__content">
-                    <h2 class="def-cab-page__heading">{{cc.config.assetName}} shares</h2>
+                    <h2 class="def-cab-page__heading">{{cc.config.assetName}}<span ng-if="cc.config.assetType!='CRYPTO'">shares</span></h2>
 
                     <div ng-controller="DiamondController as vm" ng-cloak>
                         <div class="table-container">
