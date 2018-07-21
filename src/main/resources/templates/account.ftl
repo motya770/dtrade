@@ -41,7 +41,8 @@
                                             <th>№</th>
                                             <th>Date</th>
                                             <th>Operation type</th>
-                                            <th>Sum ($)</th>
+                                            <th>Base Currency</th>
+                                            <th>Sum</th>
                                             <th>Balance</th>
                                         </tr>
                                         </thead>
@@ -51,6 +52,7 @@
                                             <td>{{balanceActivity.id}}</td>
                                             <td>{{balanceActivity.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                             <td>{{balanceActivity.balanceActivityType | lowercase}}</td>
+                                            <td>{{balanceActivity.currency}}</td>
                                             <td>{{balanceActivity.amount | number}}</td>
                                             <td>{{balanceActivity.balanceSnapshot | number}}</td>
                                         </tr>

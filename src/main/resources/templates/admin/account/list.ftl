@@ -6,7 +6,10 @@
         <tr>
             <th>ID</th>
             <th>Mail</th>
-            <th>Balance</th>
+            <th>USD</th>
+            <th>BTC</th>
+            <th>ETH</th>
+
         </tr>
         <tbody>
 
@@ -15,7 +18,9 @@
             <tr>
                 <td><a href="/admin/account/show?id=${account.id}"> ${account.id}</a></td>
                 <td>${account.mail}</td>
-                <td>${(account.balance)!""}</td>
+                <td>${(account.balance.usdAmount)!""}</td>
+                <td>${(account.balance.bitcoinAmount)!""}</td>
+                <td>${(account.balance.etherAmount)!""}</td>
             </tr>
             </#list>
 
