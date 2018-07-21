@@ -105,9 +105,11 @@ public class TradeSimulator {
 
         diamonds.forEach(diamond -> {
             Account account = accountService.getStrictlyLoggedAccount();
-            Balance balance =  balanceService.createBalance();
-            account.setBalance(balance);
-            accountService.save(account);
+            if(account.getBalance()==null) {
+                Balance balance = balanceService.createBalance();
+                account.setBalance(balance);
+                accountService.save(account);
+            }
 
             BigDecimal b = balanceService.getBalance(diamond.getCurrency(), account);
             if(b.compareTo(BigDecimal.ZERO)==-1) {

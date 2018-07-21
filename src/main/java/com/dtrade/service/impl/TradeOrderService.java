@@ -150,7 +150,6 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
 
-
     @Override
     public List<TradeOrder> getHistoryTradeOrders(Long diamondId) {
         Diamond diamond = diamondService.find(diamondId);

@@ -224,19 +224,6 @@ public class AccountService implements IAccountService, UserDetailsService {
         return accountRepository.findByMail(login);
     }
 
-
-    @PostConstruct
-    private void init(){
-        Page<Account> accounts =  findAll(0);
-        accounts.getContent().forEach(account -> {
-            if(account.getBalance()==null){
-                Balance balance  = balanceService.createBalance();
-                account.setBalance(balance);
-                save(account);
-            }
-        });
-    }
-
     @Override
     public Account login(Account account) {
         Authentication auth =
@@ -244,6 +231,4 @@ public class AccountService implements IAccountService, UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(auth);
         return account;
     }
-
-
 }
