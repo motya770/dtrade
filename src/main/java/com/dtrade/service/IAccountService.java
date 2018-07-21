@@ -15,12 +15,6 @@ public interface IAccountService {
 
     AccountDTO getCurrentAccountDTO();
 
-    Account updateOpenSum(TradeOrder tradeOrder, Account account, BigDecimal amount);
-
-    Account freezeAmount(Account account, BigDecimal amount);
-
-    Account unfreezeAmount(Account account, BigDecimal amount);
-
     Account buildAccount(String mail, String pwd, String phone, String curr);
 
     void checkCurrentAccount(Account account) throws TradeException;
@@ -46,8 +40,6 @@ public interface IAccountService {
     Account createRealAccount(String login, String pwd, String phone, String currency) throws TradeException;
 
     Account save(Account account);
-
-    Account updateBalance(Account account, BigDecimal addedValue);
 
     Account findByMail(String login);
 

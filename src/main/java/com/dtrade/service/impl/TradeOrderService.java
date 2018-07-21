@@ -64,6 +64,9 @@ public class TradeOrderService  implements ITradeOrderService{
     @Autowired
     private DiamondService diamondService;
 
+    @Autowired
+    private BalanceService balanceService;
+
     private TransactionTemplate transactionTemplate;
 
     private ExecutorService executor = Executors.newFixedThreadPool(25);
@@ -82,40 +85,6 @@ public class TradeOrderService  implements ITradeOrderService{
         List<Long> tradeOrdersIds = Arrays.asList(ids);
         return tradeOrderRepository.findAll(tradeOrdersIds);
     }
-
-/*
-
-    @Override
-    public BigDecimal getOpenedStocksAmount(Account account, Diamond diamond) {
-        BigDecimal stockAmount = tradeOrderRepository.getSellTradesByAccountAndDiamond(account, diamond);
-        if(stockAmount==null){
-            stockAmount = new BigDecimal("0.0");
-        }
-        return stockAmount;
-    }
-   */
-
-    /*
-    @Override
-    public BigDecimal getAllOpenedTradesSum(Account account){
-        BigDecimal sum =  tradeOrderRepository.getBuyOpenTradesByAccount(account);
-        if(sum==null){
-            sum = new BigDecimal("0.0");
-        }
-        return sum;
-    }*/
-
-    /*
-    @Override
-    public BigDecimal getOpenedTradesSum(Account account, Diamond diamond) {
-        //TODO fix performance
-        List<TradeOrder> tradeOrders = tradeOrderRepository.getBuyOpenTradesByAccountAndDiamond(account, diamond);
-        BigDecimal sum = new BigDecimal("0.00");
-        for(TradeOrder order: tradeOrders){
-            sum = sum.add(order.getPrice().multiply(order.getAmount()));
-        }
-        return sum;
-    }*/
 
     @Autowired
     public void setTransactionManager(PlatformTransactionManager transactionManager){
@@ -156,21 +125,6 @@ public class TradeOrderService  implements ITradeOrderService{
         bookOrderService.getBookOrders().entrySet().parallelStream().forEach((entry)->{
 
             long start1 = System.currentTimeMillis();
-
-            /*
-            Pair<TradeOrder, TradeOrder> pair = bookOrderService.findClosest(entry.getKey());
-            if(pair!=null){
-                    if(checkIfCanExecute(pair)) {
-
-                        quotesService.issueQuote(pair);
-
-                        logger.debug("EXECUTING TRADE PAIR");
-
-                        long start = System.currentTimeMillis();
-                        executeTradeOrders(pair);
-                        logger.info("execute trade time: {}", (System.currentTimeMillis() - start));
-                    }
-            }*/
 
 
             List<Pair<TradeOrder, TradeOrder>> pairs = bookOrderService.find10Closest(entry.getKey());
@@ -268,10 +222,10 @@ public class TradeOrderService  implements ITradeOrderService{
         //TODO market price can be problematic
         if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
             Account account = accountService.find(tradeOrder.getAccount().getId());
-            BigDecimal openedSum = account.getOpenOrdersSum();
-            BigDecimal balance = account.getBalance();
+            BigDecimal actualBalance =  balanceService.getActualBalance(tradeOrder.getDiamond().getCurrency(), account);
             BigDecimal cash = tradeOrder.getPrice().multiply(tradeOrder.getAmount());
-            if(balance.subtract(openedSum).subtract(account.getFrozenBalance()).subtract(cash).compareTo(BigDecimal.ZERO) < 0){
+
+            if(actualBalance.subtract(cash).compareTo(BigDecimal.ZERO) < 0){
                 throw new TradeException("Already opened too many buy orders!");
             }
         }
@@ -284,6 +238,7 @@ public class TradeOrderService  implements ITradeOrderService{
             }
         }
     }
+
 
     @Override
     public TradeOrder createTradeOrder(TradeOrder tradeOrder) {
@@ -317,7 +272,8 @@ public class TradeOrderService  implements ITradeOrderService{
 
         realOrder = tradeOrderRepository.save(realOrder);
 
-        accountService.updateOpenSum(tradeOrder, account, tradeOrder.getAmount().multiply(tradeOrder.getPrice()));
+        balanceService.updateOpenSum(realOrder.getDiamond().getCurrency(), account,
+                tradeOrder.getAmount().multiply(tradeOrder.getPrice()));
 
         stockService.updateStockInTrade(tradeOrder, account, tradeOrder.getDiamond(), tradeOrder.getAmount());
 
@@ -373,7 +329,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.remove(tradeOrder);
 
-        accountService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount()
+        balanceService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount()
                 .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE));
 
         stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(),
@@ -404,7 +360,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.remove(tradeOrder);
 
-        accountService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount()
+        balanceService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount()
                 .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE));
 
         stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(),
@@ -585,7 +541,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     tradeOrderRepository.save(buyOrder);
                     tradeOrderRepository.save(sellOrder);
 
-                    accountService.updateOpenSum(buyOrder, buyAccount, cash.multiply(MINUS_ONE_VALUE));
+                    balanceService.updateOpenSum(buyOrder, buyAccount, cash.multiply(MINUS_ONE_VALUE));
 
                    // System.out.println("1.15");
                     accountService.save(buyAccount);

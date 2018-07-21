@@ -110,8 +110,10 @@ public class AccountServiceTest extends BaseTest{
 
     }
 
+    /*
    @Test
    public  void testSave(){
+
         Account account = createAccount();
 
         BigDecimal balance = new BigDecimal("10");
@@ -119,7 +121,8 @@ public class AccountServiceTest extends BaseTest{
         account = accountService.save(account);
         Assert.assertTrue(account.getBalance().equals(balance));
    }
-
+*/
+   /*
    @Test
    public void testUpdateBalance(){
         Account account = createAccount();
@@ -128,7 +131,7 @@ public class AccountServiceTest extends BaseTest{
         account = accountService.updateBalance(account, addedValue);
 
         Assert.assertTrue(account.getBalance().compareTo(oldBalance.add(addedValue)) == 0);
-   }
+   }*/
 
    @Test
    public void testFindByMail(){

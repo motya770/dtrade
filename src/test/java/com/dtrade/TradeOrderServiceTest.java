@@ -2,15 +2,14 @@ package com.dtrade;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.balance.Balance;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
-import com.dtrade.service.IAccountService;
-import com.dtrade.service.IBookOrderService;
-import com.dtrade.service.IDiamondService;
-import com.dtrade.service.ITradeOrderService;
+import com.dtrade.service.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -127,6 +126,34 @@ public class TradeOrderServiceTest extends BaseTest {
         return tradeOrders;
     }
 
+
+    @Autowired
+    private IBalanceService balanceService;
+
+
+    private void updateBalances(Account account, BigDecimal balance){
+        transactionTemplate.execute((TransactionStatus status)-> {
+            Currency[] currencies = Currency.values();
+            for(int i = 0; i < currencies.length; i++){
+                Currency currency = currencies[i];
+
+                BigDecimal minusBalance =  balanceService.getBalance(currency, account).multiply(new BigDecimal("-1"));
+                BigDecimal minusFrozen =  balanceService.getFrozen(currency, account).multiply(new BigDecimal("-1"));
+                BigDecimal minusOpen = balanceService.getOpenSum(currency, account).multiply(new BigDecimal("-1"));
+
+                balanceService.updateBalance(currency, account, minusBalance);
+                balanceService.updateFrozenBalance(currency, account, minusFrozen);
+                balanceService.updateOpenSum(currency, account, minusOpen);
+
+
+                balanceService.updateBalance(currency, account, balance);
+
+
+            }
+            return account;
+        });
+    }
+
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
     public void testCalculateTradeOrders() throws Exception{
@@ -135,14 +162,7 @@ public class TradeOrderServiceTest extends BaseTest {
         final Account account = accountService.getCurrentAccount();
 
         BigDecimal initialBalance = new BigDecimal("100000");
-        transactionTemplate.execute((TransactionStatus status)-> {
-            account.setFrozenBalance(BigDecimal.ZERO);
-            account.setOpenOrdersSum(BigDecimal.ZERO);
-            account.setBalance(initialBalance);
-            accountRepository.saveAndFlush(account);
-            return account;
-        });
-
+        updateBalances(account, initialBalance);
 
         Pair<List<TradeOrder>, List<TradeOrder>> pair = transactionTemplate.execute((TransactionStatus status)-> {
             List<TradeOrder> buyOrders = createBuyOrderList();
@@ -198,15 +218,21 @@ public class TradeOrderServiceTest extends BaseTest {
             System.out.println("TEST2");
 
             System.out.println("B: " + rereadAccount.getBalance());
-            System.out.println("O: " + rereadAccount.getOpenOrdersSum());
-            System.out.println("F: " + rereadAccount.getFrozenBalance());
 
-            System.out.println("BALANCE: " + rereadAccount.getBalance() + " "
-                    + rereadAccount.getOpenOrdersSum() + " "
-                    + rereadAccount.getFrozenBalance());
+            System.out.println("BALANCE: " + rereadAccount.getBalance());
 
-            Assert.assertEquals(0, initialBalance.compareTo(rereadAccount.getBalance()));
-            Assert.assertEquals(0, BigDecimal.ZERO.compareTo(rereadAccount.getOpenOrdersSum()));
+            Currency[] currencies = Currency.values();
+            for(int i = 0; i < currencies.length; i++){
+                Currency currency = currencies[i];
+
+                BigDecimal balance =  balanceService.getBalance(currency, account);
+                BigDecimal frozen =  balanceService.getFrozen(currency, account);
+                BigDecimal open = balanceService.getOpenSum(currency, account);
+
+                Assert.assertEquals(0, initialBalance.compareTo(balance));
+                Assert.assertEquals(0,  BigDecimal.ZERO.compareTo(frozen));
+                Assert.assertEquals(0,  BigDecimal.ZERO.compareTo(open));
+            }
 
             System.out.println("TEST3");
             System.out.println("Finished simulation...");
@@ -288,6 +314,12 @@ public class TradeOrderServiceTest extends BaseTest {
     @Test
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     public void  testCreateTradeOrder(){
+
+        Account account = accountService.getCurrentAccount();
+        BigDecimal initialBalance = new BigDecimal("100000");
+        updateBalances(account, initialBalance);
+
+
         TradeOrder tradeOrder = createTestTradeOrder();
         TradeOrder savedTradeOrder = tradeOrderRepository.getOne(tradeOrder.getId());
         Assert.assertNotNull(savedTradeOrder);

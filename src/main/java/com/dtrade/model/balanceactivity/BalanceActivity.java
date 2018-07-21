@@ -1,6 +1,7 @@
 package com.dtrade.model.balanceactivity;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -32,6 +33,10 @@ public class BalanceActivity {
 
     @NotNull
     private BigDecimal amount;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     @NotNull
     private BigDecimal balanceSnapshot;

@@ -3,10 +3,12 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
+import com.dtrade.model.balance.Balance;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.service.IAccountService;
+import com.dtrade.service.IBalanceService;
 import com.dtrade.service.IMailService;
 import com.dtrade.service.ITradeOrderService;
 import org.slf4j.Logger;
@@ -24,7 +26,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -33,7 +37,6 @@ import java.util.UUID;
 @Service
 @Transactional
 public class AccountService implements IAccountService, UserDetailsService {
-
 
     private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
@@ -48,6 +51,9 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Autowired
     private IMailService mailService;
+
+    @Autowired
+    private IBalanceService balanceService;
 
     @Override
     public Account find(Long accountId) {
@@ -170,15 +176,6 @@ public class AccountService implements IAccountService, UserDetailsService {
         return account;
     }
 
-
-
-    @Override
-    public Account unfreezeAmount(Account account, BigDecimal amount) {
-        account.setFrozenBalance(account.getFrozenBalance().subtract(amount));
-        accountRepository.save(account);
-        return account;
-    }
-
     @Override
     public AccountDTO getCurrentAccountDTO() {
         Account account = getCurrentAccount();
@@ -189,29 +186,10 @@ public class AccountService implements IAccountService, UserDetailsService {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(account.getId());
         accountDTO.setMail(account.getMail());
-        accountDTO.setBalance(account.getBalance().subtract(account.getFrozenBalance()).subtract(account.getOpenOrdersSum()));
+
+        accountDTO.setBalance(account.getBalance().getDTO());
 
         return accountDTO;
-    }
-
-    @Override
-    public Account updateOpenSum(TradeOrder tradeOrder, Account account, BigDecimal amount) {
-
-        if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
-            //System.out.println("updating open sum " + account.getOpenOrdersSum() + " " + amount);
-            account.setOpenOrdersSum(account.getOpenOrdersSum().add(amount));
-            accountRepository.save(account);
-            return account;
-        }
-
-        return account;
-    }
-
-    @Override
-    public Account freezeAmount(Account account, BigDecimal amount) {
-        account.setFrozenBalance(account.getFrozenBalance().add(amount));
-        accountRepository.save(account);
-        return account;
     }
 
     @Override
@@ -223,13 +201,10 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         pwd = passwordEncoder.encodePassword(pwd, null);
         Account account = new Account(mail, pwd);
-
-        account.setBalance(new BigDecimal("0.0"));
-        account.setFrozenBalance(new BigDecimal("0.0"));
         account.setPhone(phone);
         account.setGuid(UUID.randomUUID().toString());
         account.setRole(Account.F_ROLE_ACCOUNT);
-        account.setOpenOrdersSum(BigDecimal.ZERO);
+        account.setBalance(balanceService.createBalance());
 
         return account;
     }
@@ -249,6 +224,19 @@ public class AccountService implements IAccountService, UserDetailsService {
         return accountRepository.findByMail(login);
     }
 
+
+    @PostConstruct
+    private void init(){
+        Page<Account> accounts =  findAll(0);
+        accounts.getContent().forEach(account -> {
+            if(account.getBalance()==null){
+                Balance balance  = balanceService.createBalance();
+                account.setBalance(balance);
+                save(account);
+            }
+        });
+    }
+
     @Override
     public Account login(Account account) {
         Authentication auth =
@@ -257,23 +245,5 @@ public class AccountService implements IAccountService, UserDetailsService {
         return account;
     }
 
-    @Override
-    @Transactional
-    public Account updateBalance(Account account, BigDecimal addedValue) {
 
-        Account rereadAccount = find(account.getId());
-
-        if (addedValue != null) {
-
-            BigDecimal balance = rereadAccount.getBalance().add(addedValue);
-            balance = balance.setScale(2, BigDecimal.ROUND_HALF_UP);
-            rereadAccount.setBalance(balance);
-
-           return accountRepository.save(rereadAccount);
-
-        } else {
-            logger.warn("Can't update balance of account {} because addedValue is null", account.getId());
-        }
-        return  rereadAccount;
-    }
 }

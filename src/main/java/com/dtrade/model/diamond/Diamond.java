@@ -1,6 +1,7 @@
 package com.dtrade.model.diamond;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.image.Image;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -52,6 +53,11 @@ public class Diamond implements Serializable {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private DiamondStatus diamondStatus;
+
+    @NotNull
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     @NotNull
     @JsonIgnore

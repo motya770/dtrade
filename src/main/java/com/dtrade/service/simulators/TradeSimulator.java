@@ -2,14 +2,12 @@ package com.dtrade.service.simulators;
 
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.balance.Balance;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.model.tradeorder.TradeOrderType;
-import com.dtrade.service.IAccountService;
-import com.dtrade.service.IDiamondService;
-import com.dtrade.service.IQuotesService;
-import com.dtrade.service.ITradeOrderService;
+import com.dtrade.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -51,6 +50,9 @@ public class TradeSimulator {
 
     @Autowired
     private IQuotesService quotesService;
+
+    @Autowired
+    private IBalanceService balanceService;
 
     //two different logins f
     @PostConstruct
@@ -92,17 +94,31 @@ public class TradeSimulator {
 
     private void startTrade(String accountName){
         login(accountName);
-        Account account = accountService.getStrictlyLoggedAccount();
-        if(account.getBalance().compareTo(new BigDecimal("0.0"))==-1) {
-            accountService.updateBalance(account, new BigDecimal("10000"));
-        }
+
         createTradeOrderSimulated();
     }
 
+
     private void createTradeOrderSimulated() {
-        diamondService.getAllAvailable("").forEach(diamond -> {
+
+        List<Diamond> diamonds =   diamondService.getAllAvailable("");
+
+        diamonds.forEach(diamond -> {
+            Account account = accountService.getStrictlyLoggedAccount();
+            Balance balance =  balanceService.createBalance();
+            account.setBalance(balance);
+            accountService.save(account);
+
+            BigDecimal b = balanceService.getBalance(diamond.getCurrency(), account);
+            if(b.compareTo(BigDecimal.ZERO)==-1) {
+                balanceService.updateBalance(diamond.getCurrency(), account, new BigDecimal("100000"));
+            }
+        });
+
+        diamonds.forEach(diamond -> {
             Random rand = new Random();
             int random = rand.nextInt(2);
+
 
             //logger.info("rand value " + random);
             //random buy and random sell (simulation!! :-))

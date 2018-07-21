@@ -1,5 +1,6 @@
 package com.dtrade.model.account;
 
+import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
@@ -66,11 +67,8 @@ public class Account implements UserDetails {
     private boolean blocked;
 
     @NotNull
-    private BigDecimal balance;
-
-    private BigDecimal frozenBalance;
-
-    private BigDecimal openOrdersSum;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Balance balance;
 
     private String phone;
 

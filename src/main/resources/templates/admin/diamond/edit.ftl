@@ -156,6 +156,12 @@
                 </#if>
             </div>
 
+         <div class="radio">
+                <label>Currency</label><br/>
+            <#assign stringStatusValue = (diamond.currency)!"" />
+            <@spring.formRadioButtons "diamond.currency", currencies, ""/><br><br>
+         </div>
+
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 

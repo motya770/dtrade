@@ -3,9 +3,11 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.coinpayment.*;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.repository.coinpayment.CoinPaymentRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
+import com.dtrade.service.IBalanceService;
 import com.dtrade.service.ICoinPaymentService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -44,20 +46,25 @@ public class CoinPaymentService implements ICoinPaymentService {
     @Autowired
     private IAccountService accountService;
 
+    @Autowired
+    private IBalanceService balanceService;
+
     @Override
     public CoinPayment sendWithdraw(InWithdrawRequest withdrawRequest) {
 
         Account account = accountService.getStrictlyLoggedAccount();
         account = accountService.find(account.getId());
 
-        BigDecimal amount = withdrawRequest.getAmountUsd();
-        BigDecimal actualBalance = account.getBalance().add(account.getFrozenBalance());
+        Currency currency = Currency.valueOf(withdrawRequest.getCurrencyCoin());
+
+        BigDecimal amount = withdrawRequest.getAmountCoin();
+        BigDecimal actualBalance = balanceService.getBalance(currency, account);
 
         if(actualBalance.compareTo(amount) < 0){
             throw new TradeException("Account " + account.getId() + " don't have enough money for withdraw.");
         }
 
-        accountService.freezeAmount(account, amount);
+        balanceService.freezeAmount(currency, account, amount);
 
         withdrawRequest  = sendWithdrawRequest(withdrawRequest);
 

@@ -1,6 +1,7 @@
 package com.dtrade;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.*;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
@@ -42,6 +43,7 @@ public class BaseTest {
         diamond.setColor(Color.D);
         diamond.setCut(Cut.EXCELLENT);
         diamond.setTotalStockAmount(new BigDecimal("40000000"));
+        diamond.setCurrency(Currency.BTC);
 
         diamond = diamondService.create(diamond);
         return diamond;
