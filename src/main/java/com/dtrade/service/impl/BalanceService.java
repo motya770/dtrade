@@ -30,6 +30,25 @@ public class BalanceService  implements IBalanceService{
     private IAccountService accountService;
 
     @Override
+    public Account updateRoboBalances(Currency currency, Account account){
+        if(!account.isRoboAccount()){
+             throw new TradeException("This is not robo account: " + account.getMail());
+        }
+
+        if(account.getBalance()==null) {
+            Balance balance = createBalance();
+            account.setBalance(balance);
+            account = accountService.save(account);
+        }
+
+        BigDecimal b = getActualBalance(currency, account);
+        if(b.compareTo(BigDecimal.ZERO)==-1 || b.compareTo(BigDecimal.ZERO) == 0) {
+            account = updateBalance(currency, account, new BigDecimal("100000"));
+        }
+        return account;
+    }
+
+    @Override
     public Account unfreezeAmount(Currency currency, Account account, BigDecimal amount) {
         updateFrozenBalance(currency, account, amount.multiply(new BigDecimal("-1")));
         return account;
@@ -55,22 +74,24 @@ public class BalanceService  implements IBalanceService{
     @Override
     public Balance updateOpenSum(Currency currency, Account account, BigDecimal amount) {
 
+        Balance balance =  balanceRepository.findById(account.getBalance().getId()).get();
+
         if(currency.equals(Currency.USD)){
 
-            account.getBalance().setUsdOpen(account.getBalance().getUsdOpen().add(amount));
+            balance.setUsdOpen(balance.getUsdOpen().add(amount));
 
         }else if(currency.equals(Currency.BTC)) {
 
-            account.getBalance().setBitcoinOpen(account.getBalance().getBitcoinOpen().add(amount));
+            balance.setBitcoinOpen(balance.getBitcoinOpen().add(amount));
 
         }else if(currency.equals(Currency.ETH)) {
 
-            account.getBalance().setEtherOpen((account.getBalance().getEtherOpen().add(amount)));
+            balance.setEtherOpen((balance.getEtherOpen().add(amount)));
 
         }else{
             throw new TradeException("Currency not defined.");
         }
-        return  balanceRepository.save(account.getBalance());
+        return balanceRepository.save(balance);
     }
 
     @Override
@@ -98,32 +119,35 @@ public class BalanceService  implements IBalanceService{
     @Transactional
     public Account updateBalance(Currency currency, Account account, BigDecimal addedValue) {
 
-        Account rereadAccount = accountService.find(account.getId());
+        Balance balanceObj = balanceRepository.findById(account.getBalance().getId()).get();
+
+        System.out.println("updating balance: " + balanceObj.getId() + " " + Thread.currentThread().getName());
 
         if(currency.equals(Currency.USD)){
 
-            BigDecimal balance = rereadAccount.getBalance().getUsdAmount().add(addedValue);
+            BigDecimal balance = balanceObj.getUsdAmount().add(addedValue);
             balance = balance.setScale(6, BigDecimal.ROUND_HALF_UP);
-            account.getBalance().setUsdAmount(balance);
+            balanceObj.setUsdAmount(balance);
 
         }else if(currency.equals(Currency.BTC)) {
 
-            BigDecimal balance = rereadAccount.getBalance().getBitcoinAmount().add(addedValue);
+            BigDecimal balance = balanceObj.getBitcoinAmount().add(addedValue);
             balance = balance.setScale(6, BigDecimal.ROUND_HALF_UP);
-            account.getBalance().setBitcoinAmount(balance);
+            balanceObj.setBitcoinAmount(balance);
 
         }else if(currency.equals(Currency.ETH)) {
 
-            BigDecimal balance = rereadAccount.getBalance().getEtherAmount().add(addedValue);
+            BigDecimal balance = balanceObj.getEtherAmount().add(addedValue);
             balance = balance.setScale(6, BigDecimal.ROUND_HALF_UP);
-            account.getBalance().setEtherAmount(balance);
+            balanceObj.setEtherAmount(balance);
 
         }else{
             logger.warn("Can't update balance of account {} because addedValue is null", account.getId());
         }
 
-        balanceRepository.save(account.getBalance());
-        return  rereadAccount;
+        balanceRepository.save(balanceObj);
+        account.setBalance(balanceObj);
+        return account;
     }
 
     @Override

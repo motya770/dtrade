@@ -26,5 +26,7 @@ public interface IStockService {
 
     Stock updateStockInTrade(TradeOrder tradeOrder, Account account, Diamond diamond, BigDecimal stockAmount);
 
+    Stock updateRoboStockAmount(Diamond diamond, Account account);
+
     void save(Stock stock);
 }

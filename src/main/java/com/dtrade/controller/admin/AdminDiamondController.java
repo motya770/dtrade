@@ -1,5 +1,6 @@
 package com.dtrade.controller.admin;
 
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.*;
 import com.dtrade.model.image.Image;
 import com.dtrade.service.IDiamondService;
@@ -82,6 +83,7 @@ public class AdminDiamondController {
         model.addAttribute("colors", Stream.of(Color.values()).collect(Collectors.toMap(Color::name, Color::name)));
         model.addAttribute("cuts", Stream.of(Cut.values()).collect(Collectors.toMap(Cut::name, Cut::name)));
         model.addAttribute("clarities", Stream.of(Clarity.values()).collect(Collectors.toMap(Clarity::name, Clarity::name)));
+        model.addAttribute("currencies", Stream.of(Currency.values()).collect(Collectors.toMap(Currency::name, Currency::name)));
         return model;
     }
 

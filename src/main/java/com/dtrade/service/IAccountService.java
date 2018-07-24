@@ -3,15 +3,18 @@ package com.dtrade.service;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
-import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.currency.Currency;
+import com.dtrade.model.diamond.Diamond;
 import org.springframework.data.domain.Page;
-
-import java.math.BigDecimal;
 
 /**
  * Created by kudelin on 8/24/16.
  */
 public interface IAccountService {
+
+    void createRoboAccounts();
+
+    String getRoboAccountMail(Diamond diamond, int rand);
 
     AccountDTO getCurrentAccountDTO();
 

@@ -63,11 +63,11 @@ public class DiamondService implements IDiamondService {
     @Override
     public Diamond preBuyDiamond(Diamond diamond, Long buyerId, BigDecimal price) throws TradeException {
 
-        diamond = diamondRepository.findOne(diamond.getId());
+        diamond = diamondRepository.findById(diamond.getId()).get();
 
         Account buyer = accountService.find(buyerId);
         Account seller = accountService.find(diamond.getAccount().getId());
-        diamond = diamondRepository.findOne(diamond.getId());
+        diamond = diamondRepository.findById(diamond.getId()).get();
 
         return buyDiamond(diamond, buyer, seller, price);
     }
@@ -117,7 +117,7 @@ public class DiamondService implements IDiamondService {
     @Override
     public Diamond openForSale(Diamond diamond, BigDecimal price) throws TradeException {
 
-       diamond  = diamondRepository.findOne(diamond.getId());
+       diamond  = diamondRepository.findById(diamond.getId()).get();
        //BigDecimal bid = diamond.getPrice();
 
        Account account = accountService.getStrictlyLoggedAccount();
@@ -143,7 +143,7 @@ public class DiamondService implements IDiamondService {
     @Override
     public Diamond hideFromSale(Diamond diamond) {
 
-        diamond = diamondRepository.findOne(diamond.getId());
+        diamond = diamondRepository.findById(diamond.getId()).get();
 
         Account account = accountService.getStrictlyLoggedAccount();
         checkDiamondOwnship(account, diamond);
@@ -176,7 +176,7 @@ public class DiamondService implements IDiamondService {
 
     @Override
     public Diamond find(Long diamondId) {
-        return diamondRepository.findOne(diamondId);
+        return diamondRepository.findById(diamondId).get();
     }
 
     @Override

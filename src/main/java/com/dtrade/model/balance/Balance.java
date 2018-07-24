@@ -1,10 +1,9 @@
 package com.dtrade.model.balance;
 
+
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -43,6 +42,10 @@ public class Balance {
 
     @NotNull
     private BigDecimal etherOpen;
+
+    /*
+    @Version
+    private Long version;*/
 
     public BalanceDTO getDTO(){
 

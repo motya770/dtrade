@@ -66,6 +66,9 @@ public class Account implements UserDetails {
 
     private boolean blocked;
 
+    @Column(columnDefinition = "boolean default false")
+    private boolean roboAccount;
+
     @NotNull
     @OneToOne(fetch = FetchType.LAZY)
     private Balance balance;

@@ -22,7 +22,7 @@
 
 <!-- Load Fonts CSS Start -->
 <script>
-    loadCSS( "/theme/app//css/fonts.min.css?ver=1.0.0", false, "all" ); // Loading fonts, if the site is located in a subfolder
+    loadCSS( "/theme/app/css/fonts.min.css?ver=1.0.0", false, "all" ); // Loading fonts, if the site is located in a subfolder
     // loadLocalStorageCSS( "webfonts", "css/fonts.min.css?ver=1.0.0" ); // Loading fonts, if the site is at the root
 </script>
 <!-- Load Fonts CSS End -->

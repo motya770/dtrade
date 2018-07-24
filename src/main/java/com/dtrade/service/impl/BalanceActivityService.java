@@ -20,7 +20,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 
@@ -42,6 +47,14 @@ public class BalanceActivityService implements IBalanceActivityService {
 
     @Autowired
     private BalanceService balanceService;
+
+    private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    public void setTransactionManager(PlatformTransactionManager transactionManager){
+        transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+    }
 
     @Override
     public Page<BalanceActivity> findAll(Integer pageNumber) {
@@ -114,6 +127,12 @@ public class BalanceActivityService implements IBalanceActivityService {
                                                                                                         Account seller,
                                                                                                         BigDecimal cash, TradeOrder buyOrder,
                                                                                                         TradeOrder sellOrder) {
+        //return transactionTemplate.execute(((TransactionStatus status)-> {
+
+            System.out.println("updating for : " + buyOrder.getDiamond().getName());
+
+
+
         //buyer don't have enough money
         Currency currency = buyOrder.getDiamond().getCurrency();
         Currency c2 = sellOrder.getDiamond().getCurrency();
@@ -129,9 +148,6 @@ public class BalanceActivityService implements IBalanceActivityService {
         }
 
         BigDecimal minusCash = cash.multiply(new BigDecimal("-1"));
-
-        balanceService.updateBalance(currency, buyer, minusCash);
-        balanceService.updateBalance(currency, seller, cash);
 
         BalanceActivity buyerActivity = new BalanceActivity();
         buyerActivity.setBalanceActivityType(BalanceActivityType.BUY);
@@ -156,7 +172,26 @@ public class BalanceActivityService implements IBalanceActivityService {
         balanceActivityRepository.save(sellerActivity);
         balanceActivityRepository.save(buyerActivity);
 
-        return org.springframework.data.util.Pair.of(buyerActivity, sellerActivity);
+       // TransactionStatus inStatusResult = transactionTemplate.execute(((TransactionStatus inStatus)-> {
+
+           // System.out.println("updating for : " + buyOrder.getDiamond().getName());
+
+            balanceService.updateBalance(currency, buyer, minusCash);
+            balanceService.updateBalance(currency, seller, cash);
+            balanceService.updateOpenSum(buyOrder, buyer, cash.multiply(TradeOrderService.MINUS_ONE_VALUE));
+
+         //   return inStatus;
+       //}));
+
+        /*
+        if(!inStatusResult.isCompleted()){
+            throw new TradeException("Balance transaction is not implemented. " + inStatusResult);
+        }*/
+
+            return org.springframework.data.util.Pair.of(buyerActivity, sellerActivity);
+            //return status;
+        ///}));
+
     }
 
 
@@ -194,7 +229,6 @@ public class BalanceActivityService implements IBalanceActivityService {
 
         return activity;
     }
-
 
 
     @Override

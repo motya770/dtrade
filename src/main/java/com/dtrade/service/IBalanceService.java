@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 
 public interface IBalanceService {
 
+    Account updateRoboBalances(Currency currency, Account account);
+
     Account unfreezeAmount(Currency currency, Account account, BigDecimal amount);
 
     Account freezeAmount(Currency currency, Account account, BigDecimal amount);

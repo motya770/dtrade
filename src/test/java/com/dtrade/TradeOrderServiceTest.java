@@ -196,14 +196,14 @@ public class TradeOrderServiceTest extends BaseTest {
             List<TradeOrder> buyTrades = pair.getFirst();
             List<TradeOrder> sellTrades = pair.getSecond();
 
-            long buyExecuted = buyTrades.stream().map(tradeOrder -> tradeOrderRepository.findOne(tradeOrder.getId())
+            long buyExecuted = buyTrades.stream().map(tradeOrder -> tradeOrderRepository.findById(tradeOrder.getId()).get()
             ).filter( tradeOrder -> {
                 System.out.println("status1: " + tradeOrder.getTraderOrderStatus());
                 return tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED);
 
             }).count();
 
-            long sellExecuted = sellTrades.stream().map(tradeOrder -> tradeOrderRepository.findOne(tradeOrder.getId()))
+            long sellExecuted = sellTrades.stream().map(tradeOrder -> tradeOrderRepository.findById(tradeOrder.getId()).get())
             .filter( tradeOrder -> {
                 System.out.println("status2: " + tradeOrder.getTraderOrderStatus());
                return tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED);
@@ -213,7 +213,7 @@ public class TradeOrderServiceTest extends BaseTest {
             System.out.println("SELL executed: " + sellExecuted);
 
             System.out.println("TEST1");
-            Account rereadAccount = accountRepository.findOne(account.getId());
+            Account rereadAccount = accountRepository.findById(account.getId()).get();
 
             System.out.println("TEST2");
 

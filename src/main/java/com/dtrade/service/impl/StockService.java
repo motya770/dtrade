@@ -108,6 +108,20 @@ public class StockService  implements IStockService {
     }
 
     @Override
+    public Stock updateRoboStockAmount(Diamond diamond, Account account){
+        if(!account.isRoboAccount()){
+            throw new TradeException("This is not robo account: " + account.getMail());
+        }
+        Stock stock = getSpecificStock(account, diamond);
+        int comparison =  stock.getAmount().subtract(stock.getStockInTrade()).compareTo(new BigDecimal("10000"));
+        if (comparison <= 0) {
+            stock.setAmount(new BigDecimal("10000"));
+            stockRepository.save(stock);
+        }
+        return stock;
+    }
+
+    @Override
     public Stock getSpecificStock(Account account, Diamond diamond) {
        // System.out.println("AC: " + account);
        // System.out.println("DI: " + diamond);

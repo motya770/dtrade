@@ -37,7 +37,7 @@ public class ConfigService implements IConfigService {
 
     @Override
     public Config find(Long configId) {
-        return configRepository.findOne(configId);
+        return configRepository.findById(configId).get();
     }
 
     @Override

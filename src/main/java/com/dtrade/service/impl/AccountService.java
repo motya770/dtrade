@@ -4,25 +4,21 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
 import com.dtrade.model.balance.Balance;
-import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.model.tradeorder.TradeOrderDirection;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.repository.account.AccountRepository;
-import com.dtrade.service.IAccountService;
-import com.dtrade.service.IBalanceService;
-import com.dtrade.service.IMailService;
-import com.dtrade.service.ITradeOrderService;
+import com.dtrade.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +26,7 @@ import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import com.dtrade.model.currency.Currency;
 
 /**
  * Created by kudelin on 8/24/16.
@@ -47,7 +44,7 @@ public class AccountService implements IAccountService, UserDetailsService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private Md5PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private IMailService mailService;
@@ -55,9 +52,12 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Autowired
     private IBalanceService balanceService;
 
+    @Autowired
+    private IDiamondService diamondService;
+
     @Override
     public Account find(Long accountId) {
-        return accountRepository.findOne(accountId);
+        return accountRepository.findById(accountId).get();
     }
 
     @Override
@@ -70,6 +70,38 @@ public class AccountService implements IAccountService, UserDetailsService {
         return changeEnablement(accountId, false);
     }
 
+    @PostConstruct //EventListener(ContextRefreshedEvent.class)
+    public void init(){
+        createRoboAccounts();
+    }
+
+    @Override
+    public void createRoboAccounts() {
+        List<Diamond> diamonds = diamondService.getAllAvailable("");
+        diamonds.forEach(diamond -> {
+            for(int i = 0; i < 2; i ++) {
+                String mail = getRoboAccountMail(diamond, i);
+                Account account  = findByMail(mail);
+                if(account==null){
+                    account = createRoboAccount(mail);
+                    logger.info("robo account is created for {}, account:  {} ", diamond, account);
+                }
+            }
+        });
+    }
+
+    //TODO hardcoded - change
+    private Account createRoboAccount(String email){
+        Account account = createRealAccount(email, "qwerty1345", null, null);
+        account.setRoboAccount(true);
+        return accountRepository.save(account);
+    }
+
+    @Override
+    public String getRoboAccountMail(Diamond diamond, int rand){
+        String simpleName = diamond.getName().replace("/", "");
+        return  "testAccount" + simpleName + rand  + "@gmail.com";
+    }
 
     @Override
     public void checkCurrentAccount(Account account) throws TradeException {
@@ -92,6 +124,8 @@ public class AccountService implements IAccountService, UserDetailsService {
         return account;
     }
 
+
+
     @Override
     public Account getCurrentAccount() {
 
@@ -103,7 +137,7 @@ public class AccountService implements IAccountService, UserDetailsService {
         Object principal = authentication.getPrincipal();
         if(principal instanceof Account){
             Account account = (Account) principal;
-            account = accountRepository.findOne(account.getId());
+            account = accountRepository.findById(account.getId()).get();
             return account;
         }
 
@@ -111,7 +145,7 @@ public class AccountService implements IAccountService, UserDetailsService {
     }
 
     private Account changeEnablement(Long accountId, boolean enabled) {
-        Account account = accountRepository.findOne(accountId);
+        Account account = accountRepository.findById(accountId).get();
         account.setEnabled(enabled);
         accountRepository.save(account);
         return account;
@@ -199,7 +233,7 @@ public class AccountService implements IAccountService, UserDetailsService {
             throw new TradeException("Can't create account with this login!");
         }
 
-        pwd = passwordEncoder.encodePassword(pwd, null);
+        pwd = passwordEncoder.encode(pwd);
         Account account = new Account(mail, pwd);
         account.setPhone(phone);
         account.setGuid(UUID.randomUUID().toString());

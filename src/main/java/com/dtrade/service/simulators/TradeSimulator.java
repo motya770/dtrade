@@ -3,6 +3,7 @@ package com.dtrade.service.simulators;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
@@ -18,6 +19,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -54,6 +59,18 @@ public class TradeSimulator {
     @Autowired
     private IBalanceService balanceService;
 
+    @Autowired
+    private IStockService stockService;
+
+
+    private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    public void setTransactionManager(PlatformTransactionManager transactionManager){
+        transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+    }
+
     //two different logins f
     @PostConstruct
     private void init(){
@@ -67,8 +84,8 @@ public class TradeSimulator {
          if(Boolean.valueOf(simulateTrade).equals(Boolean.TRUE)){
             logger.info("Starting simulation....");
 
-            Runnable r1 = getRunnable("motya770@gmail.com");
-            Runnable r2 = getRunnable("test@test.com");
+            Runnable r1 = getRunnable();// "motya770@gmail.com"
+            Runnable r2 = getRunnable();// "test@test.com"
 
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(6);
             executorService.scheduleAtFixedRate(r1, 100, 3_000, TimeUnit.MILLISECONDS);
@@ -79,11 +96,14 @@ public class TradeSimulator {
          }
     }
 
-    private Runnable getRunnable(String userName){
+    private Runnable getRunnable(){
         Runnable r1 = ()->{
             logger.debug("First account simulation");
             try{
-                startTrade(userName);
+                transactionTemplate.execute((status) -> {
+                    startTrade();
+                    return null;
+                });
                 Thread.currentThread().sleep(1_000);}
             catch (Exception e){
                 logger.error("{}", e);
@@ -92,32 +112,16 @@ public class TradeSimulator {
         return r1;
     }
 
-    private void startTrade(String accountName){
-        login(accountName);
-
+    private void startTrade(){
         createTradeOrderSimulated();
     }
-
 
     private void createTradeOrderSimulated() {
 
         List<Diamond> diamonds =   diamondService.getAllAvailable("");
 
         diamonds.forEach(diamond -> {
-            Account account = accountService.getStrictlyLoggedAccount();
-            if(account.getBalance()==null) {
-                Balance balance = balanceService.createBalance();
-                account.setBalance(balance);
-                accountService.save(account);
-            }
 
-            BigDecimal b = balanceService.getBalance(diamond.getCurrency(), account);
-            if(b.compareTo(BigDecimal.ZERO)==-1) {
-                balanceService.updateBalance(diamond.getCurrency(), account, new BigDecimal("100000"));
-            }
-        });
-
-        diamonds.forEach(diamond -> {
             Random rand = new Random();
             int random = rand.nextInt(2);
 
@@ -128,25 +132,26 @@ public class TradeSimulator {
 
             String[] prices = {"0.96", "0.97", "0.98", "0.99", "1.0", "1.1", "1.2", "1.3"};
 
-        /*
-        int randPrice = rand.nextInt(100);
-        BigDecimal price = new BigDecimal(randPrice);
-        if(price==null || price.compareTo(TradeOrderService.ZERO_VALUE)<=0){
-            price = new BigDecimal("99");
-        }*/
-
-
             int randAmount = rand.nextInt(10) + 1;
             int randPrice  = rand.nextInt(prices.length);
 
             TradeOrder tradeOrder = new TradeOrder();
             tradeOrder.setAmount(new BigDecimal(randAmount));
             tradeOrder.setDiamond(diamond);
+
+            String mail = accountService.getRoboAccountMail(diamond, random);
+            login(mail);
+
+            Account account =  accountService.getStrictlyLoggedAccount();
+            account = balanceService.updateRoboBalances(diamond.getCurrency(), account);
+            stockService.updateRoboStockAmount(diamond, account);
+
             tradeOrder.setAccount(accountService.getCurrentAccount());
             tradeOrder.setPrice(new BigDecimal(prices[randPrice]).setScale(2));
             tradeOrder.setTradeOrderType(TradeOrderType.LIMIT);
             tradeOrder.setTradeOrderDirection(tradeOrderDirection);
-            tradeOrderService.createTradeOrder(tradeOrder);
+
+            transactionTemplate.execute(status -> tradeOrderService.createTradeOrder(tradeOrder));
         });
     }
 

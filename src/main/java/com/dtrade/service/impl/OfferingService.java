@@ -65,7 +65,7 @@ public class OfferingService implements IOfferingService {
     public Offering acceptOffering(Long offeringId, Long accountId) throws TradeException{
 
         Account account = accountService.find(accountId);
-        Offering offering = offerringRepository.findOne(offeringId);
+        Offering offering = offerringRepository.findById(offeringId).get();
 
         checkOffering(offering, account, true);
 
@@ -104,7 +104,7 @@ public class OfferingService implements IOfferingService {
     public  Offering rejectOffering(Long offeringId, Long accountId) throws TradeException
     {
         Account account = accountService.find(accountId);
-        Offering offering = offerringRepository.findOne(offeringId);
+        Offering offering = offerringRepository.findById(offeringId).get();
 
         checkOffering(offering, account, true);
 
@@ -115,7 +115,7 @@ public class OfferingService implements IOfferingService {
     @Override
     public Offering cancelOffering(Long offeringId, Long accountId) throws TradeException{
         Account account = accountService.find(accountId);
-        Offering offering = offerringRepository.findOne(offeringId);
+        Offering offering = offerringRepository.findById(offeringId).get();
 
         checkOffering(offering, account, false);
 

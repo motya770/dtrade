@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by kudelin on 8/24/16.
@@ -78,9 +79,24 @@ public class Diamond implements Serializable {
     @OneToMany(mappedBy = "diamond", fetch = FetchType.LAZY)
     private List<Image> images;
 
-
     @Override
     public String toString(){
         return "diamond: {id:" + id +  "}";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Diamond)) {
+            return false;
+        }
+        Diamond diamond = (Diamond) o;
+        return Objects.equals(id, diamond.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

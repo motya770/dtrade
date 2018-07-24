@@ -29,7 +29,7 @@ public class ImageService implements IImageService {
     @Override
     public Image removeImage(Diamond diamond, Image image) {
         diamond = diamondService.find(diamond.getId());
-        image = imageRepository.findOne(image.getId());
+        image = imageRepository.findById(image.getId()).get();
         imageRepository.delete(image);
         return image;
     }
@@ -60,7 +60,7 @@ public class ImageService implements IImageService {
     @Override
     public Image getDiamondImage( Image image) {
 
-        image = imageRepository.findOne(image.getId());
+        image = imageRepository.findById(image.getId()).get();
         if(image == null){
             throw new TradeException("Image is null");
         }
