@@ -1,6 +1,5 @@
 package com.dtrade.service;
 
-import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDTO;
 import org.springframework.data.domain.Page;

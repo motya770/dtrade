@@ -3,7 +3,6 @@ package com.dtrade.service;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
-import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import org.springframework.data.domain.Page;
 

@@ -3,7 +3,6 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
-import com.dtrade.model.balance.Balance;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.service.*;
@@ -23,10 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
-import com.dtrade.model.currency.Currency;
 
 /**
  * Created by kudelin on 8/24/16.

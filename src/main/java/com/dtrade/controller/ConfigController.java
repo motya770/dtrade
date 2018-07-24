@@ -4,7 +4,6 @@ import com.dtrade.model.config.AssetType;
 import com.dtrade.model.config.Config;
 import com.dtrade.service.IConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;

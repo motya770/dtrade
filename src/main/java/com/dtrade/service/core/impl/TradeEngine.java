@@ -5,7 +5,6 @@ import com.dtrade.service.core.ITradeEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.jdbc.datasource.embedded.DataSourceFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
