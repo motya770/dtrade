@@ -3,6 +3,7 @@ package com.dtrade.model.balance;
 
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,31 +19,39 @@ public class Balance {
     private Long id;
 
     @NotNull
+    @Column(precision=19, scale=8)
     private BigDecimal bitcoinAmount;
 
     @NotNull
+    @Column(precision=19, scale=2)
     private BigDecimal usdAmount;
 
     @NotNull
+    @Column(precision=19, scale=8)
     private BigDecimal etherAmount;
 
     @NotNull
+    @Column(precision=19, scale=8)
     private BigDecimal bitcoinFrozen;
 
     @NotNull
+    @Column(precision=19, scale=2)
     private BigDecimal usdFrozen;
 
     @NotNull
+    @Column(precision=19, scale=8)
     private BigDecimal etherFrozen;
 
-
     @NotNull
+    @Column(precision=19, scale=8)
     private BigDecimal bitcoinOpen;
 
     @NotNull
+    @Column(precision=19, scale=2)
     private BigDecimal usdOpen;
 
     @NotNull
+    @Column(precision=19, scale=8)
     private BigDecimal etherOpen;
 
     /*
@@ -57,7 +66,6 @@ public class Balance {
         dto.setUsdAmount(usdAmount.subtract(usdFrozen).subtract(usdOpen));
 
         return dto;
-
     }
 
 }

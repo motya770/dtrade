@@ -126,19 +126,19 @@ public class BalanceService  implements IBalanceService{
         if(currency.equals(Currency.USD)){
 
             BigDecimal balance = balanceObj.getUsdAmount().add(addedValue);
-            balance = balance.setScale(6, BigDecimal.ROUND_HALF_UP);
+            balance = balance.setScale(2, BigDecimal.ROUND_HALF_UP);
             balanceObj.setUsdAmount(balance);
 
         }else if(currency.equals(Currency.BTC)) {
 
             BigDecimal balance = balanceObj.getBitcoinAmount().add(addedValue);
-            balance = balance.setScale(6, BigDecimal.ROUND_HALF_UP);
+            balance = balance.setScale(8, BigDecimal.ROUND_HALF_UP);
             balanceObj.setBitcoinAmount(balance);
 
         }else if(currency.equals(Currency.ETH)) {
 
             BigDecimal balance = balanceObj.getEtherAmount().add(addedValue);
-            balance = balance.setScale(6, BigDecimal.ROUND_HALF_UP);
+            balance = balance.setScale(8, BigDecimal.ROUND_HALF_UP);
             balanceObj.setEtherAmount(balance);
 
         }else{
