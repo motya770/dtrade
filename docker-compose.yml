@@ -2,7 +2,7 @@ version: '2.1'
 
 services:
   demo-mysql:
-    image: mysql:5.7.21
+    image: mysql:5.7.22
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=dtrade
