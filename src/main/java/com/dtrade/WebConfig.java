@@ -23,9 +23,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/trade").setViewName("index2");
         //registry.addViewController("/customer").setViewName("customer");
     }
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
 }
