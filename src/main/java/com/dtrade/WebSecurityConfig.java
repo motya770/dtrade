@@ -25,10 +25,15 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
+    //TODO change
     @Bean
     public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
         StrictHttpFirewall firewall = new StrictHttpFirewall();
         firewall.setAllowUrlEncodedPeriod(true);
+        firewall.setAllowUrlEncodedPercent(true);
+        firewall.setAllowUrlEncodedSlash(true);
+        firewall.setAllowBackSlash(true);
+        firewall.setAllowSemicolon(true);
 
         return firewall;
     }
