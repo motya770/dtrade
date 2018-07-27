@@ -122,14 +122,33 @@ public class TradeSimulator {
             Random rand = new Random();
             int random = rand.nextInt(2);
 
-
             //logger.info("rand value " + random);
             //random buy and random sell (simulation!! :-))
-            TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
+           TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
 
-            String[] prices = {"0.96", "0.97", "0.98", "0.99", "1.0", "1.1", "1.2", "1.3"};
+           BigDecimal highEnd =  diamond.getRoboHighEnd();
+           BigDecimal lowEnd = diamond.getRoboLowEnd();
 
-            int randAmount = rand.nextInt(10) + 1;
+           //fallback
+           if(lowEnd==null){
+              lowEnd = new BigDecimal( "0.96");
+           }
+           if(highEnd==null){
+               highEnd = new BigDecimal( "1.3");
+           }
+
+           //we can optimize here TODO
+           BigDecimal[] prices = new BigDecimal[8];
+           BigDecimal step = highEnd.subtract(lowEnd).divide(new BigDecimal(prices.length));
+
+           for(int i=0; i < prices.length; i++){
+               lowEnd = lowEnd.add(step);
+               prices[i] = lowEnd;
+           }
+
+           //{"0.96", "0.97", "0.98", "0.99", "1.0", "1.1", "1.2", "1.3"};
+
+            double randAmount = rand.nextDouble();
             int randPrice  = rand.nextInt(prices.length);
 
             TradeOrder tradeOrder = new TradeOrder();
@@ -144,7 +163,7 @@ public class TradeSimulator {
             stockService.updateRoboStockAmount(diamond, account);
 
             tradeOrder.setAccount(accountService.getCurrentAccount());
-            tradeOrder.setPrice(new BigDecimal(prices[randPrice]).setScale(2));
+            tradeOrder.setPrice(prices[randPrice]);
             tradeOrder.setTradeOrderType(TradeOrderType.LIMIT);
             tradeOrder.setTradeOrderDirection(tradeOrderDirection);
 

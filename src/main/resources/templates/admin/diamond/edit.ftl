@@ -162,6 +162,17 @@
             <@spring.formRadioButtons "diamond.currency", currencies, ""/><br><br>
          </div>
 
+
+            <div class="form-group">
+                <label for="roboHighEnd">Robo High End</label>
+                <input type="number" step="0.01" class="form-control" id="roboHighEnd" name="roboHighEnd" placeholder="roboHighEnd" value="${(diamond.roboHighEnd)!""}">
+            </div>
+
+            <div class="form-group">
+                <label for="roboLowEnd">Robo Low End</label>
+                <input type="number" step="0.01" class="form-control" id="roboLowEnd" name="roboLowEnd" placeholder="roboLowEnd" value="${(diamond.roboLowEnd)!""}">
+            </div>
+
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
 

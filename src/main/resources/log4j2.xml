@@ -22,9 +22,9 @@
         <Logger name="org.springframework.boot.actuate.endpoint.mvc.EndpointHandlerMapping" level="INFO"/>
         <Logger name="org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter" level="INFO"/>
 
-        <Logger name="org.springframework.boot.web.filter" level="DEBUG"/>
+        <Logger name="org.springframework.boot.web.filter" level="INFO"/>
 
-        <Root level="DEBUG">
+        <Root level="INFO">
             <AppenderRef ref="ConsoleAppender" />
             <AppenderRef ref="MyFile"/>
         </Root>

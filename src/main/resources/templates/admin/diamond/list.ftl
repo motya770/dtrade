@@ -1,6 +1,8 @@
 <#include "/admin/header.ftl">
 
 <h1>Diamonds</h1>
+<a href="/admin/diamond/new-entity">Create Diamond</a>
+
 <div class="table-responsive">
     <table class="table">
         <tbody>
@@ -14,6 +16,8 @@
             <th>Carats</th>
             <th>Clarity</th>
             <th>Total Stock Amount</th>
+            <th>Robo High End</th>
+            <th>Robo Low End</th>
         </tr>
         <#if diamonds??>
             <#list diamonds as diamond>
@@ -27,6 +31,8 @@
                 <td>${diamond.carats}</td>
                 <td>${diamond.clarity}</td>
                 <td>${diamond.totalStockAmount}</td>
+                <td>${diamond.roboHighEnd!""}</td>
+                <td>${diamond.roboLowEnd!""}</td>
             </tr>
             </#list>
         </#if>
