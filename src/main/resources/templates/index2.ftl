@@ -596,7 +596,7 @@
                                 <div class="sep-cab-tab" id="tab010">
                                     <div class="table-container">
 
-                                        <div ng-controller="StockController as vm">
+                                        <div ng-controller="BalanceController as vm">
                                             <table class="diamont-table">
                                                 <thead>
                                                 <tr>
@@ -615,13 +615,13 @@
                                                 </thead>
                                                 <tbody>
 
-                                                <tr ng-repeat="stock in vm.stocks track by stock.id" ng-click="chooseStockDiamond(stock.diamond)">
+                                                <tr ng-repeat="balance in vm.balances track by balance.id" ng-click="chooseStockDiamond()">
                                                     <!--
                                                     <td>{{stock.id}}</td>
                                                     <td>{{stock.diamond.id}}</td>
                                                     -->
-                                                    <td>{{stock.diamond.name}}</td>
-                                                    <td>{{stock.amount | number}}</td>
+                                                    <td>{{balance.currency}}</td>
+                                                    <td>{{balance.amount | number}}</td>
                                                     <!--
                                                     <td>
                                                         <a href="#">Choose</a>

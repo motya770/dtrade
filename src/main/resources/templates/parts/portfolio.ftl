@@ -4,9 +4,8 @@
                 <span class="cabtop-info__ico"></span>
                 <div class="cabtop-info__text">
                     <h3>Account:  {{vm.account.mail}}</h3>
-                    <p><span class="accent">Balance</span>  <span class="accent">{{vm.account.balance.usdAmount | number}}  $.</span>
-                        <span style="padding-left: 20px" class="accent">{{vm.account.balance.etherAmount | number}}  ETH.</span>
-                        <span style="padding-left: 20px" class="accent">{{vm.account.balance.bitcoinAmount | number}}  BTC.</span>
+                    <p><span class="accent">Balance</span>
+                        <span class="accent" ng-repeat="balance in vm.account.balance">{{balance.amount | number}}  $.</span>
                     </p>
                 </div>
         </div>

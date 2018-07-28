@@ -1,7 +1,10 @@
 package com.dtrade.model.account;
 
+import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balance.BalanceDTO;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class AccountDTO {
@@ -10,5 +13,5 @@ public class AccountDTO {
 
     private String mail;
 
-    private BalanceDTO balance;
+    private List<Balance> balance;
 }

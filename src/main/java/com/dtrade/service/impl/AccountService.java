@@ -218,9 +218,7 @@ public class AccountService implements IAccountService, UserDetailsService {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(account.getId());
         accountDTO.setMail(account.getMail());
-
-        //TODO fix
-       //accountDTO.setBalance(account.getBalance().getDTO());
+        accountDTO.setBalance(account.getBalances());
 
         return accountDTO;
     }

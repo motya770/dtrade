@@ -6,8 +6,11 @@ import com.dtrade.model.currency.Currency;
 import com.dtrade.model.tradeorder.TradeOrder;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface IBalanceService {
+
+    List<Balance> getBalancesByAccount(Account account);
 
     Balance updateBalance(Balance balance);
 

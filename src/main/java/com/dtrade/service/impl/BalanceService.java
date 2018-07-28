@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Transactional
 @Service
@@ -76,6 +77,11 @@ public class BalanceService  implements IBalanceService{
         Balance balance = getBalance(currency, account);
         balance.setFrozen(balance.getFrozen().add(amount));
         return balanceRepository.save(balance);
+    }
+
+    @Override
+    public List<Balance> getBalancesByAccount(Account account){
+        return account.getBalances();
     }
 
 

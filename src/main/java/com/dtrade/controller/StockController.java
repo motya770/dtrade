@@ -12,16 +12,15 @@ import java.util.List;
 /**
  * Created by kudelin on 7/22/17.
  */
-@RestController
-@RequestMapping(value = "/stock")
+//@RestController
+//@RequestMapping(value = "/stock")
 public class StockController {
 
-    @Autowired
+    //@Autowired
     private IStockService stockService;
 
-    @RequestMapping(value = "/owned", method = RequestMethod.POST)
+    //@RequestMapping(value = "/owned", method = RequestMethod.POST)
     public List<StockDTO> getOwnedStocks(){
         return stockService.getStocksByAccount();
     }
-
 }
