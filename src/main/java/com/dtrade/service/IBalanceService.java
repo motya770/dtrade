@@ -9,25 +9,25 @@ import java.math.BigDecimal;
 
 public interface IBalanceService {
 
-    Account updateRoboBalances(Currency currency, Account account);
+    Balance updateBalance(Balance balance);
 
-    Account unfreezeAmount(Currency currency, Account account, BigDecimal amount);
+    Balance updateRoboBalances(Currency currency, Account account);
 
-    Account freezeAmount(Currency currency, Account account, BigDecimal amount);
+    Balance unfreezeAmount(Currency currency, Account account, BigDecimal amount);
 
-    Account updateOpenSum(TradeOrder tradeOrder, Account account, BigDecimal amount);
+    Balance freezeAmount(Currency currency, Account account, BigDecimal amount);
 
-    Account updateBalance(Currency currency, Account account, BigDecimal addedValue);
+    void updateOpenSum(TradeOrder tradeOrder, Account account, BigDecimal sum, BigDecimal amount);
 
-    Balance updateOpenSum(Currency currency, Account account, BigDecimal amount);
+    Balance updateBalance(Currency currency, Account account, BigDecimal addedValue);
+
+    Balance updateOpen(Currency currency, Account account, BigDecimal amount);
 
     Balance updateFrozenBalance(Currency currency, Account account, BigDecimal amount);
 
-    BigDecimal getBalance(Currency currency, Account account);
+    Balance getBalance(Currency currency, Account account);
 
     BigDecimal getActualBalance(Currency currency, Account account);
-
-    Balance createBalance();
 
     BigDecimal getOpenSum(Currency currency, Account account);
 

@@ -66,7 +66,6 @@ public class TradeOrder implements Serializable {
     private TraderOrderStatusIndex traderOrderStatusIndex;
 
 
-
     public void setTraderOrderStatus(TraderOrderStatus status){
         this.traderOrderStatus = status;
 

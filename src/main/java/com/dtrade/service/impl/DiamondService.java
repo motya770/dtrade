@@ -104,8 +104,8 @@ public class DiamondService implements IDiamondService {
 //
         quotesService.create(diamond, price, System.currentTimeMillis());
 
-        balanceActivityService.createBalanceActivity(buyer, seller, diamond, price);
-        diamondActivityService.createTradeActivity(buyer, seller, diamond);
+       // balanceActivityService.createBalanceActivity(buyer, seller, diamond, price);
+       // diamondActivityService.createTradeActivity(buyer, seller, diamond);
 
         diamond.setDiamondStatus(DiamondStatus.ACQUIRED);
         diamond.setAccount(buyer);

@@ -59,7 +59,7 @@ public class BaseTest {
         tradeOrder.setDiamond(diamondService.getAvailable().stream().findFirst().get());
         Account account =  accountService.getCurrentAccount();
 
-        System.out.println("B: " + account.getBalance());
+        System.out.println("B: " + account.getBalances());
         tradeOrder.setAccount(account);
         tradeOrder.setTradeOrderType(TradeOrderType.MARKET);
         //tradeOrder.setPrice(new BigDecimal("100.00"));

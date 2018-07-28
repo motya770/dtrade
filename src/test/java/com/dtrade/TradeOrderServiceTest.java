@@ -130,20 +130,19 @@ public class TradeOrderServiceTest extends BaseTest {
     @Autowired
     private IBalanceService balanceService;
 
-
     private void updateBalances(Account account, BigDecimal balance){
         transactionTemplate.execute((TransactionStatus status)-> {
             Currency[] currencies = Currency.values();
             for(int i = 0; i < currencies.length; i++){
                 Currency currency = currencies[i];
 
-                BigDecimal minusBalance =  balanceService.getBalance(currency, account).multiply(new BigDecimal("-1"));
+                BigDecimal minusBalance =  balanceService.getBalance(currency, account).getAmount().multiply(new BigDecimal("-1"));
                 BigDecimal minusFrozen =  balanceService.getFrozen(currency, account).multiply(new BigDecimal("-1"));
                 BigDecimal minusOpen = balanceService.getOpenSum(currency, account).multiply(new BigDecimal("-1"));
 
                 balanceService.updateBalance(currency, account, minusBalance);
                 balanceService.updateFrozenBalance(currency, account, minusFrozen);
-                balanceService.updateOpenSum(currency, account, minusOpen);
+                balanceService.updateOpen(currency, account, minusOpen);
 
 
                 balanceService.updateBalance(currency, account, balance);
@@ -217,15 +216,13 @@ public class TradeOrderServiceTest extends BaseTest {
 
             System.out.println("TEST2");
 
-            System.out.println("B: " + rereadAccount.getBalance());
-
-            System.out.println("BALANCE: " + rereadAccount.getBalance());
+            System.out.println("BALANCE: " + rereadAccount.getBalances());
 
             Currency[] currencies = Currency.values();
             for(int i = 0; i < currencies.length; i++){
                 Currency currency = currencies[i];
 
-                BigDecimal balance =  balanceService.getBalance(currency, account);
+                BigDecimal balance =  balanceService.getBalance(currency, account).getAmount();
                 BigDecimal frozen =  balanceService.getFrozen(currency, account);
                 BigDecimal open = balanceService.getOpenSum(currency, account);
 

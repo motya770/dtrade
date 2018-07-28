@@ -68,9 +68,8 @@ public class Account implements UserDetails {
     @Column(columnDefinition = "boolean default false")
     private boolean roboAccount;
 
-    @NotNull
-    @OneToOne(fetch = FetchType.LAZY)
-    private Balance balance;
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Balance> balances;
 
     private String phone;
 

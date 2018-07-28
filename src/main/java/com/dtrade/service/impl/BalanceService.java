@@ -30,209 +30,117 @@ public class BalanceService  implements IBalanceService{
     private IAccountService accountService;
 
     @Override
-    public Account updateRoboBalances(Currency currency, Account account){
+    public Balance updateRoboBalances(Currency currency, Account account){
+
         if(!account.isRoboAccount()){
              throw new TradeException("This is not robo account: " + account.getMail());
         }
 
-        if(account.getBalance()==null) {
-            Balance balance = createBalance();
-            account.setBalance(balance);
-            account = accountService.save(account);
-        }
-
+        Balance balance = null;
         BigDecimal b = getActualBalance(currency, account);
         if(b.compareTo(BigDecimal.ZERO)==-1 || b.compareTo(BigDecimal.ZERO) == 0) {
-            account = updateBalance(currency, account, new BigDecimal("100000"));
+            balance = updateBalance(currency, account, new BigDecimal("100000"));
         }
-        return account;
+        return balance;
     }
 
     @Override
-    public Account unfreezeAmount(Currency currency, Account account, BigDecimal amount) {
-        updateFrozenBalance(currency, account, amount.multiply(new BigDecimal("-1")));
-        return account;
+    public Balance unfreezeAmount(Currency currency, Account account, BigDecimal amount) {
+        return updateFrozenBalance(currency, account, amount.multiply(new BigDecimal("-1")));
     }
 
     @Override
-    public Account freezeAmount(Currency currency, Account account, BigDecimal amount) {
-        updateFrozenBalance(currency, account, amount);
-        return account;
+    public Balance freezeAmount(Currency currency, Account account, BigDecimal amount) {
+        return updateFrozenBalance(currency, account, amount);
     }
 
     @Override
-    public Account updateOpenSum(TradeOrder tradeOrder, Account account, BigDecimal amount) {
-
+    public void updateOpenSum(TradeOrder tradeOrder, Account account, BigDecimal sum, BigDecimal amount) {
         if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
-            Balance balance = updateOpenSum(tradeOrder.getDiamond().getCurrency(), account, amount);
-            account.setBalance(balance);
+            updateOpen(tradeOrder.getDiamond().getBaseCurrency(), account, sum);
+        }else if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)) {
+            updateOpen(tradeOrder.getDiamond().getCurrency(), account, amount);
         }
-
-        return account;
     }
 
     @Override
-    public Balance updateOpenSum(Currency currency, Account account, BigDecimal amount) {
+    public Balance updateOpen(Currency currency, Account account, BigDecimal amount) {
 
-        Balance balance =  balanceRepository.findById(account.getBalance().getId()).get();
-
-        if(currency.equals(Currency.USD)){
-
-            balance.setUsdOpen(balance.getUsdOpen().add(amount));
-
-        }else if(currency.equals(Currency.BTC)) {
-
-            balance.setBitcoinOpen(balance.getBitcoinOpen().add(amount));
-
-        }else if(currency.equals(Currency.ETH)) {
-
-            balance.setEtherOpen((balance.getEtherOpen().add(amount)));
-
-        }else{
-            throw new TradeException("Currency not defined.");
-        }
+        Balance balance = getBalance(currency, account);
+        balance.setOpen(balance.getOpen().add(amount));
         return balanceRepository.save(balance);
     }
 
     @Override
     public Balance updateFrozenBalance(Currency currency, Account account, BigDecimal amount){
+        Balance balance = getBalance(currency, account);
+        balance.setFrozen(balance.getFrozen().add(amount));
+        return balanceRepository.save(balance);
+    }
 
-        if(currency.equals(Currency.USD)){
 
-             account.getBalance().setUsdFrozen(account.getBalance().getUsdFrozen().add(amount));
-
-        }else if(currency.equals(Currency.BTC)) {
-
-            account.getBalance().setBitcoinFrozen(account.getBalance().getBitcoinFrozen().add(amount));
-
-        }else if(currency.equals(Currency.ETH)) {
-
-            account.getBalance().setEtherFrozen((account.getBalance().getEtherFrozen().add(amount)));
-
-        }else{
-            throw new TradeException("Currency not defined");
-        }
-        return  balanceRepository.save(account.getBalance());
+    @Override
+    @Transactional
+    public Balance updateBalance(Balance balance) {
+        return balanceRepository.save(balance);
     }
 
     @Override
     @Transactional
-    public Account updateBalance(Currency currency, Account account, BigDecimal addedValue) {
-
-        Balance balanceObj = balanceRepository.findById(account.getBalance().getId()).get();
-
-        System.out.println("updating balance: " + balanceObj.getId() + " " + Thread.currentThread().getName());
-
-        if(currency.equals(Currency.USD)){
-
-            BigDecimal balance = balanceObj.getUsdAmount().add(addedValue);
-            balance = balance.setScale(2, BigDecimal.ROUND_HALF_UP);
-            balanceObj.setUsdAmount(balance);
-
-        }else if(currency.equals(Currency.BTC)) {
-
-            BigDecimal balance = balanceObj.getBitcoinAmount().add(addedValue);
-            balance = balance.setScale(8, BigDecimal.ROUND_HALF_UP);
-            balanceObj.setBitcoinAmount(balance);
-
-        }else if(currency.equals(Currency.ETH)) {
-
-            BigDecimal balance = balanceObj.getEtherAmount().add(addedValue);
-            balance = balance.setScale(8, BigDecimal.ROUND_HALF_UP);
-            balanceObj.setEtherAmount(balance);
-
-        }else{
-            logger.warn("Can't update balance of account {} because addedValue is null", account.getId());
-        }
-
-        balanceRepository.save(balanceObj);
-        account.setBalance(balanceObj);
-        return account;
+    public Balance updateBalance(Currency currency, Account account, BigDecimal addedValue) {
+        Balance balance = getBalance(currency, account);
+        balance.setAmount(balance.getAmount().add(addedValue));
+        return balanceRepository.save(balance);
     }
 
     @Override
     public BigDecimal getOpenSum(Currency currency, Account account) {
-        if (currency.equals(Currency.USD)) {
-
-            return account.getBalance().getUsdOpen();
-
-        } else if (currency.equals(Currency.BTC)) {
-
-            return account.getBalance().getBitcoinOpen();
-
-        } else if (currency.equals(Currency.ETH)) {
-
-            return account.getBalance().getEtherOpen();
-
-        } else {
-            throw new TradeException("Currency not defined. ");
-        }
+       return getBalance(currency, account).getOpen();
     }
 
     @Override
     public BigDecimal getFrozen(Currency currency, Account account){
-        if(currency.equals(Currency.USD)){
-
-            return account.getBalance().getUsdFrozen();
-
-        }else if(currency.equals(Currency.BTC)) {
-
-            return account.getBalance().getBitcoinFrozen();
-
-        }else if(currency.equals(Currency.ETH)) {
-
-            return account.getBalance().getEtherFrozen();
-
-        }else{
-            throw new TradeException("Currency not defined");
-        }
+       Balance balance = getBalance(currency, account);
+       return balance.getFrozen();
     }
 
-    @Override
-    public Balance createBalance() {
+    private Balance createBalance(Account account, Currency currency) {
+
+        if(account==null){
+            throw new TradeException("Account is null. Can't create balance");
+        }
+
+        if(currency==null){
+            throw new TradeException("Currency is null for " + account.getMail());
+        }
+
         Balance balance = new Balance();
-
-        balance.setBitcoinAmount( BigDecimal.ZERO);
-        balance.setUsdAmount(BigDecimal.ZERO);
-        balance.setEtherAmount(BigDecimal.ZERO);
-
-        balance.setBitcoinFrozen(BigDecimal.ZERO);
-        balance.setUsdFrozen(BigDecimal.ZERO);
-        balance.setEtherFrozen(BigDecimal.ZERO);
-
-        balance.setBitcoinOpen(BigDecimal.ZERO);
-        balance.setEtherOpen(BigDecimal.ZERO);
-        balance.setUsdOpen(BigDecimal.ZERO);
-
+        balance.setAmount(BigDecimal.ZERO);
+        balance.setFrozen(BigDecimal.ZERO);
+        balance.setCurrency(currency);
+        balance.setOpen(BigDecimal.ZERO);
+        balance.setAccount(account);
         balance = balanceRepository.save(balance);
         return balance;
     }
 
     @Override
     public BigDecimal getActualBalance(Currency currency, Account account) {
-
-        BigDecimal balance = getBalance(currency, account);
-        BigDecimal frozen = getFrozen(currency, account);
-        BigDecimal openSum = getOpenSum(currency, account);
-        return balance.subtract(frozen).subtract(openSum);
+        Balance balance = getBalance(currency, account);
+        return balance.getDTO().getBalance();
     }
 
     @Override
-    public BigDecimal getBalance(Currency currency, Account account) {
-        if(currency.equals(Currency.USD)){
+    public Balance getBalance(Currency currency, Account account){
 
-            return account.getBalance().getUsdAmount();
-
-        }else if(currency.equals(Currency.BTC)) {
-
-            return account.getBalance().getBitcoinAmount();
-
-        }else if(currency.equals(Currency.ETH)) {
-
-            return account.getBalance().getEtherAmount();
-
-        }else{
-            throw new TradeException("Currency not defined. ");
+        if(currency==null){
+            throw new TradeException("Currency not defined.");
         }
+
+        Balance balance =  balanceRepository.getBalance(account, currency);
+        if(balance == null){
+            balance = createBalance(account, currency);
+        }
+        return balance;
     }
 }

@@ -3,6 +3,7 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.NotEnoughMoney;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.balanceactivity.BalanceActivityType;
 import com.dtrade.model.coinpayment.CoinPayment;
@@ -17,6 +18,7 @@ import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -67,7 +69,6 @@ public class BalanceActivityService implements IBalanceActivityService {
     }
 
 
-
     @Override
     public BalanceActivity createWithdrawBalanceActivity(CoinPayment coinPayment) {
 
@@ -112,32 +113,111 @@ public class BalanceActivityService implements IBalanceActivityService {
         ba.setAmount(coinPayment.getDepositRequest().getAmountUsd());
         ba.setCreateDate(System.currentTimeMillis());
         ba.setCurrency(currency);
-        ba.setBalanceSnapshot(balanceService.getBalance(currency, account));
+        ba.setBalanceSnapshot(balanceService.getBalance(currency, account).getAmount());
 
         return balanceActivityRepository.save(ba);
     }
 
     @Override
     @Transactional(noRollbackFor = NotEnoughMoney.class)
-    public org.springframework.data.util.Pair<BalanceActivity, BalanceActivity> createBalanceActivities(Account buyer,
-                                                                                                        Account seller,
-                                                                                                        BigDecimal cash, TradeOrder buyOrder,
-                                                                                                        TradeOrder sellOrder) {
-        //return transactionTemplate.execute(((TransactionStatus status)-> {
+    public  void createBalanceActivities(Account buyer,
+                                                                          Account seller,
+                                                                          TradeOrder buyOrder,
+                                                                          TradeOrder sellOrder,
+                                                                          BigDecimal realAmount, BigDecimal price) {
 
-            System.out.println("updating for : " + buyOrder.getDiamond().getName());
+       // BTC/USD - transfer USD
+        Diamond diamond = sellOrder.getDiamond();
+        Currency currency = diamond.getCurrency();
+        Currency baseCurrency = diamond.getBaseCurrency();
+
+        BigDecimal sum = realAmount.multiply(price);
+
+        Balance baseSellerBalance =  balanceService.getBalance(baseCurrency, seller);
+
+        BalanceActivity baseSellerBa = new BalanceActivity();
+        baseSellerBa.setAccount(seller);
+        baseSellerBa.setAmount(realAmount);
+        baseSellerBa.setPrice(price);
+        baseSellerBa.setSum(sum);
+        baseSellerBa.setBalanceActivityType(BalanceActivityType.SELL);
+        baseSellerBa.setCurrency(baseCurrency);
+        baseSellerBa.setBalanceSnapshot(baseSellerBalance.getAmount());
+        baseSellerBa.setSellOrder(sellOrder);
+        baseSellerBa.setCreateDate(System.currentTimeMillis());
+        baseSellerBa.setBalance(baseSellerBalance);
+        balanceActivityRepository.save(baseSellerBa);
+
+        baseSellerBalance.setAmount(baseSellerBalance.getAmount().add(sum));
+        balanceService.updateBalance(baseSellerBalance);
+
+
+        Balance baseBuyerBalance = balanceService.getBalance(baseCurrency, buyer);
+
+        BigDecimal minusSum = sum.multiply(new BigDecimal("-1"));
+
+        BalanceActivity baseBuyerBa = new BalanceActivity();
+        baseBuyerBa.setBalanceActivityType(BalanceActivityType.BUY);
+        baseBuyerBa.setAccount(buyer);
+        baseBuyerBa.setAmount(minusSum);
+        baseBuyerBa.setCreateDate(System.currentTimeMillis());
+        baseBuyerBa.setBuyOrder(buyOrder);
+        baseBuyerBa.setBalanceSnapshot(baseBuyerBalance.getAmount());
+        baseBuyerBa.setCurrency(baseCurrency);
+        baseBuyerBa.setCreateDate(System.currentTimeMillis());
+        baseBuyerBa.setBalance(baseBuyerBalance);
+        balanceActivityRepository.save(baseBuyerBa);
+
+        baseBuyerBalance.setAmount(baseBuyerBalance.getAmount().add(minusSum));
+        balanceService.updateBalance(baseBuyerBalance);
+
+
+        // BTC/USD transfer BTC
+
+        Balance sellerBalance = balanceService.getBalance(currency, seller);
+
+        BalanceActivity sellerBa = new BalanceActivity();
+        sellerBa.setAccount(seller);
+        sellerBa.setAmount(realAmount.multiply(new BigDecimal("-1")));
+        sellerBa.setPrice(price);
+        sellerBa.setSum(sum);
+        sellerBa.setBalanceActivityType(BalanceActivityType.SELL);
+        sellerBa.setCurrency(currency);
+        sellerBa.setBalanceSnapshot(sellerBalance.getAmount());
+        sellerBa.setSellOrder(sellOrder);
+        sellerBa.setCreateDate(System.currentTimeMillis());
+        sellerBa.setBalance(sellerBalance);
+        balanceActivityRepository.save(sellerBa);
+
+        sellerBalance.setAmount(sellerBalance.getAmount().subtract(realAmount));
+        balanceService.updateBalance(sellerBalance);
+
+
+        Balance buyerBalance = balanceService.getBalance(currency, buyer);
+
+        BalanceActivity buyerBa = new BalanceActivity();
+        buyerBa.setAccount(buyer);
+        buyerBa.setAmount(realAmount);
+        buyerBa.setPrice(price);
+        buyerBa.setSum(sum);
+        buyerBa.setBalanceActivityType(BalanceActivityType.BUY);
+        buyerBa.setCurrency(currency);
+        buyerBa.setBalanceSnapshot(buyerBalance.getAmount());
+        buyerBa.setBuyOrder(buyOrder);
+        buyerBa.setCreateDate(System.currentTimeMillis());
+        buyerBa.setBalance(buyerBalance);
+        balanceActivityRepository.save(buyerBa);
+
+        buyerBalance.setAmount(buyerBalance.getAmount().add(realAmount));
+        balanceService.updateBalance(buyerBalance);
 
 
 
-        //buyer don't have enough money
-        Currency currency = buyOrder.getDiamond().getCurrency();
-        Currency c2 = sellOrder.getDiamond().getCurrency();
+        /*
+        System.out.println("updating for : " + buyOrder.getDiamond().getName());
+        Currency currency = null;
 
-        if(!currency.equals(c2)){
-            throw new TradeException("Currencies not equals");
-        }
-
-        BigDecimal buyerBalance = balanceService.getBalance(buyOrder.getDiamond().getCurrency(), buyer);
+        BigDecimal buyerBalance = balanceService.getBalance(buyOrder.getDiamond().getCurrency(), buyer).getAmount();
 
         if(buyerBalance.compareTo(cash) < 0){
             throw new NotEnoughMoney();
@@ -162,35 +242,21 @@ public class BalanceActivityService implements IBalanceActivityService {
         sellerActivity.setSellOrder(sellOrder);
         sellerActivity.setCurrency(currency);
 
-        BigDecimal sellerBalance = balanceService.getBalance(currency, seller);
+        BigDecimal sellerBalance = balanceService.getBalance(currency, seller).getAmount();
         sellerActivity.setBalanceSnapshot(sellerBalance);
 
         balanceActivityRepository.save(sellerActivity);
         balanceActivityRepository.save(buyerActivity);
 
-       // TransactionStatus inStatusResult = transactionTemplate.execute(((TransactionStatus inStatus)-> {
+        balanceService.updateBalance(currency, buyer, minusCash);
+        balanceService.updateBalance(currency, seller, cash);
+        balanceService.updateOpenSum(buyOrder, buyer, cash.multiply(TradeOrderService.MINUS_ONE_VALUE));
 
-           // System.out.println("updating for : " + buyOrder.getDiamond().getName());
-
-            balanceService.updateBalance(currency, buyer, minusCash);
-            balanceService.updateBalance(currency, seller, cash);
-            balanceService.updateOpenSum(buyOrder, buyer, cash.multiply(TradeOrderService.MINUS_ONE_VALUE));
-
-         //   return inStatus;
-       //}));
-
-        /*
-        if(!inStatusResult.isCompleted()){
-            throw new TradeException("Balance transaction is not implemented. " + inStatusResult);
-        }*/
-
-            return org.springframework.data.util.Pair.of(buyerActivity, sellerActivity);
-            //return status;
-        ///}));
-
+        return org.springframework.data.util.Pair.of(buyerActivity, sellerActivity);*/
     }
 
 
+    /*
     @Override
     public BalanceActivity createBuyBalanceActivity(TradeOrder tradeOrder) {
 
@@ -205,7 +271,7 @@ public class BalanceActivityService implements IBalanceActivityService {
 
         //buyer don't have enough money
 
-        BigDecimal balance = balanceService.getBalance(tradeOrder.getDiamond().getCurrency(), account);
+        BigDecimal balance = balanceService.getBalance(tradeOrder.getDiamond().getCurrency(), account).getAmount();
         if(balance.compareTo(cash) < 0){
             throw new NotEnoughMoney();
         }
@@ -224,13 +290,14 @@ public class BalanceActivityService implements IBalanceActivityService {
         balanceActivityRepository.save(activity);
 
         return activity;
-    }
+    }*/
 
+    /*
 
     @Override
     public void createBalanceActivity(Account buyer, Account seller, Diamond diamond, BigDecimal price) throws TradeException{
 
-        BigDecimal balance = balanceService.getBalance(diamond.getCurrency(), buyer);
+        BigDecimal balance = balanceService.getBalance(diamond.getCurrency(), buyer).getAmount();
 
         //TODO bug(?)
         if(balance.doubleValue() < diamond.getPrice().doubleValue()){
@@ -261,6 +328,6 @@ public class BalanceActivityService implements IBalanceActivityService {
 
         balanceActivityRepository.save(sellerActivity);
         balanceActivityRepository.save(buyerActivity);
-    }
+    }*/
 
 }

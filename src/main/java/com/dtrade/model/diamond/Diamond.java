@@ -61,6 +61,11 @@ public class Diamond implements Serializable {
     private Currency currency;
 
     @NotNull
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Currency baseCurrency;
+
+    @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Account account;
@@ -90,8 +95,12 @@ public class Diamond implements Serializable {
     @Column(precision=19, scale=8)
     private BigDecimal roboLowEnd;
 
+
+    /*
     @Column(columnDefinition = "boolean default true")
     private boolean baseCurrency;
+    */
+
 
     @Override
     public boolean equals(Object o) {

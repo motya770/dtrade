@@ -1,22 +1,65 @@
 package com.dtrade.model.balance;
 
 
+import com.dtrade.model.account.Account;
+import com.dtrade.model.balanceactivity.BalanceActivity;
+import com.dtrade.model.currency.Currency;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
+@Table(uniqueConstraints=
+        @UniqueConstraint(columnNames={"currency", "account_id"})
+)
 public class Balance {
 
     @Id
     @GeneratedValue
     private Long id;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    private Account account;
+
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
+
+    @Column(precision=19, scale=8)
+    private BigDecimal amount;
+
+    @Column(precision=19, scale=8)
+    private BigDecimal frozen;
+
+    @NotNull
+    @Column(precision=19, scale=8)
+    private BigDecimal open;
+
+    @Column(columnDefinition = "boolean default true")
+    private boolean baseBalance;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "balance")
+    private List<BalanceActivity> balanceActivities;
+
+    public BigDecimal getActualBalance(){
+        return  amount.subtract(frozen).subtract(open);
+    }
+
+    public BalanceDTO getDTO(){
+
+        BalanceDTO dto = new BalanceDTO();
+        dto.setBalance(amount.subtract(frozen).subtract(open));
+        return dto;
+    }
+
+
+    /*
 
     @NotNull
     @Column(precision=19, scale=8)
@@ -53,19 +96,12 @@ public class Balance {
     @NotNull
     @Column(precision=19, scale=8)
     private BigDecimal etherOpen;
+    */
 
     /*
     @Version
     private Long version;*/
 
-    public BalanceDTO getDTO(){
 
-        BalanceDTO dto = new BalanceDTO();
-        dto.setBitcoinAmount(bitcoinAmount.subtract(bitcoinFrozen).subtract(bitcoinOpen));
-        dto.setEtherAmount(etherAmount.subtract(etherFrozen).subtract(etherOpen));
-        dto.setUsdAmount(usdAmount.subtract(usdFrozen).subtract(usdOpen));
-
-        return dto;
-    }
 
 }

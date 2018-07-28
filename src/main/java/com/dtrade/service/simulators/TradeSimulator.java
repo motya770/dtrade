@@ -2,6 +2,7 @@ package com.dtrade.service.simulators;
 
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.balance.Balance;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
@@ -159,7 +160,7 @@ public class TradeSimulator {
             login(mail);
 
             Account account =  accountService.getStrictlyLoggedAccount();
-            account = balanceService.updateRoboBalances(diamond.getCurrency(), account);
+            Balance balance = balanceService.updateRoboBalances(diamond.getCurrency(), account);
             stockService.updateRoboStockAmount(diamond, account);
 
             tradeOrder.setAccount(accountService.getCurrentAccount());

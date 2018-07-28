@@ -58,7 +58,7 @@ public class CoinPaymentService implements ICoinPaymentService {
         Currency currency = Currency.valueOf(withdrawRequest.getCurrencyCoin());
 
         BigDecimal amount = withdrawRequest.getAmountCoin();
-        BigDecimal actualBalance = balanceService.getBalance(currency, account);
+        BigDecimal actualBalance = balanceService.getBalance(currency, account).getAmount();
 
         if(actualBalance.compareTo(amount) < 0){
             throw new TradeException("Account " + account.getId() + " don't have enough money for withdraw.");

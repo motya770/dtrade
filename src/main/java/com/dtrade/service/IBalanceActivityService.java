@@ -16,15 +16,17 @@ import java.math.BigDecimal;
  */
 public interface IBalanceActivityService {
 
+    /*
     @Deprecated
     void createBalanceActivity(Account buyer, Account seller, Diamond diamond, BigDecimal price) throws TradeException;
 
-    //BigDecimal getBalance(Diamond diamond, Account account);
-
     @Deprecated
     BalanceActivity createBuyBalanceActivity(TradeOrder tradeOrder);
+    */
 
-    Pair<BalanceActivity, BalanceActivity> createBalanceActivities(Account buyer, Account seller, BigDecimal cash, TradeOrder buyOrder, TradeOrder sellOrder);
+    void createBalanceActivities(Account buyer, Account seller,
+                                                                   TradeOrder buyOrder,
+                                                                   TradeOrder sellOrder, BigDecimal amount, BigDecimal price);
 
     BalanceActivity createDepositBalanceActivity(CoinPayment coinPayment);
 

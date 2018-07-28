@@ -3,6 +3,8 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.NotEnoughMoney;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.balance.Balance;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.stock.Stock;
 import com.dtrade.model.tradeorder.*;
@@ -45,9 +47,6 @@ public class TradeOrderService  implements ITradeOrderService{
     private TradeOrderRepository tradeOrderRepository;
 
     @Autowired
-    private IStockService stockService;
-
-    @Autowired
     private IAccountService accountService;
 
     @Autowired
@@ -55,9 +54,6 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Autowired
     private IBookOrderService bookOrderService;
-
-    @Autowired
-    private IStockActivityService stockActivityService;
 
     @Autowired
     private IQuotesService quotesService;
@@ -231,7 +227,7 @@ public class TradeOrderService  implements ITradeOrderService{
         Diamond diamond = diamondService.find(tradeOrder.getDiamond().getId());
         //TODO market price can be problematic
         if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
-            BigDecimal actualBalance =  balanceService.getActualBalance(diamond.getCurrency(), account);
+            BigDecimal actualBalance =  balanceService.getActualBalance(diamond.getBaseCurrency(), account);
             BigDecimal cash = tradeOrder.getPrice().multiply(tradeOrder.getAmount());
 
             if(actualBalance.subtract(cash).compareTo(BigDecimal.ZERO) < 0){
@@ -240,10 +236,12 @@ public class TradeOrderService  implements ITradeOrderService{
         }
 
         if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
-            Stock stock = stockService.getSpecificStock(tradeOrder.getAccount(), diamond);
-            BigDecimal openAmount = stock.getStockInTrade();
-            if(stock.getAmount().subtract(openAmount).subtract(tradeOrder.getAmount()).compareTo(BigDecimal.ZERO) < 0){
-                throw new TradeException("Already opened too many sell orders for " + account.getMail() +  "!");
+
+            BigDecimal actualBalance =  balanceService.getActualBalance(diamond.getBaseCurrency(), account);
+            BigDecimal amount = tradeOrder.getAmount();
+
+            if(actualBalance.subtract(amount).compareTo(BigDecimal.ZERO) < 0){
+                throw new TradeException("Already opened too many sell orders for: " + account.getMail()  +  "!");
             }
         }
     }
@@ -285,13 +283,8 @@ public class TradeOrderService  implements ITradeOrderService{
         System.out.println("Diamond: " + diamond);
         System.out.println("Currency: " +  diamond.getCurrency());
 
-        //transactionTemplate.execute((TransactionStatus status) -> {
-             balanceService.updateOpenSum(diamond.getCurrency(), account,
-                    order.getAmount().multiply(order.getPrice()));
-          //  return status;
-        //});
-
-        stockService.updateStockInTrade(order, account, diamond, order.getAmount());
+        balanceService.updateOpenSum(tradeOrder, account,
+                    order.getAmount().multiply(order.getPrice()), order.getAmount());
 
         bookOrderService.addNew(order);
 
@@ -346,14 +339,10 @@ public class TradeOrderService  implements ITradeOrderService{
         bookOrderService.remove(tradeOrder);
 
         balanceService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount()
-                .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE));
-
-        stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(),
-                tradeOrder.getAmount().multiply(MINUS_ONE_VALUE));
+                .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE), tradeOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
         return tradeOrder;
     }
-
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
@@ -377,10 +366,7 @@ public class TradeOrderService  implements ITradeOrderService{
         bookOrderService.remove(tradeOrder);
 
         balanceService.updateOpenSum(tradeOrder, tradeOrder.getAccount(), tradeOrder.getAmount()
-                .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE));
-
-        stockService.updateStockInTrade(tradeOrder, tradeOrder.getAccount(), tradeOrder.getDiamond(),
-                tradeOrder.getAmount().multiply(MINUS_ONE_VALUE));
+                .multiply(tradeOrder.getPrice()).multiply(MINUS_ONE_VALUE), tradeOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
         return tradeOrder;
     }
@@ -411,16 +397,6 @@ public class TradeOrderService  implements ITradeOrderService{
             return true;
         }
 
-
-        /*
-        if(buyOrder.getAmount().equals(new BigDecimal("0.00"))){
-            return false;
-        }
-
-        if(sellOrder.getAmount().equals(new BigDecimal("0.00"))){
-            return false;
-        }*/
-
         return false;
     }
 
@@ -429,9 +405,6 @@ public class TradeOrderService  implements ITradeOrderService{
     @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = NotEnoughMoney.class)
     public void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
 
-//        transactionTemplate.execute(new TransactionCallbackWithoutResult() {
-//            @Override
-//            protected void doInTransactionWithoutResult(TransactionStatus transactionStatus) {
                 try {
                     /*
                         1) Simple example of market order should be produced
@@ -452,9 +425,7 @@ public class TradeOrderService  implements ITradeOrderService{
                         return;
                     }
                     System.out.println("1.3");
-
-                   // Hibernate.initialize(buyOrder.getDiamond());
-                   // Hibernate.initialize(sellOrder.getDiamond());
+                    System.out.println("1.3");
 
                     if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
                         return;
@@ -502,20 +473,27 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     BigDecimal buyAmount = buyOrder.getAmount();
                     BigDecimal sellAmount = sellOrder.getAmount();
-
                     BigDecimal realAmount = buyAmount.min(sellAmount);
 
-                    Stock buyStock = stockService.getSpecificStock(buyAccount, buyOrder.getDiamond());
-                    Stock sellStock = stockService.getSpecificStock(sellAccount, sellOrder.getDiamond());
+                    Currency currency = buyOrder.getDiamond().getCurrency();
+
+                    Balance buyBalance = balanceService.getBalance(currency, buyAccount);
+                    Balance sellBalance = balanceService.getBalance(currency, sellAccount);
 
                     System.out.println("1.9");
                     //seller don't have enough stocks
-                    if (sellStock.getAmount().compareTo(realAmount) < 0) {
+                    if (buyBalance.getAmount().compareTo(realAmount) < 0) {
                         //TODO notify user
-                        logger.error("Not enough stocks at {}" + sellStock);
+                        logger.error("Not enough coins at {}" + buyBalance);
                         rejectTradeOrder(sellOrder);
                         return;
-                        // throw new TradeException("Not enough stocks at " + sellStock);
+                    }
+
+                    if (sellBalance.getAmount().compareTo(realAmount) < 0) {
+                        //TODO notify user
+                        logger.error("Not enough coins at {}" + sellBalance);
+                        rejectTradeOrder(sellOrder);
+                        return;
                     }
 
                     System.out.println("1.10");
@@ -524,7 +502,8 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     long startActivity = System.currentTimeMillis();
                     try {
-                        balanceActivityService.createBalanceActivities(buyAccount, sellAccount, cash, buyOrder, sellOrder);
+                        balanceActivityService.createBalanceActivities(buyAccount, sellAccount, buyOrder,
+                                sellOrder, realAmount, orderPrice);
                     }catch (TradeException e){
                         //TODO notify user
                         logger.error("Rejecting {} because of exception {}", buyOrder, e);
@@ -536,13 +515,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     logger.debug(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
 
-                    buyStock.setAmount(buyStock.getAmount().add(realAmount));
-                    sellStock.setAmount(sellStock.getAmount().subtract(realAmount));
-
                     System.out.println("1.12");
-
-                    stockActivityService.createStockActivity(buyOrder, sellOrder,
-                            cash, orderPrice, realAmount);
 
                     buyOrder.setAmount(buyOrder.getAmount().subtract(realAmount));
                     sellOrder.setAmount(sellOrder.getAmount().subtract(realAmount));
@@ -554,21 +527,14 @@ public class TradeOrderService  implements ITradeOrderService{
                     checkIfExecuted(buyOrder);
                     checkIfExecuted(sellOrder);
 
-                    stockService.updateStockInTrade(sellOrder, sellAccount, sellOrder.getDiamond(),
-                            sellOrder.getAmount().multiply(MINUS_ONE_VALUE));
-
-                    stockService.save(buyStock);
-                    stockService.save(sellStock);
+                    balanceService.updateOpenSum(sellOrder, sellAccount, cash.multiply(MINUS_ONE_VALUE), sellOrder.getAmount().multiply(MINUS_ONE_VALUE));
+                    balanceService.updateOpenSum(buyOrder, buyAccount, cash.multiply(MINUS_ONE_VALUE), sellOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
                     System.out.println("1.14");
                     tradeOrderRepository.save(buyOrder);
                     tradeOrderRepository.save(sellOrder);
 
                     System.out.println("1.15");
-                    accountService.save(buyAccount);
-                    accountService.save(sellAccount);
-
-                    System.out.println("1.17");
                     long end = System.currentTimeMillis() - start;
 
                     logger.debug("SUC EXEC TIME: " + end);
@@ -576,8 +542,6 @@ public class TradeOrderService  implements ITradeOrderService{
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-//            }
-//        });
     }
 
     private BigDecimal definePrice(TradeOrder sellOrder, TradeOrder buyOrder){
@@ -595,18 +559,12 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Override
     public long sellSumForMonthForAccount() {
-        //TODO think about time solution
         return 0;
-//        Account account = accountService.getStrictlyLoggedAccount();
-//        return tradeOrderRepository.getSellSumForMonthForAccount(account, );
     }
 
     @Override
     public long buySumForMonthForAccount() {
         return 0;
-
-       // Account account = accountService.getStrictlyLoggedAccount();
-       // return tradeOrderRepository.getBuySumForMonthForAccount();
     }
 
     private void checkIfExecuted(TradeOrder tradeOrder){
