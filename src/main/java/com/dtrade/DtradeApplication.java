@@ -37,6 +37,7 @@ public class DtradeApplication  implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
 
+
         //offerringRepository.findOne(1L);
         ///offerringRepository.getPreviousLiveOfferingsForDiamond(null, null);
 

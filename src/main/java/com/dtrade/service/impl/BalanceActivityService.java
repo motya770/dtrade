@@ -4,6 +4,7 @@ import com.dtrade.exception.NotEnoughMoney;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
+import com.dtrade.model.balance.BalanceUpdater;
 import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.balanceactivity.BalanceActivityType;
 import com.dtrade.model.coinpayment.CoinPayment;
@@ -16,6 +17,8 @@ import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceActivityService;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.util.Pair;
@@ -26,6 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.concurrent.*;
 
 /**
  * Created by kudelin on 12/4/16.
@@ -46,7 +51,41 @@ public class BalanceActivityService implements IBalanceActivityService {
     @Autowired
     private BalanceService balanceService;
 
+    private ScheduledExecutorService executor;
+
+    //@EventListener(ContextRefreshedEvent.class)
+    public void init(){
+         executor = Executors.newScheduledThreadPool(1);
+         executor.scheduleAtFixedRate(()->execute(), 1000,100, TimeUnit.MILLISECONDS);
+    }
+
     private TransactionTemplate transactionTemplate;
+
+    private ConcurrentLinkedDeque<BalanceUpdater> deque = new ConcurrentLinkedDeque<>();
+
+    private void addUpdater(Balance balance){
+        BalanceUpdater updater = new BalanceUpdater();
+        updater.setBalance(balance);
+        deque.add(updater);
+    }
+
+    private int size = 2_000;
+    private void execute(){
+        try {
+            System.out.println("dec: " + deque.size());
+            for (int i = 0; i < size; i++) {
+                BalanceUpdater updater = deque.poll();
+                if (updater == null) {
+                    return;
+                }
+                Balance balance = updater.getBalance();
+                System.out.println("balance update: " + balance.getId() + " " + balance.getCurrency() + " " + balance.getAmount());
+                balanceService.updateBalance(balance);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     @Autowired
     public void setTransactionManager(PlatformTransactionManager transactionManager){
@@ -149,8 +188,8 @@ public class BalanceActivityService implements IBalanceActivityService {
         balanceActivityRepository.save(baseSellerBa);
 
         baseSellerBalance.setAmount(baseSellerBalance.getAmount().add(sum));
+        //addUpdater(baseSellerBalance);
         balanceService.updateBalance(baseSellerBalance);
-
 
         Balance baseBuyerBalance = balanceService.getBalance(baseCurrency, buyer);
 
@@ -159,7 +198,9 @@ public class BalanceActivityService implements IBalanceActivityService {
         BalanceActivity baseBuyerBa = new BalanceActivity();
         baseBuyerBa.setBalanceActivityType(BalanceActivityType.BUY);
         baseBuyerBa.setAccount(buyer);
-        baseBuyerBa.setAmount(minusSum);
+        baseBuyerBa.setAmount(realAmount);
+        baseBuyerBa.setPrice(price);
+        baseBuyerBa.setSum(minusSum);
         baseBuyerBa.setCreateDate(System.currentTimeMillis());
         baseBuyerBa.setBuyOrder(buyOrder);
         baseBuyerBa.setBalanceSnapshot(baseBuyerBalance.getAmount());
@@ -169,8 +210,8 @@ public class BalanceActivityService implements IBalanceActivityService {
         balanceActivityRepository.save(baseBuyerBa);
 
         baseBuyerBalance.setAmount(baseBuyerBalance.getAmount().add(minusSum));
+        //addUpdater(baseBuyerBalance);
         balanceService.updateBalance(baseBuyerBalance);
-
 
         // BTC/USD transfer BTC
 
@@ -190,8 +231,8 @@ public class BalanceActivityService implements IBalanceActivityService {
         balanceActivityRepository.save(sellerBa);
 
         sellerBalance.setAmount(sellerBalance.getAmount().subtract(realAmount));
+        //addUpdater(sellerBalance);
         balanceService.updateBalance(sellerBalance);
-
 
         Balance buyerBalance = balanceService.getBalance(currency, buyer);
 
@@ -209,9 +250,12 @@ public class BalanceActivityService implements IBalanceActivityService {
         balanceActivityRepository.save(buyerBa);
 
         buyerBalance.setAmount(buyerBalance.getAmount().add(realAmount));
+       // addUpdater(buyerBalance);
+
         balanceService.updateBalance(buyerBalance);
 
-
+        balanceService.updateOpenSum(sellOrder, buyer, minusSum, realAmount.multiply(new BigDecimal("-1")));
+        balanceService.updateOpenSum(buyOrder, buyer, minusSum, realAmount.multiply(new BigDecimal("-1")));
 
         /*
         System.out.println("updating for : " + buyOrder.getDiamond().getName());

@@ -3,6 +3,7 @@ package com.dtrade.service.simulators;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
@@ -25,6 +26,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
@@ -160,8 +162,9 @@ public class TradeSimulator {
             login(mail);
 
             Account account =  accountService.getStrictlyLoggedAccount();
-            Balance balance = balanceService.updateRoboBalances(diamond.getCurrency(), account);
-            stockService.updateRoboStockAmount(diamond, account);
+
+            Arrays.stream(Currency.values()).forEach(currency ->
+                    balanceService.updateRoboBalances(currency, account));
 
             tradeOrder.setAccount(accountService.getCurrentAccount());
             tradeOrder.setPrice(prices[randPrice]);

@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kudelin on 6/27/17.
@@ -133,11 +134,11 @@ public class TradeOrderService  implements ITradeOrderService{
                         logger.debug("EXECUTING TRADE PAIR");
 
                         long start = System.currentTimeMillis();
-                        Runnable pairRunnable = () -> executeTradeOrders(pair);
-                        executor.execute(pairRunnable);
+                       // Runnable pairRunnable = () -> executeTradeOrders(pair);
+                       // executor.execute(pairRunnable);
 
-                        //executor.schedule(pairRunnable, getRandomDelay(), TimeUnit.MILLISECONDS);
-                        //executeTradeOrders(pair);
+                       // executor.schedule(pairRunnable, getRandomDelay(), TimeUnit.MILLISECONDS);
+                        executeTradeOrders(pair);
 
                         logger.debug("execute trade time: {}", (System.currentTimeMillis() - start));
                     }
@@ -150,8 +151,13 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
     private int getRandomDelay(){
-        Random rand = new Random();
-        return rand.nextInt(20);
+        Random r = new Random();
+        int l = 20;
+        int h = 110;
+        int result = r.nextInt(h - l ) + l;
+
+        //System.out.println("USING random r: " + result);
+        return result;
     }
 
     @Override
@@ -433,7 +439,8 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     System.out.println("1.4");
 
-                    System.out.println("1.4.1: status : " +  buyOrder.getTraderOrderStatus());
+                    System.out.println("1.4.1: status b: " +  buyOrder.getTraderOrderStatus() + " " + buyOrder.getId());
+                    System.out.println("1.4.3: status s: " +  sellOrder.getTraderOrderStatus() + " " + sellOrder.getId());
 
                     if (!(buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                             || buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
@@ -502,6 +509,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     long startActivity = System.currentTimeMillis();
                     try {
+                        System.out.println("1.10.1 " + Thread.currentThread().getName());
                         balanceActivityService.createBalanceActivities(buyAccount, sellAccount, buyOrder,
                                 sellOrder, realAmount, orderPrice);
                     }catch (TradeException e){
@@ -526,9 +534,6 @@ public class TradeOrderService  implements ITradeOrderService{
                     System.out.println("1.13");
                     checkIfExecuted(buyOrder);
                     checkIfExecuted(sellOrder);
-
-                    balanceService.updateOpenSum(sellOrder, sellAccount, cash.multiply(MINUS_ONE_VALUE), sellOrder.getAmount().multiply(MINUS_ONE_VALUE));
-                    balanceService.updateOpenSum(buyOrder, buyAccount, cash.multiply(MINUS_ONE_VALUE), sellOrder.getAmount().multiply(MINUS_ONE_VALUE));
 
                     System.out.println("1.14");
                     tradeOrderRepository.save(buyOrder);
@@ -574,7 +579,7 @@ public class TradeOrderService  implements ITradeOrderService{
             setExecutionDate(tradeOrder);
         } else {
             tradeOrder.setTraderOrderStatus(TraderOrderStatus.IN_MARKET);
-            bookOrderService.update(tradeOrder);
+            //bookOrderService.update(tradeOrder);
         }
     }
 

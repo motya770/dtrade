@@ -30,6 +30,7 @@ public class BalanceService  implements IBalanceService{
     @Autowired
     private IAccountService accountService;
 
+    @Transactional
     @Override
     public Balance updateRoboBalances(Currency currency, Account account){
 
@@ -39,7 +40,7 @@ public class BalanceService  implements IBalanceService{
 
         Balance balance = null;
         BigDecimal b = getActualBalance(currency, account);
-        if(b.compareTo(BigDecimal.ZERO)==-1 || b.compareTo(BigDecimal.ZERO) == 0) {
+        if(b.compareTo(BigDecimal.ZERO) <= 0) {
             balance = updateBalance(currency, account, new BigDecimal("100000"));
         }
         return balance;
@@ -139,14 +140,23 @@ public class BalanceService  implements IBalanceService{
     @Override
     public Balance getBalance(Currency currency, Account account){
 
-        if(currency==null){
-            throw new TradeException("Currency not defined.");
-        }
+        try {
 
-        Balance balance =  balanceRepository.getBalance(account, currency);
-        if(balance == null){
-            balance = createBalance(account, currency);
+            if (currency == null) {
+                throw new TradeException("Currency not defined.");
+            }
+
+            System.out.println("account: " + account.getMail() + " " + currency + " " + Thread.currentThread().getName());
+            Balance balance =  account.getBalances().stream().filter((b)->b.getCurrency().equals(currency)).findFirst().get();
+            //Balance balance = balanceRepository.getBalance(account, currency);
+            if (balance == null) {
+                return createBalance(account, currency);
+            }
+            return balance;
+        }catch (Throwable e){
+            System.out.println("erroor " + e.getMessage());
+            e.printStackTrace();
         }
-        return balance;
+        return null;
     }
 }

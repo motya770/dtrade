@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -170,16 +171,21 @@ public class BookOrderService implements IBookOrderService {
 
         BookOrder book = bookOrders.get(order.getDiamond().getId());
 
-        logger.debug("remove D");
+        System.out.println("remove D 1.0 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
         if(book!=null) {
-            logger.debug("BUY SIZE {}", book.getBuyOrders().size());
-            logger.debug("SELL SIZE {}", book.getSellOrders().size());
+            System.out.println("BUY SIZE {}"  +  book.getBuyOrders().size());
+            System.out.println("SELL SIZE {}" +  book.getSellOrders().size());
         }
 
+        System.out.println("remove D 1.1 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
+
         Optional.ofNullable(book).ifPresent((bookOrder)->{
+            System.out.println("remove D 1.2 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
             if(order.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
+                System.out.println("remove D 1.3 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
                  bookOrder.getBuyOrders().remove(order);
             }else if(order.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
+                System.out.println("remove D 1.4 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
                 bookOrder.getSellOrders().remove(order);
             }
         });

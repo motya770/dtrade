@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface BalanceRepository extends JpaRepository<Balance, Long> {
 
     @Query("select b from Balance b where b.account.id  = :#{#account.id} and b.currency = :#{#currency}")
-    Balance getBalance(@Param("account")Account account, Currency currency);
+    Balance getBalance(@Param("account") Account account, @Param("currency") Currency currency);
 
 }

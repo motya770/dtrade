@@ -4,6 +4,7 @@ package com.dtrade.model.balance;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.currency.Currency;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -44,6 +45,7 @@ public class Balance {
     @Column(columnDefinition = "boolean default true")
     private boolean baseBalance;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "balance")
     private List<BalanceActivity> balanceActivities;
 
@@ -58,6 +60,9 @@ public class Balance {
         return dto;
     }
 
+    public String toString(){
+        return "{id:  " + getId() + "}";
+    }
 
     /*
 

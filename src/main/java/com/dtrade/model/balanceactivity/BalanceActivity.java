@@ -32,6 +32,7 @@ public class BalanceActivity {
     @Enumerated(EnumType.STRING)
     private BalanceActivityType balanceActivityType;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Balance balance;
 
@@ -67,5 +68,12 @@ public class BalanceActivity {
 
     @Column(columnDefinition = "boolean default false")
     private boolean operationOnBaseCurrency;
+
+    //@Version
+    //private Long version;
+
+    public String toString(){
+        return "{ id: " + getId() + "}";
+    }
 
 }
