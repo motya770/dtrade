@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/bower_components/highcharts-ng/dist/highcharts-ng.css ">
 -->
 
-<script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
+
 <!--
 <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js" type="text/javascript"></script>
 -->
@@ -23,7 +23,6 @@
 
 <!-- Angular Material Library -->
 <script src="/bower_components/angular-material/angular-material.min.js"></script>
-
 <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
 
 <script src="/content/js/app.js"></script>
@@ -35,27 +34,18 @@
 <script src="/content/js/app/account.service.js"></script>
 <script src="/content/js/app/available.controller.js"></script>
 <script src="/content/js/app/available.service.js"></script>
+<script src="/content/js/app/historytradeorder.controller.js"></script>
 <script src="/content/js/app/bidder.controller.js"></script>
 <script src="/content/js/app/bookorder.controller.js"></script>
 <script src="/content/js/app/bookorder.service.js"></script>
 <script src="/content/js/app/chart2.controller.js"></script>
 <script src="/content/js/app/register.controller.js"></script>
-
 <script src="/content/js/app/tradeorder.account.service.js"></script>
 <script src="/content/js/app/tradeorder.account.controller.js"></script>
-<script src="/content/js/app/stock.service.js"></script>
-
-<script src="/content/js/app/stock.controller.js"></script>
-<script src="/content/js/app/stock.service.js"></script>
-
-<script src="/content/js/app/owned.controller.js"></script>
-<script src="/content/js/app/sale.controller.js"></script>
-<script src="/content/js/app/sale.service.js"></script>
-<script src="/content/js/app/owned.service.js"></script>
 <script src="/content/js/app/livetradeorder.controller.js"></script>
-<script src="/content/js/app/historytradeorder.controller.js"></script>
 <script src="/content/js/app/tradeorder.service.js"></script>
 <script src="/content/js/app/utils.js"></script>
 <script src="/content/js/app/menu.controller.js"></script>
 <script src="/content/js/app/alert.service.js"></script>
 
+<script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>

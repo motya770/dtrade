@@ -1,4 +1,4 @@
-diamondApp.controller('StockController', function (AccountService, $scope, $rootScope, $http) {
+diamondApp.controller('StockController', function (AccountService, DiamondService, $scope, $rootScope, $http) {
     var self = this;
 
     AccountService.currentAccount().then(function (account) {
@@ -9,7 +9,8 @@ diamondApp.controller('StockController', function (AccountService, $scope, $root
         }
     });
 
-    $scope.chooseStockDiamond = function (diamond) {
+    $scope.chooseStockDiamond = function (currency) {
+        var diamond = DiamondService.getDiamondByBaseCurrency();
         $rootScope.$broadcast('buyDiamondChoosed', diamond);
     }
 });

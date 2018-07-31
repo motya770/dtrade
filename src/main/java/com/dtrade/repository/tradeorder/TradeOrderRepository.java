@@ -3,13 +3,17 @@ package com.dtrade.repository.tradeorder;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.QueryHint;
 import java.util.List;
 
 /**
@@ -29,8 +33,9 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
             " order by to.creationDate desc ")
     Page<TradeOrder> getHistoryTradeOrdersForAccount(@Param("account") Account account, Pageable pageable);
 
-    @Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' and to.diamond.id = :#{#diamond.id} order by to.executionDate desc ")
-    List<TradeOrder> getHistoryTradeOrders(@Param("diamond") Diamond diamond, Pageable pageable);
+    @Query(value = "select * from trade_order where trader_order_status = 'EXECUTED' and diamond_id = ?1 order by execution_date desc limit 23", nativeQuery = true)
+    //@Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' and to.diamond.id = :#{#diamond.id} order by to.executionDate desc ")
+    List<TradeOrder> getHistoryTradeOrders(Long diamondId);
 }
 
 

@@ -1,6 +1,5 @@
-diamondApp.service("DiamondService", function DiamondService($http, $rootScope, $q) {
-
-    var diamonds = [];
+diamondApp.service("DiamondService", function DiamondService($http, $rootScope, $q){
+    var diamonds=[];
     var currentDiamond = null;
 
     var getAllEnlistedDiamonds = function () {

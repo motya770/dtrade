@@ -6,7 +6,9 @@ import com.dtrade.service.ITradeOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,11 +58,11 @@ public class TradeOrderController {
 //        );
     }
 
-   // @Cacheable(value="getHistoryTradeOrders", cacheManager="timeoutCacheManager")
+    //@Cacheable(value = "historyOrders")
     @RequestMapping(value = "/history-orders")
     public CompletableFuture<List<TradeOrderDTO>> getHistoryTradeOrders(@RequestBody Long diamondId)throws Exception {
 
-        //long start = System.currentTimeMillis();
+
 
         //List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders(diamond);
        // Hibernate.initialize(tradeOrders);
@@ -71,8 +73,14 @@ public class TradeOrderController {
 //        return tradeOrderService.getTradeOrderDTO(tradeOrders);
 
         return  CompletableFuture.supplyAsync(()-> {
+            long start = System.currentTimeMillis();
             List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders(diamondId);
-            return tradeOrderService.getTradeOrderDTO(tradeOrders);
+            System.out.println("!!!!!!!!!!!!!end1: " + (System.currentTimeMillis() - start) + " " + tradeOrders.size());
+            List<TradeOrderDTO> result =  tradeOrderService.getTradeOrderDTO(tradeOrders);
+
+            System.out.println("!!!!!!!!!!!!!end2: " + (System.currentTimeMillis() - start));
+            return result;
+
         });
     }
 

@@ -233,7 +233,7 @@
                                             <button class="form-tabs__subm" ng-click="alert('test'); createTradeOrder(vm.tradeOrder, vm.diamond, 'MARKET');">Place order</button>
                                         </div>
                                     </form>
-                                    <form class="form-tabs__tab" id="tab06">
+                                    <form class="form-tabs__tab" id="tab06" style="display: none;">
                                         <div class="form-tabs__boxes">
                                             <div class="form-tabs__info-top diamond-bid-name">
                                                 <div>{{vm.diamond.name}}</div>
@@ -272,7 +272,7 @@
                                             <h3>Total ({{vm.diamond.baseCurrency}}): {{vm.tradeOrder.amount * vm.tradeOrder.price | number:2}}</h3>
                                             <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond, 'LIMIT')">Place order</button>
                                         </div>
-                                    </form>
+                                    </form sty sty>
                                 </div>
                                 </div>
                             </div>
@@ -348,7 +348,7 @@
                                             <div id="container" style="position: relative; width: 100%;"></div>
                                         </div>
 
-                                        <div  class="graph__tab" id="tab12" class="row" style="position: relative; width: 100%;">
+                                        <div  class="graph__tab" id="tab12" class="row" style="display: none; position: relative; width: 100%;">
                                             <div id="containerDepth" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                                         </div>
                                     </div>
@@ -440,7 +440,7 @@
                                                 <tr>
                                                     <th>Spread</th>
                                                     <th></th>
-                                                    <th>{{vm.spread | number : 2}}</th>
+                                                    <th>{{vm.spread | number : 7}}</th>
                                                 </tr>
                                                 </thead>
 
@@ -484,11 +484,9 @@
                                 <li class="active">
                                     <a href="#tab01">Open Orders</a>
                                 </li>
-
                                 <li>
                                     <a href="#tab02">History Orders</a>
                                 </li>
-
                                 <li>
                                     <a href="#tab010">My {{cc.config.assetName}}</a>
                                 </li>
@@ -559,7 +557,6 @@
                                     </div>
                                     <a href="#" ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
                                 </div>
-
                                 <div class="sep-cab-tab" id="tab02">
                                     <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
                                         <div>
@@ -615,18 +612,17 @@
                                                 </thead>
                                                 <tbody>
 
-                                                <tr ng-repeat="balance in vm.balances track by balance.id" ng-click="chooseStockDiamond()">
+                                                <tr ng-repeat="balance in vm.balances track by balance.id" ng-click="chooseBalance(balance.currency)">
                                                     <!--
                                                     <td>{{stock.id}}</td>
                                                     <td>{{stock.diamond.id}}</td>
                                                     -->
                                                     <td>{{balance.currency}}</td>
                                                     <td>{{balance.amount | number}}</td>
-                                                    <!--
                                                     <td>
                                                         <a href="#">Choose</a>
                                                     </td>
-                                                    -->
+
                                                 </tr>
                                                 <!--
                                                 <tr>
@@ -679,11 +675,7 @@
                                     <!--
                                     <a href="#" class="sep-cab-tab__more">Показать предыдущие позиции</a>-->
                                 </div>
-
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>

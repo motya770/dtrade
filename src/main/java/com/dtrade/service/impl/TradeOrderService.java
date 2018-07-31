@@ -13,8 +13,10 @@ import com.dtrade.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
@@ -104,18 +106,21 @@ public class TradeOrderService  implements ITradeOrderService{
 
         for(int i = 0; i < tradeOrders.size(); i++){
             TradeOrder to = tradeOrders.get(i);
-
-            TradeOrderDTO tradeOrderDTO = new TradeOrderDTO();
-            tradeOrderDTO.setId(to.getId());
-            tradeOrderDTO.setAmount(to.getAmount());
-            tradeOrderDTO.setInitialAmount(to.getInitialAmount());
-            tradeOrderDTO.setPrice(to.getPrice());
-            tradeOrderDTO.setExecutionDate(to.getExecutionDate());
-            tradeOrderDTO.setTradeOrderDirection(to.getTradeOrderDirection());
-
+            TradeOrderDTO tradeOrderDTO = convert(to);
             tradeOrderDTOS.add(tradeOrderDTO);
         }
         return tradeOrderDTOS;
+    }
+
+    public TradeOrderDTO convert(TradeOrder to){
+        TradeOrderDTO tradeOrderDTO = new TradeOrderDTO();
+        tradeOrderDTO.setId(to.getId());
+        tradeOrderDTO.setAmount(to.getAmount());
+        tradeOrderDTO.setInitialAmount(to.getInitialAmount());
+        tradeOrderDTO.setPrice(to.getPrice());
+        tradeOrderDTO.setExecutionDate(to.getExecutionDate());
+        tradeOrderDTO.setTradeOrderDirection(to.getTradeOrderDirection());
+        return tradeOrderDTO;
     }
 
     @Override
@@ -166,13 +171,13 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public List<TradeOrder> getHistoryTradeOrders(Long diamondId) {
         Diamond diamond = diamondService.find(diamondId);
-        return tradeOrderRepository.getHistoryTradeOrders(diamond, new PageRequest(0, 23));
+        return tradeOrderRepository.getHistoryTradeOrders(diamond.getId());
     }
 
     @Override
     public Page<TradeOrder> getHistoryTradeOrdersByAccount(Integer pageNumber){
         Account account = accountService.getStrictlyLoggedAccount();
-        return tradeOrderRepository.getHistoryTradeOrdersForAccount(account, new PageRequest(pageNumber, 10));
+        return tradeOrderRepository.getHistoryTradeOrdersForAccount(account, PageRequest.of(pageNumber, 10));
     }
 
     @Override
@@ -192,7 +197,7 @@ public class TradeOrderService  implements ITradeOrderService{
             pageNumber=0;
         }
 
-        return tradeOrderRepository.getLiveTradeOrdersByAccount(account, new PageRequest(pageNumber, 10));
+        return tradeOrderRepository.getLiveTradeOrdersByAccount(account, PageRequest.of(pageNumber, 10));
     }
 
     @Override
@@ -204,25 +209,24 @@ public class TradeOrderService  implements ITradeOrderService{
         }
 
         if(tradeOrder.getAmount().compareTo(ZERO_VALUE) <= 0){
-            throw new TradeException("Can't create trade order because amount value is less than 0.");
+             throw new TradeException("Can't create trade order because amount value is less than 0.");
         }
 
         if(tradeOrder.getDiamond()==null){
-            throw new TradeException("Can't create trade order because diamond is empty.");
+             throw new TradeException("Can't create trade order because diamond is empty.");
         }
 
         if(tradeOrder.getAccount()==null){
-            throw new TradeException("Can't create trade order because account is empty.");
+             throw new TradeException("Can't create trade order because account is empty.");
         }
 
+        if(tradeOrder.getPrice()==null ){
+             throw new TradeException("Can't create trade order because price is empty.");
+        }
 
-            if(tradeOrder.getPrice()==null ){
-                throw new TradeException("Can't create trade order because price is empty.");
-            }
-
-            if(tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0){
-                throw new TradeException("Can't create trade order because price is less than 0.");
-            }
+        if(tradeOrder.getPrice().compareTo(ZERO_VALUE)<=0){
+             throw new TradeException("Can't create trade order because price is less than 0.");
+        }
 
 
         if(tradeOrder.getTradeOrderDirection()==null){

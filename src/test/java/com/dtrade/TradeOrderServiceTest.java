@@ -6,6 +6,7 @@ import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderDTO;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
