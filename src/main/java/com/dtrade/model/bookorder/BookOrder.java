@@ -37,6 +37,10 @@ public class BookOrder {
         return response;
     }
 
+    private static int comparator(TradeOrder o1, TradeOrder o2){
+        return o1.getId().compareTo(o2.getId());
+    }
+
     public BookOrder() {
         buyOrders = new ConcurrentSkipListSet<>(BookOrder::comparatorBuy);
         sellOrders = new ConcurrentSkipListSet<>(BookOrder::comparatorSell);

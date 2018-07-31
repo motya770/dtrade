@@ -31,12 +31,14 @@ public class TradeOrder implements Serializable {
     @NotNull
     private Account account;
 
+    @Column(precision=19, scale=8)
     @NotNull
     private BigDecimal amount;
 
     @NotNull
     private BigDecimal initialAmount;
 
+    @Column(precision=19, scale=8)
     @NotNull
     private BigDecimal price;
 
@@ -45,6 +47,7 @@ public class TradeOrder implements Serializable {
 
     private Long executionDate;
 
+    @Column(precision=19, scale=8)
     @NotNull
     private BigDecimal executionSum;
 
@@ -92,9 +95,15 @@ public class TradeOrder implements Serializable {
         return Objects.equals(id, order.getId());
     }
 
+    /*
+    @Override
+    public int compareTo(Object o) {
+        return id.compareTo(((TradeOrder)o).getId());
+    }*/
+
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, 1);
     }
 
     @Override

@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -85,6 +87,15 @@ public class BalanceService  implements IBalanceService{
         return account.getBalances();
     }
 
+    @Override
+    public List<Currency> getBaseCurrencies(){
+        return Arrays.stream(Currency.values()).filter(c->c.isBaseCurrency()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Balance> getBaseBalancesByAccount(Account account){
+        return balanceRepository.getBaseBalancesByAccount(account, getBaseCurrencies());
+    }
 
     @Override
     @Transactional
@@ -146,7 +157,7 @@ public class BalanceService  implements IBalanceService{
                 throw new TradeException("Currency not defined.");
             }
 
-            System.out.println("account: " + account.getMail() + " " + currency + " " + Thread.currentThread().getName());
+           // System.out.println("account: " + account.getMail() + " " + currency + " " + Thread.currentThread().getName());
             Balance balance =  account.getBalances().stream().filter((b)->b.getCurrency().equals(currency)).findFirst().get();
             //Balance balance = balanceRepository.getBalance(account, currency);
             if (balance == null) {

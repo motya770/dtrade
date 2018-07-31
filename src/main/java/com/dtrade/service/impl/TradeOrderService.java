@@ -41,7 +41,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
     private static final Logger logger = LoggerFactory.getLogger(TradeOrderService.class);
 
-    public final static BigDecimal ZERO_VALUE = new BigDecimal("0.00");
+    public final static BigDecimal ZERO_VALUE = BigDecimal.ZERO;
     public final static BigDecimal MINUS_ONE_VALUE = new BigDecimal("-1.00");
 
     @Autowired
@@ -120,7 +120,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         //logger.debug("CALCULATING TRADE ORDERS");
 
-        bookOrderService.getBookOrders().entrySet().stream().forEach((entry)->{
+        bookOrderService.getBookOrders().entrySet().parallelStream().forEach((entry)->{
 
             long start1 = System.currentTimeMillis();
 
@@ -434,7 +434,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     System.out.println("1.3");
 
                     if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
-                        return;
+                        throw new TradeException("Something wrong with COINS pairs.");
                     }
 
                     System.out.println("1.4");
@@ -466,7 +466,6 @@ public class TradeOrderService  implements ITradeOrderService{
 
                     Account buyAccount = buyOrder.getAccount();
                     Account sellAccount = sellOrder.getAccount();
-
 
                     //Decided that buyer and seller can be the same
 //                    if (buyAccount.getId().equals(sellAccount.getId())) {
@@ -543,7 +542,13 @@ public class TradeOrderService  implements ITradeOrderService{
                     long end = System.currentTimeMillis() - start;
 
                     logger.debug("SUC EXEC TIME: " + end);
-                    System.out.println("exec: " + sellOrder.getDiamond().getName() +  " " + realAmount + " " + orderPrice);
+
+                    System.out.println("exec1: "
+                            + sellOrder.getId() + " "
+                            + sellOrder.getTraderOrderStatus() + ", "
+                            + buyOrder.getId() + ":"
+                            + buyOrder.getTraderOrderStatus());
+                    System.out.println("exec2:  " + sellOrder.getDiamond().getName() +  " " + realAmount + " " + orderPrice);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -572,14 +577,16 @@ public class TradeOrderService  implements ITradeOrderService{
         return 0;
     }
 
-    private void checkIfExecuted(TradeOrder tradeOrder){
-        if (tradeOrder.getAmount().equals(ZERO_VALUE)) {
-            bookOrderService.remove(tradeOrder);
-            tradeOrder.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
-            setExecutionDate(tradeOrder);
+    private void checkIfExecuted(TradeOrder order){
+        System.out.println("checking if executed " + order.getAmount().setScale(8));
+        if (order.getAmount().compareTo(ZERO_VALUE)==0) {
+            System.out.println("EXECUTED: " + order.getId());
+            order.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
+            setExecutionDate(order);
+            bookOrderService.remove(order);
         } else {
-            tradeOrder.setTraderOrderStatus(TraderOrderStatus.IN_MARKET);
-            //bookOrderService.update(tradeOrder);
+            order.setTraderOrderStatus(TraderOrderStatus.IN_MARKET);
+            bookOrderService.update(order);
         }
     }
 

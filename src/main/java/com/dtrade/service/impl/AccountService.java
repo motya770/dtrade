@@ -3,6 +3,7 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
+import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.repository.account.AccountRepository;
@@ -218,7 +219,9 @@ public class AccountService implements IAccountService, UserDetailsService {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(account.getId());
         accountDTO.setMail(account.getMail());
-        accountDTO.setBalance(account.getBalances());
+
+        List<Balance> balances = balanceService.getBaseBalancesByAccount(account);
+        accountDTO.setBalance(balances);
 
         return accountDTO;
     }

@@ -103,9 +103,10 @@
         <div>
             <input type="hidden" name="account.id" value="${(diamond.account.id)!""}"/>
         <div>
+            <!--
         <div>
             <input type="hidden" name="diamondStatus" value="${(diamond.diamondStatus)!""}">
-        </div>
+        </div>-->
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="name" value="${(diamond.name)!""}">
@@ -146,6 +147,12 @@
                 <@spring.formRadioButtons "diamond.cut", cuts, ""/><br><br>
          </div>
 
+            <div class="radio">
+                <label>Status</label><br/>
+            <#assign stringStatusValue = (diamond.diamondStatus)!"" />
+            <@spring.formRadioButtons "diamond.diamondStatus", statuses, ""/><br><br>
+            </div>
+
             <div class="form-group">
                 <label for="hideTotalStockAmount">Hide Total Stock Amount</label>
 
@@ -161,6 +168,13 @@
             <#assign stringStatusValue = (diamond.currency)!"" />
             <@spring.formRadioButtons "diamond.currency", currencies, ""/><br><br>
          </div>
+
+
+            <div class="radio">
+                <label>Base Currency</label><br/>
+            <#assign stringStatusValue = (diamond.baseCurrency)!"" />
+            <@spring.formRadioButtons "diamond.baseCurrency", currencies, ""/><br><br>
+            </div>
 
 
             <div class="form-group">

@@ -10,6 +10,10 @@ import java.util.List;
 
 public interface IBalanceService {
 
+    List<Currency> getBaseCurrencies();
+
+    List<Balance> getBaseBalancesByAccount(Account account);
+
     List<Balance> getBalancesByAccount(Account account);
 
     Balance updateBalance(Balance balance);

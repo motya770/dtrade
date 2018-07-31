@@ -425,9 +425,10 @@
                                                 <tbody>
 
                                                 <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders track by tradeOrder.id">
-                                                    <td style="padding-right: 20px;">{{tradeOrder.amount | number : 4}}</td>
-                                                    <td style="padding-right: 20px" class="down">{{tradeOrder.price | number : 4}}</td>
+                                                    <td style="padding-right: 10px;">{{tradeOrder.amount | number : 4}}</td>
+                                                    <td style="padding-right: 10px" class="down">{{tradeOrder.price | number : 4}}</td>
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+
                                                     <!--
                                                     <td style="width: 114px;">{{tradeOrder.initialAmount | number : 4}}</td>
                                                     <td style="width: 50px;" class="down">{{tradeOrder.price | number : 4}}</td>
@@ -438,7 +439,6 @@
                                                 <thead style="border-top: 1px solid #e7e7e7;">
                                                 <tr>
                                                     <th>Spread</th>
-                                                    <th></th>
                                                     <th></th>
                                                     <th>{{vm.spread | number : 2}}</th>
                                                 </tr>
@@ -518,7 +518,7 @@
                                                 <td>{{tradeOrder.price | number : 4 }}</td>
                                                 <td>{{tradeOrder.initialAmount | number : 4}}</td>
                                                 <td>{{tradeOrder.executionSum | number : 2}}</td>
-                                                <td>{{tradeOrder.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                                                <td>{{tradeOrder.creationDate | date:'MM/dd HH:mm:ss' }}</td>
                                                 <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
                                                 <td>{{tradeOrder.tradeOrderDirection | lowercase}} {{tradeOrder.tradeOrderType | lowercase}}</td>
                                                 <!--

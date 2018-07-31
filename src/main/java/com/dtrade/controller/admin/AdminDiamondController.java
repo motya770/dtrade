@@ -84,6 +84,7 @@ public class AdminDiamondController {
         model.addAttribute("cuts", Stream.of(Cut.values()).collect(Collectors.toMap(Cut::name, Cut::name)));
         model.addAttribute("clarities", Stream.of(Clarity.values()).collect(Collectors.toMap(Clarity::name, Clarity::name)));
         model.addAttribute("currencies", Stream.of(Currency.values()).collect(Collectors.toMap(Currency::name, Currency::name)));
+        model.addAttribute("statuses", Stream.of(DiamondStatus.values()).collect(Collectors.toMap(DiamondStatus::name, DiamondStatus::name)));
         return model;
     }
 
