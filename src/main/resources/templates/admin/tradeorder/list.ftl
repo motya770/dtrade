@@ -18,7 +18,7 @@
             <th>Type</th>
         </tr>
         <#if tradeOrders??>
-            <#list tradeOrders as tradeOrder>
+            <#list tradeOrders.content as tradeOrder>
             <tr>
                 <td>${tradeOrder.id}</td>
                 <td>${tradeOrder.diamond.id}</td>
@@ -33,6 +33,10 @@
                 <td>${(tradeOrder.tradeOrderDirection)!""}</td>
             </tr>
             </#list>
+
+            <a href="/admin/tradeorder/list?pageNumber=${tradeOrders.number + 1}">
+            ${tradeOrders.number + 1}
+            </a>
         </#if>
         </tbody>
     </table>

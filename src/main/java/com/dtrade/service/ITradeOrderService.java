@@ -22,7 +22,7 @@ public interface ITradeOrderService {
 
     List<TradeOrderDTO> getTradeOrderDTO(List<TradeOrder> tradeOrders);
 
-    List<TradeOrder> findAll();
+    Page<TradeOrder> findAll(Integer pageNumber);
 
     void calculateTradeOrders();
 

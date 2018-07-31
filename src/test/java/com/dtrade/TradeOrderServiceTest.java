@@ -102,8 +102,8 @@ public class TradeOrderServiceTest extends BaseTest {
 
     @Test
     public void testFindAll(){
-        List<TradeOrder> tradeOrders = tradeOrderService.findAll();
-        Assert.assertTrue(tradeOrders.size()>0);
+        Page<TradeOrder> tradeOrders = tradeOrderService.findAll(0);
+        Assert.assertTrue(tradeOrders.getContent().size()>0);
     }
 
 

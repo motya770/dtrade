@@ -2,6 +2,7 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.NotEnoughMoney;
 import com.dtrade.exception.TradeException;
+import com.dtrade.model.Const;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
@@ -15,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -71,8 +74,11 @@ public class TradeOrderService  implements ITradeOrderService{
 
     //TODO add paging
     @Override
-    public List<TradeOrder> findAll() {
-        return tradeOrderRepository.findAll();
+    public Page<TradeOrder> findAll(Integer pageNumber) {
+        if(pageNumber==null){
+            pageNumber=0;
+        }
+        return tradeOrderRepository.findAll(PageRequest.of(pageNumber, 50, Sort.Direction.DESC, Const.F_ID));
     }
 
     @Override
