@@ -229,7 +229,7 @@
                                             <input type="text" ng-model="vm.tradeOrder.amount" value="0.00" id="input03">
                                         </div>
                                         <div class="form-tabs__submit">
-                                            <h3>Total (USD)</h3>
+                                            <h3>Total ({{vm.diamond.baseCurrency}})</h3>
                                             <button class="form-tabs__subm" ng-click="alert('test'); createTradeOrder(vm.tradeOrder, vm.diamond, 'MARKET');">Place order</button>
                                         </div>
                                     </form>
@@ -258,7 +258,7 @@
                                         <div class="form-tabs__row">
                                             <label for="input02">Limit price</label>
                                             <input type="number"  ng-init="vm.tradeOrder.price=0" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr" min="0" step="0.01">
-                                            <small>USD</small>
+                                            <small>{{vm.diamond.baseCurrency}}</small>
                                         </div>
                                         <!--
                                         <div class="form-tabs__info">
@@ -269,7 +269,7 @@
                                             <p>Сообщение не выбрано. Эта сделка может выполняться только заказчиком</p>
                                         </div>-->
                                         <div class="form-tabs__submit">
-                                            <h3>Total (USD): {{vm.tradeOrder.amount * vm.tradeOrder.price | number:2}}</h3>
+                                            <h3>Total ({{vm.diamond.baseCurrency}}): {{vm.tradeOrder.amount * vm.tradeOrder.price | number:2}}</h3>
                                             <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond, 'LIMIT')">Place order</button>
                                         </div>
                                     </form>
