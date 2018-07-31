@@ -2,7 +2,6 @@ package com.dtrade.service.simulators;
 
 
 import com.dtrade.model.account.Account;
-import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
