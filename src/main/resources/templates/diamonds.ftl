@@ -35,13 +35,16 @@
                                 <!--
                                 <th>Количество</th>
                                 -->
+                                <!--
                                 <th>Type</th>
+                                -->
                                 <th>Status</th>
+                                <!--
                                 <th>Carats</th>
                                 <th>Clarity</th>
                                 <th>Cut</th>
                                 <th>Color</th>
-                                <th>Σ stocks</th>
+                                <th>Σ stocks</th>-->
                                 <!--
                                 <th></th>
                                 -->
@@ -49,18 +52,22 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="diamond in vm.diamonds">
-                                <td>{{diamond.name}}<br>ISIN: {{diamond.id}}</td>
+                                <td>{{diamond.name}} <!--<br>ISIN: {{diamond.id}}--></td>
                                 <td>{{diamond.price | number }}</td>
                                 <!--
                                 <td>{{diamond.amount}}</td>
                                 -->
+                                <!--
                                 <td>{{diamond.diamondType | lowercase}}</td>
+                                -->
                                 <td>{{diamond.diamondStatus | lowercase}}</td>
+                                <!--
                                 <td>{{diamond.carats}}</td>
                                 <td>{{diamond.clarity}}</td>
                                 <td>{{diamond.cut | lowercase}}</td>
                                 <td>{{diamond.color}}</td>
                                 <td>{{diamond.totalStockAmount | number}}</td>
+                                -->
                                 <!--
                                 <td>
                                     <a href="#" data-open="1">More</a>

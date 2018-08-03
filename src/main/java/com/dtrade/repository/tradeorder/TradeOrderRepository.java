@@ -33,9 +33,10 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
             " order by to.creationDate desc ")
     Page<TradeOrder> getHistoryTradeOrdersForAccount(@Param("account") Account account, Pageable pageable);
 
-    @Query(value = "select * from trade_order where trader_order_status = 'EXECUTED' and diamond_id = ?1 order by execution_date desc limit 23", nativeQuery = true)
+    @Query(value = "select * from trade_order where trader_order_status = 'EXECUTED' and diamond_id = ?1 and execution_date > ?2 order by execution_date desc limit 23",
+            nativeQuery = true)
     //@Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' and to.diamond.id = :#{#diamond.id} order by to.executionDate desc ")
-    List<TradeOrder> getHistoryTradeOrders(Long diamondId);
+    List<TradeOrder> getHistoryTradeOrders(Long diamondId, Long time);
 }
 
 

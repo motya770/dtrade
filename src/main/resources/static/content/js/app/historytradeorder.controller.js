@@ -1,10 +1,12 @@
-diamondApp.controller("HistoryTradeOrderController", function TradeOrderController($scope, $q, $rootScope, $http, $interval, $timeout, DiamondService, AccountService, TradeOrderService){
+diamondApp.controller("HistoryTradeOrderController", function TradeOrderController($scope, $q, $rootScope, $http, $interval, $timeout,
+                                                                                   DiamondService, AccountService,
+                                                                                   TradeOrderService){
 
     console.log("start: " + new Date());
 
     var self = this;
-    self.firstTimeOut = true;
-    var historyInterval;
+   // self.firstTimeOut = true;
+   // var historyInterval;
 
     var historyOrders = function() {
         if(DiamondService.getCurrentDiamond()==null){
@@ -13,20 +15,27 @@ diamondApp.controller("HistoryTradeOrderController", function TradeOrderControll
         }
         TradeOrderService.getHistoryOrders(DiamondService.getCurrentDiamond()).then(function (data) {
             self.historyTradeOrders = data;
-
+            /*
+            console.log("end: " + new Date());
             console.log("end: " + new Date());
             if(self.firstTimeOut) {
                 self.firstTimeOut = false;
                 console.log("Setting interval");
-            }
-
-            if(historyInterval!=null){
-                clearInterval(historyInterval);
-            }
-            historyInterval = window.setInterval(historyOrders, 1000);
+                window.setInterval(historyOrders, 1000);
+            }*/
         });
     };
 
-    console.log("START START");
-    historyOrders();
+
+    var promise = $interval(historyOrders, 1000);
+
+// Cancel interval on page changes
+    $scope.$on('$destroy', function(){
+        if (angular.isDefined(promise)) {
+            $interval.cancel(promise);
+            promise = undefined;
+        }
+    });
+
+    //historyOrders();
 });

@@ -6,6 +6,7 @@ import com.dtrade.model.currency.Currency;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,9 @@ import java.math.BigDecimal;
  * Created by kudelin on 12/3/16.
  */
 
+
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
 @Data
 public class BalanceActivity {

@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
@@ -27,12 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.*;
 
 /**
  * Created by kudelin on 6/27/17.
@@ -67,11 +69,37 @@ public class TradeOrderService  implements ITradeOrderService{
     @Autowired
     private BalanceService balanceService;
 
+    private ScheduledExecutorService historyCasheExecutor;
+
+    private ConcurrentHashMap<Long, List<TradeOrder>> historyOrders = new ConcurrentHashMap<>();
+
+    @EventListener(ContextRefreshedEvent.class)
+    public void init(){
+
+        historyCasheExecutor = Executors.newScheduledThreadPool(2);
+
+        historyCasheExecutor.scheduleWithFixedDelay(()->{
+            loadHistoryOrders();
+        }, 1_000, 20, TimeUnit.MILLISECONDS);
+    }
+
+    private void loadHistoryOrders(){
+        List<Diamond> diamonds = diamondService.getAvailable();
+        diamonds.forEach(diamond -> {
+            List<TradeOrder> tradeOrders =  getHistoryTradeOrders(diamond.getId());
+            historyOrders.put(diamond.getId(), tradeOrders);
+        });
+    }
+
+    @Override
+    public List<TradeOrder> getHistoryTradeOrdersCashed(Long diamondId){
+        return historyOrders.get(diamondId);
+    }
+
     private TransactionTemplate transactionTemplate;
 
     private ScheduledExecutorService executor = Executors.newScheduledThreadPool(25); //Executors.newFixedThreadPool(25);
 
-    //TODO add paging
     @Override
     public Page<TradeOrder> findAll(Integer pageNumber) {
         if(pageNumber==null){
@@ -146,7 +174,11 @@ public class TradeOrderService  implements ITradeOrderService{
                        // executor.execute(pairRunnable);
 
                        // executor.schedule(pairRunnable, getRandomDelay(), TimeUnit.MILLISECONDS);
-                        executeTradeOrders(pair);
+                        transactionTemplate.execute(status -> {
+                            executeTradeOrders(pair);
+                            return status;
+                        });
+
 
                         logger.debug("execute trade time: {}", (System.currentTimeMillis() - start));
                     }
@@ -171,7 +203,8 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public List<TradeOrder> getHistoryTradeOrders(Long diamondId) {
         Diamond diamond = diamondService.find(diamondId);
-        return tradeOrderRepository.getHistoryTradeOrders(diamond.getId());
+        long oneDay = System.currentTimeMillis() -Duration.ofDays(1).toMillis();
+        return tradeOrderRepository.getHistoryTradeOrders(diamond.getId(), oneDay);
     }
 
     @Override
@@ -585,7 +618,7 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
     private void checkIfExecuted(TradeOrder order){
-        System.out.println("checking if executed " + order.getAmount().setScale(8));
+       // System.out.println("checking if executed " + order.getAmount().setScale(8));
         if (order.getAmount().compareTo(ZERO_VALUE)==0) {
             System.out.println("EXECUTED: " + order.getId());
             order.setTraderOrderStatus(TraderOrderStatus.EXECUTED);

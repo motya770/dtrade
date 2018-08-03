@@ -3,6 +3,7 @@ package com.dtrade.model.quote;
 import com.dtrade.model.diamond.Diamond;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +11,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data
 @Entity
 //@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

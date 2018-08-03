@@ -208,9 +208,10 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
     var reloadGraph = function () {
         if(self.poolingPromise){
             $interval.cancel(self.poolingPromise);
+
+            getGraphData();
+            getDepthGraph();
         }
-        getGraphData();
-        getDepthGraph();
     }
 
     $scope.$on('buyDiamondChoosed', function (event, arg) {
@@ -379,7 +380,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
   };
 
 
-  getDepthGraph();
-  getGraphData();
-   //$timeout(getGraphData, 2000, false);
+
+   $timeout(getDepthGraph, 1000, false);
+   $timeout(getGraphData, 1000, false);
 });

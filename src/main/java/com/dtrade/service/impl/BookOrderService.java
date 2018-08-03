@@ -111,12 +111,12 @@ public class BookOrderService implements IBookOrderService {
             return null;
         }
 
-        if(bookOrder.getBuyOrders().size()==0){
+        if(bookOrder.getBuyOrders().isEmpty()){
             return null;
 
         }
 
-        if(bookOrder.getSellOrders().size()==0){
+        if(bookOrder.getSellOrders().isEmpty()){
             return null;
         }
 

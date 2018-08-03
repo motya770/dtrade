@@ -1,0 +1,16 @@
+version: '2.1'
+
+services:
+  hazelcast:
+   image: hazelcast/hazelcast
+   ports:
+      - 5701:5701
+   environment:
+     - MANCENTER_URL=http://127.0.0.1:38080/hazelcast-mancenter
+     - JAVA_OPTS=-Dhazelcast.local.publicAddress=127.0.0.1:5701 -Dhazelcast.diagnostics.enabled=true
+  hazelcast-mgmt:
+   image: hazelcast/management-center:latest
+   ports:
+      - 38080:8080
+volumes:
+     my-datavolume:

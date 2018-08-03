@@ -32,7 +32,7 @@
 
                     <div class="lk-main-tabs">
                         <div class="lk-main-tab" id="tab01">
-                            <div class="lk-main-tab__table" style="width: 692px;">
+                            <div class="lk-main-tab__table" style="width: 1100px;">
                                 <div class="table-container" ng-controller="BalanceActivityController as vm" ng-cloak>
                                     <div>
                                         <table class="diamont-table">
@@ -42,6 +42,8 @@
                                             <th>Date</th>
                                             <th>Operation type</th>
                                             <th>Base Currency</th>
+                                            <th>Amount</th>
+                                            <th>Price</th>
                                             <th>Sum</th>
                                             <th>Balance</th>
                                         </tr>
@@ -53,8 +55,10 @@
                                             <td>{{balanceActivity.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                             <td>{{balanceActivity.balanceActivityType | lowercase}}</td>
                                             <td>{{balanceActivity.currency}}</td>
-                                            <td>{{balanceActivity.amount | number}}</td>
-                                            <td>{{balanceActivity.balanceSnapshot | number}}</td>
+                                            <td>{{balanceActivity.amount | number:7 }}</td>
+                                            <td>{{balanceActivity.price | number:7 }}</td>
+                                            <td>{{balanceActivity.sum | number:7  }}</td>
+                                            <td>{{balanceActivity.balanceSnapshot | number:7}}</td>
                                         </tr>
 
                                         </tbody>
@@ -90,7 +94,7 @@
                             </div>
                         </div>
                         <div class="lk-main-tab" id="tab02">
-                            <div class="lk-main-tab__table" style="width: 900px;">
+                            <div class="lk-main-tab__table" style="width: 1100px;">
                                 <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
                                     <div >
                                         <table class="diamont-table">

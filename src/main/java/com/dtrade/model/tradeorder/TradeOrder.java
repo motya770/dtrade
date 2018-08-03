@@ -2,8 +2,10 @@ package com.dtrade.model.tradeorder;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,6 +16,8 @@ import java.util.Objects;
 /**
  * Created by kudelin on 6/27/17.
  */
+@Cacheable
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data
 @Entity
 public class TradeOrder implements Serializable {
@@ -22,7 +26,7 @@ public class TradeOrder implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @NotNull
     private Diamond diamond;
 

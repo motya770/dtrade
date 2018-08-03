@@ -37,12 +37,12 @@
                     <div class="sep-cab-page__top">
                         <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm" style="height:491px;">
                             <div class="sep-cab-page__heading">
-                                <h2>{{cc.config.assetName}} listing</h2>
-                                <p>All {{cc.config.assetName}} are available</p>
+                                <h2>{{::cc.config.assetName}} listing</h2>
+                                <p>All {{::cc.config.assetName}} are available</p>
                             </div>
 
                             <form class="searchform">
-                                <input type="text" class="searchform__inp" ng-model="searchInputValue" placeholder="Enter the name of the {{cc.config.assetName}}">
+                                <input type="text" class="searchform__inp" ng-model="searchInputValue" placeholder="Enter the name of the {{::cc.config.assetName}}">
                                 <button class="searchform__btn" ng-click="getAvailableByName();">Find</button>
                             </form>
 
@@ -52,7 +52,7 @@
                                       <table class="diamont-table">
                                         <thead>
                                         <tr>
-                                            <th>{{cc.config.assetNameForListing}}</th>
+                                            <th>{{::cc.config.assetNameForListing}}</th>
                                             <th></th>
 
                                             <th>Bid <!--<span class="inf">?</span>--></th>
@@ -63,23 +63,23 @@
                                         </thead>
                                         <tbody>
 
-                                            <tr ng-repeat="diamond in vm.availableDiamonds" ng-click="chooseAvailableDiamond(diamond)">
-                                                <td>{{diamond.name}}
-                                                    <small ng-if="cc.config.assetType=='DIAMOND'">
-                                                    {{diamond.diamondType | diamondTypeFilter }},
-                                                     GIA - {{diamond.clarity}},
-                                                     Cr - {{diamond.carats}}
+                                            <tr ng-repeat="diamond in ::vm.availableDiamonds" ng-click="chooseAvailableDiamond(diamond)">
+                                                <td>{{::diamond.name}}
+                                                    <small ng-if="::cc.config.assetType=='DIAMOND'">
+                                                    {{::diamond.diamondType | diamondTypeFilter }},
+                                                     GIA - {{::diamond.clarity}},
+                                                     Cr - {{::diamond.carats}}
                                                     </small>
                                                 </td>
                                                 <td>
                                                     <div class="dialog-demo-content" layout="row" layout-wrap="" >
-                                                         <input ng-if="cc.config.assetType=='DIAMOND'" type="image" src="/theme/app/img/dia1.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
-                                                         <input ng-if="cc.config.assetType=='WINE'" style="height: 30px;" type="image" src="/theme/app/img/bottle.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
+                                                         <input ng-if="::cc.config.assetType=='DIAMOND'" type="image" src="/theme/app/img/dia1.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
+                                                         <input ng-if="::cc.config.assetType=='WINE'" style="height: 30px;" type="image" src="/theme/app/img/bottle.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
                                                     </div>
                                                 </td>
                                                 <td>{{diamond.askBidPair.first}} </td>
                                                 <td>{{diamond.askBidPair.second}}</td>
-                                                <td><span ng-if="!diamond.hideTotalStockAmount">{{diamond.totalStockAmount/10000000 | number}} mln </span></td>
+                                                <td><span ng-if="::!diamond.hideTotalStockAmount">{{::diamond.totalStockAmount/10000000 | number}} mln </span></td>
                                             </tr>
                                                     <script type="text/ng-template" id="dialog1.tmpl.html">
                                                         <md-dialog aria-label="Diamond">
@@ -102,7 +102,7 @@
                                                         </md-dialog>
                                                     </script>
 
-                                        <tr ng-if="cc.config.assetType=='DIAMOND'" style="width: 100%; background-color: #e7e7e7">
+                                        <tr ng-if="::cc.config.assetType=='DIAMOND'" style="width: 100%; background-color: #e7e7e7">
                                             <td>Elisabeth III <small>Rad, GIA - VSS2, Cr-6</small></td>
                                                     <td>
                                                        <div layout="row" layout-wrap="" >
@@ -113,7 +113,7 @@
                                             <td>0.42&nbsp;</td>
                                             <td>7 mln</td>
                                         </tr>
-                                            <tr ng-if="cc.config.assetType=='DIAMOND'" style="width: 100%; background-color: #e7e7e7">
+                                            <tr ng-if="::cc.config.assetType=='DIAMOND'" style="width: 100%; background-color: #e7e7e7">
                                                 <td style="width: 100%;">White Sea <small>Ova, GIA - VS2, Cr-3</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
@@ -124,7 +124,7 @@
                                                 <td>0.43&nbsp;</td>
                                                 <td>4 mln</td>
                                             </tr>
-                                            <tr ng-if="cc.config.assetType=='DIAMOND'" style="width: 100%; background-color: #e7e7e7">
+                                            <tr ng-if="::cc.config.assetType=='DIAMOND'" style="width: 100%; background-color: #e7e7e7">
                                                 <td style="width: 100%;">Ashberg <small>Pea, GIA - VS1, Cr-5</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
@@ -149,7 +149,7 @@
                                             </tr>
 
 
-                                            <tr ng-if="cc.config.assetType=='WINE'" style="width: 100%; background-color: #e7e7e7">
+                                            <tr ng-if="::cc.config.assetType=='WINE'" style="width: 100%; background-color: #e7e7e7">
                                                 <td style="width: 100%;">Ashberg <small>Corton clos du chapitre</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
@@ -162,7 +162,7 @@
                                             </tr>
 
 
-                                            <tr ng-if="cc.config.assetType=='WINE'" style="width: 100%; background-color: #e7e7e7">
+                                            <tr ng-if="::cc.config.assetType=='WINE'" style="width: 100%; background-color: #e7e7e7">
                                                 <td style="width: 100%;">Ashberg <small>Corton les valozieres</small></td>
                                                 <td>
                                                     <div layout="row" layout-wrap="" >
@@ -210,7 +210,7 @@
                                         <div class="form-tabs__boxes">
                                             <div class="form-tabs__info-top diamond-bid-name">
                                                 <div>{{vm.diamond.name}}</div>
-                                                <p ng-if="cc.config.assetType=='DIAMOND'" >{{vm.diamond.diamondType | diamondTypeFilter}},
+                                                <p ng-if="::cc.config.assetType=='DIAMOND'" >{{vm.diamond.diamondType | diamondTypeFilter}},
                                                     Cr - {{vm.diamond.carats}}, GIA - {{vm.diamond.clarity}}</p>
                                             </div>
                                         </div>
@@ -237,7 +237,7 @@
                                         <div class="form-tabs__boxes">
                                             <div class="form-tabs__info-top diamond-bid-name">
                                                 <div>{{vm.diamond.name}}</div>
-                                                <p ng-if="cc.config.assetType=='DIAMOND'">{{vm.diamond.diamondType | diamondTypeFilter}},
+                                                <p ng-if="::cc.config.assetType=='DIAMOND'">{{vm.diamond.diamondType | diamondTypeFilter}},
                                                Cr - {{vm.diamond.carats}}, GIA - {{vm.diamond.clarity}}</p>
                                             </div>
                                         </div>
@@ -488,7 +488,7 @@
                                     <a href="#tab02">History Orders</a>
                                 </li>
                                 <li>
-                                    <a href="#tab010">My {{cc.config.assetName}}</a>
+                                    <a href="#tab010">My {{::cc.config.assetName}}</a>
                                 </li>
                             </ul>
                             <div class="sep-cab-tabs-container">

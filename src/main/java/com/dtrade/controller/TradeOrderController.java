@@ -58,7 +58,7 @@ public class TradeOrderController {
 //        );
     }
 
-    //@Cacheable(value = "historyOrders")
+    //@Cacheable(value = "historyOrders", cacheManager = "concurrent")
     @RequestMapping(value = "/history-orders")
     public CompletableFuture<List<TradeOrderDTO>> getHistoryTradeOrders(@RequestBody Long diamondId)throws Exception {
 
@@ -74,7 +74,7 @@ public class TradeOrderController {
 
         return  CompletableFuture.supplyAsync(()-> {
             long start = System.currentTimeMillis();
-            List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrders(diamondId);
+            List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrdersCashed(diamondId);
             System.out.println("!!!!!!!!!!!!!end1: " + (System.currentTimeMillis() - start) + " " + tradeOrders.size());
             List<TradeOrderDTO> result =  tradeOrderService.getTradeOrderDTO(tradeOrders);
 
