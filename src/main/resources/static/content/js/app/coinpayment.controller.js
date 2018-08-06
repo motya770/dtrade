@@ -14,7 +14,6 @@ diamondApp.controller("CoinPaymentController", function CoinPaymentController($s
 
     self.withdrawRequest = {
         currencyCoin: "ETH",
-        currencyFiat: "USD",
         address: "",
         amount: 10
     }

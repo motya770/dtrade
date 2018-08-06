@@ -57,12 +57,12 @@ public class CoinPaymentTests extends BaseTest{
         //{"currencyCoin":"ETH","currencyFiat":"USD","address":"0x10D75F90b0F483942aDd5a947b71D8617BB012eD","amount":"2"}
 
         String currencyCoin ="ETH";
-        String currencyFiat = "USD";
+        //String currencyFiat = "USD";
         String address = "0x10D75F90b0F483942aDd5a947b71D8617BB012eD";
-        String amount = "2";
+        String amount = "0.0001";
 
         coinPaymentService.sendWithdraw(
-                InWithdrawRequest.initiliazeRequest(currencyCoin, currencyFiat, address, amount)
+                InWithdrawRequest.initiliazeRequest(currencyCoin, address, amount)
         );
 
     }

@@ -28,7 +28,7 @@ public class PageController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String main(){
-        return "ico/index";
+        return "main"; //"ico/index";
     }
 
     @RequestMapping(value = "/widget", method = RequestMethod.GET)

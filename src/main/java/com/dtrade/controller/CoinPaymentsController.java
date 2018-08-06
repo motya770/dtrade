@@ -35,15 +35,11 @@ public class CoinPaymentsController {
 
     @RequestMapping(value = "/create-withdraw")
     public CoinPayment createWithdraw(@RequestParam String currencyCoin,
-                                      @RequestParam String currencyFiat,
                                       @RequestParam String address,
-                                      @RequestParam String amount){
-       if(!currencyFiat.equals("USD")){
-           throw new TradeException("Only USD currently supported.");
-       }
+                                      @RequestParam String amountCoin){
 
        return coinPaymentService.sendWithdraw(
-               InWithdrawRequest.initiliazeRequest(currencyCoin, currencyFiat, address, amount)
+               InWithdrawRequest.initiliazeRequest(currencyCoin, address, amountCoin)
        );
     }
 

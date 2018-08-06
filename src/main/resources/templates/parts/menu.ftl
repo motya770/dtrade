@@ -11,6 +11,7 @@
                     <a href="/account">My account</a>
                 </li>
 
+            <!--
                 <span ng-controller="AccountController as ac" >
                     <li ng-hide="ac.account" >
                         <a  href="/login-page">Login</a>
@@ -19,6 +20,7 @@
                         <a href="/logout">Logout</a>
                     </li>
                 </span>
+                -->
         </ul>
     </div>
 </nav>

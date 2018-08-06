@@ -191,8 +191,15 @@ public class CoinPaymentService implements ICoinPaymentService {
 
     private InWithdrawRequest sendWithdrawRequest(InWithdrawRequest withdrawRequest){
 
+        /*
          String body = "currency=" + withdrawRequest.getCurrencyCoin() +
                 "&currency2="  + withdrawRequest.getCurrencyUsd() + "&version=1&cmd=create_withdrawal&key=" + publicKey+
+                "&amount=" + withdrawRequest.getAmountUsd()
+                + "&format=json" + "&address="+ withdrawRequest.getAddress();
+        */
+
+        String body = "currency=" + withdrawRequest.getCurrencyCoin() +
+                "&version=1&cmd=create_withdrawal&key=" + publicKey+
                 "&amount=" + withdrawRequest.getAmountUsd()
                 + "&format=json" + "&address="+ withdrawRequest.getAddress();
 

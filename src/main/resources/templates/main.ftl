@@ -10,7 +10,7 @@
 	<header class="header">
 		<div class="header__inner">
 			<div class="header__logo">
-				<a href="/">Diaminds<br>financial diamond exchange</a>
+				<a href="/">Exchange1<br>cryptocurrency exchange number 1</a>
 			</div>
 			<div class="header__right">
 				<!--
@@ -34,20 +34,19 @@
 		<div class="hero" style="background-image: url(/theme/app/img/hero-bg.jpg)">
 			<div class="hero__inner">
 				<div class="hero__text">
-					<h1 class="hero__heading">Investing in financial shares backed by diamond </h1>
+					<h1 class="hero__heading">Cryptocurrency exchange as it should be.</h1>
 					<p class="hero__descr">
-                        Diamond shares create an opportunity for a new type of investing.
-						Now, anyone can invest for speculative purposes and retain value even after inflation.
-						Our exchange created this new instrument, which allows you to buy and sell papers simply and securely.</p>
+						No commissions on trade, free tokens listing, no commission on deposits and withdraw.
+						Join financial revolution right now.
 				</div>
 				<div class="hero__stat">
 					<div class="hero-stat-elem">
 						<h3>38</h3>
-						<p>countries<br>trading</p>
+						<p>Trading<br>pairs</p>
 					</div>
 					<div class="hero-stat-elem">
 						<h3>59</h3>
-						<p>assets<br>for investment</p>
+						<p>Coins<br>for trading</p>
 					</div>
 				</div>
                 <a href="/trade" class="btn btn--lg" style="margin-left: 126px; margin-bottom: 20px; width: 36%; margin-top:5px;">Start trading</a>

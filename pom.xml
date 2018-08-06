@@ -11,7 +11,6 @@
     <name>dtrade</name>
     <description>Demo project for Spring Boot</description>
 
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -69,7 +68,6 @@
             <artifactId>hibernate-jcache</artifactId>
         </dependency>
 
-
         <!--
         <dependency>
             <groupId>net.sf.ehcache</groupId>
@@ -81,10 +79,7 @@
             <groupId>net.sf.ehcache.internal</groupId>
             <artifactId>ehcache-core</artifactId>
             <version>2.10.4</version>
-        </dependency>
-
--->
-
+        </dependency>-->
 
         <dependency>
             <groupId>org.ehcache</groupId>
@@ -130,8 +125,6 @@
         -->
 
         <!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
-
-
 
 
         <dependency>

@@ -192,6 +192,7 @@
                                             <input type="hidden" name="amountf" value="{{cp.depositRequest.amount}}">
                                             <input type="hidden" name="quantity" value="1">
                                             <input type="hidden" name="allow_quantity" value="0">
+                                            <input type="hidden" name="allow_amount" value="1">
                                             <input type="hidden" name="want_shipping" value="0">
                                             <input type="hidden" name="success_url" value="www.diaminds.io/trade">
                                             <input type="hidden" name="allow_extra" value="0">
@@ -207,18 +208,13 @@
                                 <div style="margin: 20px; width: 600px">
                                     <md-content class="md-no-momentum" style="min-width: 500px;">
                                         <h2 class="account-withdraw">Withdraw</h2>
+                                        <!--
                                         <md-input-container class="md-icon-float md-block">
                                             <label>Currency</label>
                                             <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="currency"></md-icon>
                                             <input ng-model="cp.withdrawRequest.currencyFiat" type="text" disabled>
                                         </md-input-container>
-
-                                        <md-input-container class="md-icon-float md-icon-right md-block">
-                                            <label>Withdraw Amount ($)</label>
-                                            <md-icon md-svg-src="/theme/app/img/icons/ic_card_giftcard_24px.svg"></md-icon>
-                                            <input ng-model="cp.withdrawRequest.amount" type="number" step="0.01">
-                                            <md-icon md-svg-src="/theme/app/img/icons/ic_euro_24px.svg"></md-icon>
-                                        </md-input-container>
+                                        -->
 
                                         <md-input-container style="margin-left: 34px; margin-bottom: 28px; width: 100px;">
                                             <label>Crypto Coin</label>
@@ -230,6 +226,13 @@
                                             </md-select>
                                         </md-input-container>
 
+                                        <md-input-container class="md-icon-float md-icon-right md-block">
+                                            <label>Withdraw Amount</label>
+                                            <md-icon md-svg-src="/theme/app/img/icons/ic_card_giftcard_24px.svg"></md-icon>
+                                            <input ng-model="cp.withdrawRequest.amount" type="number" step="0.01">
+                                            <md-icon md-svg-src="/theme/app/img/icons/ic_euro_24px.svg"></md-icon>
+                                        </md-input-container>
+
                                         <md-input-container class="md-icon-float md-block">
                                             <label>Your crypto currency address</label>
                                             <md-icon md-svg-src="/theme/app/img/icons/ic_person_24px.svg" class="address"></md-icon>
@@ -239,7 +242,6 @@
                                         <md-button class="md-raised md-primary" ng-click="createWithdraw(cp.withdrawRequest);">Withdraw</md-button>
                                     </md-content>
                                 </div>
-
 
                                 <div class="table-container" >
                                     <div>
