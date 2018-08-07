@@ -151,6 +151,7 @@ public class BalanceService  implements IBalanceService{
     @Override
     public Balance getBalance(Currency currency, Account account){
 
+
         try {
 
             if (currency == null) {
@@ -158,8 +159,9 @@ public class BalanceService  implements IBalanceService{
             }
 
            // System.out.println("account: " + account.getMail() + " " + currency + " " + Thread.currentThread().getName());
-            Balance balance =  account.getBalances().stream().filter((b)->b.getCurrency().equals(currency)).findFirst().get();
-            //Balance balance = balanceRepository.getBalance(account, currency);
+            //Balance balance =  account.getBalances().stream().filter((b)->b.getCurrency()
+              ///      .equals(currency)).findFirst().orElse(null);
+            Balance balance = balanceRepository.getBalance(account, currency);
             if (balance == null) {
                 return createBalance(account, currency);
             }

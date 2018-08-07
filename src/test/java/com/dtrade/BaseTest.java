@@ -44,6 +44,7 @@ public class BaseTest {
         diamond.setCut(Cut.EXCELLENT);
         diamond.setTotalStockAmount(new BigDecimal("40000000"));
         diamond.setCurrency(Currency.BTC);
+        diamond.setBaseCurrency(Currency.USD);
 
         diamond = diamondService.create(diamond);
         return diamond;

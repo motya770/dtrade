@@ -103,7 +103,6 @@ public class BalanceServiceTest extends BaseTest {
             Account roboAccount =  accountService.findByMail(roboMail);
             List<Currency> currencies = balanceService.getBaseCurrencies();
 
-
             List<Balance> balances = balanceService.getBalancesByAccount(roboAccount);
 
             balanceService.updateRoboBalances(currencies.get(currencies.indexOf(Currency.BTC)), roboAccount);
