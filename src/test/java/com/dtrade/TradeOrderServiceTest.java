@@ -148,7 +148,6 @@ public class TradeOrderServiceTest extends BaseTest {
 
                 balanceService.updateBalance(currency, account, balance);
 
-
             }
             return account;
         });

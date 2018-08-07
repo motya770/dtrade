@@ -75,6 +75,9 @@ public class TradeOrderController {
         return  CompletableFuture.supplyAsync(()-> {
             long start = System.currentTimeMillis();
             List<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrdersCashed(diamondId);
+            if(tradeOrders==null){
+                return null;
+            }
             System.out.println("!!!!!!!!!!!!!end1: " + (System.currentTimeMillis() - start) + " " + tradeOrders.size());
             List<TradeOrderDTO> result =  tradeOrderService.getTradeOrderDTO(tradeOrders);
 

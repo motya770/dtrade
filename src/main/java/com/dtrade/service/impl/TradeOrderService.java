@@ -467,9 +467,16 @@ public class TradeOrderService  implements ITradeOrderService{
                     TradeOrder buyOrder = tradeOrderRepository.findById(pair.getFirst().getId()).orElse(null);
                     TradeOrder sellOrder = tradeOrderRepository.findById(pair.getSecond().getId()).orElse(null);
                     System.out.println("1.2");
-                    if (buyOrder==null || sellOrder == null){
+                    if (sellOrder==null){
+                        bookOrderService.remove(sellOrder);
                         return;
                     }
+
+                    if (buyOrder==null){
+                        bookOrderService.remove(buyOrder);
+                        return;
+                    }
+
                     System.out.println("1.3");
                     System.out.println("1.3");
 

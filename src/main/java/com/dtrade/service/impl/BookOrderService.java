@@ -211,11 +211,18 @@ public class BookOrderService implements IBookOrderService {
 
         logger.debug("ContextRefreshedEvent!!!");
 
-        List<TradeOrder> orders = tradeOrderService.getLiveTradeOrders();
-        for(TradeOrder order: orders){
-            addNew(order);
-        }
 
-        logger.info("BookOrder loaded {} trade orders", orders.size());
+        Runnable runnable = ()-> {
+
+            List<TradeOrder> orders = tradeOrderService.getLiveTradeOrders();
+            for (TradeOrder order : orders) {
+                addNew(order);
+            }
+
+            logger.info("BookOrder loaded {} trade orders", orders.size());
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 }

@@ -1,12 +1,27 @@
 package com.dtrade;
 
+import com.dtrade.model.quote.Quote;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableCaching
-public class CacheConfig {
+public class CacheConfig  {
 
+    /*
+    @Bean
+    Config config() {
+        Config c = new Config();
+        c.setInstanceName("cache-1");
+        c.getGroupConfig().setName("test").setPassword("tesla1tesla1");
+        ManagementCenterConfig mcc = new ManagementCenterConfig().setUrl("http://127.0.0.1:8080/hazelcast-mancenter").setEnabled(true);
+        c.setManagementCenterConfig(mcc);
+        //SerializerConfig sc = new SerializerConfig().setTypeClass(Quote.class);
+        //c.getSerializationConfig().addSerializerConfig(sc);
+        return c;
+    }*/
 
     /*
     @Bean
