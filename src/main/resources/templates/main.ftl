@@ -31,7 +31,7 @@
 		</div>
 	</header>
 	<main class="content">
-		<div class="hero" style="background-image: url(/theme/app/img/hero-bg.jpg)">
+		<div class="hero" style="background-image: url(/theme/app/img/bitcoin-cryptocurrency.jpg)">
 			<div class="hero__inner">
 				<div class="hero__text">
 					<h1 class="hero__heading">Cryptocurrency exchange as it should be.</h1>
@@ -69,10 +69,13 @@
 					</span>
 				</div>
 				<div class="versus__descr">
-					<h2>COMPARED WITH OTHER INVESTMENT TOOLS</h2>
+					<h2>Why Exchange 1</h2>
 					<p>
-                        Diamond shares can be compared with other investment tools. However, when we consider different instruments, we understand that gold is too expensive, stocks are too high, currencies inflate, and cryptocurrency is too volatile.
-						Introducing this new investment tool creates an opportunity to speculate or save money over time.
+						Crypto trading went in the wrong way. We believe that trading should be free and simple.
+						We created simple trading platform for everyone.
+						We list startups for free. We don't charge commissions for trading.
+						We don't take money on deposits
+						and withdraws.
 					</p>
 				</div>
 			</div>
@@ -80,19 +83,17 @@
 		<div class="make-invest">
 			<div class="make-invest__inner">
 				<div class="make-invest__descr">
-					<h2>INVEST YOUR BUDGET IN DIAMONDS</h2>
-					<blockquote>Our mission is to maximize our clients' profits through investing in diamonds.</blockquote>
+					<h2>Our mission</h2>
+					<blockquote>Our mission is to disrupt finance, they should work for you, not you for them.</blockquote>
 					<ul>
-						<li>We have developed a special algorithm that allows us to evaluate any diamond
-							in the world. Invest in papers at the best price after the Initial Diamond Offering.</li>
+						<li>Cryptocurrency in simple way.</li>
 
-						<li>Our diamonds retain their value over time. We choose the statistically best diamonds,
-							so that you can have safe investments.</li>
+						<li>No previous experience needed. </li>
 
-						<li>Our partners have over 100 years of expertise in this market.
-							Combining our innovative approach and their prowess, we have created something truly unique.</li>
+						<li>Free trading</li>
 					</ul>
 				</div>
+				<!--
 				<div class="make-invest__icons">
 					<span class="make-invest__ico">
 						<img src="/theme/app/img/stone1.png" alt="stone">
@@ -130,17 +131,18 @@
 						<img src="/theme/app/img/stone9.png" alt="stone">
 						<span>Heart</span>
 					</span>
-				</div>
+				</div>-->
 			</div>
 		</div>
 		<div class="ctablock">
 			<div class="ctablock__inner">
 				<div class="ctablock__content">
-					<h2>Choose diamond shares</h2>
+					<h2>Choose coins</h2>
 					<a href="/trade" class="btn btn--lg">Start trading</a>
 				</div>
 			</div>
 		</div>
+		<!--
 		<div class="gray-bg">
 			<div class="feedback">
 				<div class="feedback__inner">
@@ -177,7 +179,7 @@
 			</div>
 			<div class="sert">
 				<div class="sert__inner">
-					<!--
+
 					<h2 class="sert__heading">Certificates</h2>
 					<div class="owl-carousel def-dots sert__carousel sert-carousel">
 						<div class="sert-carousel__item">
@@ -206,15 +208,17 @@
 							</div>
 						</div>
 					</div>
-					-->
+
 				</div>
 			</div>
 		</div>
+		-->
+
 	</main>
 	<div class="footer">
 		<div class="footer__inner">
 			<div class="footer__content">
-				<p class="footer__copy">Financial diamonds exchange</p>
+				<p class="footer__copy">Cryprocurrency exchnage</p>
 				<img src="/theme/app/img/cards.png" alt="cards" class="footer__card">
 			</div>
 		</div>
