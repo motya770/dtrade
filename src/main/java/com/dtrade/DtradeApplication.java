@@ -1,6 +1,5 @@
 package com.dtrade;
 
-import com.dtrade.repository.offering.OfferringRepository;
 import com.dtrade.service.IStockService;
 import com.dtrade.service.ITradeOrderService;
 import com.dtrade.service.impl.DiamondService;
@@ -13,11 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 @SpringBootApplication
 public class DtradeApplication  implements CommandLineRunner {
-
-
-    @Autowired
-    private OfferringRepository offerringRepository;
-
 
     @Autowired
     private UserDetailsService userDetailsService;

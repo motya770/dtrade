@@ -151,7 +151,6 @@ public class BalanceService  implements IBalanceService{
     @Override
     public Balance getBalance(Currency currency, Account account){
 
-
         try {
 
             if (currency == null) {

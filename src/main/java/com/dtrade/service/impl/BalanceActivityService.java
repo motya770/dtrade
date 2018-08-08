@@ -2,6 +2,7 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.NotEnoughMoney;
 import com.dtrade.exception.TradeException;
+import com.dtrade.model.Const;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balance.BalanceUpdater;
@@ -18,6 +19,7 @@ import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -49,9 +51,10 @@ public class BalanceActivityService implements IBalanceActivityService {
     @Autowired
     private BalanceService balanceService;
 
+    /*
     private ScheduledExecutorService executor;
 
-    //@EventListener(ContextRefreshedEvent.class)
+    @EventListener(ContextRefreshedEvent.class)
     public void init(){
          executor = Executors.newScheduledThreadPool(1);
          executor.scheduleAtFixedRate(()->execute(), 1000,100, TimeUnit.MILLISECONDS);
@@ -89,14 +92,14 @@ public class BalanceActivityService implements IBalanceActivityService {
     public void setTransactionManager(PlatformTransactionManager transactionManager){
         transactionTemplate = new TransactionTemplate(transactionManager);
         transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-    }
+    }*/
 
     @Override
     public Page<BalanceActivity> findAll(Integer pageNumber) {
         if(pageNumber==null){
             pageNumber = 0;
         }
-        return balanceActivityRepository.findAll(new PageRequest(pageNumber, 20));
+        return balanceActivityRepository.findAll(PageRequest.of(pageNumber, 20, Sort.Direction.DESC, Const.F_ID));
     }
 
     @Override
@@ -252,7 +255,7 @@ public class BalanceActivityService implements IBalanceActivityService {
 
         balanceService.updateBalance(buyerBalance);
 
-        balanceService.updateOpenSum(sellOrder, buyer, minusSum, realAmount.multiply(new BigDecimal("-1")));
+        balanceService.updateOpenSum(sellOrder, seller, minusSum, realAmount.multiply(new BigDecimal("-1")));
         balanceService.updateOpenSum(buyOrder, buyer, minusSum, realAmount.multiply(new BigDecimal("-1")));
 
         /*

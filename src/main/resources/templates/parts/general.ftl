@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 
-<title>Cyptocurrency exchange</title>
+<title>Free cryptocurrency exchange</title>
 <meta name="description" content="">
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">

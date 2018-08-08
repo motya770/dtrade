@@ -13,14 +13,6 @@ import java.math.BigDecimal;
  */
 public interface IBalanceActivityService {
 
-    /*
-    @Deprecated
-    void createBalanceActivity(Account buyer, Account seller, Diamond diamond, BigDecimal price) throws TradeException;
-
-    @Deprecated
-    BalanceActivity createBuyBalanceActivity(TradeOrder tradeOrder);
-    */
-
     void createBalanceActivities(Account buyer, Account seller,
                                                                    TradeOrder buyOrder,
                                                                    TradeOrder sellOrder, BigDecimal amount, BigDecimal price);
@@ -31,6 +23,5 @@ public interface IBalanceActivityService {
 
     Page<BalanceActivity> getAccountBalanceActivities(Integer pageInteger);
 
-    //TODO add paging and protecting
     Page<BalanceActivity> findAll(Integer pageNumber);
 }

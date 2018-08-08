@@ -157,7 +157,6 @@ public class TradeOrderServiceTest extends BaseTest {
     @Test
     public void testCalculateTradeOrders() throws Exception{
 
-
         final Account account = accountService.getCurrentAccount();
 
         BigDecimal initialBalance = new BigDecimal("100000");
@@ -333,6 +332,7 @@ public class TradeOrderServiceTest extends BaseTest {
 
 
     //TODO check execution more precily
+    /*
     @Transactional
     @Test
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
@@ -343,7 +343,7 @@ public class TradeOrderServiceTest extends BaseTest {
 
        Pair<TradeOrder, TradeOrder> pair = Pair.of(buyOrder, sellOrder);
        tradeOrderService.executeTradeOrders(pair);
-    }
+    }*/
 
     @Test
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
