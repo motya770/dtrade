@@ -27,17 +27,4 @@ public interface ICoinPaymentService {
     CoinPayment confirmWithdraw(CoinPayment coinPayment);
 
     void checkHmac(String hmac, String body);
-
-    /*
-    void requestWithdraw(String id);
-
-    void requestDeposit(String id);
-*/
-
-   // void login();
-
-  //  void deposit();
-
-   // void withdraw();
-
 }

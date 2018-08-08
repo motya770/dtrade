@@ -16,6 +16,4 @@ public interface IStockActivityService {
     @Deprecated
     StockActivity createSellStockActivity(TradeOrder tradeOrder);
 
-    List<StockActivity> getAccountStockActivities();
-
 }

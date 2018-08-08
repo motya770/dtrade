@@ -49,9 +49,4 @@ public class StockActivityService implements IStockActivityService {
         return stockActivityRepository.save(stockActivity);
     }
 
-
-    @Override
-    public List<StockActivity> getAccountStockActivities() {
-        return null;
-    }
 }

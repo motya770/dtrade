@@ -614,15 +614,6 @@ public class TradeOrderService  implements ITradeOrderService{
         return buyOrder.getPrice();
     }
 
-    @Override
-    public long sellSumForMonthForAccount() {
-        return 0;
-    }
-
-    @Override
-    public long buySumForMonthForAccount() {
-        return 0;
-    }
 
     private void checkIfExecuted(TradeOrder order){
        // System.out.println("checking if executed " + order.getAmount().setScale(8));

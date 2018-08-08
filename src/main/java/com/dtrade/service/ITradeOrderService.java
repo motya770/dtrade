@@ -13,12 +13,6 @@ import java.util.List;
  */
 public interface ITradeOrderService {
 
-    //BigDecimal getAllOpenedTradesSum(Account account);
-
-    //BigDecimal getOpenedTradesSum(Account account, Diamond diamond);
-
-   // BigDecimal getOpenedStocksAmount(Account account, Diamond diamond);
-
     TradeOrderDTO convert(TradeOrder to);
 
     List<TradeOrder> rereadTradeOrders(Long[] tradeOrders);
@@ -51,9 +45,4 @@ public interface ITradeOrderService {
     void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair);
 
     boolean checkIfCanExecute(Pair<TradeOrder, TradeOrder> pair);
-
-    long sellSumForMonthForAccount();
-
-    long buySumForMonthForAccount();
-
 }

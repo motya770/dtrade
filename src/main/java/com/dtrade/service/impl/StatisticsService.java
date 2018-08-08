@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class StatisticsService implements IStatisticsService{
 
-
-
     @Override
     public long sellSumForMonthForAccount() {
         return 0;
