@@ -1,11 +1,19 @@
 package com.dtrade;
 
+import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balanceactivity.BalanceActivity;
+import com.dtrade.model.balanceactivity.BalanceActivityType;
 import com.dtrade.model.coinpayment.CoinPayment;
+import com.dtrade.model.coinpayment.DepositRequest;
+import com.dtrade.model.coinpayment.InWithdrawRequest;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.repository.balance.BalanceRepository;
 import com.dtrade.repository.balanceactivity.BalanceActivityRepository;
+import com.dtrade.service.IBalanceService;
+import com.dtrade.service.ICoinPaymentService;
 import com.dtrade.service.impl.AccountService;
 import com.dtrade.service.impl.BalanceActivityService;
 import org.junit.Assert;
@@ -20,7 +28,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -41,6 +51,9 @@ public class BalanceActivityTest extends BaseTest {
 
     @Autowired
     private BalanceActivityRepository balanceActivityRepository;
+
+    @Autowired
+    private ICoinPaymentService coinPaymentService;
 
     //TODO make more complicated checks
     @Transactional
@@ -102,18 +115,87 @@ public class BalanceActivityTest extends BaseTest {
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
     public void testCreateDepositBalanceActivity(){
+
+
+
+//        if(coinPayment.getAccount()==null){
+//            throw new TradeException("Account is null");
+//        }
+//
+//        Account account = accountService.find(coinPayment.getAccount().getId());
+//        Currency currency = Currency.valueOf(coinPayment.getDepositRequest().getCurrencyCoin());
+//        balanceService.updateBalance(currency, account,  coinPayment.getDepositRequest().getAmountCoin());
+//
+//        BalanceActivity ba = new BalanceActivity();
+//        ba.setAccount(account);
+//        ba.setBalanceActivityType(BalanceActivityType.DEPOSIT);
+//        ba.setAmount(coinPayment.getDepositRequest().getAmountUsd());
+//        ba.setCreateDate(System.currentTimeMillis());
+//        ba.setCurrency(currency);
+//        ba.setBalanceSnapshot(balanceService.getBalance(currency, account).getAmount());
+//
+//        return balanceActivityRepository.save(ba);
+
+        Account account = accountService.getStrictlyLoggedAccount();
+
+        Currency currency = Currency.ETH;
+        BigDecimal amount = new BigDecimal("100000");
+
+        DepositRequest depositRequest = new DepositRequest();
+        depositRequest.setCurrencyCoin(currency.toString());
+        depositRequest.setAmountCoin(amount);
+        depositRequest.setIpnId("test");
+
         CoinPayment coinPayment = new CoinPayment();
+        coinPayment.setDepositRequest(depositRequest);
+        coinPayment.setAccount(account);
+
+        Balance balance = balanceService.getBalance(currency, account);
+        BigDecimal saved = balance.getAmount();
+
         balanceActivityService.createDepositBalanceActivity(coinPayment);
 
+        balance = balanceService.getBalance(currency, account);
+
+        Assert.assertTrue(balance.getAmount().compareTo(saved.add(amount))==0);
     }
+
+    @Autowired
+    private IBalanceService balanceService;
 
     @Transactional
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
     public void testCreateWithdrawBalanceActivity(){
 
+        Account account = accountService.getStrictlyLoggedAccount();
+
+        BigDecimal amount =  new BigDecimal("10000");
+
         CoinPayment coinPayment = new CoinPayment();
+        coinPayment.setAccount(account);
+        InWithdrawRequest withdrawRequest = new InWithdrawRequest();
+        coinPayment.setInWithdrawRequest(withdrawRequest);
+        coinPayment.getInWithdrawRequest().setAmountCoin(amount);
+        coinPayment.getInWithdrawRequest().setCurrencyCoin(Currency.BTC.toString());
+
+        coinPayment.setInWithdrawRequest(withdrawRequest);
+
+        Currency currency = Currency.BTC;
+
+        Balance balance = balanceService.getBalance(currency, account);
+        BigDecimal saved = balance.getAmount();
+
         balanceActivityService.createWithdrawBalanceActivity(coinPayment);
+
+        balance = balanceService.getBalance(currency, account);
+
+        Assert.assertTrue(saved.subtract(amount).compareTo(balance.getAmount())==0);
+
+//        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=currency, rootBeanClass=class com.dtrade.model.balanceactivity.BalanceActivity, messageTemplate='{javax.validation.constraints.NotNull.message}'}
+//        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=sum, rootBeanClass=class com.dtrade.model.balanceactivity.BalanceActivity, messageTemplate='{javax.validation.constraints.NotNull.message}'}
+//        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=price, rootBeanClass=class com.dtrade.model.balanceactivity.BalanceActivity, messageTemplate='{javax.validation.constraints.NotNull.message}'}
+//        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=balanceSnapshot,
 
     }
 

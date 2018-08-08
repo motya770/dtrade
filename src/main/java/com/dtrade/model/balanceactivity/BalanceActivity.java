@@ -41,11 +41,9 @@ public class BalanceActivity {
     private Balance balance;
 
     @Column(precision=19, scale=8)
-    @NotNull
     private BigDecimal amount;
 
     @Column(precision=19, scale=8)
-    @NotNull
     private BigDecimal price;
 
     @Column(precision=19, scale=8)

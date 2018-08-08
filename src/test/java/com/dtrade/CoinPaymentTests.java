@@ -29,23 +29,7 @@ public class CoinPaymentTests extends BaseTest{
     //@Test
     public void processDeposit(){
 //Process
-        DepositRequest depositRequest = new DepositRequest();
-        depositRequest.setEmail(F_DEFAULT_TEST_ACCOUNT);
-        UUID uuid = UUID.randomUUID();
-        depositRequest.setIpnId(uuid.toString());
-        depositRequest.setIpn_version("1.0");
-        depositRequest.setIpn_type("button");
-        depositRequest.setIpn_mode("hmac");
-        depositRequest.setMerchant("merchant");
-        depositRequest.setAddress("test");
-        depositRequest.setTransactionId("test1");
-        depositRequest.setStatus(1);
-        depositRequest.setStatus_text("test statussets");
-        depositRequest.setConfirms("1");
-        depositRequest.setCurrencyUsd("USD");
-        depositRequest.setCurrencyCoin("ETHER");
-        depositRequest.setAmountCoin(new BigDecimal("10"));
-        depositRequest.setAmountUsd(new BigDecimal("100"));
+        DepositRequest depositRequest = createDepositRequest();
         coinPaymentService.proceedDeposit(depositRequest);
     }
 

@@ -128,11 +128,12 @@ public class BalanceActivityService implements IBalanceActivityService {
         ba.setAccount(account);
         ba.setBalanceActivityType(BalanceActivityType.WITHDRAW);
         ba.setAmount(withdrawAmount);
+        ba.setSum(withdrawAmount);
         ba.setCreateDate(System.currentTimeMillis());
 
         //TODO ajust USD BTC ETH
-       // ba.setCurrency(Curre);
-       // ba.setBalanceSnapshot(balanceService.getBa);
+        ba.setCurrency(currency);
+        ba.setBalanceSnapshot(balanceService.getBalance(currency, account).getAmount());
         return balanceActivityRepository.save(ba);
     }
 
@@ -147,10 +148,12 @@ public class BalanceActivityService implements IBalanceActivityService {
         Currency currency = Currency.valueOf(coinPayment.getDepositRequest().getCurrencyCoin());
         balanceService.updateBalance(currency, account,  coinPayment.getDepositRequest().getAmountCoin());
 
+        BigDecimal amount = coinPayment.getDepositRequest().getAmountCoin();
         BalanceActivity ba = new BalanceActivity();
         ba.setAccount(account);
         ba.setBalanceActivityType(BalanceActivityType.DEPOSIT);
-        ba.setAmount(coinPayment.getDepositRequest().getAmountUsd());
+        ba.setAmount(amount);
+        ba.setSum(amount);
         ba.setCreateDate(System.currentTimeMillis());
         ba.setCurrency(currency);
         ba.setBalanceSnapshot(balanceService.getBalance(currency, account).getAmount());
