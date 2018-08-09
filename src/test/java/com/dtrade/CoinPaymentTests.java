@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @RunWith(SpringRunner.class)
@@ -59,7 +60,7 @@ public class CoinPaymentTests extends BaseTest{
     @Transactional
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
-    public void testCreateWithdraw(){
+    public void testCreateWithdralAndGetAllByAccount(){
         String currencyCoin ="ETH";
         String address = "0x10D75F90b0F483942aDd5a947b71D8617BB012eD";
         String amount = "0.00240000";
@@ -70,9 +71,15 @@ public class CoinPaymentTests extends BaseTest{
 
         Page<CoinPayment> payments =  coinPaymentService.findAll(0);
 
-        long count = payments.getContent().stream().filter(p -> p.getId().equals(coinPayment)).count();
+        long count = payments.getContent().stream().filter(p -> p.getId().equals(coinPayment.getId())).count();
 
         Assert.assertEquals(1L, count);
+
+        Account account = accountService.getStrictlyLoggedAccount();
+        List<CoinPayment> content = coinPaymentService.getAllByAccount(account).getContent();
+
+        long byAccountCount = content.stream().filter(p-> p.getId().equals(coinPayment.getId())).count();
+        Assert.assertEquals(1L, byAccountCount);
     }
 
 

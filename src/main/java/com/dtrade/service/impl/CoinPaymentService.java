@@ -1,6 +1,7 @@
 package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
+import com.dtrade.model.Const;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.coinpayment.*;
 import com.dtrade.model.currency.Currency;
@@ -200,7 +201,7 @@ public class CoinPaymentService implements ICoinPaymentService {
 
         String body = "currency=" + withdrawRequest.getCurrencyCoin() +
                 "&version=1&cmd=create_withdrawal&key=" + publicKey+
-                "&amount=" + withdrawRequest.getAmountUsd()
+                "&amount=" + withdrawRequest.getAmountCoin()
                 + "&format=json" + "&address="+ withdrawRequest.getAddress();
 
         String result = requestServer(body);
@@ -339,7 +340,7 @@ public class CoinPaymentService implements ICoinPaymentService {
         if(pageNumber==null){
             pageNumber = 0;
         }
-        return coinPaymentRepository.findAll(new PageRequest(pageNumber, 20));
+        return coinPaymentRepository.findAll(PageRequest.of(pageNumber, 20, Sort.Direction.DESC, Const.F_ID));
     }
 
     //receive money

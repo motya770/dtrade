@@ -13,8 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 @Transactional
 public class ImageServiceTest extends BaseTest {
 
