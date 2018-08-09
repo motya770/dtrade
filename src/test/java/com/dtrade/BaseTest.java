@@ -45,11 +45,11 @@ public class BaseTest {
         depositRequest.setMerchant("merchant");
         depositRequest.setAddress("test");
         depositRequest.setTransactionId("test1");
-        depositRequest.setStatus(1);
+        depositRequest.setStatus(100);
         depositRequest.setStatus_text("test statussets");
         depositRequest.setConfirms("1");
         depositRequest.setCurrencyUsd("USD");
-        depositRequest.setCurrencyCoin("ETHER");
+        depositRequest.setCurrencyCoin("ETH");
         depositRequest.setAmountCoin(new BigDecimal("10"));
         depositRequest.setAmountUsd(new BigDecimal("100"));
         return depositRequest;
