@@ -34,9 +34,9 @@
 		<div class="hero" style="background-image: url(/theme/app/img/bitcoin-cryptocurrency.jpg)">
 			<div class="hero__inner">
 				<div class="hero__text">
-					<h1 class="hero__heading">Cryptocurrency exchange as it should be.</h1>
+					<h1 class="hero__heading">Cryptocurrency exchange as it should be</h1>
 					<p class="hero__descr">
-						No commissions on trade, free tokens listing, no commission on deposits and withdraw.
+						No commissions on trade, free tokens listing, no commission on deposits and withdraws.
 						Join financial revolution right now.
 				</div>
 				<div class="hero__stat">
@@ -84,11 +84,11 @@
 			<div class="make-invest__inner">
 				<div class="make-invest__descr">
 					<h2>Our mission</h2>
-					<blockquote>Our mission is to disrupt finance, they should work for you, not you for them.</blockquote>
+					<blockquote>Our mission is to disrupt finance, industry should work for you, not you for it</blockquote>
 					<ul>
-						<li>Cryptocurrency in simple way.</li>
+						<li>Cryptocurrency in a simple way</li>
 
-						<li>No previous experience needed. </li>
+						<li>No previous experience needed</li>
 
 						<li>Free trading</li>
 					</ul>
