@@ -28,5 +28,5 @@ public interface IStockService {
 
     Stock updateRoboStockAmount(Diamond diamond, Account account);
 
-    void save(Stock stock);
+    Stock save(Stock stock);
 }

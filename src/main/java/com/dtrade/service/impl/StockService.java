@@ -87,8 +87,8 @@ public class StockService  implements IStockService {
     }
 
     @Override
-    public void save(Stock stock) {
-        stockRepository.save(stock);
+    public Stock save(Stock stock) {
+        return stockRepository.save(stock);
     }
 
     @Override

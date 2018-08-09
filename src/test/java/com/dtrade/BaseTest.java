@@ -80,7 +80,7 @@ public class BaseTest {
         TradeOrder tradeOrder = new TradeOrder();
         tradeOrder.setAmount(new BigDecimal("10.0"));
         tradeOrder.setDiamond(diamondService.getAvailable().stream().findFirst().get());
-        Account account =  accountService.getCurrentAccount();
+        Account account =  accountService.getStrictlyLoggedAccount();
 
         System.out.println("B: " + account.getBalances());
         tradeOrder.setAccount(account);

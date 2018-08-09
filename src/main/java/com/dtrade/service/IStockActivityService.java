@@ -13,7 +13,4 @@ public interface IStockActivityService {
     StockActivity createStockActivity(TradeOrder buyOrder, TradeOrder sellOrder,
                                       BigDecimal sum,  BigDecimal price, BigDecimal amount);
 
-    @Deprecated
-    StockActivity createSellStockActivity(TradeOrder tradeOrder);
-
 }
