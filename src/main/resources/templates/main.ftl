@@ -25,7 +25,8 @@
 						</li>
 					</ul>
 				</div>-->
-				    <a href="/trade" class="btn btn--darken">Trade</a>
+				    <a href="/simple" class="btn btn--darken">Trade</a>
+                    <a href="/trade" class="btn btn--darken">Advanced</a>
                     <a href="/login-page" class="btn btn--darken">Login</a>
 			</div>
 		</div>
@@ -138,7 +139,7 @@
 			<div class="ctablock__inner">
 				<div class="ctablock__content">
 					<h2>Choose coins</h2>
-					<a href="/trade" class="btn btn--lg">Start trading</a>
+					<a href="/simple" class="btn btn--lg">Start trading</a>
 				</div>
 			</div>
 		</div>

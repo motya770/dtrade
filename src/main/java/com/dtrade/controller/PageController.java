@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class PageController {
 
     @RequestMapping(value = "/trade", method = RequestMethod.GET)
-    public String index(){
+    public String trade(){
         return "index2";
+    }
+
+    @RequestMapping(value = "/simple", method = RequestMethod.GET)
+    public String simple(){
+        return "simple";
     }
 
     /*dc

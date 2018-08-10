@@ -23,6 +23,12 @@ diamondApp.controller('AvailableController', function AvailableController($scope
                 var diamond = pair.first;
                 var askBidPair = pair.second;
 
+
+                var avg = (askBidPair.first + askBidPair.second)/2;
+                //if(angular.isNumber(avg)){
+                    askBidPair.avg = avg;
+                //}
+
                 for(var j in self.availableDiamonds){
                     var currentDiamond = self.availableDiamonds[j];
                     if(currentDiamond.id == diamond.id){

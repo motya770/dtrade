@@ -1,8 +1,11 @@
 <nav class="subnav">
     <div class="subnav__inner">
         <ul ng-controller="MenuController as vm" class="subnav__list">
+                <li ng-class="getClass('/simple')">
+                    <a href="/simple">Simple</a>
+                </li>
                 <li ng-class="getClass('/trade')">
-                    <a href="/trade">Trade</a>
+                    <a href="/trade">Advanced</a>
                 </li>
                 <li ng-class="getClass('/diamonds')" >
                     <a href="/{{cc.config.assetType|lowercase}}">{{cc.config.assetName}}</a>
