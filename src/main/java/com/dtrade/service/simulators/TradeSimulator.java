@@ -112,7 +112,67 @@ public class TradeSimulator {
     }
 
     private void startTrade(){
-        createTradeOrderSimulated();
+       // createTradeOrderSimulated();
+        createMarketMakerTrades();
+    }
+
+
+    private void createMarketMakerTrades(){
+        List<Diamond> diamonds =   diamondService.getAllAvailable("");
+
+        diamonds.forEach(diamond -> {
+
+            Random rand = new Random();
+            int random = rand.nextInt(2);
+
+            //logger.info("rand value " + random);
+            //random buy and random sell (simulation!! :-))
+            TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
+
+            BigDecimal highEnd =  diamond.getRoboHighEnd();
+            BigDecimal lowEnd = diamond.getRoboLowEnd();
+
+            BigDecimal highEndSecond = highEnd.multiply(new BigDecimal("1.003"));
+            BigDecimal lowEndFirst = highEnd.multiply(new BigDecimal("0.0097"));
+
+            //we just want to create the market but not to buy or sell
+            BigDecimal price =  (tradeOrderDirection == TradeOrderDirection.BUY) ?
+                    getRandomRangePrice(lowEndFirst, lowEnd) : getRandomRangePrice(highEnd, highEndSecond);
+
+            double randAmount = rand.nextDouble();
+
+            TradeOrder tradeOrder = new TradeOrder();
+            tradeOrder.setAmount(new BigDecimal(randAmount));
+            tradeOrder.setDiamond(diamond);
+
+            String mail = accountService.getRoboAccountMail(diamond, random);
+            login(mail);
+
+            Account account =  accountService.getStrictlyLoggedAccount();
+
+            Arrays.stream(Currency.values()).forEach(currency ->
+                    balanceService.updateRoboBalances(currency, account));
+
+            tradeOrder.setAccount(accountService.getCurrentAccount());
+            tradeOrder.setPrice(price);
+            tradeOrder.setTradeOrderType(TradeOrderType.LIMIT);
+            tradeOrder.setTradeOrderDirection(tradeOrderDirection);
+
+            transactionTemplate.execute(status -> tradeOrderService.createTradeOrder(tradeOrder));
+        });
+    }
+
+    private BigDecimal getRandomRangePrice(BigDecimal start, BigDecimal end){
+        Random rand = new Random();
+        BigDecimal[] prices = new BigDecimal[8];
+        BigDecimal step = start.subtract(end).divide(new BigDecimal(prices.length));
+
+        for(int i=0; i < prices.length; i++){
+            start = step.add(step);
+            prices[i] = start;
+        }
+        int priceIndex  = rand.nextInt(prices.length);
+        return prices[priceIndex];
     }
 
     private void createTradeOrderSimulated() {
@@ -148,8 +208,6 @@ public class TradeSimulator {
                prices[i] = lowEnd;
            }
 
-           //{"0.96", "0.97", "0.98", "0.99", "1.0", "1.1", "1.2", "1.3"};
-
             double randAmount = rand.nextDouble();
             int randPrice  = rand.nextInt(prices.length);
 
@@ -173,6 +231,7 @@ public class TradeSimulator {
             transactionTemplate.execute(status -> tradeOrderService.createTradeOrder(tradeOrder));
         });
     }
+
 
     private void login(String userName){
 

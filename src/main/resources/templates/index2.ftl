@@ -77,8 +77,8 @@
                                                          <input ng-if="::cc.config.assetType=='WINE'" style="height: 30px;" type="image" src="/theme/app/img/bottle.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
                                                     </div>
                                                 </td>
-                                                <td>{{diamond.askBidPair.first}} </td>
-                                                <td>{{diamond.askBidPair.second}}</td>
+                                                <td>{{diamond.askBidPair.first | number: 8}} </td>
+                                                <td>{{diamond.askBidPair.second | number : 8}}</td>
                                                 <td><span ng-if="::!diamond.hideTotalStockAmount">{{::diamond.totalStockAmount/10000000 | number}} mln </span></td>
                                             </tr>
                                                     <script type="text/ng-template" id="dialog1.tmpl.html">
@@ -392,15 +392,15 @@
                                             <tbody>
 
                                             <tr ng-repeat="tradeOrder in vm.historyTradeOrders track by tradeOrder.id">
-                                                <td>{{tradeOrder.initialAmount | number : 4}}</td>
+                                                <td>{{tradeOrder.initialAmount | number : 8}}</td>
                                                     <td ng-if="tradeOrder.tradeOrderDirection == 'BUY'" class="up">
-                                                        {{tradeOrder.price | number : 4 }}
+                                                        {{tradeOrder.price | number : 8 }}
 
                                                             <img ng-src="/theme/app/img/up.png" alt="up">
 
                                                     </td>
                                                     <td ng-if="tradeOrder.tradeOrderDirection == 'SELL'" class="down">
-                                                        {{tradeOrder.price | number : 4}}
+                                                        {{tradeOrder.price | number : 8}}
                                                             <img ng-src="/theme/app/img/down.png" alt="down">
 
                                                     </td>
@@ -425,8 +425,8 @@
                                                 <tbody>
 
                                                 <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders track by tradeOrder.id">
-                                                    <td style="padding-right: 10px;">{{tradeOrder.amount | number : 4}}</td>
-                                                    <td style="padding-right: 10px" class="down">{{tradeOrder.price | number : 4}}</td>
+                                                    <td style="padding-right: 10px;">{{tradeOrder.amount | number : 6}}</td>
+                                                    <td style="padding-right: 10px" class="down">{{tradeOrder.price | number : 8}}</td>
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
 
                                                     <!--
@@ -440,14 +440,14 @@
                                                 <tr>
                                                     <th>Spread</th>
                                                     <th></th>
-                                                    <th>{{vm.spread | number : 7}}</th>
+                                                    <th>{{vm.spread | number : 8}}</th>
                                                 </tr>
                                                 </thead>
 
 
                                                 <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders track by tradeOrder.id">
-                                                    <td>{{tradeOrder.amount | number : 4}}</td>
-                                                    <td class="up">{{tradeOrder.price | number : 4 }}</td>
+                                                    <td>{{tradeOrder.amount | number : 6}}</td>
+                                                    <td class="up">{{tradeOrder.price | number : 8 }}</td>
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                                 </tr>
 

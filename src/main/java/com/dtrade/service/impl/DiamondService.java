@@ -35,8 +35,8 @@ public class DiamondService implements IDiamondService {
     @Autowired
     private IScoreService scoreService;
 
-    private static final BigDecimal LOW_BORDER_PERCENT = new BigDecimal("0.97");
-    private static final BigDecimal HIGH_BORDER_PERCENT = new BigDecimal("1.03");
+    private static final BigDecimal LOW_BORDER_PERCENT = new BigDecimal("0.997");
+    private static final BigDecimal HIGH_BORDER_PERCENT = new BigDecimal("1.003");
 
     @Override
     public Diamond defineRobotBorders(Diamond diamond, BigDecimal bid, BigDecimal ask) {
@@ -50,8 +50,12 @@ public class DiamondService implements IDiamondService {
             throw new TradeException("Can't define ask for " + diamond.getName());
         }
 
+        System.out.println("ask, bid1: " + bid + " " + ask);
+
         BigDecimal low = bid.multiply(LOW_BORDER_PERCENT);
         BigDecimal high = low.multiply(HIGH_BORDER_PERCENT);
+
+        System.out.println("ask, bid2: " + low + " " + high);
 
         diamond.setRoboLowEnd(low);
         diamond.setRoboHighEnd(high);

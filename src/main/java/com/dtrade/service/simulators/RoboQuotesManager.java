@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -25,7 +26,7 @@ public class RoboQuotesManager {
 
     private List<BitfinexClient> clients = new ArrayList<>();
 
-    //@EventListener(ContextRefreshedEvent.class)
+    @EventListener(ContextRefreshedEvent.class)
     public void init(){
 
         List<Diamond> diamonds = diamondService.getAllAvailable("");
@@ -93,25 +94,30 @@ public class RoboQuotesManager {
             10305 //: Reached limit of open channels
              */
 
-            JSONObject obj = new JSONObject(message);
+            if(message.contains("code")){
 
-            String code =  obj.getString("code");
-            if(!StringUtils.isEmpty(code)){
-                if (code.equals("10000")){
+                JSONObject obj = new JSONObject(message);
 
-                }else if (code.equals("10001")){
+                String code =  obj.getString("code");
+                if(!StringUtils.isEmpty(code)){
+                    if (code.equals("10000")){
 
-                }else if(code.equals("10305")){
+                    }else if (code.equals("10001")){
 
+                    }else if(code.equals("10305")){
+
+                    }
                 }
+            }else if (message.contains("[") && !message.contains("hb")) { //not a heartbeat
+
+                JSONArray arr = new JSONArray(message);
+                JSONArray values = arr.getJSONArray(1);
+                System.out.println("values: " + values);
+                BigDecimal bid = new BigDecimal(values.getDouble(0));//BID
+                BigDecimal ask = new BigDecimal(values.getDouble(2));//ASK
+
+                diamondService.defineRobotBorders(diamond, bid, ask);
             }
-
-            JSONArray arr = new JSONArray(message);
-            JSONArray values =  arr.getJSONArray(1);
-            BigDecimal bid = new BigDecimal(values.getString(1));//BID
-            BigDecimal ask = new BigDecimal(values.getString(4));//ASK
-
-            diamondService.defineRobotBorders(diamond, bid, ask);
 
             //[1,[6311.8,21.55044611,6311.9,22.37189934,172.9,0.0282,6311.9,32007.13546903,6499.5,6070.1]]
         }
