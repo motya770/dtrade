@@ -1,8 +1,8 @@
 <nav class="subnav">
     <div class="subnav__inner">
         <ul ng-controller="MenuController as vm" class="subnav__list">
-                <li ng-class="getClass('/simple')">
-                    <a href="/simple">Simple</a>
+                <li ng-class="getClass('/basic')">
+                    <a href="/basic">Basic</a>
                 </li>
                 <li ng-class="getClass('/trade')">
                     <a href="/trade">Advanced</a>

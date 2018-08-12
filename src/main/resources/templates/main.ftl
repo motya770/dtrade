@@ -25,7 +25,7 @@
 						</li>
 					</ul>
 				</div>-->
-				    <a href="/simple" class="btn btn--darken">Trade</a>
+				    <a href="/basic" class="btn btn--darken">Trade</a>
                     <a href="/trade" class="btn btn--darken">Advanced</a>
                     <a href="/login-page" class="btn btn--darken">Login</a>
 			</div>

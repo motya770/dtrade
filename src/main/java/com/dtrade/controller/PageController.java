@@ -15,9 +15,9 @@ public class PageController {
         return "index2";
     }
 
-    @RequestMapping(value = "/simple", method = RequestMethod.GET)
+    @RequestMapping(value = "/basic", method = RequestMethod.GET)
     public String simple(){
-        return "simple";
+        return "basic";
     }
 
     /*dc

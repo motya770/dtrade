@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface IDiamondService {
 
+    Diamond defineRobotBorders(Diamond diamond, BigDecimal bid, BigDecimal ask);
+
     Diamond update(Diamond diamond);
 
     void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException;
