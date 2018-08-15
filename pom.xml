@@ -309,7 +309,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <executable>bower</executable>
+                        <executable>bower.cmd</executable>
                         <arguments>
                             <argument>install</argument>
                         </arguments>
