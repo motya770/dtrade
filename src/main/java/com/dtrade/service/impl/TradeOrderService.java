@@ -7,6 +7,7 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.model.tradeorder.*;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
@@ -249,6 +250,7 @@ public class TradeOrderService  implements ITradeOrderService{
              throw new TradeException("Can't create trade order because diamond is empty.");
         }
 
+
         if(tradeOrder.getAccount()==null){
              throw new TradeException("Can't create trade order because account is empty.");
         }
@@ -325,6 +327,10 @@ public class TradeOrderService  implements ITradeOrderService{
 
         TradeOrder order = tradeOrderRepository.save(realOrder);
         Diamond diamond  = diamondService.find(order.getDiamond().getId());
+
+        if(!diamond.getDiamondStatus().equals(DiamondStatus.ENLISTED)){
+            throw new TradeException("Can't open trade because pair in status: " + diamond.getDiamondStatus());
+        }
 
         System.out.println("Diamond: " + diamond);
         System.out.println("Currency: " +  diamond.getCurrency());
