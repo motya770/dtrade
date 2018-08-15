@@ -1,22 +1,13 @@
-package com.dtrade.service.simulators;
+package com.dtrade.service.arbitrage;
 
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.service.IDiamondService;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
-import java.math.BigDecimal;
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -24,7 +15,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Component
-public class RoboQuotesManager {
+public class ClientsManager {
 
     @Autowired
     private IDiamondService diamondService;
@@ -47,7 +38,6 @@ public class RoboQuotesManager {
              clients.add(client);
              client.connect();
         });
-
 
         Runnable runnable = ()->{
             clients.forEach(client->{

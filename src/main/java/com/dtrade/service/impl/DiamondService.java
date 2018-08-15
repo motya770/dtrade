@@ -59,6 +59,7 @@ public class DiamondService implements IDiamondService {
 
         diamond.setRoboLowEnd(low);
         diamond.setRoboHighEnd(high);
+        //diamond.setLastRoboUpdated(System.currentTimeMillis());
 
         return diamondRepository.save(diamond);
     }

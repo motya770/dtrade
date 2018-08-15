@@ -93,18 +93,21 @@ public class Diamond implements Serializable {
         return "diamond: {id:" + id +  "}";
     }
 
+    @JsonIgnore
     @Column(precision=19, scale=8)
     private BigDecimal roboHighEnd;
 
+    @JsonIgnore
     @Column(precision=19, scale=8)
     private BigDecimal roboLowEnd;
 
+    //@JsonIgnore
+    //private Long lastRoboUpdated;
 
     /*
     @Column(columnDefinition = "boolean default true")
     private boolean baseCurrency;
     */
-
 
     @Override
     public boolean equals(Object o) {

@@ -1,4 +1,4 @@
-package com.dtrade.service.simulators;
+package com.dtrade.service.arbitrage;
 
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondStatus;
@@ -15,7 +15,6 @@ import java.util.List;
 
 public class BitfinexClient extends WebSocketClient {
 
-    private boolean closed = false;
     private Diamond diamond;
     private IDiamondService diamondService;
     private List<BitfinexClient> clients;
