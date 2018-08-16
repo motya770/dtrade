@@ -44,10 +44,11 @@ public class BitfinexClient extends WebSocketClient {
         System.out.println( "opened connection" );
 
         //TODO can create bug because hidden field is gonna be reenlisted
+        /*
         if(diamond.getDiamondStatus()!= DiamondStatus.ENLISTED){
             diamond.setDiamondStatus(DiamondStatus.ENLISTED);
             diamondService.update(diamond);
-        }
+        }*/
     }
 
     @Override
@@ -105,8 +106,8 @@ public class BitfinexClient extends WebSocketClient {
 
     @Override
     public void onClose( int code, String reason, boolean remote ) {
-        diamond.setDiamondStatus(DiamondStatus.HIDDEN);
-        diamondService.update(diamond);
+        //diamond.setDiamondStatus(DiamondStatus.HIDDEN);
+        //diamondService.update(diamond);
 
         // The codecodes are documented in class org.java_websocket.framing.CloseFrame
         System.out.println( "Connection closed by " + ( remote ? "remote peer" : "us" ) + " Code: " + code + " Reason: " + reason );

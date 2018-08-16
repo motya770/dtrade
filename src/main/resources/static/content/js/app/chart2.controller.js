@@ -115,7 +115,14 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
             return;
         }
         var series = that.series[0];
-        $http.post('/graph/get-quotes?diamond=' + DiamondService.getCurrentDiamond().id +  '&start=' + self.lastTimeQuote, null).then(function(response) {
+        var url = null;
+        if(start.lastTimeQuote==null){
+            url =  '/graph/get-quotes?diamond=' + DiamondService.getCurrentDiamond().id;
+        }else{
+            url =  '/graph/get-quotes?diamond=' + DiamondService.getCurrentDiamond().id + '&start=' + self.lastTimeQuote
+        }
+
+        $http.post(url, null).then(function(response) {
             var result = parseQuotesToArray(response.data);
             //console.log(result.length);
             for(var i in result){
