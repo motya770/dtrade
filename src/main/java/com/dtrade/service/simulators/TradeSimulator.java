@@ -133,7 +133,7 @@ public class TradeSimulator {
             BigDecimal lowEnd = diamond.getRoboLowEnd();
 
             BigDecimal highEndSecond = highEnd.multiply(new BigDecimal("1.003"));
-            BigDecimal lowEndFirst = highEnd.multiply(new BigDecimal("0.0097"));
+            BigDecimal lowEndFirst = lowEnd.multiply(new BigDecimal("0.997"));
 
             //we just want to create the market but not to buy or sell
             BigDecimal price =  (tradeOrderDirection == TradeOrderDirection.BUY) ?
@@ -165,10 +165,10 @@ public class TradeSimulator {
     private BigDecimal getRandomRangePrice(BigDecimal start, BigDecimal end){
         Random rand = new Random();
         BigDecimal[] prices = new BigDecimal[8];
-        BigDecimal step = start.subtract(end).divide(new BigDecimal(prices.length));
+        BigDecimal step = end.subtract(start).divide(new BigDecimal(prices.length));
 
         for(int i=0; i < prices.length; i++){
-            start = step.add(step);
+            start = start.add(step);
             prices[i] = start;
         }
         int priceIndex  = rand.nextInt(prices.length);

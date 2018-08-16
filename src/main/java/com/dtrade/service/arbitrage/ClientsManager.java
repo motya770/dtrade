@@ -31,12 +31,12 @@ public class ClientsManager {
         diamonds.forEach(d-> {
             BitfinexClient client = null;
             try{
-                     client = new BitfinexClient(d, diamondService, clients);
-                }catch (Exception e){
-                     e.printStackTrace();
-                }
-             clients.add(client);
-             client.connect();
+                client = new BitfinexClient(d, diamondService, clients);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            clients.add(client);
+            client.connect();
         });
 
         Runnable runnable = ()->{
