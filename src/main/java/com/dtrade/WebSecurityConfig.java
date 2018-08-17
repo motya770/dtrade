@@ -37,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/balance-activity/**").authenticated()
                 .antMatchers("/customer/**").authenticated()//remove?
                 .antMatchers("/diamond/available").permitAll()
+                .antMatchers("/diamond/by-id").permitAll()
                 .antMatchers("/diamond/**").denyAll()//remove?
                 .antMatchers("/quote/**").permitAll()
                 .antMatchers("/graph/**").permitAll()

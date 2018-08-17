@@ -1,12 +1,10 @@
 package com.dtrade.controller;
 
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondDTO;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,6 +43,11 @@ public class DiamondController {
     public List<DiamondDTO> getAllAvailableDiamonds(@RequestParam(required = false) String name) {
         List<DiamondDTO> diamonds = diamondService.getAllAvailableDTO(name);
         return diamonds;
+    }
+
+    @RequestMapping(value = "/by-id")
+    public Diamond getDiamondById(@RequestParam Long diamondId) {
+        return diamondService.find(diamondId);
     }
 
 /*
