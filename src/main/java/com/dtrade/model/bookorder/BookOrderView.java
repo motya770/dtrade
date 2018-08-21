@@ -1,6 +1,6 @@
 package com.dtrade.model.bookorder;
 
-import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderDTO;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 
@@ -10,10 +10,10 @@ import java.util.List;
 @JsonRootName(value = "bookOrder")
 public class BookOrderView {
 
-    private List<TradeOrder> buyOrders;
-    private List<TradeOrder> sellOrders;
+    private List<TradeOrderDTO> buyOrders;
+    private List<TradeOrderDTO> sellOrders;
 
-    public BookOrderView(List<TradeOrder> buyOrders, List<TradeOrder> sellOrders){
+    public BookOrderView(List<TradeOrderDTO> buyOrders, List<TradeOrderDTO> sellOrders){
         this.buyOrders = buyOrders;
         this.sellOrders = sellOrders;
     }

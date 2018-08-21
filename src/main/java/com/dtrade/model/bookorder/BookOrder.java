@@ -3,7 +3,9 @@ package com.dtrade.model.bookorder;
 import com.dtrade.model.tradeorder.TradeOrder;
 import lombok.Data;
 
+import java.util.PriorityQueue;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Created by kudelin on 7/10/17.
@@ -11,9 +13,9 @@ import java.util.concurrent.ConcurrentSkipListSet;
 @Data
 public class BookOrder {
 
-    private ConcurrentSkipListSet<TradeOrder> buyOrders;
+    private PriorityBlockingQueue<TradeOrder> buyOrders;
 
-    private ConcurrentSkipListSet<TradeOrder> sellOrders;
+    private PriorityBlockingQueue<TradeOrder> sellOrders;
 
     private static int comparatorSell(TradeOrder o1, TradeOrder o2){
         int response = o1.getPrice().compareTo(o2.getPrice());
@@ -42,7 +44,7 @@ public class BookOrder {
     }
 
     public BookOrder() {
-        buyOrders = new ConcurrentSkipListSet<>(BookOrder::comparatorBuy);
-        sellOrders = new ConcurrentSkipListSet<>(BookOrder::comparatorSell);
+        buyOrders = new PriorityBlockingQueue<>(1000,BookOrder::comparatorBuy);
+        sellOrders = new PriorityBlockingQueue<>(1000, BookOrder::comparatorSell);
     }
 }

@@ -2,9 +2,12 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.bookorder.BookOrder;
+import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderDTO;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
+import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.ITradeOrderService;
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -40,17 +44,53 @@ public class BookOrderService implements IBookOrderService {
     @Autowired
     private DiamondService diamondService;
 
+    @Autowired
+    private TradeOrderRepository tradeOrderRepository;
+
     //THINK about equals for diamond
     private ConcurrentHashMap<Long, BookOrder> bookOrders = new ConcurrentHashMap<>();
 
     @Override
     public BookOrder getBookOrder(Long diamondId) {
         return bookOrders.get(diamondId);
+
+//        BookOrder bookOrder =  new BookOrder();
+//        bookOrder.setBuyOrders(tradeOrderRepository.getBuyOrders(diamondId));
+//        bookOrder.setSellOrders(tradeOrderRepository.getSellOrders(diamondId));
+//        return bookOrder;
     }
 
     @Override
     public ConcurrentHashMap<Long, BookOrder> getBookOrders(){
         return bookOrders;
+    }
+
+
+
+
+    @Override
+    public BookOrderView getBookOrderView(Long diamondId){
+        //long start = System.currentTimeMillis();
+        BookOrder bookOrder = getBookOrder(diamondId);
+        List<TradeOrderDTO> buyOrders  = null;
+        List<TradeOrderDTO> sellOrders  = null;
+
+        if(bookOrder==null){
+            return null;
+        }
+        if(bookOrder.getBuyOrders()!=null) {
+            buyOrders = bookOrder.getBuyOrders().stream().limit(10)
+                    .map(tradeOrder -> tradeOrderService.convert(tradeOrder)).collect(Collectors.toList());
+        }
+
+        if(bookOrder.getSellOrders()!=null) {
+            sellOrders = bookOrder.getSellOrders().stream().limit(10)
+                    .map(tradeOrder -> tradeOrderService.convert(tradeOrder)).collect(Collectors.toList());
+            Collections.reverse(sellOrders);
+        }
+
+        //System.out.println("BookOrder: " + (System.currentTimeMillis() - start));
+        return new BookOrderView(buyOrders, sellOrders);
     }
 
     @Override
@@ -105,7 +145,7 @@ public class BookOrderService implements IBookOrderService {
             throw new TradeException("Diamond is null!");
         }
 
-        BookOrder bookOrder  = bookOrders.get(diamondId);
+        BookOrder bookOrder  = getBookOrder(diamondId); //bookOrders.get(diamondId);
 
         if(bookOrder ==null || bookOrder.getBuyOrders()==null || bookOrder.getSellOrders()==null){
             return null;
@@ -124,20 +164,38 @@ public class BookOrderService implements IBookOrderService {
     }
 
     @Override
-    public List<Pair<TradeOrder, TradeOrder>> find10Closest(Long diamondId) {
+    public Pair<TradeOrder, List<TradeOrder>>  find10Closest(Long diamondId) {
 
         BookOrder bookOrder = checkDiamondInBook(diamondId);
         if(bookOrder==null){
             return null;
         }
 
-        List<TradeOrder> buyOrders = bookOrder.getBuyOrders().stream().limit(10).collect(Collectors.toList());
-        List<TradeOrder>  sellOrders= bookOrder.getSellOrders().stream().limit(10).collect(Collectors.toList());
+        TradeOrder  buyOrder = bookOrder.getBuyOrders().stream().findFirst().orElse(null);
+        List<TradeOrder> sellOrder = bookOrder.getSellOrders().stream().limit(10).collect(Collectors.toList());
 
-        if(buyOrders == null || sellOrders == null){
+
+        /*
+        bookOrder.getBuyOrders().stream().limit(10).forEach(tradeOrder -> {
+                    System.out.println("Buy: " + tradeOrder.getId() + " " + tradeOrder.getTraderOrderStatus());
+                    System.out.println(tradeOrderRepository.findById(tradeOrder.getId()).get().getTraderOrderStatus());
+        });
+
+        bookOrder.getSellOrders().stream().limit(10).forEach(tradeOrder -> {
+            System.out.print("Sell: " + tradeOrder.getId() + " " + tradeOrder.getTraderOrderStatus() + " ");
+            tradeOrderRepository.findById(tradeOrder.getId()).ifPresent(tradeOrder1 -> {
+                        System.out.println(tradeOrder1.getTraderOrderStatus());
+                    }
+            );
+        });*/
+
+        if(buyOrder == null || sellOrder == null || sellOrder.size()==0){
             return null;
         }
 
+        return Pair.of(buyOrder, sellOrder);
+
+        /*
         int maxSize = buyOrders.size() > sellOrders.size()  ? sellOrders.size() : buyOrders.size();
 
         List<Pair<TradeOrder, TradeOrder>> result = new ArrayList<>();
@@ -145,7 +203,7 @@ public class BookOrderService implements IBookOrderService {
             result.add(Pair.of(buyOrders.get(i), sellOrders.get(i)));
         }
 
-        return result;
+        return result;*/
     }
 
     @Override
@@ -156,8 +214,8 @@ public class BookOrderService implements IBookOrderService {
             return null;
         }
 
-        TradeOrder buyOrder = bookOrder.getBuyOrders().first();
-        TradeOrder sellOrder = bookOrder.getSellOrders().first();
+        TradeOrder buyOrder = bookOrder.getBuyOrders().peek();
+        TradeOrder sellOrder = bookOrder.getSellOrders().peek();
 
         if(buyOrder == null || sellOrder == null){
             return null;
@@ -182,10 +240,10 @@ public class BookOrderService implements IBookOrderService {
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             //System.out.println("remove D 1.2 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
             if(order.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
-                //System.out.println("remove D 1.3 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
+                System.out.println("remove D 1.3 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
                  bookOrder.getBuyOrders().remove(order);
             }else if(order.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
-               // System.out.println("remove D 1.4 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
+                System.out.println("remove D 1.4 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
                 bookOrder.getSellOrders().remove(order);
             }
         });

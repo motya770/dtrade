@@ -42,7 +42,7 @@ public interface ITradeOrderService {
     TradeOrder cancelTradeOrder(TradeOrder tradeOrder);
 
     //buy order // sell order
-    void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair);
+    Pair<Boolean, Boolean>  executeTradeOrders(Pair<TradeOrder, TradeOrder> pair);
 
     boolean checkIfCanExecute(Pair<TradeOrder, TradeOrder> pair);
 }

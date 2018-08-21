@@ -10,7 +10,7 @@
 	<header class="header">
 		<div class="header__inner">
 			<div class="header__logo">
-				<a href="/">Exchange1<br>cryptocurrency exchange number 1</a>
+				<a href="/">Exchange 1<br>cryptocurrency exchange number 1</a>
 			</div>
 			<div class="header__right">
 				<!--

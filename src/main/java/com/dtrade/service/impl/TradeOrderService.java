@@ -25,8 +25,10 @@ import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
@@ -81,7 +83,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         historyCasheExecutor.scheduleWithFixedDelay(()->{
             loadHistoryOrders();
-        }, 1_000, 20, TimeUnit.MILLISECONDS);
+        }, 1_000, 10, TimeUnit.MILLISECONDS);
     }
 
     private void loadHistoryOrders(){
@@ -149,6 +151,7 @@ public class TradeOrderService  implements ITradeOrderService{
         tradeOrderDTO.setPrice(to.getPrice());
         tradeOrderDTO.setExecutionDate(to.getExecutionDate());
         tradeOrderDTO.setTradeOrderDirection(to.getTradeOrderDirection());
+        tradeOrderDTO.setCreationDate(to.getCreationDate());
         return tradeOrderDTO;
     }
 
@@ -161,7 +164,107 @@ public class TradeOrderService  implements ITradeOrderService{
 
             long start1 = System.currentTimeMillis();
 
-            List<Pair<TradeOrder, TradeOrder>> pairs = bookOrderService.find10Closest(entry.getKey());
+            for(int j=0; j<10; j++) {
+                Pair<TradeOrder, List<TradeOrder>> buySell = bookOrderService.find10Closest(entry.getKey());
+                if (buySell == null) {
+                    break;
+                }
+
+                TradeOrder buyOrder = buySell.getFirst();
+                List<TradeOrder> sellOrders = buySell.getSecond();
+
+                if(!checkIfCanExecute(Pair.of(buyOrder, sellOrders.get(0)))){
+                    break;
+                }
+
+                Pair<Boolean, Boolean> result = null;
+                for (int i = 0; i < sellOrders.size(); i++) {
+                    TradeOrder sellOrder = sellOrders.get(i);
+                    Pair<TradeOrder, TradeOrder> pair = Pair.of(buyOrder, sellOrder);
+
+                    if (checkIfCanExecute(pair)) {
+                        Runnable quoteRunnable = () -> quotesService.issueQuote(pair);
+                        executor.execute(quoteRunnable);
+                        logger.debug("EXECUTING TRADE PAIR");
+
+                        System.out.println("ij "  + i + " "  + j + " " + buyOrder.getId() + " " + sellOrder.getId());
+
+                        long start = System.currentTimeMillis();
+                        result = transactionTemplate.execute(status -> {
+                            return executeTradeOrders(pair);
+                        });
+
+                        if (!result.getFirst()) {
+                            //can't execute or buy is executed
+                            break;
+                        }
+
+                        logger.info("execute trade time: {}", (System.currentTimeMillis() - start));
+                    }else {
+                        System.out.println("can't execute");
+                        break;
+                    }
+                }
+
+                if (result==null || !result.getFirst()) {
+                    break;
+                }
+            }
+
+            /*
+            List<TradeOrder> buyList = buySell.getFirst();
+            List<TradeOrder> sellList = buySell.getSecond();
+
+            List<Boolean> buyResults = new ArrayList<>();
+            List<Boolean> sellResults  = new ArrayList<>();
+
+            for(int i=0; i < buyList.size(); i++){
+                Pair<Boolean, Boolean>  executedResult = null;
+                for(int j=0; j < sellList.size(); j++){
+
+                    TradeOrder buy = buyList.get(i);
+                    TradeOrder sell = sellList.get(j);
+
+                    System.out.println("buy: " + i  + " " + buy.getId() + " " + Thread.currentThread().getName());
+                    System.out.println("sell: " + j + " " + sell.getId());
+
+                    Pair<TradeOrder, TradeOrder> pair =  Pair.of(buy, sell);
+
+                    if(checkIfCanExecute(pair)){
+
+                        executedResult = transactionTemplate
+                                .execute(status -> {
+                          return executeTradeOrders(pair);
+                        });
+
+                        System.out.println("result: " + executedResult.getFirst()+ " " + executedResult.getSecond());
+
+                        Boolean buyResult =  executedResult.getFirst();
+                        if(!buyResult){
+                            break;
+                        }
+
+                        Boolean sellResult = executedResult.getSecond();
+                        if(!sellResult){
+
+                            continue;
+                        }
+                    }else{
+
+                          return;
+                    }
+
+                }
+
+                if(executedResult.getFirst()==true){
+                    break;
+                }
+            }*/
+
+            System.out.println("Main execution: " + (System.currentTimeMillis() - start1));
+
+            /*
+            List<Pair<TradeOrder, TradeOrder>> pairs =
             if(pairs!=null && pairs.size()>0){
                 pairs.forEach(pair->{
                     if(checkIfCanExecute(pair)) {
@@ -171,10 +274,6 @@ public class TradeOrderService  implements ITradeOrderService{
                         logger.debug("EXECUTING TRADE PAIR");
 
                         long start = System.currentTimeMillis();
-                       // Runnable pairRunnable = () -> executeTradeOrders(pair);
-                       // executor.execute(pairRunnable);
-
-                       // executor.schedule(pairRunnable, getRandomDelay(), TimeUnit.MILLISECONDS);
                         transactionTemplate.execute(status -> {
                             executeTradeOrders(pair);
                             return status;
@@ -184,7 +283,7 @@ public class TradeOrderService  implements ITradeOrderService{
                         logger.debug("execute trade time: {}", (System.currentTimeMillis() - start));
                     }
                 });
-            }
+            }*/
 
            //System.out.println("Main execuiton: " + (System.currentTimeMillis() - start1));
 
@@ -434,8 +533,40 @@ public class TradeOrderService  implements ITradeOrderService{
         TradeOrder sellOrder = pair.getSecond();
 
         if(buyOrder==null || sellOrder == null){
+            System.out.println("wtf null");
             return false;
         }
+
+        buyOrder = tradeOrderRepository.findById(buyOrder.getId()).orElse(null);
+        sellOrder = tradeOrderRepository.findById(sellOrder.getId()).orElse(null);
+
+        if(buyOrder==null || sellOrder == null){
+            System.out.println("wtf null 2");
+            return false;
+        }
+
+        if (buyOrder.getInitialAmount().compareTo(BigDecimal.ZERO) == 0){
+            logger.error("trade order amount is null " + buyOrder.getId());
+            System.out.println("wtf amount");
+            return false;
+        }
+
+        if (sellOrder.getInitialAmount().compareTo(BigDecimal.ZERO) == 0){
+            logger.error("trade order amount is null " + sellOrder.getId());
+            System.out.println("wtf amount 2");
+            return false;
+        }
+
+        /*
+        if(sellOrder.getTraderOrderStatus()==TraderOrderStatus.EXECUTED){
+            System.out.println("wtf executed");
+            return false;
+        }
+
+        if(buyOrder.getTraderOrderStatus()==TraderOrderStatus.EXECUTED){
+            System.out.println("wtf executed");
+            return false;
+        }*/
 
         if(buyOrder.getTradeOrderType().equals(TradeOrderType.MARKET)){
             return true;
@@ -449,13 +580,14 @@ public class TradeOrderService  implements ITradeOrderService{
             return true;
         }
 
+        System.out.println("wtf end");
         return false;
     }
 
     //buy - sell
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = NotEnoughMoney.class)
-    public void executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
+    public Pair<Boolean, Boolean> executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
 
                 try {
                     /*
@@ -467,30 +599,30 @@ public class TradeOrderService  implements ITradeOrderService{
                         5) work only during one minute
                      */
 
-                    System.out.println("1.1");
+                    //System.out.println("1.1");
                     long start = System.currentTimeMillis();
 
                     TradeOrder buyOrder = tradeOrderRepository.findById(pair.getFirst().getId()).orElse(null);
                     TradeOrder sellOrder = tradeOrderRepository.findById(pair.getSecond().getId()).orElse(null);
-                    System.out.println("1.2");
+                    //System.out.println("1.2");
                     if (sellOrder==null){
                         //bookOrderService.remove(sellOrder);
-                        return;
+                        return Pair.of(true, false);
                     }
 
                     if (buyOrder==null){
                         //bookOrderService.remove(buyOrder);
-                        return;
+                        return Pair.of(false, true);
                     }
 
-                    System.out.println("1.3");
-                    System.out.println("1.3");
+                    //System.out.println("1.3");
+                    //System.out.println("1.3");
 
                     if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
                         throw new TradeException("Something wrong with COINS pairs.");
                     }
 
-                    System.out.println("1.4");
+                    //System.out.println("1.4");
 
                     System.out.println("1.4.1: status b: " +  buyOrder.getTraderOrderStatus() + " " + buyOrder.getId());
                     System.out.println("1.4.3: status s: " +  sellOrder.getTraderOrderStatus() + " " + sellOrder.getId());
@@ -498,7 +630,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     if (!(buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                             || buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
                         bookOrderService.remove(buyOrder);
-                        return;
+                        return Pair.of(false, true);
                     }
 
                     System.out.println("1.5");
@@ -506,13 +638,13 @@ public class TradeOrderService  implements ITradeOrderService{
                     if (!(sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                             || sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
                         bookOrderService.remove(sellOrder);
-                        return;
+                        return  Pair.of(true, false);
                     }
 
                     System.out.println("1.6");
 
                     if (!checkIfCanExecute(pair)) {
-                        return;
+                        return Pair.of(false, false);
                     }
 
                     System.out.println("1.7");
@@ -544,15 +676,15 @@ public class TradeOrderService  implements ITradeOrderService{
                     if (buyBalance.getAmount().compareTo(realAmount) < 0) {
                         //TODO notify user
                         logger.error("Not enough coins at {}" + buyBalance);
-                        rejectTradeOrder(sellOrder);
-                        return;
+                        sellOrder = rejectTradeOrder(sellOrder);
+                        return Pair.of(true, false);
                     }
 
                     if (sellBalance.getAmount().compareTo(realAmount) < 0) {
                         //TODO notify user
                         logger.error("Not enough coins at {}" + sellBalance);
-                        rejectTradeOrder(sellOrder);
-                        return;
+                        sellOrder = rejectTradeOrder(sellOrder);
+                        return Pair.of(true, false);
                     }
 
                     System.out.println("1.10");
@@ -567,8 +699,8 @@ public class TradeOrderService  implements ITradeOrderService{
                     }catch (TradeException e){
                         //TODO notify user
                         logger.error("Rejecting {} because of exception {}", buyOrder, e);
-                        rejectTradeOrder(buyOrder);
-                        return;
+                        buyOrder = rejectTradeOrder(buyOrder);
+                        return Pair.of(false, true);
                     }
 
                     System.out.println("1.11");
@@ -584,8 +716,8 @@ public class TradeOrderService  implements ITradeOrderService{
                     sellOrder.setExecutionSum(sellOrder.getExecutionSum().add(cash));
 
                     System.out.println("1.13");
-                    checkIfExecuted(buyOrder);
-                    checkIfExecuted(sellOrder);
+                    boolean buyResult = checkIfExecuted(buyOrder);
+                    boolean sellResult = checkIfExecuted(sellOrder);
 
                     System.out.println("1.14");
                     tradeOrderRepository.save(buyOrder);
@@ -602,9 +734,12 @@ public class TradeOrderService  implements ITradeOrderService{
                             + buyOrder.getId() + ":"
                             + buyOrder.getTraderOrderStatus());
                     System.out.println("exec2:  " + sellOrder.getDiamond().getName() +  " " + realAmount + " " + orderPrice);
+
+                    return Pair.of(!buyResult, !sellResult);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+        return Pair.of(false, false);
     }
 
     private BigDecimal definePrice(TradeOrder sellOrder, TradeOrder buyOrder){
@@ -621,20 +756,49 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
 
-    private void checkIfExecuted(TradeOrder order){
+    private boolean checkIfExecuted(TradeOrder order){
        // System.out.println("checking if executed " + order.getAmount().setScale(8));
         if (order.getAmount().compareTo(ZERO_VALUE)==0) {
             System.out.println("EXECUTED: " + order.getId());
             order.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
             setExecutionDate(order);
             bookOrderService.remove(order);
+            return true;
         } else {
             order.setTraderOrderStatus(TraderOrderStatus.IN_MARKET);
             bookOrderService.update(order);
+            return false;
         }
     }
 
     private void setExecutionDate(TradeOrder tradeOrder){
         tradeOrder.setExecutionDate(System.currentTimeMillis());
+    }
+
+
+    public static void main(String... args){
+
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+
+        List<Boolean> buyResults = new ArrayList<>(10);
+        List<Boolean> sellResults  = new ArrayList<>(10);
+
+        for(int i=0; i<10; i++){
+            for(int j = 0; j<10; j++){
+                System.out.println("ij " + i + " " + j);
+                if(j==5){
+                    break;
+                }
+            }
+            System.out.println("after first break");
+            if(i==3){
+                break;
+            }
+        }
     }
 }

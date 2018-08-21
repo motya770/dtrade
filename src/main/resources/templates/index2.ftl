@@ -429,6 +429,7 @@
                                                     <td style="padding-right: 10px" class="down">{{tradeOrder.price | number : 8}}</td>
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
 
+
                                                     <!--
                                                     <td style="width: 114px;">{{tradeOrder.initialAmount | number : 4}}</td>
                                                     <td style="width: 50px;" class="down">{{tradeOrder.price | number : 4}}</td>

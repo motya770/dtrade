@@ -20,6 +20,11 @@ public class BitfinexClient extends WebSocketClient {
     private List<BitfinexClient> clients;
     private static final String BITFINEX_URI = "wss://api.bitfinex.com/ws/2";
 
+    @Override
+    public void run() {
+        super.run();
+    }
+
     private Diamond getDiamond(){
         return diamond;
     }
@@ -106,9 +111,10 @@ public class BitfinexClient extends WebSocketClient {
 
     @Override
     public void onClose( int code, String reason, boolean remote ) {
-        //diamond.setDiamondStatus(DiamondStatus.HIDDEN);
-        //diamondService.update(diamond);
 
+
+        diamond.setDiamondStatus(DiamondStatus.HIDDEN);
+        diamondService.update(diamond);
         // The codecodes are documented in class org.java_websocket.framing.CloseFrame
         System.out.println( "Connection closed by " + ( remote ? "remote peer" : "us" ) + " Code: " + code + " Reason: " + reason );
     }
@@ -116,6 +122,7 @@ public class BitfinexClient extends WebSocketClient {
     @Override
     public void onError( Exception ex ) {
         ex.printStackTrace();
+
         // if the error is fatal then onClose will be called additionally
     }
 }

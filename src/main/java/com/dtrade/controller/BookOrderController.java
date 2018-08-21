@@ -40,26 +40,8 @@ public class BookOrderController {
     public CompletableFuture<BookOrderView> getBookOrder(@RequestBody Long diamondId){
 
         return CompletableFuture.supplyAsync(() -> {
-            //long start = System.currentTimeMillis();
-            BookOrder bookOrder = bookOrderService.getBookOrder(diamondId);
-            List<TradeOrder> buyOrders  = null;
-            List<TradeOrder> sellOrders  = null;
-
-            if(bookOrder==null){
-                return null;
+                return bookOrderService.getBookOrderView(diamondId);
             }
-            if(bookOrder.getBuyOrders()!=null) {
-                buyOrders = bookOrder.getBuyOrders().stream().limit(10).collect(Collectors.toList());
-            }
-
-            if(bookOrder.getSellOrders()!=null) {
-                sellOrders = bookOrder.getSellOrders().stream().limit(10).collect(Collectors.toList());
-                Collections.reverse(sellOrders);
-            }
-
-            //System.out.println("BookOrder: " + (System.currentTimeMillis() - start));
-            return new BookOrderView(buyOrders, sellOrders);
-        }
         );
     }
 }
