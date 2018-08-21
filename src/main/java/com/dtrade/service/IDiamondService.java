@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface IDiamondService {
 
+    void validateDiamondCanTrade(Diamond diamond);
+
     Diamond defineRobotBorders(Diamond diamond, BigDecimal bid, BigDecimal ask);
 
     Diamond update(Diamond diamond);

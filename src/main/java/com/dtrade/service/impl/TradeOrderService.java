@@ -261,7 +261,7 @@ public class TradeOrderService  implements ITradeOrderService{
                 }
             }*/
 
-            System.out.println("Main execution: " + (System.currentTimeMillis() - start1));
+            //System.out.println("Main execution: " + (System.currentTimeMillis() - start1));
 
             /*
             List<Pair<TradeOrder, TradeOrder>> pairs =
@@ -403,6 +403,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
         long start = System.currentTimeMillis();
 
+
         defineMarketPrice(tradeOrder);
 
         validateFields(tradeOrder);
@@ -427,9 +428,7 @@ public class TradeOrderService  implements ITradeOrderService{
         TradeOrder order = tradeOrderRepository.save(realOrder);
         Diamond diamond  = diamondService.find(order.getDiamond().getId());
 
-        if(!diamond.getDiamondStatus().equals(DiamondStatus.ENLISTED)){
-            throw new TradeException("Can't open trade because pair in status: " + diamond.getDiamondStatus());
-        }
+        diamondService.validateDiamondCanTrade(diamond);
 
         System.out.println("Diamond: " + diamond);
         System.out.println("Currency: " +  diamond.getCurrency());
@@ -442,6 +441,7 @@ public class TradeOrderService  implements ITradeOrderService{
         logger.debug("Open Trade time {}", (System.currentTimeMillis() - start));
         return realOrder;
     }
+
 
     private void defineMarketPrice(TradeOrder tradeOrder){
         if(tradeOrder.getTradeOrderType().equals(TradeOrderType.MARKET)) {
@@ -537,13 +537,13 @@ public class TradeOrderService  implements ITradeOrderService{
             return false;
         }
 
-        buyOrder = tradeOrderRepository.findById(buyOrder.getId()).orElse(null);
-        sellOrder = tradeOrderRepository.findById(sellOrder.getId()).orElse(null);
+        //buyOrder = tradeOrderRepository.findById(buyOrder.getId()).orElse(null);
+        //sellOrder = tradeOrderRepository.findById(sellOrder.getId()).orElse(null);
 
-        if(buyOrder==null || sellOrder == null){
-            System.out.println("wtf null 2");
-            return false;
-        }
+//        if(buyOrder==null || sellOrder == null){
+//            System.out.println("wtf null 2");
+//            return false;
+//        }
 
         if (buyOrder.getInitialAmount().compareTo(BigDecimal.ZERO) == 0){
             logger.error("trade order amount is null " + buyOrder.getId());
@@ -580,7 +580,7 @@ public class TradeOrderService  implements ITradeOrderService{
             return true;
         }
 
-        System.out.println("wtf end");
+       // System.out.println("wtf end");
         return false;
     }
 

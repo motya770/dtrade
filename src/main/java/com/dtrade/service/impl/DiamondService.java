@@ -39,6 +39,30 @@ public class DiamondService implements IDiamondService {
     private static final BigDecimal HIGH_BORDER_PERCENT = new BigDecimal("1.003");
 
     @Override
+    public void validateDiamondCanTrade(Diamond diamond) {
+
+        Long lastUpdated =  diamond.getLastRoboUpdated();
+        if(lastUpdated==null || (System.currentTimeMillis() - lastUpdated > 30_000)) {
+
+            if(diamond.getDiamondStatus().equals(DiamondStatus.ENLISTED)){
+                diamond.setDiamondStatus(DiamondStatus.ROBO_HIDDEN);
+                diamond = diamondRepository.save(diamond);
+            }
+        }
+
+        if(lastUpdated!=null && (System.currentTimeMillis() - lastUpdated < 30_000)){
+            if(diamond.getDiamondStatus().equals(DiamondStatus.ROBO_HIDDEN)){
+                diamond.setDiamondStatus(DiamondStatus.ENLISTED);
+                diamond = diamondRepository.save(diamond);
+            }
+        }
+
+        if(!diamond.getDiamondStatus().equals(DiamondStatus.ENLISTED)){
+            throw new TradeException("Can't open trade because pair in status: " + diamond.getDiamondStatus());
+        }
+    }
+
+    @Override
     public Diamond defineRobotBorders(Diamond diamond, BigDecimal bid, BigDecimal ask) {
         diamond = diamondRepository.findById(diamond.getId()).get();
 
@@ -50,6 +74,7 @@ public class DiamondService implements IDiamondService {
             throw new TradeException("Can't define ask for " + diamond.getName());
         }
 
+
         System.out.println("ask, bid1: " + bid + " " + ask);
 
         BigDecimal low = bid.multiply(LOW_BORDER_PERCENT);
@@ -59,7 +84,7 @@ public class DiamondService implements IDiamondService {
 
         diamond.setRoboLowEnd(low);
         diamond.setRoboHighEnd(high);
-        //diamond.setLastRoboUpdated(System.currentTimeMillis());
+        diamond.setLastRoboUpdated(System.currentTimeMillis());
 
         return diamondRepository.save(diamond);
     }
