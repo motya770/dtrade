@@ -416,7 +416,7 @@ public class TradeOrderService  implements ITradeOrderService{
         Account account = accountService.find(tradeOrder.getAccount().getId());
         realOrder.setAccount(account);
 
-        realOrder.setPrice(tradeOrder.getPrice());
+        realOrder.setPrice(tradeOrder.getPrice().setScale(8, BigDecimal.ROUND_HALF_UP));
         realOrder.setTradeOrderDirection(tradeOrder.getTradeOrderDirection());
         realOrder.setTraderOrderStatus(TraderOrderStatus.CREATED);
         realOrder.setCreationDate(System.currentTimeMillis());
@@ -450,15 +450,15 @@ public class TradeOrderService  implements ITradeOrderService{
 
             if(spread == null) {
                 logger.info("Can't define market price because spread is empty.");
-                tradeOrder.setPrice(new BigDecimal("100"));
+                tradeOrder.setPrice(new BigDecimal("100").setScale(8, BigDecimal.ROUND_HALF_UP));
             }else{
                 if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
                     // for buy order we take sell price
-                    tradeOrder.setPrice(spread.getSecond().getSecond());
+                    tradeOrder.setPrice(spread.getSecond().getSecond().setScale(8, BigDecimal.ROUND_HALF_UP));
 
                 } else if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)) {
                     // for sell order we take buy price
-                    tradeOrder.setPrice(spread.getSecond().getFirst());
+                    tradeOrder.setPrice(spread.getSecond().getFirst().setScale(8, BigDecimal.ROUND_HALF_UP));
                 } else {
                     throw new TradeException("Unexpected behavior");
                 }

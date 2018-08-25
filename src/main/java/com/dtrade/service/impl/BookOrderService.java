@@ -214,8 +214,8 @@ public class BookOrderService implements IBookOrderService {
             return null;
         }
 
-        TradeOrder buyOrder = bookOrder.getBuyOrders().peek();
-        TradeOrder sellOrder = bookOrder.getSellOrders().peek();
+        TradeOrder buyOrder = bookOrder.getBuyOrders().first();
+        TradeOrder sellOrder = bookOrder.getSellOrders().first();
 
         if(buyOrder == null || sellOrder == null){
             return null;
@@ -243,7 +243,7 @@ public class BookOrderService implements IBookOrderService {
                 System.out.println("remove D 1.3 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
                  bookOrder.getBuyOrders().remove(order);
             }else if(order.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
-                System.out.println("remove D 1.4 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
+                System.out.println("remove D 1.4 : " + order.getId() + " " + order.getPrice() +  " " + Thread.currentThread().getName() + " " + LocalTime.now());
                 bookOrder.getSellOrders().remove(order);
             }
         });

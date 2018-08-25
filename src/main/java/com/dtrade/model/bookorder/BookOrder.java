@@ -3,7 +3,10 @@ package com.dtrade.model.bookorder;
 import com.dtrade.model.tradeorder.TradeOrder;
 import lombok.Data;
 
+import java.util.Collections;
 import java.util.PriorityQueue;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -13,11 +16,18 @@ import java.util.concurrent.PriorityBlockingQueue;
 @Data
 public class BookOrder {
 
-    private PriorityBlockingQueue<TradeOrder> buyOrders;
+//    private PriorityBlockingQueue<TradeOrder> buyOrders;
+//
+//
+//   private PriorityBlockingQueue<TradeOrder> sellOrders;
 
-    private PriorityBlockingQueue<TradeOrder> sellOrders;
 
-    private static int comparatorSell(TradeOrder o1, TradeOrder o2){
+    private ConcurrentSkipListSet<TradeOrder> buyOrders;
+
+    private ConcurrentSkipListSet<TradeOrder> sellOrders;
+
+
+    public static int comparatorSell(TradeOrder o1, TradeOrder o2){
         int response = o1.getPrice().compareTo(o2.getPrice());
         if(response==0){
             response = o1.getCreationDate().compareTo(o2.getCreationDate());
@@ -28,7 +38,7 @@ public class BookOrder {
         return response;
     }
 
-    private static int comparatorBuy(TradeOrder o1, TradeOrder o2){
+    public static int comparatorBuy(TradeOrder o1, TradeOrder o2){
         int response = o1.getPrice().compareTo(o2.getPrice()) * (-1);
         if(response==0){
             response = o1.getCreationDate().compareTo(o2.getCreationDate());
@@ -44,7 +54,7 @@ public class BookOrder {
     }
 
     public BookOrder() {
-        buyOrders = new PriorityBlockingQueue<>(1000,BookOrder::comparatorBuy);
-        sellOrders = new PriorityBlockingQueue<>(1000, BookOrder::comparatorSell);
+        buyOrders =  new ConcurrentSkipListSet<>(BookOrder::comparatorBuy); // new PriorityBlockingQueue<>(1000,BookOrder::comparatorBuy);
+        sellOrders = new ConcurrentSkipListSet<>(BookOrder::comparatorSell);// new PriorityBlockingQueue<>(1000, BookOrder::comparatorSell);
     }
 }

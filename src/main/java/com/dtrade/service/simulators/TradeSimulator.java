@@ -112,7 +112,7 @@ public class TradeSimulator {
     }
 
     private void startTrade(){
-       // createTradeOrderSimulated();
+        createTradeOrderSimulated();
         createMarketMakerTrades();
     }
 
@@ -169,6 +169,7 @@ public class TradeSimulator {
 
         for(int i=0; i < prices.length; i++){
             start = start.add(step);
+            start = start.setScale(8, BigDecimal.ROUND_HALF_UP);
             prices[i] = start;
         }
         int priceIndex  = rand.nextInt(prices.length);
@@ -204,7 +205,7 @@ public class TradeSimulator {
            BigDecimal step = highEnd.subtract(lowEnd).divide(new BigDecimal(prices.length));
 
            for(int i=0; i < prices.length; i++){
-               lowEnd = lowEnd.add(step);
+               lowEnd = lowEnd.add(step).setScale(8, BigDecimal.ROUND_HALF_UP);
                prices[i] = lowEnd;
            }
 

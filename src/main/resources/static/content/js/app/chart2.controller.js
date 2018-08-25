@@ -116,7 +116,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
         }
         var series = that.series[0];
         var url = null;
-        if(start.lastTimeQuote==null){
+        if(self.lastTimeQuote==null){
             url =  '/graph/get-quotes?diamond=' + DiamondService.getCurrentDiamond().id;
         }else{
             url =  '/graph/get-quotes?diamond=' + DiamondService.getCurrentDiamond().id + '&start=' + self.lastTimeQuote
