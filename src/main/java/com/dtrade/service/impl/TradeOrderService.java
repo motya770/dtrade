@@ -187,7 +187,7 @@ public class TradeOrderService  implements ITradeOrderService{
                         executor.execute(quoteRunnable);
                         logger.debug("EXECUTING TRADE PAIR");
 
-                        System.out.println("ij "  + i + " "  + j + " " + buyOrder.getId() + " " + sellOrder.getId());
+                        System.out.println("ij: "  + i + " "  + j + " " + buyOrder.getId() + " " + sellOrder.getId());
 
                         long start = System.currentTimeMillis();
                         result = transactionTemplate.execute(status -> {
@@ -394,6 +394,7 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public TradeOrder createTradeOrder(TradeOrder tradeOrder) {
 

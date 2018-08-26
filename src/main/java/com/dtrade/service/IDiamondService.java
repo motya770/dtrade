@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface IDiamondService {
 
+
+
     void validateDiamondCanTrade(Diamond diamond);
 
     Diamond defineRobotBorders(Diamond diamond, BigDecimal bid, BigDecimal ask);
@@ -23,6 +25,8 @@ public interface IDiamondService {
     void checkDiamondOwnship(Account account, Diamond diamond) throws TradeException;
 
     Diamond find(Long diamondId);
+
+    List<Diamond> getEnlistedOrRoboHidden();
 
     List<Diamond> getAllAvailable(String name);
 

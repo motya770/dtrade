@@ -29,6 +29,9 @@ public interface DiamondRepository extends JpaRepository<Diamond, Long> {
     @Query("select d from Diamond d where diamondStatus = 'ENLISTED' and d.name like %:name%")
     List<Diamond> getAllAvailableByName(@Param("name") String name);
 
+    @Query("select d from Diamond d where diamondStatus = 'ENLISTED' or diamondStatus = 'ROBO_HIDDEN'")
+    List<Diamond> getEnlistedAndRoboHidded();
+
     //@Query("select d from Diamond d where diamondStatus = 'ENLISTED'")
     //List<Diamond> getAllAvailable();
 

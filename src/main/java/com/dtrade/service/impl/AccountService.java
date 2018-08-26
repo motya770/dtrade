@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -202,11 +203,23 @@ public class AccountService implements IAccountService, UserDetailsService {
         //TODO remove after smpt
         account.setConfirmed(true);
         account.setEnabled(true);
-        accountRepository.save(account);
+        Account saved =  accountRepository.save(account);
+
+        balanceService.getBaseCurrencies().forEach(c -> {
+            Balance balance = new Balance();
+            balance.setAmount(BigDecimal.ZERO);
+            balance.setFrozen(BigDecimal.ZERO);
+            balance.setOpen(BigDecimal.ZERO);
+            balance.setCurrency(c);
+            balance.setAccount(saved);
+            balance.setBaseBalance(true);
+            balanceService.updateBalance(balance);
+        });
+
         //TODO enable after restart
         //mailService.sendRegistrationMail(account);
-        login(account);
-        return account;
+        login(saved);
+        return saved;
     }
 
     @Override

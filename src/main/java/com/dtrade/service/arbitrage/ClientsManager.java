@@ -27,7 +27,7 @@ public class ClientsManager {
     @EventListener(ContextRefreshedEvent.class)
     public void init(){
 
-        List<Diamond> diamonds = diamondService.getAllAvailable("");
+        List<Diamond> diamonds = diamondService.getEnlistedOrRoboHidden();
         diamonds.forEach(d-> {
             BitfinexClient client = null;
             try{

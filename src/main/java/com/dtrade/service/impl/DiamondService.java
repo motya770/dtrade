@@ -42,7 +42,7 @@ public class DiamondService implements IDiamondService {
     public void validateDiamondCanTrade(Diamond diamond) {
 
         Long lastUpdated =  diamond.getLastRoboUpdated();
-        if(lastUpdated==null || (System.currentTimeMillis() - lastUpdated > 30_000)) {
+        if(lastUpdated==null || (System.currentTimeMillis() - lastUpdated > 60_000)) {
 
             if(diamond.getDiamondStatus().equals(DiamondStatus.ENLISTED)){
                 diamond.setDiamondStatus(DiamondStatus.ROBO_HIDDEN);
@@ -50,7 +50,7 @@ public class DiamondService implements IDiamondService {
             }
         }
 
-        if(lastUpdated!=null && (System.currentTimeMillis() - lastUpdated < 30_000)){
+        if(lastUpdated!=null && (System.currentTimeMillis() - lastUpdated < 60_000)){
             if(diamond.getDiamondStatus().equals(DiamondStatus.ROBO_HIDDEN)){
                 diamond.setDiamondStatus(DiamondStatus.ENLISTED);
                 diamond = diamondRepository.save(diamond);
@@ -115,6 +115,11 @@ public class DiamondService implements IDiamondService {
 
         diamond = diamondRepository.save(diamond);
         return diamond;
+    }
+
+    @Override
+    public List<Diamond> getEnlistedOrRoboHidden() {
+        return diamondRepository.getEnlistedAndRoboHidded();
     }
 
     @Override

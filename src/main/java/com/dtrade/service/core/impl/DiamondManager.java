@@ -30,7 +30,7 @@ public class DiamondManager implements IDiamondManager {
             diamondService.getAllAvailable("").forEach(diamond -> {
                 Long lastUpdated = diamond.getLastRoboUpdated();
                 if(lastUpdated!=null){
-                   if(lastUpdated + 30_000 < System.currentTimeMillis()){
+                   if(lastUpdated + 60_000 < System.currentTimeMillis()){
                        logger.info("Hidding pair because its not updated {}", diamond.getId());
                        diamond.setDiamondStatus(DiamondStatus.HIDDEN);
                        diamondService.update(diamond);
