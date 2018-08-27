@@ -169,22 +169,29 @@
             <@spring.formRadioButtons "diamond.currency", currencies, ""/><br><br>
          </div>
 
-
             <div class="radio">
                 <label>Base Currency</label><br/>
             <#assign stringStatusValue = (diamond.baseCurrency)!"" />
             <@spring.formRadioButtons "diamond.baseCurrency", currencies, ""/><br><br>
             </div>
 
-
             <div class="form-group">
                 <label for="roboHighEnd">Robo High End</label>
-                <input type="number" step="0.01" class="form-control" id="roboHighEnd" name="roboHighEnd" placeholder="roboHighEnd" value="${(diamond.roboHighEnd)!""}">
+                <input type="number" step="any" class="form-control" id="roboHighEnd" name="roboHighEnd" placeholder="roboHighEnd" value="${(diamond.roboHighEnd)!""}">
             </div>
 
             <div class="form-group">
                 <label for="roboLowEnd">Robo Low End</label>
-                <input type="number" step="0.01" class="form-control" id="roboLowEnd" name="roboLowEnd" placeholder="roboLowEnd" value="${(diamond.roboLowEnd)!""}">
+                <input type="number" step="any" class="form-control" id="roboLowEnd" name="roboLowEnd" placeholder="roboLowEnd" value="${(diamond.roboLowEnd)!""}">
+            </div>
+
+            <div class="form-group">
+                <label for="roboLowEnd">Robo Max Amount</label>
+                <#if diamond.roboMaxAmount??>
+                    <input type="" step="any" class="form-control" id="roboMaxAmount" name="roboMaxAmount" placeholder="roboMaxAmount" value="#{(diamond.roboMaxAmount)}">
+                <#else>
+                    <input type="" step="any" class="form-control" id="roboMaxAmount" name="roboMaxAmount" placeholder="roboMaxAmount" value="">
+                </#if>
             </div>
 
         <button type="submit" class="btn btn-default">Submit</button>

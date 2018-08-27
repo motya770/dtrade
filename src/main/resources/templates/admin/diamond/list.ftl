@@ -18,6 +18,7 @@
             <th>Total Stock Amount</th>
             <th>Robo High End</th>
             <th>Robo Low End</th>
+            <th>Robo Max Amount</th>
         </tr>
         <#if diamonds??>
             <#list diamonds as diamond>
@@ -33,6 +34,11 @@
                 <td>${diamond.totalStockAmount}</td>
                 <td>${diamond.roboHighEnd!""}</td>
                 <td>${diamond.roboLowEnd!""}</td>
+                <#if diamond.roboMaxAmount??>
+                    <td>#{diamond.roboMaxAmount!""}</td>
+                <#else>
+                    <td></td>
+                </#if>
             </tr>
             </#list>
         </#if>

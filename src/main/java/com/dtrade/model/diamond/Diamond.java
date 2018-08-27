@@ -101,6 +101,11 @@ public class Diamond implements Serializable {
     @Column(precision=19, scale=8)
     private BigDecimal roboLowEnd;
 
+    @NotNull
+    @JsonIgnore
+    @Column(precision=19, scale=8)
+    private BigDecimal roboMaxAmount;
+
     @JsonIgnore
     private Long lastRoboUpdated;
 

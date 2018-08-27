@@ -139,10 +139,10 @@ public class TradeSimulator {
             BigDecimal price =  (tradeOrderDirection == TradeOrderDirection.BUY) ?
                     getRandomRangePrice(lowEndFirst, lowEnd) : getRandomRangePrice(highEnd, highEndSecond);
 
-            double randAmount = rand.nextDouble();
+            BigDecimal amount =getRandomAmount(diamond);
 
             TradeOrder tradeOrder = new TradeOrder();
-            tradeOrder.setAmount(new BigDecimal(randAmount));
+            tradeOrder.setAmount(amount);
             tradeOrder.setDiamond(diamond);
 
             String mail = accountService.getRoboAccountMail(diamond, random);
@@ -160,6 +160,12 @@ public class TradeSimulator {
 
             transactionTemplate.execute(status -> tradeOrderService.createTradeOrder(tradeOrder));
         });
+    }
+
+
+    private BigDecimal getRandomAmount(Diamond diamond){
+        // until 10 dollars amount
+        return diamond.getRoboMaxAmount();
     }
 
     private BigDecimal getRandomRangePrice(BigDecimal start, BigDecimal end){
@@ -209,11 +215,12 @@ public class TradeSimulator {
                prices[i] = lowEnd;
            }
 
-            double randAmount = rand.nextDouble();
             int randPrice  = rand.nextInt(prices.length);
 
+            BigDecimal amount = getRandomAmount(diamond);
+
             TradeOrder tradeOrder = new TradeOrder();
-            tradeOrder.setAmount(new BigDecimal(randAmount));
+            tradeOrder.setAmount(amount);
             tradeOrder.setDiamond(diamond);
 
             String mail = accountService.getRoboAccountMail(diamond, random);

@@ -3,6 +3,7 @@ package com.dtrade.controller.admin;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.*;
 import com.dtrade.model.image.Image;
+import com.dtrade.service.IBalanceService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IImageService;
 import com.dtrade.service.IStockService;
@@ -78,12 +79,17 @@ public class AdminDiamondController {
         return "admin/diamond/edit";
     }
 
+    @Autowired
+    private IBalanceService balanceService;
+
+
     private  Model addAttributes(Model model){
         model.addAttribute("diamondTypes", Stream.of(DiamondType.values()).collect(Collectors.toMap(DiamondType::name, DiamondType::name)));
         model.addAttribute("colors", Stream.of(Color.values()).collect(Collectors.toMap(Color::name, Color::name)));
         model.addAttribute("cuts", Stream.of(Cut.values()).collect(Collectors.toMap(Cut::name, Cut::name)));
         model.addAttribute("clarities", Stream.of(Clarity.values()).collect(Collectors.toMap(Clarity::name, Clarity::name)));
         model.addAttribute("currencies", Stream.of(Currency.values()).collect(Collectors.toMap(Currency::name, Currency::name)));
+        model.addAttribute("baseCurrencies", balanceService.getBaseCurrencies().stream().collect(Collectors.toMap(Currency::name, Currency::name)));
         model.addAttribute("statuses", Stream.of(DiamondStatus.values()).collect(Collectors.toMap(DiamondStatus::name, DiamondStatus::name)));
         return model;
     }
