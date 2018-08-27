@@ -1,4 +1,4 @@
-cd /code/dtrade_repo/
+cd /code/dtrade_repo/dtrade/
 git pull https://jenkins@gitlab.x1team.com/fox/dtrade.git
 mvn clean install -DskipTests dockerfile:build dockerfile:push
 cd /work
