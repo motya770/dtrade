@@ -263,7 +263,7 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Override
     public Account create(Account account) {
         account = accountRepository.save(account);
-        balanceService.getBalance(Currency.USD, account);
+        balanceService.getBalance(Currency.USDT, account);
         return account;
     }
 

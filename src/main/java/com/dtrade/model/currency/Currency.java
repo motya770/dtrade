@@ -1,7 +1,7 @@
 package com.dtrade.model.currency;
 
 public enum  Currency {
-    USD(true), BTC(true), ETH(true), LTC(false);
+    USDT(true), BTC(true), ETH(true), LTC(false), BHC(false), ETC(false);
 
     Currency(boolean baseCurrency) {
         this.baseCurrency = baseCurrency;
