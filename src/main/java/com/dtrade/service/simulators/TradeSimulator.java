@@ -164,8 +164,24 @@ public class TradeSimulator {
 
 
     private BigDecimal getRandomAmount(Diamond diamond){
-        // until 10 dollars amount
-        return diamond.getRoboMaxAmount();
+
+       BigDecimal rangeMin =  diamond.getRoboMaxAmount().divide(new BigDecimal("10"));
+       BigDecimal rangeMax = diamond.getRoboMaxAmount();
+
+       Random r = new Random();
+       //to generate a random value between rangeMin and rangeMax:
+
+        /*
+        To generate a random value between rangeMin and rangeMax:
+
+        Random r = new Random();
+        double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+        */
+
+       BigDecimal randomAmount =
+               rangeMin.add((rangeMax.min(rangeMin) ).multiply(new BigDecimal(r.nextDouble()))).setScale(8, BigDecimal.ROUND_HALF_UP);
+       return randomAmount;
+
     }
 
     private BigDecimal getRandomRangePrice(BigDecimal start, BigDecimal end){
