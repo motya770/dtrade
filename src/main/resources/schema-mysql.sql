@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: localhost    Database: dtrade
+-- Host: localhost    Database: dtrade1
 -- ------------------------------------------------------
 -- Server version	5.7.17
 
@@ -35,7 +35,7 @@ CREATE TABLE `account` (
   `role` varchar(255) DEFAULT NULL,
   `robo_account` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,7 +58,7 @@ CREATE TABLE `balance` (
   UNIQUE KEY `UK82hdkm7ghujcsuwxo1rlvwr11` (`currency`,`account_id`),
   KEY `FKxhe1wv9gspc3wl0w66bptmgs` (`account_id`),
   CONSTRAINT `FKxhe1wv9gspc3wl0w66bptmgs` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42688 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=51334 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `balance_activity` (
   CONSTRAINT `FKninbfrjd3pg34ngly4rk7ey70` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`),
   CONSTRAINT `FKs4dn7385ejq06y8dnfp7ynewb` FOREIGN KEY (`balance_id`) REFERENCES `balance` (`id`),
   CONSTRAINT `FKxe9bbef408kr3pe3o594hjv8` FOREIGN KEY (`sell_order_id`) REFERENCES `trade_order` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6266658 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6538539 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,7 +109,7 @@ CREATE TABLE `category_tick` (
   `score` int(11) NOT NULL,
   `time` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +157,7 @@ CREATE TABLE `coin_payment` (
   PRIMARY KEY (`id`),
   KEY `FKf8sc2bhwt0fadkm4t4o8y7ck3` (`account_id`),
   CONSTRAINT `FKf8sc2bhwt0fadkm4t4o8y7ck3` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +174,7 @@ CREATE TABLE `config` (
   `asset_name_for_listing` varchar(255) DEFAULT NULL,
   `active` bit(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,10 +202,13 @@ CREATE TABLE `diamond` (
   `robo_high_end` decimal(19,8) DEFAULT NULL,
   `robo_low_end` decimal(19,8) DEFAULT NULL,
   `base_currency` varchar(255) NOT NULL,
+  `last_robo_updated` bigint(20) DEFAULT NULL,
+  `max_robo_amount` decimal(19,8) DEFAULT NULL,
+  `robo_max_amount` decimal(19,8) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKah40au58bq4q3woch5v1cxgb2` (`account_id`),
   CONSTRAINT `FKah40au58bq4q3woch5v1cxgb2` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=146 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -311,7 +314,7 @@ CREATE TABLE `quote` (
   KEY `quote_time_index` (`time`) USING BTREE,
   KEY `diamond_quotes_index` (`diamond_id`,`time`),
   CONSTRAINT `FK8qmb0c7lquyrdrda5o914h2np` FOREIGN KEY (`diamond_id`) REFERENCES `diamond` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23221587 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30214540 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -332,7 +335,7 @@ CREATE TABLE `stock` (
   KEY `stock_account_diamond_index` (`account_id`,`diamond_id`) USING HASH,
   CONSTRAINT `FKax1c78hakdsu6u4tocbydw862` FOREIGN KEY (`diamond_id`) REFERENCES `diamond` (`id`),
   CONSTRAINT `FKq8g2v10you4x7q8onab8iy3ye` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1942 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1941 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -358,7 +361,7 @@ CREATE TABLE `stock_activity` (
   CONSTRAINT `FK9ahv1i6dvcsxs39so0tdcljp2` FOREIGN KEY (`sell_order_id`) REFERENCES `trade_order` (`id`),
   CONSTRAINT `FKdo8ixp9utc95q1i1vqa5y59bn` FOREIGN KEY (`diamond_id`) REFERENCES `diamond` (`id`),
   CONSTRAINT `FKirecygoh0igoi12t3fd01d1j` FOREIGN KEY (`buy_order_id`) REFERENCES `trade_order` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=455493 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -381,7 +384,7 @@ CREATE TABLE `trade_order` (
   `trader_order_status_index` varchar(255) NOT NULL,
   `trade_order_direction` varchar(255) NOT NULL,
   `trade_order_type` varchar(255) NOT NULL,
-  `execution_sum` decimal(19,2) NOT NULL,
+  `execution_sum` decimal(19,8) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `trade_order_trade_order_status` (`trader_order_status`) USING HASH,
   KEY `trade_order_execution_date_index` (`execution_date`) USING BTREE,
@@ -391,7 +394,7 @@ CREATE TABLE `trade_order` (
   KEY `account_trade_order_status_time` (`account_id`,`trader_order_status_index`,`creation_date`),
   CONSTRAINT `FKmst6y94vgg26prceqhxfx1dwq` FOREIGN KEY (`diamond_id`) REFERENCES `diamond` (`id`),
   CONSTRAINT `FKoo7xiemrnnd0hqg4jal2ohluj` FOREIGN KEY (`account_id`) REFERENCES `account` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1328830 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1518482 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -403,5 +406,4 @@ CREATE TABLE `trade_order` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-COMMIT;
--- Dump completed on 2018-08-11 18:35:46
+-- Dump completed on 2018-08-29 15:55:43
