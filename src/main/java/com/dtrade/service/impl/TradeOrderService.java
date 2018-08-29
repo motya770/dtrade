@@ -162,9 +162,12 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.getBookOrders().entrySet().parallelStream().forEach((entry)->{
 
+            System.out.println("NEW THREAD");
+
             long start1 = System.currentTimeMillis();
 
-            for(int j=0; j<10; j++) {
+            for(int j=0; j<3; j++) {
+                System.out.println("start: " + j);
                 Pair<TradeOrder, List<TradeOrder>> buySell = bookOrderService.find10Closest(entry.getKey());
                 if (buySell == null) {
                     break;
@@ -196,6 +199,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
                         if (!result.getFirst()) {
                             //can't execute or buy is executed
+                            System.out.println("break1");
                             break;
                         }
 
@@ -207,6 +211,7 @@ public class TradeOrderService  implements ITradeOrderService{
                 }
 
                 if (result==null || !result.getFirst()) {
+                    System.out.println("break2");
                     break;
                 }
             }
