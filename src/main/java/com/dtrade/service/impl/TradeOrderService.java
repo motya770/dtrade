@@ -185,7 +185,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     }*/
                 }
 
-                if(exitCounter==100){
+                if(exitCounter==500){
                     break;
                 }
                 exitCounter++;
