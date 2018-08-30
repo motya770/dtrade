@@ -1,5 +1,6 @@
 package com.dtrade.service;
 
+import com.dtrade.model.account.Account;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDTO;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,8 @@ import java.util.List;
  * Created by kudelin on 6/27/17.
  */
 public interface ITradeOrderService {
+
+    TradeOrder afterTradeOrderCreation(TradeOrder order, Account account);
 
     TradeOrderDTO convert(TradeOrder to);
 

@@ -84,10 +84,11 @@ public class TradeSimulator {
             logger.info("Starting simulation....");
 
             Runnable r1 = getRunnable();// "motya770@gmail.com"
-            Runnable r2 = getRunnable();// "test@test.com"
 
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(6);
             executorService.scheduleAtFixedRate(r1, 100, 3_000, TimeUnit.MILLISECONDS);
+
+            Runnable r2 = getRunnable();  // "test@test.com"
             executorService.scheduleAtFixedRate(r2, 100, 3_000, TimeUnit.MILLISECONDS);
 
          }else{

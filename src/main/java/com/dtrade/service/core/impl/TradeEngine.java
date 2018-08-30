@@ -23,8 +23,9 @@ public class TradeEngine implements ITradeEngine {
 
     private ScheduledExecutorService service;
 
-    @EventListener(ContextRefreshedEvent.class)
-    private void init(){
+   // @EventListener(ContextRefreshedEvent.class)
+    @Override
+    public void start(){
 
        service = Executors.newScheduledThreadPool(10);
        //TODO rewrite
@@ -36,7 +37,7 @@ public class TradeEngine implements ITradeEngine {
                e.printStackTrace();
            }
 
-       }, 1_000, 40, TimeUnit.MILLISECONDS);
+       }, 1_000,  40, TimeUnit.MILLISECONDS);
     }
 
     @PreDestroy

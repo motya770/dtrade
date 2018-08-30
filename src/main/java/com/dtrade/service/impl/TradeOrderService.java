@@ -165,7 +165,33 @@ public class TradeOrderService  implements ITradeOrderService{
             System.out.println("NEW THREAD");
 
             long start1 = System.currentTimeMillis();
+            int exitCounter = 0;
+            while (true) {
+                System.out.println("STRAT WHILE");
+                Pair<TradeOrder, TradeOrder> buySell = bookOrderService.findClosest(entry.getKey());
+                if(checkIfCanExecute(buySell)){
+                    System.out.println("CAN EXECUTE " + entry.getKey());
+                    transactionTemplate.execute(status -> {
+                        return executeTradeOrders(buySell);
+                    });
+                }else {
+                    break;
+                    /*
+                    try {
+                        System.out.println("SLEEP");
+                        Thread.sleep(40);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }*/
+                }
 
+                if(exitCounter==100){
+                    break;
+                }
+                exitCounter++;
+            }
+
+            /*
             for(int j=0; j<3; j++) {
                 System.out.println("start: " + j);
                 Pair<TradeOrder, List<TradeOrder>> buySell = bookOrderService.find10Closest(entry.getKey());
@@ -193,9 +219,11 @@ public class TradeOrderService  implements ITradeOrderService{
                         System.out.println("ij: "  + i + " "  + j + " " + buyOrder.getId() + " " + sellOrder.getId());
 
                         long start = System.currentTimeMillis();
-                        result = transactionTemplate.execute(status -> {
-                            return executeTradeOrders(pair);
-                        });
+
+                                    transactionTemplate.execute(status -> {
+                                        return executeTradeOrders(pair);
+                                    });
+
 
                         if (!result.getFirst()) {
                             //can't execute or buy is executed
@@ -214,7 +242,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     System.out.println("break2");
                     break;
                 }
-            }
+            }*/
 
             /*
             List<TradeOrder> buyList = buySell.getFirst();
@@ -432,6 +460,17 @@ public class TradeOrderService  implements ITradeOrderService{
         logger.debug("before save {}", tradeOrder);
 
         TradeOrder order = tradeOrderRepository.save(realOrder);
+
+        afterTradeOrderCreation(order, account);
+        return order;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public TradeOrder afterTradeOrderCreation(TradeOrder order, Account account) {
+
+        order = tradeOrderRepository.findById(order.getId()).orElseThrow(()->new TradeException("TradeOrder is not created"));
+
         Diamond diamond  = diamondService.find(order.getDiamond().getId());
 
         diamondService.validateDiamondCanTrade(diamond);
@@ -439,15 +478,14 @@ public class TradeOrderService  implements ITradeOrderService{
         System.out.println("Diamond: " + diamond);
         System.out.println("Currency: " +  diamond.getCurrency());
 
-        balanceService.updateOpenSum(tradeOrder, account,
-                    order.getAmount().multiply(order.getPrice()), order.getAmount());
+        balanceService.updateOpenSum(order, account,
+                order.getAmount().multiply(order.getPrice()), order.getAmount());
 
         bookOrderService.addNew(order);
 
-        logger.debug("Open Trade time {}", (System.currentTimeMillis() - start));
-        return realOrder;
+        //logger.debug("Open Trade time {}", (System.currentTimeMillis() - start));
+        return order;
     }
-
 
     private void defineMarketPrice(TradeOrder tradeOrder){
         if(tradeOrder.getTradeOrderType().equals(TradeOrderType.MARKET)) {
@@ -605,30 +643,33 @@ public class TradeOrderService  implements ITradeOrderService{
                         5) work only during one minute
                      */
 
-                    //System.out.println("1.1");
+                    System.out.println("1.1");
                     long start = System.currentTimeMillis();
 
                     TradeOrder buyOrder = tradeOrderRepository.findById(pair.getFirst().getId()).orElse(null);
                     TradeOrder sellOrder = tradeOrderRepository.findById(pair.getSecond().getId()).orElse(null);
-                    //System.out.println("1.2");
+                    System.out.println("1.2 " + " " + pair.getFirst().getId() + " " + pair.getSecond().getId());
                     if (sellOrder==null){
-                        //bookOrderService.remove(sellOrder);
-                        return Pair.of(true, false);
+                        //TODO this patch - you have a deadlock
+                        bookOrderService.remove(pair.getSecond());
+                        //throw new TradeException("This should not be true");
+                        //return Pair.of(true, false);
                     }
 
                     if (buyOrder==null){
-                        //bookOrderService.remove(buyOrder);
-                        return Pair.of(false, true);
+                        //throw new TradeException("This should not be true");
+                        bookOrderService.remove(pair.getFirst());
+                        //return Pair.of(false, true);
                     }
 
-                    //System.out.println("1.3");
+                    System.out.println("1.3");
                     //System.out.println("1.3");
 
                     if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
                         throw new TradeException("Something wrong with COINS pairs.");
                     }
 
-                    //System.out.println("1.4");
+                    System.out.println("1.4");
 
                     System.out.println("1.4.1: status b: " +  buyOrder.getTraderOrderStatus() + " " + buyOrder.getId());
                     System.out.println("1.4.3: status s: " +  sellOrder.getTraderOrderStatus() + " " + sellOrder.getId());

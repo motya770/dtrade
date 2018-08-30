@@ -10,6 +10,7 @@ import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.ITradeOrderService;
+import com.dtrade.service.core.ITradeEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,9 +96,14 @@ public class BookOrderService implements IBookOrderService {
 
     @Override
     public void addNew(TradeOrder order){
+
+        order = tradeOrderRepository.findById(order.getId()).get();
+
         BookOrder bookOrder = bookOrders.get(order.getDiamond().getId());
+        boolean newBookOrder = false;
         if(bookOrder==null){
             bookOrder = new BookOrder();
+            newBookOrder = true;
         }
 
         if(TradeOrderDirection.BUY.equals(order.getTradeOrderDirection())){
@@ -113,7 +119,9 @@ public class BookOrderService implements IBookOrderService {
 
         //bookOrders.put(order.getDiamond(), bookOrder);
 
-        bookOrders.put(order.getDiamond().getId(), bookOrder);
+        if(newBookOrder) {
+            bookOrders.put(order.getDiamond().getId(), bookOrder);
+        }
     }
 
     @Transactional
@@ -264,6 +272,10 @@ public class BookOrderService implements IBookOrderService {
         });
     }
 
+
+    @Autowired
+    private ITradeEngine tradeEngine;
+
     @EventListener(ContextRefreshedEvent.class)
     public void init() {
 
@@ -272,12 +284,10 @@ public class BookOrderService implements IBookOrderService {
 
         Runnable runnable = ()-> {
 
-            List<TradeOrder> orders = tradeOrderService.getLiveTradeOrders();
-            for (TradeOrder order : orders) {
-                addNew(order);
-            }
+            tradeOrderService.getLiveTradeOrders().parallelStream().forEach(tradeOrder -> addNew(tradeOrder));
 
-            logger.info("BookOrder loaded {} trade orders", orders.size());
+            logger.info("Starting trade engine");
+            tradeEngine.start();
         };
 
         Thread thread = new Thread(runnable);

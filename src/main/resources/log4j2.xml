@@ -9,13 +9,12 @@
         <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
-        <File name="MyFile" fileName="all.log" immediateFlush="false" append="false">
+        <File name="MyFile" fileName="all.log" immediateFlush="true" append="true">
             <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
     </Appenders>
     <Loggers>
-        <Logger name="com.dtrade" level="info" additivity="false">
-            <AppenderRef ref="ConsoleAppender" />
+        <Logger name="com.dtrade" level="debug" additivity="true">
             <AppenderRef ref="MyFile"/>
         </Logger>
 
