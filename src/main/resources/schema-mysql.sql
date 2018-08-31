@@ -303,10 +303,10 @@ DROP TABLE IF EXISTS `quote`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `quote` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `ask` decimal(12,5) DEFAULT NULL,
-  `avg` decimal(12,5) DEFAULT NULL,
-  `bid` decimal(12,5) DEFAULT NULL,
-  `price` decimal(12,5) DEFAULT NULL,
+  `ask` decimal(12,8) DEFAULT NULL,
+  `avg` decimal(12,8) DEFAULT NULL,
+  `bid` decimal(12,8) DEFAULT NULL,
+  `price` decimal(12,8) DEFAULT NULL,
   `quote_type` varchar(255) NOT NULL,
   `time` bigint(20) DEFAULT NULL,
   `diamond_id` bigint(20) DEFAULT NULL,
