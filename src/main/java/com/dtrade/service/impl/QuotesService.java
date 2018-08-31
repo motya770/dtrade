@@ -178,7 +178,7 @@ public class QuotesService implements IQuotesService {
         quote.setQuoteType(QuoteType.ACTION_QUOTE);
 
         if(ask!=null && bid != null) {
-            BigDecimal avg = ask.add(bid).divide(new BigDecimal("2.0"));
+            BigDecimal avg = ask.add(bid).divide(new BigDecimal("2.0")).setScale(8, BigDecimal.ROUND_HALF_UP);
             logger.debug("QUOTE AVG: {}", avg);
             quote.setAvg(avg);
         }

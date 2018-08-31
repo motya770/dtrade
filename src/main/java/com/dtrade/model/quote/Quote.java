@@ -32,16 +32,16 @@ public class Quote implements Serializable {
     //@Column(precision = 12, scale = 5)
     //private BigDecimal value;
 
-    @Column(precision = 12, scale = 5)
+    @Column(precision = 12, scale = 8)
     private BigDecimal ask;
 
-    @Column(precision = 12, scale = 5)
+    @Column(precision = 12, scale = 8)
     private BigDecimal bid;
 
-    @Column(precision = 12, scale = 5)
+    @Column(precision = 12, scale = 8)
     private BigDecimal avg;
 
-    @Column(precision = 12, scale = 5)
+    @Column(precision = 12, scale = 8)
     private BigDecimal price;
 
     //TODO think about index

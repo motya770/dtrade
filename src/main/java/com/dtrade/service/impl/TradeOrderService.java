@@ -170,6 +170,10 @@ public class TradeOrderService  implements ITradeOrderService{
                 System.out.println("STRAT WHILE");
                 Pair<TradeOrder, TradeOrder> buySell = bookOrderService.findClosest(entry.getKey());
                 if(checkIfCanExecute(buySell)){
+
+                    Runnable quoteRunnable = () -> quotesService.issueQuote(buySell);
+                    executor.execute(quoteRunnable);
+
                     System.out.println("CAN EXECUTE " + entry.getKey());
                     transactionTemplate.execute(status -> {
                         return executeTradeOrders(buySell);
