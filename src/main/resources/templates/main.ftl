@@ -139,7 +139,7 @@
 			<div class="ctablock__inner">
 				<div class="ctablock__content">
 					<h2>Choose coins</h2>
-					<a href="/simple" class="btn btn--lg">Start trading</a>
+					<a href="/trade" class="btn btn--lg">Start trading</a>
 				</div>
 			</div>
 		</div>
