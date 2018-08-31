@@ -410,10 +410,17 @@ public class TradeOrderService  implements ITradeOrderService{
 
         Diamond diamond = diamondService.find(tradeOrder.getDiamond().getId());
         //TODO market price can be problematic
-        if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
-            BigDecimal actualBalance =  balanceService.getActualBalance(diamond.getBaseCurrency(), account);
-            BigDecimal cash = tradeOrder.getPrice().multiply(tradeOrder.getAmount());
 
+        if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
+
+            Balance balance =  balanceService.getBalance(diamond.getBaseCurrency(), account);
+
+            if (balance.getAmount().compareTo(BigDecimal.ZERO)==0){
+                throw new TradeException("Account " + account.getMail()  +  " don't have enough currency " + diamond.getBaseCurrency() + " . Please make deposit. ");
+            }
+
+            BigDecimal actualBalance = balance.getActualBalance();
+            BigDecimal cash = tradeOrder.getPrice().multiply(tradeOrder.getAmount());
             if(actualBalance.subtract(cash).compareTo(BigDecimal.ZERO) < 0){
                 throw new TradeException("Already opened too many buy orders for: " + account.getMail()  +  "!");
             }
@@ -421,9 +428,14 @@ public class TradeOrderService  implements ITradeOrderService{
 
         if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
 
-            BigDecimal actualBalance =  balanceService.getActualBalance(diamond.getBaseCurrency(), account);
-            BigDecimal amount = tradeOrder.getAmount();
+            Balance balance =  balanceService.getBalance(diamond.getCurrency(), account);
 
+            if (balance.getAmount().compareTo(BigDecimal.ZERO)==0){
+                throw new TradeException("Account " + account.getMail()  +  " don't have enough currency " + diamond.getCurrency() + " . Please make deposit. ");
+            }
+
+            BigDecimal actualBalance = balance.getActualBalance();
+            BigDecimal amount = tradeOrder.getAmount();
             if(actualBalance.subtract(amount).compareTo(BigDecimal.ZERO) < 0){
                 throw new TradeException("Already opened too many sell orders for: " + account.getMail()  +  "!");
             }

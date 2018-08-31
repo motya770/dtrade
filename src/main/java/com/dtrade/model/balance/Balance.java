@@ -60,7 +60,7 @@ public class Balance {
     public BalanceDTO getDTO(){
 
         BalanceDTO dto = new BalanceDTO();
-        dto.setBalance(amount.subtract(frozen).subtract(open));
+        dto.setBalance(getActualBalance());
         return dto;
     }
 
