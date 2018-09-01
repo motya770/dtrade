@@ -57,8 +57,9 @@
 
                                             <th>Bid <!--<span class="inf">?</span>--></th>
                                             <th>Ask <!--<span class="inf">?</span>--></th>
-
+                                            <!--
                                             <th>N</th>
+                                            -->
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -428,6 +429,7 @@
                                                     <td style="padding-right: 10px;">{{tradeOrder.amount | number : 6}}</td>
                                                     <td style="padding-right: 10px" class="down">{{tradeOrder.price | number : 8}}</td>
                                                     <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+
 
 
                                                     <!--
