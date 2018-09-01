@@ -31,14 +31,5 @@ services:
         - DATABASE_PASSWORD=1234
         - DATABASE_NAME=dtrade
         - DATABASE_PORT=3306
-  phpmyadmin:
-      image: phpmyadmin/phpmyadmin:4.7
-      depends_on:
-        - demo-mysql
-      ports:
-        - 8082:80
-      environment:
-        PMA_HOST: demo-mysql
-        PMA_PORT: 3306
 volumes:
      my-datavolume:
