@@ -7,6 +7,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
     self.lastDiamondId = null;
     self.poolingPromise = null;
 
+    $scope.tab = 11;
     var simpleTheme = {
         "time": {
             "useUTC": false

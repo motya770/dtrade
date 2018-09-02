@@ -2,6 +2,7 @@ diamondApp.controller("LiveTradeOrderController", function TradeOrderController(
 
     var self = this;
     self.firstTimeOut = true;
+    $scope.tab = 1;
 
     $scope.cancelTradeOrder = function(tradeOrder) {
         $http.post("/trade-order/cancel", tradeOrder, null).then(function (response) {

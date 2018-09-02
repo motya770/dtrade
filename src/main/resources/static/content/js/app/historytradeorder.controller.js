@@ -4,6 +4,7 @@ diamondApp.controller("HistoryTradeOrderController", function TradeOrderControll
 
     console.log("start: " + new Date());
 
+    $scope.tab = 3;
     var self = this;
    // self.firstTimeOut = true;
    // var historyInterval;

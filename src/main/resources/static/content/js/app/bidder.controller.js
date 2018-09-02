@@ -3,8 +3,9 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
     var self= this;
     self.buyOrder = {};
     self.sellOrder = {};
+    $scope.tab = 5;
 
-    AccountService.currentAccount().then(function (currentAccount) {
+    AccountService.currentAccountCall().then(function (currentAccount) {
         self.currentAccount = currentAccount;
     });
 

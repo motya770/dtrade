@@ -1,17 +1,20 @@
 <nav class="subnav">
     <div class="subnav__inner">
         <ul ng-controller="MenuController as vm" class="subnav__list">
-                <li ng-class="getClass('/basic')">
-                    <a href="/basic">Basic</a>
+                <li ng-class="{ active: isActive('/basic')}" >
+                    <a href="/trade#!/basic">Basic</a>
                 </li>
-                <li ng-class="getClass('/trade')">
-                    <a href="/trade">Advanced</a>
+                <li ng-class="{ active: isActive('/trade')}">
+                    <a href="/trade#!/trade">Advanced</a>
                 </li>
-                <li ng-class="getClass('/diamonds')" >
+                <li ng-class="{ active: isActive('/coins')}" >
+                    <a href="/trade#!/coins">Coins</a>
+                    <!--
                     <a href="/{{cc.config.assetType|lowercase}}">{{cc.config.assetName}}</a>
+                    -->
                 </li>
-                <li ng-show="vm.account" ng-class="getClass('/account')">
-                    <a href="/account">My account</a>
+                <li ng-show="vm.account" ng-class="{ active: isActive('/account')}">
+                    <a href="/trade#!/account">My account</a>
                 </li>
 
             <!--

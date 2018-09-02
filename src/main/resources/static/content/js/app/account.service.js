@@ -17,14 +17,14 @@ diamondApp.factory( 'AccountService', ["$http", function($http) {
 
     var currentAccountCall = function () {
         if(self.currentAccount!=null){
-            return self.currentAccount;
+            return currentAccountRefresh();
         }else{
             return currentAccountRefresh();
         }
     }
     
     return {
-        currentAccount: currentAccountCall,
+        currentAccountCall: currentAccountCall,
         refreshCurrentAccount: currentAccountRefresh
     }
     /*

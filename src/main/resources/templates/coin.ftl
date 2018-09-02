@@ -31,8 +31,7 @@
 </div>
 
 <#include "parts/bootom-scripts.ftl">
-<script src="/content/js/app/diamond.controller.js"></script>
-<script src="/content/js/app/coin.controller.js"></script>
+
 
 </body>
 </html>

@@ -1,5 +1,6 @@
 diamondApp.controller('BalanceActivityController', function BalanceActivityController($scope, $http, $rootScope, BalanceActivityService) {
     var self = this;
+    $scope.tab = 1;
 
     /*BalanceActivityService.getBalanceActivities().then(function (data) {
         self.balanceActivities = data;

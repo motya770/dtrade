@@ -24,7 +24,7 @@ diamondApp.controller("CoinPaymentController", function CoinPaymentController($s
             method: "POST",
             params: withdrawRequest}).then(function (response) {
 
-            AccountService.currentAccount();
+            AccountService.currentAccountCall();
             if(response.data.error){
                 AlertService.showAlert(response.data.message);
                 return;
