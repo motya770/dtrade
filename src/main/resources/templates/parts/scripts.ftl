@@ -25,9 +25,8 @@
 <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
 
 <script src="/content/js/app.js"></script>
-<script src="/content/js/app.config.js"></script>
+<script src="/content/js/app/app.config.js"></script>
 <script src="/content/js/components/advanced.component.js"></script>
-
 <script src="/content/js/app/account.service.js"></script>
 <script src="/content/js/app/config.controller.js"></script>
 <script src="/content/js/app/balance.controller.js"></script>
@@ -49,11 +48,13 @@
 <script src="/content/js/app/menu.controller.js"></script>
 <script src="/content/js/app/alert.service.js"></script>
 <script src="/content/js/app/diamond.controller.js"></script>
-<script src="/content/js/registration.js" ></script>
+<script src="/content/js/app/registration.js" ></script>
 <script src="/content/js/app/balanceactivity.service.js"></script>
 <script src="/content/js/app/balanceactivity.controller.js"></script>
 <script src="/content/js/app/coinpayment.controller.js"></script>
 <script src="/content/js/app/coin.controller.js"></script>
+
+
 
 <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
 

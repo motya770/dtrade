@@ -22,7 +22,7 @@
        <div class="rect4"></div>
        <div class="rect5"></div>
      </div>
-   <div ng-cloak=""  ng-controller="ConfigController as cc">
+   <div  ng-controller="ConfigController as cc">
     <#include "parts/caption.ftl">
     <#include "parts/menu.ftl">
    </div>
@@ -35,8 +35,7 @@
     </div>
 </div>
 
-
-<#include "parts/bootom-scripts.ftl">
 </body>
 
+<#include "parts/bootom-scripts.ftl">
 </html>
