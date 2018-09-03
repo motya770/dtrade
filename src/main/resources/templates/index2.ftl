@@ -35,7 +35,6 @@
     </div>
 </div>
 
-</body>
-
 <#include "parts/bootom-scripts.ftl">
+</body>
 </html>

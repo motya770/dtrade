@@ -18,6 +18,14 @@ var debug = require('gulp-debug');
 
 gulp.task('app', function() {
     return gulp.src([
+        './bower_components/angular/angular.min.js',
+        './bower_components/angular-route/angular-route.min.js',
+        './bower_components/angular-resource/angular-resource.min.js',
+        './bower_components/angular-animate/angular-animate.min.js',
+        './bower_components/angular-aria/angular-aria.min.js',
+        './bower_components/angular-messages/angular-messages.min.js',
+        './bower_components/angular-material/angular-material.min.js',
+        './bower_components/angular-cookies/angular-cookies.js',
         './content/js/app.js',
         './content/js/app/app.config.js',
         './content/js/components/advanced.component.js',
