@@ -54,7 +54,8 @@ gulp.task('app', function() {
         './content/js/app/balanceactivity.service.js',
         './content/js/app/balanceactivity.controller.js',
         './content/js/app/coinpayment.controller.js',
-        './content/js/app/coin.controller.js'
+        './content/js/app/coin.controller.js',
+        './bower_components/highcharts/highstock.js'
     ]).pipe(debug({title: 'unicorn:'}))
         .pipe(plumber())
         .pipe(concat('app.js', {newLine: ';'}))

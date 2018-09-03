@@ -57,7 +57,9 @@
 <script src="/content/js/app/coin.controller.js"></script>
 -->
 <script src="/dist.min/js/app.js"></script>
+<!--
 <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
+-->
 
 <!--
 <script>var scr = {"scripts":[
