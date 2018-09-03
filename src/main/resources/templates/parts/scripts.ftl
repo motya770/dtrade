@@ -9,11 +9,10 @@
 <link rel="stylesheet" href="/bower_components/highcharts-ng/dist/highcharts-ng.css ">
 -->
 
-
 <!--
 <script src="/bower_components/highcharts-ng/dist/highcharts-ng.js" type="text/javascript"></script>
--->
 <script src="/bower_components/less/dist/less.min.js" type="text/javascript"></script>
+-->
 
 <!-- Angular Material requires Angular.js Libraries -->
 <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
@@ -24,6 +23,7 @@
 <script src="/bower_components/angular-material/angular-material.min.js"></script>
 <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
 
+<!--
 <script src="/content/js/app.js"></script>
 <script src="/content/js/app/app.config.js"></script>
 <script src="/content/js/components/advanced.component.js"></script>
@@ -53,9 +53,8 @@
 <script src="/content/js/app/balanceactivity.controller.js"></script>
 <script src="/content/js/app/coinpayment.controller.js"></script>
 <script src="/content/js/app/coin.controller.js"></script>
-
-
-
+-->
+<script src="/dist.min/js/app.js"></script>
 <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
 
 <!--
