@@ -49,7 +49,3 @@
 <!-- iOS Safari -->
 <meta name="apple-mobile-web-app-status-bar-style" content="#000">
 <!-- Custom Browsers Color End -->
-
-<!--
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
--->

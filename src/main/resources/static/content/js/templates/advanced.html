@@ -1,3 +1,4 @@
+
 <div ng-controller="ConfigController as cc">
     <div class="sep-cab-page">
         <div class="sep-cab-page__inner">
@@ -46,8 +47,8 @@
                                                     <input ng-if="::cc.config.assetType=='WINE'" style="height: 30px;" type="image" src="/theme/app/img/bottle.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
                                                 </div>
                                             </td>
-                                            <td>{{diamond.askBidPair.first | number: 8}} </td>
-                                            <td>{{diamond.askBidPair.second | number : 8}}</td>
+                                            <td>{{diamond.askBidPair.first | number: 5}} </td>
+                                            <td>{{diamond.askBidPair.second | number : 5}}</td>
                                             <td><span ng-if="::!diamond.hideTotalStockAmount">{{::diamond.totalStockAmount/10000000 | number}} mln </span></td>
                                         </tr>
                                         <script type="text/ng-template" id="dialog1.tmpl.html">
@@ -495,7 +496,7 @@
                                                 <td>{{tradeOrder.amount}}</td>
                                                 -->
 
-                                                <td><a ng-if="tradeOrder.traderOrderStatus == 'CREATED'" href="#" class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">Cancel</a></td>
+                                                <td><a ng-if="tradeOrder.traderOrderStatus == 'CREATED'" href class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">Cancel</a></td>
                                             </tr>
 
                                             <!--
@@ -527,7 +528,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <a href="#" ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
+                                <a href ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
                             </div>
                             <div ng-show="tab===2" class="sep-cab-tab" >
                                 <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
@@ -559,7 +560,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <a href="#" ng-click="getPreviousAccountHistoryOrders(vm.accountHistoryTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
+                                    <a href ng-click="getPreviousAccountHistoryOrders(vm.accountHistoryTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
                                 </div>
                             </div>
                             <div ng-show="tab==10" class="sep-cab-tab" >
@@ -591,10 +592,11 @@
                                                 -->
                                                 <td>{{balance.currency}}</td>
                                                 <td>{{balance.amount | number}}</td>
+                                                <!--
                                                 <td>
                                                     <a href="#">Choose</a>
                                                 </td>
-
+                                                -->
                                             </tr>
                                             <!--
                                             <tr>

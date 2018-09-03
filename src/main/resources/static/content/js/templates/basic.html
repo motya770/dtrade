@@ -1,4 +1,4 @@
-<div class="sep-cab-page">
+<div class="sep-cab-page" ng-controller="ConfigController as cc">
     <div class="sep-cab-page__inner">
         <div class="sep-cab-page__content">
             <div class="sep-cab-page__top">
@@ -266,13 +266,13 @@
                                             <td>{{tradeOrder.executionSum | number : 2}}</td>
                                             <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
                                             <td>{{tradeOrder.tradeOrderDirection | lowercase}} {{tradeOrder.tradeOrderType | lowercase}}</td>
-                                            <td><a ng-if="tradeOrder.traderOrderStatus == 'CREATED'" href="#" class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">Cancel</a></td>
+                                            <td><a ng-if="tradeOrder.traderOrderStatus == 'CREATED'" href class="button black" ng-click="$event.preventDefault(); cancelTradeOrder(tradeOrder)">Cancel</a></td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <a href="#" ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
+                            <a href ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
                         </div>
                         <div ng-show="tab===2" class="sep-cab-tab" >
                             <div class="table-container">

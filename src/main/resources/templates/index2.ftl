@@ -36,5 +36,6 @@
 </div>
 
 <#include "parts/bootom-scripts.ftl">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </body>
 </html>
