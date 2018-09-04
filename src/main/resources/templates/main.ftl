@@ -226,7 +226,5 @@
 		</div>
 	</div>
 
-	<#include "parts/bootom-scripts.ftl">
-
 </body>
 </html>
