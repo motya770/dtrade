@@ -72,6 +72,9 @@ public class TradeOrderService  implements ITradeOrderService{
     @Autowired
     private BalanceService balanceService;
 
+    @Autowired
+    private IRabbitService rabbitService;
+
     private ScheduledExecutorService historyCasheExecutor;
 
     private ConcurrentHashMap<Long, List<TradeOrder>> historyOrders = new ConcurrentHashMap<>();
@@ -152,6 +155,7 @@ public class TradeOrderService  implements ITradeOrderService{
         tradeOrderDTO.setExecutionDate(to.getExecutionDate());
         tradeOrderDTO.setTradeOrderDirection(to.getTradeOrderDirection());
         tradeOrderDTO.setCreationDate(to.getCreationDate());
+        tradeOrderDTO.setDiamondId(to.getDiamond().getId());
         return tradeOrderDTO;
     }
 
@@ -499,9 +503,12 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.addNew(order);
 
+        rabbitService.tradeOrderCreated(convert(order));
+
         //logger.debug("Open Trade time {}", (System.currentTimeMillis() - start));
         return order;
     }
+
 
     private void defineMarketPrice(TradeOrder tradeOrder){
         if(tradeOrder.getTradeOrderType().equals(TradeOrderType.MARKET)) {
@@ -783,8 +790,11 @@ public class TradeOrderService  implements ITradeOrderService{
                     boolean sellResult = checkIfExecuted(sellOrder);
 
                     System.out.println("1.14");
-                    tradeOrderRepository.save(buyOrder);
-                    tradeOrderRepository.save(sellOrder);
+                    buyOrder = tradeOrderRepository.save(buyOrder);
+                    sellOrder = tradeOrderRepository.save(sellOrder);
+
+                    rabbitService.tradeOrderUpdated(convert(buyOrder));
+                    rabbitService.tradeOrderUpdated(convert(sellOrder));
 
                     System.out.println("1.15");
                     long end = System.currentTimeMillis() - start;
@@ -826,6 +836,7 @@ public class TradeOrderService  implements ITradeOrderService{
             order.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
             setExecutionDate(order);
             bookOrderService.remove(order);
+            rabbitService.tradeOrderExecuted(convert(order));
             return true;
         } else {
             order.setTraderOrderStatus(TraderOrderStatus.IN_MARKET);
