@@ -78,10 +78,10 @@ public class TradeOrderController {
             if(tradeOrders==null){
                 return null;
             }
-            System.out.println("!!!!!!!!!!!!!end1: " + (System.currentTimeMillis() - start) + " " + tradeOrders.size());
+            logger.debug("!!!!!!!!!!!!!end1: " + (System.currentTimeMillis() - start) + " " + tradeOrders.size());
             List<TradeOrderDTO> result =  tradeOrderService.getTradeOrderDTO(tradeOrders);
 
-            System.out.println("!!!!!!!!!!!!!end2: " + (System.currentTimeMillis() - start));
+           logger.debug("!!!!!!!!!!!!!end2: " + (System.currentTimeMillis() - start));
             return result;
 
         });

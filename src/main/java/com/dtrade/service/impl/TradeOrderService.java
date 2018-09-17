@@ -166,12 +166,12 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.getBookOrders().entrySet().parallelStream().forEach((entry)->{
 
-            System.out.println("NEW THREAD");
+            //System.out.println("NEW THREAD");
 
             long start1 = System.currentTimeMillis();
             int exitCounter = 0;
             while (true) {
-                System.out.println("STRAT WHILE");
+                //System.out.println("STRAT WHILE");
                 Pair<TradeOrder, TradeOrder> buySell = bookOrderService.findClosest(entry.getKey());
                 if(checkIfCanExecute(buySell)){
 
@@ -193,7 +193,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     }*/
                 }
 
-                if(exitCounter==500){
+                if(exitCounter==100){
                     break;
                 }
                 exitCounter++;

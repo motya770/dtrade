@@ -34,7 +34,7 @@ public class GraphController {
 
         long start = System.currentTimeMillis();
         Pair<?, ?> pair =  quotesService.getDepthQuotes(diamond);
-        System.out.println("depth quote difference: " + (System.currentTimeMillis() - start));
+        //System.out.println("depth quote difference: " + (System.currentTimeMillis() - start));
         return (Pair<List<DepthQuote>, List<DepthQuote>>)pair;
     }
 

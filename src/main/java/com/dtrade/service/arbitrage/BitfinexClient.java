@@ -3,10 +3,13 @@ package com.dtrade.service.arbitrage;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.service.IDiamondService;
+import com.dtrade.service.impl.TradeOrderService;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
@@ -14,6 +17,8 @@ import java.net.URI;
 import java.util.List;
 
 public class BitfinexClient extends WebSocketClient {
+
+    private static final Logger logger = LoggerFactory.getLogger(BitfinexClient.class);
 
     private Diamond diamond;
     private IDiamondService diamondService;
@@ -46,7 +51,7 @@ public class BitfinexClient extends WebSocketClient {
 
         String subscribe = "{ \"event\": \"subscribe\",  \"channel\": \"ticker\",  \"symbol\": \""  + getBitfinexPairName()  +  "\"}";
         send(subscribe);
-        System.out.println( "opened connection" );
+        logger.info( "opened connection" );
 
         //TODO can create bug because hidden field is gonna be reenlisted
         /*
@@ -58,7 +63,7 @@ public class BitfinexClient extends WebSocketClient {
 
     @Override
     public void onMessage( String message ) {
-        System.out.println( "received: " + message );
+       logger.info( "received: " + message );
 
             /*
             FRR	float	Flash Return Rate - average of all fixed rate funding over the last hour
@@ -99,7 +104,7 @@ public class BitfinexClient extends WebSocketClient {
 
             JSONArray arr = new JSONArray(message);
             JSONArray values = arr.getJSONArray(1);
-            System.out.println("values: " + values);
+           logger.debug("values: " + values);
             BigDecimal bid = new BigDecimal(values.getDouble(0));//BID
             BigDecimal ask = new BigDecimal(values.getDouble(2));//ASK
 
@@ -114,7 +119,7 @@ public class BitfinexClient extends WebSocketClient {
 
 
         // The codecodes are documented in class org.java_websocket.framing.CloseFrame
-        System.out.println( "Connection closed by " + ( remote ? "remote peer" : "us" ) + " Code: " + code + " Reason: " + reason );
+       logger.info( "Connection closed by " + ( remote ? "remote peer" : "us" ) + " Code: " + code + " Reason: " + reason );
     }
 
     @Override

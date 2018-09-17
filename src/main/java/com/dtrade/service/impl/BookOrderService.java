@@ -243,15 +243,15 @@ public class BookOrderService implements IBookOrderService {
            // System.out.println("SELL SIZE {}" +  book.getSellOrders().size());
         }
 
-        System.out.println("remove D 1.1 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
+        logger.debug("remove D 1.1 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
 
         Optional.ofNullable(book).ifPresent((bookOrder)->{
             //System.out.println("remove D 1.2 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
             if(order.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
-                System.out.println("remove D 1.3 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
+                  logger.debug("remove D 1.3 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
                  bookOrder.getBuyOrders().remove(order);
             }else if(order.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
-                System.out.println("remove D 1.4 : " + order.getId() + " " + order.getPrice() +  " " + Thread.currentThread().getName() + " " + LocalTime.now());
+               logger.debug("remove D 1.4 : " + order.getId() + " " + order.getPrice() +  " " + Thread.currentThread().getName() + " " + LocalTime.now());
                 bookOrder.getSellOrders().remove(order);
             }
         });

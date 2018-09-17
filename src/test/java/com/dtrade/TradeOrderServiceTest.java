@@ -180,7 +180,7 @@ public class TradeOrderServiceTest extends BaseTest {
       });*/
 
        // tradeOrderService.calculateTradeOrders();
-        System.out.println("END " + (System.currentTimeMillis() - start));
+        //System.out.println("END " + (System.currentTimeMillis() - start));
 
 
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);

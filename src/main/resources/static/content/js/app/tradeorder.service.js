@@ -13,7 +13,7 @@ diamondApp.service("TradeOrderService", function ($http, $q, DiamondService) {
 
     var clearHistoryOrders = function (diamond) {
         historyOrders.length = 0;
-        getHistoryOrders(diamond);
+        //getHistoryOrders(diamond);
     }
 
     var addHistoryOrder = function (order) {

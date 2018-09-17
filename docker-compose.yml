@@ -4,12 +4,10 @@ services:
   rabbitmq:
     image: rabbitmq:3.7.7
     ports:
-          - 1883:1883
+          - 1884:1883
           - 5671:5671
     environment:
-          RABBITMQ_DEFAULT_VHOST: /
-          RABBITMQ_DEFAULT_USER: guest
-          RABBITMQ_DEFAULT_PASS: guest
+           RABBITMQ_DEFAULT_VHOST: /
   demo-mysql:
     image: mysql:5.7.22
     environment:
@@ -17,7 +15,6 @@ services:
       - MYSQL_DATABASE=dtrade
       - MYSQL_USER=test
       - MYSQL_PASSWORD=1234
-
     volumes:
         - my-datavolume:/var/lib/mysql
   nginx:
@@ -33,6 +30,7 @@ services:
       depends_on:
         - demo-mysql
         - nginx
+        - rabbitmq
       ports:
          - 8080:8080
       environment:
@@ -41,5 +39,15 @@ services:
         - DATABASE_PASSWORD=1234
         - DATABASE_NAME=dtrade
         - DATABASE_PORT=3306
+  websocket-server:
+      image: wallawalla/websocket:latest
+      depends_on:
+        - rabbitmq
+        - demo-mysql
+        - app
+      ports:
+         - 8083:8083
+      environment:
+         RABBIT_HOST: rabbitmq
 volumes:
      my-datavolume:
