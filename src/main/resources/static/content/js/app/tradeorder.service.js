@@ -30,13 +30,7 @@ diamondApp.service("TradeOrderService", function ($http, $q, DiamondService) {
             // var diamond = {}
             // diamond["diamond"] = diamondObj;
             return $http.post("/trade-order/history-orders", diamond.id, null).then(function (responce) {
-                if(historyOrders==null) {
-                    //historyOrders = responce.data;
-                }else {
-                    //historyOrders.length = 0;
-                    //historyOrders = responce.data.slice();
-                }
-
+                historyOrders = responce.data;
                 return historyOrders;
             });
         //}
@@ -63,9 +57,9 @@ diamondApp.service("TradeOrderService", function ($http, $q, DiamondService) {
         //}
     };
 
+    /*
     var ws = new WebSocket('ws://localhost:8083');
 
-    // Listen for messages
     ws.addEventListener('message', function (event) {
         console.log('Message from server ', event.data);
         var data  = JSON.parse(event.data);
@@ -80,7 +74,7 @@ diamondApp.service("TradeOrderService", function ($http, $q, DiamondService) {
                 }
             }
         }
-    });
+    });*/
 
     return {
         getHistoryOrders: getHistoryOrders,

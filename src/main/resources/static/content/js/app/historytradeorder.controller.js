@@ -19,24 +19,23 @@ diamondApp.controller("HistoryTradeOrderController", function TradeOrderControll
         });
     };
 
-    historyOrders();
-
+    /*
     $scope.$on('buyDiamondChoosed', function (event, arg) {
         var diamond = arg;
         TradeOrderService.clearHistoryOrders(diamond);
-    });
+    });*/
 
 
-   // var promise = $interval(historyOrders, 1000);
+    var promise = $interval(historyOrders, 1000);
 
 // Cancel interval on page changes
-    /*
+
     $scope.$on('$destroy', function(){
         if (angular.isDefined(promise)) {
             $interval.cancel(promise);
             promise = undefined;
         }
-    });*/
+    });
 
     //historyOrders();
 });
