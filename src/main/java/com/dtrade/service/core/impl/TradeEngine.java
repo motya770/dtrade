@@ -3,8 +3,6 @@ package com.dtrade.service.core.impl;
 import com.dtrade.service.ITradeOrderService;
 import com.dtrade.service.core.ITradeEngine;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;

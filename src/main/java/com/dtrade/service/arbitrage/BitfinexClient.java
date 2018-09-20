@@ -1,9 +1,7 @@
 package com.dtrade.service.arbitrage;
 
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.service.IDiamondService;
-import com.dtrade.service.impl.TradeOrderService;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONArray;

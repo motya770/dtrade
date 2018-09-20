@@ -284,7 +284,7 @@ public class BookOrderService implements IBookOrderService {
 
         Runnable runnable = ()-> {
 
-            tradeOrderService.getLiveTradeOrders().parallelStream().forEach(tradeOrder -> addNew(tradeOrder));
+           tradeOrderService.getLiveTradeOrders(). forEach(tradeOrder -> addNew(tradeOrder));
 
             logger.info("Starting trade engine");
             tradeEngine.start();

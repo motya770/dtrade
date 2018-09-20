@@ -3,12 +3,7 @@ package com.dtrade.model.bookorder;
 import com.dtrade.model.tradeorder.TradeOrder;
 import lombok.Data;
 
-import java.util.Collections;
-import java.util.PriorityQueue;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Created by kudelin on 7/10/17.

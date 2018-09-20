@@ -2,7 +2,6 @@ package com.dtrade.model.tradeorder;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.CacheConcurrencyStrategy;

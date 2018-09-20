@@ -5,7 +5,6 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.Const;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
-import com.dtrade.model.balance.BalanceUpdater;
 import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.balanceactivity.BalanceActivityType;
 import com.dtrade.model.coinpayment.CoinPayment;
@@ -21,16 +20,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kudelin on 12/4/16.

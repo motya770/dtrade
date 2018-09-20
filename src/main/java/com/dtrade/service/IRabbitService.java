@@ -1,7 +1,6 @@
 package com.dtrade.service;
 
 import com.dtrade.model.quote.Quote;
-import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDTO;
 
 public interface IRabbitService {

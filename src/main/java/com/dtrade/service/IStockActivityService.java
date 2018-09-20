@@ -4,7 +4,6 @@ import com.dtrade.model.stockactivity.StockActivity;
 import com.dtrade.model.tradeorder.TradeOrder;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * Created by kudelin on 6/27/17.

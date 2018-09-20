@@ -4,7 +4,6 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDTO;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.util.Pair;
 
 import java.util.List;
