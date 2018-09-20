@@ -10,7 +10,7 @@
 	<header class="header">
 		<div class="header__inner">
 			<div class="header__logo">
-				<a href="/">Exchange 1<br>cryptocurrency exchange number 1</a>
+				<a href="/">Exchange 1<br>free stock and crypto trading</a>
 			</div>
 			<div class="header__right">
 				<!--
@@ -36,18 +36,18 @@
 		<div class="hero" style="background-image: url(/theme/app/img/bitcoin-cryptocurrency.jpg)">
 			<div class="hero__inner">
 				<div class="hero__text">
-					<h1 class="hero__heading">Cryptocurrency exchange as it should be</h1>
+					<h1 class="hero__heading">Stock and crypto trading as it should be</h1>
 					<p class="hero__descr">
-						No commissions on trade, free tokens listing, no commission on deposits and withdraws.
+						No commissions on trade, no commission on deposits and withdraws.
 						Join financial revolution right now.
 				</div>
 				<div class="hero__stat">
 					<div class="hero-stat-elem">
-						<h3>38</h3>
-						<p>Trading<br>pairs</p>
+						<h3>56</h3>
+						<p>Trading<br>stocks</p>
 					</div>
 					<div class="hero-stat-elem">
-						<h3>59</h3>
+						<h3>20</h3>
 						<p>Coins<br>for trading</p>
 					</div>
 				</div>
@@ -73,7 +73,8 @@
 				<div class="versus__descr">
 					<h2>Why Exchange 1</h2>
 					<p>
-						Crypto trading went in the wrong way. We believe that trading should be free and simple.
+
+						Trading went in the wrong way. We believe that trading should be free and simple.
 						We created simple trading platform for everyone.
 						We list startups for free. We don't charge commissions for trading.
 						We don't take money on deposits
@@ -88,7 +89,7 @@
 					<h2>Our mission</h2>
 					<blockquote>Our mission is to disrupt finance, industry should work for you, not you for it</blockquote>
 					<ul>
-						<li>Cryptocurrency in a simple way</li>
+						<li>Stocks and cryptocurrencies in a simple way</li>
 
 						<li>No previous experience needed</li>
 
@@ -220,7 +221,7 @@
 	<div class="footer">
 		<div class="footer__inner">
 			<div class="footer__content">
-				<p class="footer__copy">Cryprocurrency exchnage</p>
+				<p class="footer__copy">Crypto and stock trading</p>
 				<img src="/theme/app/img/cards.png" alt="cards" class="footer__card">
 			</div>
 		</div>
