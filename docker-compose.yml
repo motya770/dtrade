@@ -39,15 +39,5 @@ services:
         - DATABASE_PASSWORD=1234
         - DATABASE_NAME=dtrade
         - DATABASE_PORT=3306
-  websocket-server:
-      image: wallawalla/websocket:latest
-      depends_on:
-        - rabbitmq
-        - demo-mysql
-        - app
-      ports:
-         - 8083:8083
-      environment:
-         RABBIT_HOST: rabbitmq
 volumes:
      my-datavolume:
