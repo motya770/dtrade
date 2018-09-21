@@ -10,6 +10,7 @@ import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.repository.quote.QuoteRepository;
 import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.IQuotesService;
+import com.dtrade.service.IRabbitService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class QuotesService implements IQuotesService {
 
     @Autowired
     private IBookOrderService bookOrderService;
+
+    @Autowired
+    private IRabbitService rabbitService;
 
     @Override
     public Pair<List<DepthQuote>, List<DepthQuote>> getDepthQuotes(Diamond diamond) {
@@ -186,6 +190,9 @@ public class QuotesService implements IQuotesService {
         logger.debug("QUOTE:  {} {}", bid, ask);
 
         Quote quote1 =  create(quote);
+
+
+        rabbitService.quoteCreated(quote1);
         //System.out.println("QUOTE ISSUING: " + (System.currentTimeMillis() - start));
         return quote1;
     }

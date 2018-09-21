@@ -20,4 +20,6 @@ public class TradeOrderDTO {
     private Long creationDate;
 
     private TradeOrderDirection tradeOrderDirection;
+
+    private Long diamondId;
 }

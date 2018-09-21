@@ -1,19 +1,14 @@
 package com.dtrade.repository.tradeorder;
 
 import com.dtrade.model.account.Account;
-import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.model.tradeorder.TradeOrderDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.QueryHint;
 import java.util.List;
 
 /**
@@ -23,7 +18,7 @@ import java.util.List;
 public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
     @Query("select to from TradeOrder to where to.traderOrderStatusIndex = 'LIVE' order by to.creationDate desc")
-    List<TradeOrder> getLiveTradeOrders();
+    List<TradeOrder> getLiveTradeOrders(Pageable pageable);
 
 
 

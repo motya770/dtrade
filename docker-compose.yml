@@ -1,6 +1,13 @@
 version: '2.1'
 
 services:
+  rabbitmq:
+    image: rabbitmq:3.7.7
+    ports:
+          - 1884:1883
+          - 5671:5671
+    environment:
+           RABBITMQ_DEFAULT_VHOST: /
   demo-mysql:
     image: mysql:5.7.22
     environment:
@@ -23,6 +30,7 @@ services:
       depends_on:
         - demo-mysql
         - nginx
+        - rabbitmq
       ports:
          - 8080:8080
       environment:

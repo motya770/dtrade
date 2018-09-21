@@ -42,6 +42,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 /**
  * Created by kudelin on 7/15/17.
@@ -180,7 +181,7 @@ public class TradeOrderServiceTest extends BaseTest {
       });*/
 
        // tradeOrderService.calculateTradeOrders();
-        System.out.println("END " + (System.currentTimeMillis() - start));
+        //System.out.println("END " + (System.currentTimeMillis() - start));
 
 
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);

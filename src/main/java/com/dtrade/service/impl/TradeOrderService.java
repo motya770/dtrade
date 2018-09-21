@@ -7,28 +7,23 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.diamond.DiamondStatus;
 import com.dtrade.model.tradeorder.*;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
@@ -37,7 +32,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kudelin on 6/27/17.
@@ -71,6 +69,9 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Autowired
     private BalanceService balanceService;
+
+    @Autowired
+    private IRabbitService rabbitService;
 
     private ScheduledExecutorService historyCasheExecutor;
 
@@ -152,6 +153,7 @@ public class TradeOrderService  implements ITradeOrderService{
         tradeOrderDTO.setExecutionDate(to.getExecutionDate());
         tradeOrderDTO.setTradeOrderDirection(to.getTradeOrderDirection());
         tradeOrderDTO.setCreationDate(to.getCreationDate());
+        tradeOrderDTO.setDiamondId(to.getDiamond().getId());
         return tradeOrderDTO;
     }
 
@@ -162,12 +164,12 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.getBookOrders().entrySet().parallelStream().forEach((entry)->{
 
-            System.out.println("NEW THREAD");
+            //System.out.println("NEW THREAD");
 
             long start1 = System.currentTimeMillis();
             int exitCounter = 0;
             while (true) {
-                System.out.println("STRAT WHILE");
+                //System.out.println("STRAT WHILE");
                 Pair<TradeOrder, TradeOrder> buySell = bookOrderService.findClosest(entry.getKey());
                 if(checkIfCanExecute(buySell)){
 
@@ -189,7 +191,7 @@ public class TradeOrderService  implements ITradeOrderService{
                     }*/
                 }
 
-                if(exitCounter==500){
+                if(exitCounter==100){
                     break;
                 }
                 exitCounter++;
@@ -353,7 +355,7 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public List<TradeOrder> getLiveTradeOrders() {
         logger.info("CALLING getLiveTradeOrders");
-        return tradeOrderRepository.getLiveTradeOrders();
+        return tradeOrderRepository.getLiveTradeOrders(PageRequest.of(0, 2000));
     }
 
     @Override
@@ -499,9 +501,12 @@ public class TradeOrderService  implements ITradeOrderService{
 
         bookOrderService.addNew(order);
 
+        rabbitService.tradeOrderCreated(convert(order));
+
         //logger.debug("Open Trade time {}", (System.currentTimeMillis() - start));
         return order;
     }
+
 
     private void defineMarketPrice(TradeOrder tradeOrder){
         if(tradeOrder.getTradeOrderType().equals(TradeOrderType.MARKET)) {
@@ -783,8 +788,11 @@ public class TradeOrderService  implements ITradeOrderService{
                     boolean sellResult = checkIfExecuted(sellOrder);
 
                     System.out.println("1.14");
-                    tradeOrderRepository.save(buyOrder);
-                    tradeOrderRepository.save(sellOrder);
+                    buyOrder = tradeOrderRepository.save(buyOrder);
+                    sellOrder = tradeOrderRepository.save(sellOrder);
+
+                    rabbitService.tradeOrderUpdated(convert(buyOrder));
+                    rabbitService.tradeOrderUpdated(convert(sellOrder));
 
                     System.out.println("1.15");
                     long end = System.currentTimeMillis() - start;
@@ -826,6 +834,7 @@ public class TradeOrderService  implements ITradeOrderService{
             order.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
             setExecutionDate(order);
             bookOrderService.remove(order);
+            rabbitService.tradeOrderExecuted(convert(order));
             return true;
         } else {
             order.setTraderOrderStatus(TraderOrderStatus.IN_MARKET);

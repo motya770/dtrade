@@ -1,4 +1,4 @@
-diamondApp.service("TradeOrderService", function ($http, $q) {
+diamondApp.service("TradeOrderService", function ($http, $q, DiamondService) {
 
     var liveOrders = null;
 
@@ -11,6 +11,10 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
         liveOrders.content.push(order);
     };
 
+    var clearHistoryOrders = function (diamond) {
+        historyOrders.length = 0;
+        //getHistoryOrders(diamond);
+    }
 
     var addHistoryOrder = function (order) {
         liveOrders.content.splice(arrayObjectIndexOf(liveOrders, order),1);
@@ -53,11 +57,31 @@ diamondApp.service("TradeOrderService", function ($http, $q) {
         //}
     };
 
+    /*
+    var ws = new WebSocket('ws://localhost:8083');
+
+    ws.addEventListener('message', function (event) {
+        console.log('Message from server ', event.data);
+        var data  = JSON.parse(event.data);
+        var channel = data.channel;
+        if(channel=='executed_tradeOrder'){
+
+            var diamond = DiamondService.getCurrentDiamond();
+            if(diamond.id == data.entity.diamondId) {
+                historyOrders.unshift(data.entity);
+                if(historyOrders.length>10) {
+                    historyOrders.pop();
+                }
+            }
+        }
+    });*/
+
     return {
         getHistoryOrders: getHistoryOrders,
         getLiveOrders: getLiveOrders,
         addLiveOrder: addLiveOrder,
-        addHistoryOrder: addHistoryOrder
+        addHistoryOrder: addHistoryOrder,
+        clearHistoryOrders: clearHistoryOrders
     }
 });
 

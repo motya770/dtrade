@@ -66,8 +66,8 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
     $scope.$on('buyDiamondChoosed', function (event, arg) {
         self.diamond = arg;
     });
-
+/*
     $scope.$on('buyDiamondChoosed', function (event, arg) {
         self.diamond = arg;
-    });
+    });*/
 });

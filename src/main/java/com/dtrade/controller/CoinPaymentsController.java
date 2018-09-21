@@ -1,6 +1,5 @@
 package com.dtrade.controller;
 
-import com.dtrade.exception.TradeException;
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.coinpayment.DepositRequest;
 import com.dtrade.model.coinpayment.InWithdrawRequest;

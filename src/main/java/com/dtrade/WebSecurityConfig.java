@@ -12,6 +12,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 /**
  * Created by kudelin on 8/24/16.
@@ -56,9 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/**").permitAll()
                 .and().formLogin().defaultSuccessUrl("/trade")
-                .loginPage("/login-page").permitAll()
+                .loginPage("/trade#!/login-form").permitAll()
                 .loginProcessingUrl("/login")
-                .failureForwardUrl("/login-page?error=fail")
+                //.failureUrl("/trade#!/login-form")
+                .failureHandler(new SimpleUrlAuthenticationFailureHandler("/trade#!/login-form"))
+                //.failureForwardUrl("/trade#!/login-form")
                 .and().logout().permitAll().logoutSuccessUrl("/trade");
 
         http.headers()

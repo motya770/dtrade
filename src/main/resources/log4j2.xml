@@ -9,24 +9,34 @@
         <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
+        <!--
         <File name="MyFile" fileName="all.log" immediateFlush="true" append="true">
             <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
+        <Async name="Async">
+            <AppenderRef ref="Async"/>
+        </Async>-->
+
+        <RandomAccessFile name="RandomAccessFile" fileName="all.log" immediateFlush="false" append="false">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m %ex%n</Pattern>
+            </PatternLayout>
+        </RandomAccessFile>
     </Appenders>
     <Loggers>
-        <Logger name="com.dtrade" level="debug" additivity="true">
-            <AppenderRef ref="MyFile"/>
-        </Logger>
+        <AsyncLogger name="com.dtrade" level="debug" additivity="true">
+            <AppenderRef ref="RandomAccessFile"/>
+        </AsyncLogger>
 
-        <Logger name="org.springframework.boot.actuate.endpoint.mvc.EndpointHandlerMapping" level="INFO"/>
-        <Logger name="org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter" level="INFO"/>
+        <AsyncLogger name="org.springframework.boot.actuate.endpoint.mvc.EndpointHandlerMapping" level="INFO"/>
+        <AsyncLogger name="org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter" level="INFO"/>
 
-        <Logger name="org.springframework.boot.web.filter" level="INFO"/>
+        <AsyncLogger name="org.springframework.boot.web.filter" level="INFO"/>
 
-        <Root level="INFO">
+        <AsyncRoot level="INFO">
             <AppenderRef ref="ConsoleAppender" />
-            <AppenderRef ref="MyFile"/>
-        </Root>
+            <AppenderRef ref="RandomAccessFile"/>
+        </AsyncRoot>
 
     </Loggers>
 </Configuration>

@@ -17,6 +17,27 @@
                     <a href="/trade#!/account">My account</a>
                 </li>
 
+                <li ng-show="vm.account">
+                    <form action="https://www.coinpayments.net/index.php" method="post">
+                        <input type="hidden" name="cmd" value="_pay">
+                        <input type="hidden" name="reset" value="1">
+                        <input type="hidden" name="merchant" value="1fb3cd572acffff43b1c0356d5429f1c">
+                        <input type="hidden" name="item_name" value="Diaminds Deposit">
+                        <input type="hidden" name="currency" value="USD">
+                        <input type="hidden" name="first_name" value="Trading platform">
+                        <input type="hidden" name="last_name" value="user">
+                        <input type="hidden" name="amountf" value="200">
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="hidden" name="allow_quantity" value="0">
+                        <input type="hidden" name="allow_amount" value="1">
+                        <input type="hidden" name="want_shipping" value="0">
+                        <input type="hidden" name="success_url" value="www.exchange1.io/trade">
+                        <input type="hidden" name="allow_extra" value="0">
+                        <input type="hidden" name="email" value="{{vm.account.mail}}">
+                        <md-button class="md-raised md-primary" type="submit" >Deposit</md-button>
+                    </form>
+                </li>
+
             <!--
                 <span ng-controller="AccountController as ac" >
                     <li ng-hide="ac.account" >
