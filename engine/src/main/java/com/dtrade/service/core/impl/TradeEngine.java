@@ -11,17 +11,16 @@ import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
 import com.dtrade.service.core.ITradeEngine;
-import com.dtrade.service.impl.TradeOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.PreDestroy;
 import java.math.BigDecimal;
@@ -172,8 +171,8 @@ public class TradeEngine implements ITradeEngine {
             return false;
         }
 
-        TradeOrder buyOrder = pair.getFirst();
-        TradeOrder sellOrder = pair.getSecond();
+        TradeOrder buyOrder = pair.getLeft();
+        TradeOrder sellOrder = pair.getRight();
 
         if(buyOrder==null || sellOrder == null){
             System.out.println("wtf null");
@@ -265,17 +264,17 @@ public class TradeEngine implements ITradeEngine {
             System.out.println("1.1");
             long start = System.currentTimeMillis();
 
-            TradeOrder buyOrder = tradeOrderRepository.findById(pair.getFirst().getId()).orElse(null);
-            TradeOrder sellOrder = tradeOrderRepository.findById(pair.getSecond().getId()).orElse(null);
-            System.out.println("1.2 " + " " + pair.getFirst().getId() + " " + pair.getSecond().getId());
+            TradeOrder buyOrder = tradeOrderRepository.findById(pair.getLeft().getId()).orElse(null);
+            TradeOrder sellOrder = tradeOrderRepository.findById(pair.getRight().getId()).orElse(null);
+            System.out.println("1.2 " + " " + pair.getLeft().getId() + " " + pair.getRight().getId());
             if (sellOrder==null){
                 //TODO this patch - you have a deadlock
-                bookOrderService.remove(pair.getSecond());
+                bookOrderService.remove(pair.getRight());
             }
 
             if (buyOrder==null){
                 //throw new TradeException("This should not be true");
-                bookOrderService.remove(pair.getFirst());
+                bookOrderService.remove(pair.getLeft());
             }
 
             System.out.println("1.3");
@@ -301,7 +300,7 @@ public class TradeEngine implements ITradeEngine {
             if (!(sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                     || sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
                 bookOrderService.remove(sellOrder);
-                return  Pair.of(true, false);
+                return Pair.of(true, false);
             }
 
             System.out.println("1.6");

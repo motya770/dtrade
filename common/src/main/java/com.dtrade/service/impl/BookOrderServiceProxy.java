@@ -5,9 +5,9 @@ import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderServiceProxy;
+import com.dtrade.utils.ConsulUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.data.util.Pair;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,14 +23,7 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
     private RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
-    private DiscoveryClient discoveryClient;
-
-    public String engineUrl() {
-        return discoveryClient.getInstances("engine")
-                .stream()
-                .map(si -> si.getUri())
-          .findFirst().get().toString();
-    }
+    private ConsulUtils consulUtils;
 
     @Override
     public List<Pair<?, ?>> getSpreadForDiamonds(List<Long> diamonds) {
@@ -39,30 +32,10 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
 
     @Override
     public BookOrderView getBookOrderView(Long diamondId) {
-        return null;
-    }
-
-    @Override
-    public Pair<Diamond, Pair<BigDecimal, BigDecimal>> getSpread(Diamond diamond) {
-        return null;
-    }
-
-    @Override
-    public boolean remove(TradeOrder tradeOrder) {
-        String url = engineUrl() + "/remove";
-
-        boolean result = restTemplate.postForObject(url, tradeOrder, boolean.class);
-        System.out.println("result: " + result);
-        return false;
-    }
-
-    //@Override
-    public BookOrder getBookOrder(Long diamondId) {
         try {
-            String url = engineUrl() + "/book-order/get-book-order";
-
-            RequestEntity<?> requestEntity =  RequestEntity.post(new URI(url)).body(diamondId);
-            ResponseEntity<BookOrder> responseEntity = restTemplate.exchange(requestEntity, BookOrder.class);
+            String url = consulUtils.engineUrl() + "/book-order/get-view";
+            RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(diamondId);
+            ResponseEntity<BookOrderView> responseEntity = restTemplate.exchange(requestEntity, BookOrderView.class);
             return responseEntity.getBody();
         }catch (Exception e){
             e.printStackTrace();
@@ -71,7 +44,36 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
     }
 
     @Override
+    public Pair<Diamond, Pair<BigDecimal, BigDecimal>> getSpread(Diamond diamond) {
+        try {
+            String url = consulUtils.engineUrl() + "/book-order/get-spread";
+            RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(diamond);
+            ResponseEntity<Pair> responseEntity = restTemplate.exchange(requestEntity, Pair.class);
+            return (Pair<Diamond, Pair<BigDecimal, BigDecimal>>) responseEntity.getBody();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean remove(TradeOrder tradeOrder) {
+        String url = consulUtils.engineUrl() + "/book-order/remove";
+        boolean result = restTemplate.postForObject(url, tradeOrder, boolean.class);
+        System.out.println("result: " + result);
+        return result;
+    }
+
+    @Override
     public boolean addNew(TradeOrder tradeOrder) {
+        try {
+            String url = consulUtils.engineUrl() + "/book-order/add-new";
+            RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(tradeOrder);
+            ResponseEntity<Boolean> responseEntity = restTemplate.exchange(requestEntity, boolean.class);
+            return responseEntity.getBody();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return false;
     }
 }

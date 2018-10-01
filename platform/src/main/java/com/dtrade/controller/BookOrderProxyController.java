@@ -2,8 +2,8 @@ package com.dtrade.controller;
 
 import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.service.IBookOrderServiceProxy;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -1,17 +1,14 @@
 package com.dtrade.controller;
 
-import com.dtrade.exception.TradeException;
-import com.dtrade.model.bookorder.BookOrder;
+import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.quote.depth.DepthQuote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderService;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping(value = "/book-order", method = RequestMethod.POST)
@@ -22,9 +19,21 @@ public class BookOrderController {
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     public void remove(@RequestBody(required = true) TradeOrder tradeOrder){
-        bookOrderService.remove(tradeOrder);
+         bookOrderService.remove(tradeOrder);
     }
 
+    @RequestMapping(value = "/add-new", method = RequestMethod.POST)
+    public void addNew(@RequestBody(required = true) TradeOrder tradeOrder){
+        bookOrderService.addNew(tradeOrder);
+    }
 
+    @RequestMapping(value = "/get-view", method = RequestMethod.POST)
+    public BookOrderView addNew(@RequestBody(required = true) Long diamondId){
+       return bookOrderService.getBookOrderView(diamondId);
+    }
 
+    @RequestMapping(value = "/get-spread", method = RequestMethod.POST)
+    public Pair<Diamond, Pair<BigDecimal, BigDecimal>> getSpread(@RequestBody(required = true) Diamond diamond){
+        return bookOrderService.getSpread(diamond);
+    }
 }
