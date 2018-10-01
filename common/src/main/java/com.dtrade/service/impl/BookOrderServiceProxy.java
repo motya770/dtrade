@@ -8,6 +8,7 @@ import com.dtrade.service.IBookOrderServiceProxy;
 import com.dtrade.utils.ConsulUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -69,8 +70,10 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
         try {
             String url = consulUtils.engineUrl() + "/book-order/add-new";
             RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(tradeOrder);
-            ResponseEntity<Boolean> responseEntity = restTemplate.exchange(requestEntity, boolean.class);
-            return responseEntity.getBody();
+            ResponseEntity<?> responseEntity = restTemplate.exchange(requestEntity, String.class);
+            if(responseEntity.getStatusCode().equals(HttpStatus.OK)){
+                return true;
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

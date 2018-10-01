@@ -4,6 +4,7 @@ import com.dtrade.model.tradeorder.TradeOrderDTO;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,6 +13,11 @@ public class BookOrderView {
 
     private List<TradeOrderDTO> buyOrders;
     private List<TradeOrderDTO> sellOrders;
+
+    public BookOrderView(){
+        buyOrders = new ArrayList<>();
+        sellOrders = new ArrayList<>();
+    }
 
     public BookOrderView(List<TradeOrderDTO> buyOrders, List<TradeOrderDTO> sellOrders){
         this.buyOrders = buyOrders;
