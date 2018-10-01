@@ -71,9 +71,21 @@ public class TradeEngine implements ITradeEngine {
         transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
     }
 
+    @Override
+    public void prepareAndLaunch() {
+        Runnable runnable = () -> {
+            tradeOrderService.getLiveTradeOrders().forEach(tradeOrder -> bookOrderService.addNew(tradeOrder));
+            logger.info("Starting trade engine");
+            launch();
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
     // @EventListener(ContextRefreshedEvent.class)
     @Override
-    public void start(){
+    public void launch(){
 
        service = Executors.newScheduledThreadPool(10);
        //TODO rewrite

@@ -14,8 +14,6 @@ import com.dtrade.service.core.ITradeEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +69,7 @@ public class BookOrderService implements IBookOrderService {
 
     @Override
     public BookOrderView getBookOrderView(Long diamondId){
-        //long start = System.currentTimeMillis();
+        //long launch = System.currentTimeMillis();
         BookOrder bookOrder = getBookOrder(diamondId);
         List<TradeOrderDTO> buyOrders  = null;
         List<TradeOrderDTO> sellOrders  = null;
@@ -90,7 +88,7 @@ public class BookOrderService implements IBookOrderService {
             Collections.reverse(sellOrders);
         }
 
-        //System.out.println("BookOrder: " + (System.currentTimeMillis() - start));
+        //System.out.println("BookOrder: " + (System.currentTimeMillis() - launch));
         return new BookOrderView(buyOrders, sellOrders);
     }
 
@@ -276,21 +274,11 @@ public class BookOrderService implements IBookOrderService {
     @Autowired
     private ITradeEngine tradeEngine;
 
-    @EventListener(ContextRefreshedEvent.class)
+
+
     public void init() {
 
-        logger.debug("ContextRefreshedEvent!!!");
 
 
-        Runnable runnable = ()-> {
-
-            tradeOrderService.getLiveTradeOrders().forEach(tradeOrder -> addNew(tradeOrder));
-
-            logger.info("Starting trade engine");
-            tradeEngine.start();
-        };
-
-        Thread thread = new Thread(runnable);
-        thread.start();
     }
 }

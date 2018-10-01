@@ -10,7 +10,9 @@ public interface ITradeEngine {
 
     Pair<Boolean, Boolean> executeTradeOrders(Pair<TradeOrder, TradeOrder> pair);
 
-    void start();
+    void prepareAndLaunch();
+
+    void launch();
 
     void calculateTradeOrders();
 
