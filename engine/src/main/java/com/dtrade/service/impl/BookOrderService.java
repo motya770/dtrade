@@ -64,9 +64,6 @@ public class BookOrderService implements IBookOrderService {
         return bookOrders;
     }
 
-
-
-
     @Override
     public BookOrderView getBookOrderView(Long diamondId){
         //long launch = System.currentTimeMillis();

@@ -18,9 +18,6 @@ import java.util.List;
  */
 public interface IQuotesService {
 
-
-    Pair<List<DepthQuote>, List<DepthQuote>>  getDepthQuotes(Diamond diamond);
-
     Quote issueQuote(Pair<TradeOrder, TradeOrder> pair);
 
     Quote create(Quote quote);

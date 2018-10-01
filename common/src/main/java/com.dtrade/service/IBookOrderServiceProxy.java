@@ -15,7 +15,7 @@ public interface IBookOrderServiceProxy {
 
     boolean remove(TradeOrder tradeOrder);
 
-    BookOrder getBookOrder(Long diamondId);
+   // BookOrder getBookOrder(Long diamondId);
 
     Pair<Diamond, Pair<BigDecimal, BigDecimal>>  getSpread(Diamond diamond);
 

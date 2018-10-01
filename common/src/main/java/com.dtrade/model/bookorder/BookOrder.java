@@ -11,12 +11,6 @@ import java.util.concurrent.ConcurrentSkipListSet;
 @Data
 public class BookOrder {
 
-//    private PriorityBlockingQueue<TradeOrder> buyOrders;
-//
-//
-//   private PriorityBlockingQueue<TradeOrder> sellOrders;
-
-
     private ConcurrentSkipListSet<TradeOrder> buyOrders;
 
     private ConcurrentSkipListSet<TradeOrder> sellOrders;

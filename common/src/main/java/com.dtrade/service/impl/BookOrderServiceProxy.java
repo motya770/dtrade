@@ -8,14 +8,14 @@ import com.dtrade.service.IBookOrderServiceProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.util.Pair;
-import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookOrderServiceProxy implements IBookOrderServiceProxy {
@@ -56,8 +56,17 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
         return false;
     }
 
-    @Override
+    //@Override
     public BookOrder getBookOrder(Long diamondId) {
+        try {
+            String url = engineUrl() + "/book-order/get-book-order";
+
+            RequestEntity<?> requestEntity =  RequestEntity.post(new URI(url)).body(diamondId);
+            ResponseEntity<BookOrder> responseEntity = restTemplate.exchange(requestEntity, BookOrder.class);
+            return responseEntity.getBody();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return null;
     }
 
