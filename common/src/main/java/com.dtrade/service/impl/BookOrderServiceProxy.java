@@ -5,19 +5,32 @@ import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderServiceProxy;
-import com.dtrade.service.IRabbitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookOrderServiceProxy implements IBookOrderServiceProxy {
 
+    private RestTemplate restTemplate = new RestTemplate();
+
     @Autowired
-    private IRabbitService rabbitService;
+    private DiscoveryClient discoveryClient;
+
+    public String engineUrl() {
+        return discoveryClient.getInstances("engine")
+                .stream()
+                .map(si -> si.getUri())
+          .findFirst().get().toString();
+    }
 
     @Override
     public List<Pair<?, ?>> getSpreadForDiamonds(List<Long> diamonds) {
@@ -36,6 +49,10 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
 
     @Override
     public boolean remove(TradeOrder tradeOrder) {
+        String url = engineUrl() + "/remove";
+
+        boolean result = restTemplate.postForObject(url, tradeOrder, boolean.class);
+        System.out.println("result: " + result);
         return false;
     }
 

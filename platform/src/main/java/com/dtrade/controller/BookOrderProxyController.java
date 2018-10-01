@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping(value = "/book-order", method = RequestMethod.POST)
-public class BookOrderController {
+public class BookOrderProxyController {
 
     @Autowired
     private IBookOrderServiceProxy bookOrderServiceProxy;
