@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/book-order", method = RequestMethod.POST)
@@ -16,6 +17,11 @@ public class BookOrderController {
 
     @Autowired
     private IBookOrderService bookOrderService;
+
+    @RequestMapping(value = "/get-diamonds-spread", method = RequestMethod.POST)
+    public List<Pair<?,?>> getDiamondSpread(@RequestBody(required = true) List<Long> diamondIds){
+        return bookOrderService.getSpreadForDiamonds(diamondIds);
+    }
 
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     public void remove(@RequestBody(required = true) TradeOrder tradeOrder){

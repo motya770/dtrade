@@ -1,7 +1,9 @@
 package com.dtrade.controller;
 
 import com.dtrade.model.bookorder.BookOrderView;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.service.IBookOrderServiceProxy;
+import com.dtrade.utils.MyPair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +23,7 @@ public class BookOrderProxyController {
     private IBookOrderServiceProxy bookOrderServiceProxy;
 
     @RequestMapping(value = "/get-diamonds-spread", method = RequestMethod.POST)
-    public CompletableFuture<List<Pair<?, ?>>> getLastQuotesForDiamonds(@RequestBody(required = true) ArrayList<Long> diamonds){
+    public CompletableFuture<List<MyPair<Diamond, MyPair<?, ?>>>> getLastQuotesForDiamonds(@RequestBody(required = true) ArrayList<Long> diamonds){
 
         return CompletableFuture.supplyAsync(() -> {
                 return bookOrderServiceProxy.getSpreadForDiamonds(diamonds);
