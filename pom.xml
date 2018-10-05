@@ -43,6 +43,14 @@
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 
+
+        <!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast-hibernate52 -->
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-hibernate52</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-all</artifactId>

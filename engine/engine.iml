@@ -26,6 +26,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="app (1)" />
+    <orderEntry type="library" name="Maven: com.hazelcast:hazelcast-hibernate52:1.2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.hazelcast:hazelcast:3.9.4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-consul-all:2.0.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-consul-bus:2.0.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-consul:2.0.1.RELEASE" level="project" />
