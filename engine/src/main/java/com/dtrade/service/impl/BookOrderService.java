@@ -11,10 +11,10 @@ import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.IBookOrderService;
 import com.dtrade.service.ITradeOrderService;
 import com.dtrade.service.core.ITradeEngine;
-import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -126,7 +126,7 @@ public class BookOrderService implements IBookOrderService {
     public Pair<Diamond, Pair<BigDecimal, BigDecimal>> getSpread(Diamond diamond) {
             Pair<TradeOrder, TradeOrder> closest = this.findClosest(diamond.getId());
             if(closest!=null) {
-                return Pair.of(diamond, Pair.of(closest.getLeft().getPrice(), closest.getRight().getPrice()));
+                return Pair.of(diamond, Pair.of(closest.getFirst().getPrice(), closest.getSecond().getPrice()));
             }
         return null;
     }

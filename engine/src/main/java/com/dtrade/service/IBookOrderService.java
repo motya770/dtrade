@@ -4,7 +4,7 @@ import com.dtrade.model.bookorder.BookOrder;
 import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
-import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.data.util.Pair;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,7 +31,7 @@ public interface IBookOrderService {
 
      Pair<TradeOrder, List<TradeOrder>> find10Closest(Long diamondId);
 
-     List<Pair<?, ?>> getSpreadForDiamonds(List<Long> diamonds);
+     List<org.springframework.data.util.Pair<?, ?>> getSpreadForDiamonds(List<Long> diamonds);
 
      Pair<Diamond, Pair<BigDecimal, BigDecimal>>  getSpread(Diamond diamond);
 }

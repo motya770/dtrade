@@ -5,9 +5,9 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
 import com.dtrade.model.tradeorder.TradeOrder;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Pair;
 
 import java.math.BigDecimal;
 import java.util.List;

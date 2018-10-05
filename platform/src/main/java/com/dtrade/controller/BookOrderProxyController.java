@@ -23,7 +23,7 @@ public class BookOrderProxyController {
     private IBookOrderServiceProxy bookOrderServiceProxy;
 
     @RequestMapping(value = "/get-diamonds-spread", method = RequestMethod.POST)
-    public CompletableFuture<List<MyPair<Diamond, MyPair<?, ?>>>> getLastQuotesForDiamonds(@RequestBody(required = true) ArrayList<Long> diamonds){
+    public CompletableFuture<String> getLastQuotesForDiamonds(@RequestBody(required = true) ArrayList<Long> diamonds){
 
         return CompletableFuture.supplyAsync(() -> {
                 return bookOrderServiceProxy.getSpreadForDiamonds(diamonds);

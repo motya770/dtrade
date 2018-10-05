@@ -1,7 +1,7 @@
 package com.dtrade.service.core;
 
 import com.dtrade.model.tradeorder.TradeOrder;
-import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.data.util.Pair;
 
 /**
  * Created by kudelin on 7/4/17.

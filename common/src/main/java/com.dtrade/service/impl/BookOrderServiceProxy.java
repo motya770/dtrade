@@ -1,15 +1,12 @@
 package com.dtrade.service.impl;
 
-import com.dtrade.model.bookorder.BookOrder;
 import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderServiceProxy;
 import com.dtrade.utils.ConsulUtils;
-import com.dtrade.utils.MyPair;
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,12 +26,12 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
     private ConsulUtils consulUtils;
 
     @Override
-    public List<MyPair<Diamond, MyPair<?, ?>>>  getSpreadForDiamonds(List<Long> diamonds) {
+    public String getSpreadForDiamonds(List<Long> diamonds) {
         try {
             String url = consulUtils.engineUrl() + "/book-order/get-diamonds-spread";
             RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(diamonds);
-            ResponseEntity<ArrayList> responseEntity = restTemplate.exchange(requestEntity, ArrayList.class);
-            return (List<MyPair<Diamond, MyPair<?, ?>>> )responseEntity.getBody();
+            ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
+            return responseEntity.getBody();
         }catch (Exception e){
             e.printStackTrace();
         }

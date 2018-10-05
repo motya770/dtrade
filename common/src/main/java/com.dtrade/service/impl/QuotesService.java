@@ -11,13 +11,13 @@ import com.dtrade.repository.quote.QuoteRepository;
 import com.dtrade.service.IBookOrderServiceProxy;
 import com.dtrade.service.IQuotesService;
 import com.dtrade.service.IRabbitService;
-import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,8 +58,8 @@ public class QuotesService implements IQuotesService {
             return null;
         }
 
-        TradeOrder buyOrder = pair.getLeft();
-        TradeOrder sellOrder = pair.getRight();
+        TradeOrder buyOrder = pair.getFirst();
+        TradeOrder sellOrder = pair.getSecond();
         if(sellOrder == null && buyOrder == null){
             return null;
         }

@@ -10,7 +10,6 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.*;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
-import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -338,11 +338,11 @@ public class TradeOrderService  implements ITradeOrderService{
             }else{
                 if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
                     // for buy order we take sell price
-                    tradeOrder.setPrice(spread.getRight().getRight().setScale(8, BigDecimal.ROUND_HALF_UP));
+                    tradeOrder.setPrice(spread.getSecond().getSecond().setScale(8, BigDecimal.ROUND_HALF_UP));
 
                 } else if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)) {
                     // for sell order we take buy price
-                    tradeOrder.setPrice(spread.getRight().getLeft().setScale(8, BigDecimal.ROUND_HALF_UP));
+                    tradeOrder.setPrice(spread.getSecond().getFirst().setScale(8, BigDecimal.ROUND_HALF_UP));
                 } else {
                     throw new TradeException("Unexpected behavior");
                 }

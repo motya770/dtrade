@@ -14,13 +14,13 @@ import com.dtrade.service.core.ITradeEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.PreDestroy;
 import java.math.BigDecimal;
@@ -171,8 +171,8 @@ public class TradeEngine implements ITradeEngine {
             return false;
         }
 
-        TradeOrder buyOrder = pair.getLeft();
-        TradeOrder sellOrder = pair.getRight();
+        TradeOrder buyOrder = pair.getFirst();
+        TradeOrder sellOrder = pair.getSecond();
 
         if(buyOrder==null || sellOrder == null){
             System.out.println("wtf null");
@@ -264,17 +264,17 @@ public class TradeEngine implements ITradeEngine {
             System.out.println("1.1");
             long start = System.currentTimeMillis();
 
-            TradeOrder buyOrder = tradeOrderRepository.findById(pair.getLeft().getId()).orElse(null);
-            TradeOrder sellOrder = tradeOrderRepository.findById(pair.getRight().getId()).orElse(null);
-            System.out.println("1.2 " + " " + pair.getLeft().getId() + " " + pair.getRight().getId());
+            TradeOrder buyOrder = tradeOrderRepository.findById(pair.getFirst().getId()).orElse(null);
+            TradeOrder sellOrder = tradeOrderRepository.findById(pair.getSecond().getId()).orElse(null);
+            System.out.println("1.2 " + " " + pair.getFirst().getId() + " " + pair.getSecond().getId());
             if (sellOrder==null){
                 //TODO this patch - you have a deadlock
-                bookOrderService.remove(pair.getRight());
+                bookOrderService.remove(pair.getSecond());
             }
 
             if (buyOrder==null){
                 //throw new TradeException("This should not be true");
-                bookOrderService.remove(pair.getLeft());
+                bookOrderService.remove(pair.getFirst());
             }
 
             System.out.println("1.3");
