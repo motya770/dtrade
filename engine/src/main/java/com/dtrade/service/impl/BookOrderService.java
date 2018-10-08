@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 /**
  * Created by kudelin on 7/10/17.
  */
-@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
+@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_COMMITTED)
 @Service
 public class BookOrderService implements IBookOrderService {
 

@@ -273,30 +273,34 @@ public class TradeOrderService  implements ITradeOrderService{
         //TODO check account balance.
         //TODO freeze money (?)
 
-        long start = System.currentTimeMillis();
-
-        defineMarketPrice(tradeOrder);
-
-        validateFields(tradeOrder);
-
-        final TradeOrder realOrder = new TradeOrder();
-        realOrder.setAmount(tradeOrder.getAmount());
-        realOrder.setInitialAmount(tradeOrder.getAmount());
-        realOrder.setDiamond(tradeOrder.getDiamond());
-
         Account account = accountService.find(tradeOrder.getAccount().getId());
-        realOrder.setAccount(account);
 
-        realOrder.setPrice(tradeOrder.getPrice().setScale(8, BigDecimal.ROUND_HALF_UP));
-        realOrder.setTradeOrderDirection(tradeOrder.getTradeOrderDirection());
-        realOrder.setTraderOrderStatus(TraderOrderStatus.CREATED);
-        realOrder.setCreationDate(System.currentTimeMillis());
-        realOrder.setTradeOrderType(tradeOrder.getTradeOrderType());
-        realOrder.setExecutionSum(new BigDecimal("0.00"));
+        TradeOrder order =  transactionTemplate.execute(transactionStatus->{
+            long start = System.currentTimeMillis();
 
-        logger.debug("before save {}", tradeOrder);
+            defineMarketPrice(tradeOrder);
 
-        TradeOrder order = tradeOrderRepository.saveAndFlush(realOrder);
+            validateFields(tradeOrder);
+
+            final TradeOrder realOrder = new TradeOrder();
+            realOrder.setAmount(tradeOrder.getAmount());
+            realOrder.setInitialAmount(tradeOrder.getAmount());
+            realOrder.setDiamond(tradeOrder.getDiamond());
+
+
+            realOrder.setAccount(account);
+
+            realOrder.setPrice(tradeOrder.getPrice().setScale(8, BigDecimal.ROUND_HALF_UP));
+            realOrder.setTradeOrderDirection(tradeOrder.getTradeOrderDirection());
+            realOrder.setTraderOrderStatus(TraderOrderStatus.CREATED);
+            realOrder.setCreationDate(System.currentTimeMillis());
+            realOrder.setTradeOrderType(tradeOrder.getTradeOrderType());
+            realOrder.setExecutionSum(new BigDecimal("0.00"));
+
+            logger.debug("before save {}", tradeOrder);
+
+            return tradeOrderRepository.save(realOrder);
+        });
 
         afterTradeOrderCreation(order, account);
         return order;
