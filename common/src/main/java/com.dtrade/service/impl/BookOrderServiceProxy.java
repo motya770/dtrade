@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URI;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -57,8 +59,13 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
         try {
             String url = consulUtils.engineUrl() + "/book-order/get-spread";
             RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(diamond);
-            ResponseEntity<MyPair> responseEntity = restTemplate.exchange(requestEntity, Pair.class);
-            return (Pair<Diamond, Pair<BigDecimal, BigDecimal>>) responseEntity.getBody();
+            ResponseEntity<LinkedHashMap> responseEntity = restTemplate.exchange(requestEntity, LinkedHashMap.class);
+            LinkedHashMap<Diamond, LinkedHashMap<Double, Double>> result = (LinkedHashMap<Diamond, LinkedHashMap<Double, Double>>) responseEntity.getBody();
+
+            Pair<?, ?> bidAsk = Pair.of(new BigDecimal(result.get("second").get("first")).setScale(8, RoundingMode.HALF_UP),
+                    new BigDecimal(result.get("second").get("second")).setScale(8, RoundingMode.HALF_UP));
+            Pair<Diamond, ?> diamondPair = Pair.of(diamond, bidAsk);
+            return (Pair<Diamond, Pair<BigDecimal, BigDecimal>>) diamondPair;
         }catch (Exception e){
             e.printStackTrace();
         }

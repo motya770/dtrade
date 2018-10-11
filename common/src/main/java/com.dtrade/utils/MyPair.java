@@ -5,8 +5,8 @@ import lombok.Data;
 public class MyPair<L, R>  {
 
     /** Left object */
-    public L left;
+    public L first;
     /** Right object */
-    public R right;
+    public R second;
 
 }

@@ -42,7 +42,7 @@ public class BalanceServiceTest extends BaseTest {
         Assert.assertTrue(currencies.size() > 0);
 
         Assert.assertTrue(currencies.contains(Currency.BTC));
-        Assert.assertTrue(currencies.contains(Currency.USDT));
+        Assert.assertTrue(currencies.contains(Currency.USD));
         Assert.assertTrue(currencies.contains(Currency.ETH));
     }
 

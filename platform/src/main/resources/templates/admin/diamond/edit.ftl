@@ -171,7 +171,7 @@
 
             <div class="radio">
                 <label>Base Currency</label><br/>
-            <#assign stringStatusValue = (diamond.baseCurrency)!"" />
+            <#assign stringStatusValue = (diamond.getBase)!"" />
             <@spring.formRadioButtons "diamond.baseCurrency", currencies, ""/><br><br>
             </div>
 
