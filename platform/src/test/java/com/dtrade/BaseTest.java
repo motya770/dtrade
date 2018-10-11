@@ -67,6 +67,7 @@ public class BaseTest {
         diamond.setTotalStockAmount(new BigDecimal("40000000"));
         diamond.setCurrency(Currency.BTC);
         diamond.setBaseCurrency(Currency.USDT);
+        diamond.setRoboMaxAmount(new BigDecimal("1.00"));
 
         diamond = diamondService.create(diamond);
         return diamond;

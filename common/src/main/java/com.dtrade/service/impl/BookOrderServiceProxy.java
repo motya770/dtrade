@@ -5,6 +5,7 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderServiceProxy;
 import com.dtrade.utils.ConsulUtils;
+import com.dtrade.utils.MyPair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
@@ -56,7 +57,7 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
         try {
             String url = consulUtils.engineUrl() + "/book-order/get-spread";
             RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(diamond);
-            ResponseEntity<Pair> responseEntity = restTemplate.exchange(requestEntity, Pair.class);
+            ResponseEntity<MyPair> responseEntity = restTemplate.exchange(requestEntity, Pair.class);
             return (Pair<Diamond, Pair<BigDecimal, BigDecimal>>) responseEntity.getBody();
         }catch (Exception e){
             e.printStackTrace();
