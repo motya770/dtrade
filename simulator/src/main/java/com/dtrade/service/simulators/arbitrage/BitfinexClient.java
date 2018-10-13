@@ -1,4 +1,4 @@
-package com.dtrade.service.arbitrage;
+package com.dtrade.service.simulators.arbitrage;
 
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.service.IDiamondService;

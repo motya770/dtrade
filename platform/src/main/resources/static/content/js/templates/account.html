@@ -205,7 +205,7 @@
                                     <label>Crypto Coin</label>
                                     <md-select ng-model="cp.withdrawRequest.currencyCoin">
                                         <md-option><em>None</em></md-option>
-                                        <md-option ng-repeat="state in ['BTC', 'ETH', 'USDT']" ng-value="state" ng-disabled="$index === 1">
+                                        <md-option ng-repeat="state in ['BTC', 'ETH', 'USD']" ng-value="state" ng-disabled="$index === 1">
                                             {{state}}
                                         </md-option>
                                     </md-select>

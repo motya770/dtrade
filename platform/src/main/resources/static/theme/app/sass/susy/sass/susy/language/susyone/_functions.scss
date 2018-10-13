@@ -274,8 +274,8 @@ $rem-with-px-fallback               : true !default;
 //                : - one unitless number (columns in a layout)
 //                : - two optional lengths (min and max-width media-query breakpoints).
 //                : - one optional boolean or string to trigger fallback support for IE.
-// $font-size     : [optional] The base font-size of your layout, if you are using ems.
-//                : - defaults to $base-font-size
+// $font-size     : [optional] The baseCurrency font-size of your layout, if you are using ems.
+//                : - defaults to $baseCurrency-font-size
 @function medialayout(
   $media-layout,
   $font-size: $base-font-size
