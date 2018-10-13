@@ -23,6 +23,7 @@
         <module>engine</module>
         <module>platform</module>
         <module>simulator</module>
+        <module>backoffice</module>
     </modules>
 
     <properties>
