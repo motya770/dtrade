@@ -28,6 +28,7 @@ public class RabbitService implements IRabbitService {
 
     @PostConstruct
     public void init() {
+        /*
         try {
             connectionFactory = new ConnectionFactory();
             connectionFactory.setAutomaticRecoveryEnabled(true);
@@ -45,7 +46,7 @@ public class RabbitService implements IRabbitService {
             channel.exchangeDeclare(EXCHANGE_NAME, "direct");
         } catch (Exception e) {
             logger.error("Can't init messaging", e);
-        }
+        }*/
     }
 
     @Override
@@ -58,6 +59,10 @@ public class RabbitService implements IRabbitService {
     }
 
     private void sendEntity(Object entity, String routingKey){
+        if(true){
+            logger.debug("Disabled rabbit");
+            return;
+        }
         try {
             Message sendMsg = Message.build(routingKey, entity);
             String message = mapper.writeValueAsString(sendMsg);
