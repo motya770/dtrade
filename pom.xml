@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.dtrade</groupId>
-    <artifactId>app</artifactId>
+    <artifactId>parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
-    <name>dtrade</name>
+    <name>parent</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>
@@ -18,17 +18,67 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <modules>
+        <module>common</module>
+        <module>engine</module>
+        <module>platform</module>
+        <module>simulator</module>
+        <module>backoffice</module>
+    </modules>
+
     <properties>
         <docker.image.prefix>wallawalla</docker.image.prefix>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-
-        <hibernate.version>5.2.10.Final</hibernate.version>
-
+        <java.version>1.10</java.version>
+        <hibernate.version>5.2.17.Final</hibernate.version>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-hazelcast -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-hazelcast</artifactId>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast-hibernate52 -->
+
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-hibernate52</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast-client -->
+        <!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast-all -->
+        <!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast-all -->
+        <!--
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-all</artifactId>
+            <version>3.9.4</version>
+        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-consul-all</artifactId>
+            <version>2.0.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectreactor</groupId>
+            <artifactId>reactor-spring</artifactId>
+            <version>1.0.1.RELEASE</version>
+        </dependency>
 
         <dependency>
             <groupId>com.rabbitmq</groupId>
@@ -75,10 +125,12 @@
 
 
         <!-- Hibernate Jcache -->
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jcache</artifactId>
         </dependency>
+
 
         <!--
         <dependency>
@@ -92,6 +144,7 @@
             <artifactId>ehcache-core</artifactId>
             <version>2.10.4</version>
         </dependency>-->
+
 
         <dependency>
             <groupId>org.ehcache</groupId>
@@ -145,12 +198,11 @@
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
 
-        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        -->
+
 
         <!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
 
@@ -180,10 +232,17 @@
         </dependency>
 
         <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <!--
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
-        </dependency>
+        </dependency>-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
@@ -226,12 +285,14 @@
             <version>1.2.6.RELEASE</version>
         </dependency>-->
 
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.10</version>
+            <version>1.18.2</version>
             <scope>provided</scope>
         </dependency>
+
 
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -288,59 +349,15 @@
 
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>springloaded</artifactId>
-                        <version>1.2.6.RELEASE</version>
-                    </dependency>
-                </dependencies>
 
-            </plugin>
-
-            <!--
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>exec-maven-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <phase>generate-sources</phase>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <executable>bower</executable>
-                        <arguments>
-                            <argument>install</argument>
-                        </arguments>
-                        <workingDirectory>${basedir}/src/main/resources/static</workingDirectory>
-                    </configuration>
-                </plugin>
-                -->
-            <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>dockerfile-maven-plugin</artifactId>
-                    <version>1.3.6</version>
-                    <configuration>
-                        <username>wallawalla</username>
-                        <password>pragma1</password>
-                        <repository>${docker.image.prefix}/diaminds</repository>
-                        <buildArgs>
-                            <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-                        </buildArgs>
-                    </configuration>
-                </plugin>
-        </plugins>
-
-
-    </build>
-
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.2</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
