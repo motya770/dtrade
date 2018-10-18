@@ -27,6 +27,7 @@ import java.util.List;
 @Data
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(uniqueConstraints= @UniqueConstraint(columnNames={"mail"}))
 public class Account implements UserDetails {
 
     public static final String F_ROLE_ACCOUNT = "ROLE_ACCOUNT";
@@ -73,6 +74,8 @@ public class Account implements UserDetails {
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<Balance> balances;
+
+    private String referral;
 
     private String phone;
 

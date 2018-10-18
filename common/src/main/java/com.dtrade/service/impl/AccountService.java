@@ -8,6 +8,7 @@ import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.repository.account.AccountRepository;
 import com.dtrade.service.*;
+import org.apache.commons.text.RandomStringGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,12 @@ public class AccountService implements IAccountService, UserDetailsService {
                 }
             }
         });
+    }
+
+    @Override
+    public Account createReferalAccount(String mail) {
+        Account account = createRealAccount(mail, "demo1345", null, null);
+        return accountRepository.save(account);
     }
 
     //TODO hardcoded - change
@@ -197,12 +204,22 @@ public class AccountService implements IAccountService, UserDetailsService {
         return account;
     }
 
+    private String generateReferral(){
+        RandomStringGenerator generator = new RandomStringGenerator.Builder()
+                .withinRange('a', 'z').build();
+        return generator.generate(20);
+    }
+
     @Override
     public Account createRealAccount(String login, String pwd, String phone, String currency) throws TradeException {
         Account account = buildAccount(login, pwd, phone, currency);
         //TODO remove after smpt
         account.setConfirmed(true);
         account.setEnabled(true);
+
+        String ref = generateReferral();
+        account.setReferral(ref);
+
         Account saved =  accountRepository.save(account);
 
         balanceService.getBaseCurrencies().forEach(c -> {
