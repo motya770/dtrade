@@ -1,6 +1,6 @@
 package com.dtrade.configuration;
 
-import com.dtrade.HazelcastHttpSessionConfig;
+import com.dtrade.config.HazelcastHttpSessionConfig;
 import com.hazelcast.config.SecurityConfig;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
