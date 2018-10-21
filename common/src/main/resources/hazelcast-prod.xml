@@ -205,6 +205,9 @@
         -->
         <cache-deserialized-values>INDEX-ONLY</cache-deserialized-values>
 
+        <attributes>
+            <attribute extractor="org.springframework.session.hazelcast.PrincipalNameExtractor">principalName</attribute>
+        </attributes>
     </map>
 
     <!--
