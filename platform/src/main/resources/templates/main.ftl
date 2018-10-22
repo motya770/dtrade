@@ -52,15 +52,14 @@
 					</div>
 				</div>
 
-				<!--
-				<div>
+				<div class="hero__text">
 					<form type="POST" action="/accounts/create-referral">
-					Sign to waiting list
-					<input name="mail" value=""/>
-					<input type="submit" value="SIGN"/>
+                        <p class="hero__descr">Sign to waiting list</p>
+					    <input name="mail" value=""/>
+                        <a href='#' class="btn btn--lg" style="margin-left: 126px; margin-bottom: 20px; width: 36%; margin-top:5px;" onclick='this.parentNode.submit(); return false;'>Sign</a>
 					</form>
-				</div>-->
-                <a href="/trade" class="btn btn--lg" style="margin-left: 126px; margin-bottom: 20px; width: 36%; margin-top:5px;">Start trading</a>
+				</div>
+
 			</div>
 		</div>
 		<div class="versus">

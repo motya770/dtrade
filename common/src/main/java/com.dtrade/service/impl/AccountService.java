@@ -249,6 +249,7 @@ public class AccountService implements IAccountService, UserDetailsService {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(account.getId());
         accountDTO.setMail(account.getMail());
+        accountDTO.setReferral(account.getReferral());
 
         List<Balance> balances = balanceService.getBaseBalancesByAccount(account);
         accountDTO.setBalance(balances);

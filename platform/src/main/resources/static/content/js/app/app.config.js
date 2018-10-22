@@ -20,6 +20,9 @@ config(['$locationProvider', '$routeProvider',
         when('/account', {
             template: '<account-component></account-component>'
         }).
+        when('/referral', {
+            template: '<referral-component></referral-component>'
+        }).
         otherwise('/trade');
     }
 ]);

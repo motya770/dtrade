@@ -13,4 +13,6 @@ public class AccountDTO {
     private String mail;
 
     private List<Balance> balance;
+
+    private String referral;
 }

@@ -17,7 +17,11 @@
                     <a href="/trade#!/account">My account</a>
                 </li>
 
-                <li ng-show="vm.account">
+                <li ng-show="vm.account" ng-class="{ active: isActive('/referral')}">
+                    <a href="/trade#!/referral">Referral</a>
+                </li>
+
+            <li ng-show="vm.account">
                     <form action="https://www.coinpayments.net/index.php" method="post">
                         <input type="hidden" name="cmd" value="_pay">
                         <input type="hidden" name="reset" value="1">
