@@ -55,8 +55,8 @@
 				<div class="hero__text">
 					<form type="POST" action="/accounts/create-referral">
                         <p class="hero__descr">Sign to waiting list</p>
-					    <input name="mail" value=""/>
-                        <a href='#' class="btn btn--lg" style="margin-left: 126px; margin-bottom: 20px; width: 36%; margin-top:5px;" onclick='this.parentNode.submit(); return false;'>Sign</a>
+					    <input name="mail" style="font-size: 14px; height: 30px; width: 300px;" value=""/>
+                        <a href='#' class="btn btn--lg" onclick='this.parentNode.submit(); return false;'>Sign</a>
 					</form>
 				</div>
 
