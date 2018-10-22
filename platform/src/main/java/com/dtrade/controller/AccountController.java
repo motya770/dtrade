@@ -33,8 +33,10 @@ public class AccountController {
     private ObjectMapper mapper = new ObjectMapper();
 
     @RequestMapping(value = "/create-referral", method = RequestMethod.GET)
-    public String signToRefferal(@RequestParam String mail)  {
-        accountService.createReferalAccount(mail);
+    public String signToRefferal(@RequestParam String mail,
+                                 @RequestParam(value = "hidden_ref", required = false) String ref)
+    {
+        accountService.createReferalAccount(mail, ref);
         return "redirect:/trade#!/referral";
     }
 

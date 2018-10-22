@@ -3,6 +3,17 @@
 
 <head>
 <#include "parts/general.ftl">
+<script type="text/javascript">
+	function submitForm(that) {
+
+        var url_string = window.location.href
+        var url = new URL(url_string);
+        var c = url.searchParams.get("ref");
+        document.getElementById('hidden_ref').value = c;
+
+        that.parentNode.submit();
+    }
+</script>
 </head>
 
 <body>
@@ -55,8 +66,9 @@
 				<div class="hero__text">
 					<form type="POST" action="/accounts/create-referral">
                         <p class="hero__descr">Sign to waiting list</p>
+                        <input id="hidden_ref" name="hidden_ref" type="hidden"/>
 					    <input name="mail" style="font-size: 14px; height: 30px; width: 300px;" value=""/>
-                        <a href='#' class="btn btn--lg" onclick='this.parentNode.submit(); return false;'>Sign</a>
+                        <a href='#' class="btn btn--lg" onclick='submitForm(this);return false;'>Sign</a>
 					</form>
 				</div>
 

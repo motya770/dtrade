@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
@@ -92,8 +93,18 @@ public class AccountService implements IAccountService, UserDetailsService {
     }
 
     @Override
-    public Account createReferalAccount(String mail) {
+    public Account createReferalAccount(String mail, String ref) {
         Account account = createRealAccount(mail, "demo1345", null, null);
+
+        //adding to referral account
+        if(!StringUtils.isEmpty(ref)) {
+            Account referalAccount = accountRepository.findByReferral(ref);
+            if(referalAccount!=null){
+                referalAccount.setReferredCount(referalAccount.getReferredCount() + 1);
+                accountRepository.save(referalAccount);
+            }
+        }
+
         return accountRepository.save(account);
     }
 
@@ -206,8 +217,8 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     private String generateReferral(){
         RandomStringGenerator generator = new RandomStringGenerator.Builder()
-                .withinRange('a', 'z').build();
-        return generator.generate(20);
+                .withinRange('A', 'Z').build();
+        return generator.generate(6);
     }
 
     @Override

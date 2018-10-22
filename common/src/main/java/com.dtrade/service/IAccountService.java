@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
  */
 public interface IAccountService {
 
-    Account createReferalAccount(String mail);
+    Account createReferalAccount(String mail, String ref);
 
     void createRoboAccounts();
 

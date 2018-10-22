@@ -77,6 +77,9 @@ public class Account implements UserDetails {
 
     private String referral;
 
+    @Column(nullable = false, columnDefinition = "int default 0")
+    private int referredCount;
+
     private String phone;
 
     @JsonIgnore

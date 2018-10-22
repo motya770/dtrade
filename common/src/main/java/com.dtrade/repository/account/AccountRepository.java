@@ -14,4 +14,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Account findAccountByGuidAndConfirmed(String guid, boolean confirmed);
 
+    Account findByReferral(String ref);
+
 }
