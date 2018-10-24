@@ -2,7 +2,11 @@
 <html>
 
 <head>
-<#include "parts/general.ftl">
+    <link rel="stylesheet" href="/theme/app/header.min.css">
+    <link rel="stylesheet" href="/theme/app/css/main.min.css">
+    <link rel="stylesheet" href="/theme/app/css/custom.css">
+    <link rel="stylesheet" href="/theme/app/css/fonts.min.css">
+
 <script type="text/javascript">
 	function submitForm(that) {
 
