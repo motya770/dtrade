@@ -44,7 +44,8 @@
 		</div>
 	</header>
 	<main class="content">
-		<div class="hero" style="background-image: url(/theme/app/img/bitcoin-cryptocurrency.jpg)">
+
+        <div class="hero" style="background-image: url(/theme/app/img/hope.jpg)">
 			<div class="hero__inner">
 				<div class="hero__text">
 					<h1 class="hero__heading">Stock and crypto trading as it should be</h1>
@@ -64,8 +65,8 @@
 				</div>
 
 				<div class="hero__text">
-					<form type="POST" action="/accounts/create-referral">
-                        <p class="hero__descr">Sign to waiting list</p>
+					<form type="POST" action="/accounts/create-referral" style="margin-top: -30px;">
+                        <p class="hero__descr">Get free tokens with your mail</p>
                         <input id="hidden_ref" name="hidden_ref" type="hidden"/>
 					    <input name="mail" style="font-size: 14px; height: 30px; width: 300px;" value=""/>
                         <a href='#' class="btn btn--lg" onclick='submitForm(this);return false;'>Sign</a>
