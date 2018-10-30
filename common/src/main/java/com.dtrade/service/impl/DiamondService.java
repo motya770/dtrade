@@ -9,6 +9,8 @@ import com.dtrade.repository.diamond.DiamondRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IScoreService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,9 @@ import java.util.List;
 @Service
 @Transactional
 public class DiamondService implements IDiamondService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DiamondService.class);
+
 
     @Autowired
     private DiamondRepository diamondRepository;
@@ -77,12 +82,12 @@ public class DiamondService implements IDiamondService {
         }
 
 
-        System.out.println("ask, bid1: " + bid + " " + ask);
+        logger.info("ask, bid1: " + bid + " " + ask);
 
         BigDecimal low = bid.multiply(LOW_BORDER_PERCENT);
         BigDecimal high = low.multiply(HIGH_BORDER_PERCENT);
 
-        System.out.println("ask, bid2: " + low + " " + high);
+        logger.info("ask, bid2: " + low + " " + high);
 
         diamond.setRoboLowEnd(low);
         diamond.setRoboHighEnd(high);

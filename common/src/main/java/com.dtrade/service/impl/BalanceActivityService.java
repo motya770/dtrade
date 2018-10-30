@@ -109,9 +109,17 @@ public class BalanceActivityService implements IBalanceActivityService {
         }
 
         Account account = accountService.find(coinPayment.getAccount().getId());
+        BigDecimal amount = coinPayment.getInWithdrawRequest().getAmountCoin();
 
-        BigDecimal withdrawAmount =  coinPayment.getInWithdrawRequest().getAmountCoin().multiply(new BigDecimal("-1"));
+        BigDecimal withdrawAmount =  amount.multiply(new BigDecimal("-1"));
         Currency currency = Currency.valueOf(coinPayment.getInWithdrawRequest().getCurrencyCoin());
+
+
+        Balance balance = balanceService.getBalance(currency, account);
+        if(balance.getActualBalance().compareTo(amount)<0){
+            throw new TradeException("Can't withdraw because actual amount less than amount: " +
+                    balance +  ", withdraw amount: " + amount);
+        }
 
         balanceService.updateBalance(currency, account, withdrawAmount);
         balanceService.unfreezeAmount(currency, account, withdrawAmount);

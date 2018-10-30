@@ -22,7 +22,7 @@ public class DepthQuoteController {
     @RequestMapping(value = "/get-depth-quotes", method = RequestMethod.POST)
     public Pair<List<DepthQuote>, List<DepthQuote>> getDepthQuotes(@RequestBody(required = true) Diamond diamond
     ) throws TradeException {
-        long start = System.currentTimeMillis();
+        //long start = System.currentTimeMillis();
         Pair<?, ?> pair =  depthQuotesService.getDepthQuotes(diamond);
         return (Pair<List<DepthQuote>, List<DepthQuote>>)pair;
     }

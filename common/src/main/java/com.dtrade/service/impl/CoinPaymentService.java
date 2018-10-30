@@ -221,7 +221,7 @@ public class CoinPaymentService implements ICoinPaymentService {
         Integer status = actualObj.get("result").get("status").asInt();
         BigDecimal amountCoin = new BigDecimal(actualObj.get("result").get("amount").asText());
 
-        System.out.println("id: " + id + " status: " + status + " amountCoin:" + amountCoin);
+        logger.info("id: " + id + " status: " + status + " amountCoin:" + amountCoin);
 
         withdrawRequest.setId(id);
         withdrawRequest.setStatus(status);
@@ -247,7 +247,7 @@ public class CoinPaymentService implements ICoinPaymentService {
 
     @Override
     public void proceedWithdraw(InWithdrawRequest withdrawRequest) {
-        System.out.println("1. Proceed: " + withdrawRequest);
+        logger.info("1. Proceed: " + withdrawRequest);
 
         CoinPayment coinPayment = coinPaymentRepository.findInWithdrawById(withdrawRequest.getId());
 
@@ -256,7 +256,7 @@ public class CoinPaymentService implements ICoinPaymentService {
             return;
         }
 
-        System.out.println("2. Proceed: " + coinPayment);
+        logger.info("2. Proceed: " + coinPayment);
 
         Integer status =  withdrawRequest.getStatus();
         if(status==null){
@@ -264,14 +264,14 @@ public class CoinPaymentService implements ICoinPaymentService {
         }
 
 
-        System.out.println("3. Status: " + status);
+        logger.info("3. Status: " + status);
 
         logger.debug("Status is {} for {}", status, coinPayment.getInWithdrawRequest().getIpnId());
 
         coinPayment.getInWithdrawRequest().update(withdrawRequest);
 
 
-        System.out.println("4. Updated: " + coinPayment.getInWithdrawRequest());
+        logger.info("4. Updated: " + coinPayment.getInWithdrawRequest());
 
         if(status == 0){
             coinPayment.setCoinPaymentStatus(CoinPaymentStatus.WAITING_FOR_EMAIL);
@@ -283,7 +283,7 @@ public class CoinPaymentService implements ICoinPaymentService {
             throw new TradeException("Unknown withdraw status " + status);
         }
 
-        System.out.println("5. New status: " + coinPayment);
+        logger.info("5. New status: " + coinPayment);
 
         coinPaymentRepository.save(coinPayment);
     }
@@ -385,8 +385,8 @@ public class CoinPaymentService implements ICoinPaymentService {
         calculatedHmac = calculatedHmac.trim();
         hmac = hmac.trim();
 
-        System.out.println("you hmac: " + hmac);
-        System.out.println("calculatedHmac: " + calculatedHmac);
+        logger.info("you hmac: " + hmac);
+        logger.info("calculatedHmac: " + calculatedHmac);
 
         if(!calculatedHmac.equals(hmac)){
             throw new TradeException("Hmac is not equals");
@@ -490,7 +490,7 @@ public class CoinPaymentService implements ICoinPaymentService {
          */
 
         ResponseEntity<String> response  = restTemplate.exchange(entity, String.class);
-        System.out.println(response.getBody());
+        logger.info(response.getBody());
 
 
     }

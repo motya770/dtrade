@@ -228,36 +228,40 @@ public class TradeOrderService  implements ITradeOrderService{
         accountService.checkCurrentAccount(account);
         account =  accountService.find(account.getId());
 
-        Diamond diamond = diamondService.find(tradeOrder.getDiamond().getId());
-        //TODO market price can be problematic
+        //robo account can trade always
+        if(!account.isRoboAccount()) {
 
-        if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
+            Diamond diamond = diamondService.find(tradeOrder.getDiamond().getId());
+            //TODO market price can be problematic
 
-            Balance balance =  balanceService.getBalance(diamond.getBaseCurrency(), account);
+            if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
 
-            if (balance.getAmount().compareTo(BigDecimal.ZERO)==0){
-                throw new TradeException("Account " + account.getMail()  +  " don't have enough currency " + diamond.getBaseCurrency() + " . Please make deposit. ");
+                Balance balance = balanceService.getBalance(diamond.getBaseCurrency(), account);
+
+                if (balance.getAmount().compareTo(BigDecimal.ZERO) == 0) {
+                    throw new TradeException("Account " + account.getMail() + " don't have enough currency " + diamond.getBaseCurrency() + " . Please make deposit. ");
+                }
+
+                BigDecimal actualBalance = balance.getActualBalance();
+                BigDecimal cash = tradeOrder.getPrice().multiply(tradeOrder.getAmount());
+                if (actualBalance.subtract(cash).compareTo(BigDecimal.ZERO) < 0) {
+                    throw new TradeException("Already opened too many buy orders for: " + account.getMail() + "!");
+                }
             }
 
-            BigDecimal actualBalance = balance.getActualBalance();
-            BigDecimal cash = tradeOrder.getPrice().multiply(tradeOrder.getAmount());
-            if(actualBalance.subtract(cash).compareTo(BigDecimal.ZERO) < 0){
-                throw new TradeException("Already opened too many buy orders for: " + account.getMail()  +  "!");
-            }
-        }
+            if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)) {
 
-        if(tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
+                Balance balance = balanceService.getBalance(diamond.getCurrency(), account);
 
-            Balance balance =  balanceService.getBalance(diamond.getCurrency(), account);
+                if (balance.getAmount().compareTo(BigDecimal.ZERO) == 0) {
+                    throw new TradeException("Account " + account.getMail() + " don't have enough currency " + diamond.getCurrency() + " . Please make deposit. ");
+                }
 
-            if (balance.getAmount().compareTo(BigDecimal.ZERO)==0){
-                throw new TradeException("Account " + account.getMail()  +  " don't have enough currency " + diamond.getCurrency() + " . Please make deposit. ");
-            }
-
-            BigDecimal actualBalance = balance.getActualBalance();
-            BigDecimal amount = tradeOrder.getAmount();
-            if(actualBalance.subtract(amount).compareTo(BigDecimal.ZERO) < 0){
-                throw new TradeException("Already opened too many sell orders for: " + account.getMail()  +  "!");
+                BigDecimal actualBalance = balance.getActualBalance();
+                BigDecimal amount = tradeOrder.getAmount();
+                if (actualBalance.subtract(amount).compareTo(BigDecimal.ZERO) < 0) {
+                    throw new TradeException("Already opened too many sell orders for: " + account.getMail() + "!");
+                }
             }
         }
     }
@@ -272,6 +276,10 @@ public class TradeOrderService  implements ITradeOrderService{
         //TODO freeze money (?)
 
         Account account = accountService.find(tradeOrder.getAccount().getId());
+
+        diamondService.validateDiamondCanTrade(
+                tradeOrder.getDiamond()
+        );
 
         TradeOrder order =  transactionTemplate.execute(transactionStatus->{
             long start = System.currentTimeMillis();
@@ -312,10 +320,9 @@ public class TradeOrderService  implements ITradeOrderService{
 
         Diamond diamond  = diamondService.find(order.getDiamond().getId());
 
-        diamondService.validateDiamondCanTrade(diamond);
 
-        System.out.println("Diamond: " + diamond);
-        System.out.println("Currency: " +  diamond.getCurrency());
+        logger.info("Diamond: " + diamond);
+        logger.info("Currency: " +  diamond.getCurrency());
 
         balanceService.updateOpenSum(order, account,
                 order.getAmount().multiply(order.getPrice()), order.getAmount());

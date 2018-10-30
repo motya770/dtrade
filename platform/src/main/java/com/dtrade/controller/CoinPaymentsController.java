@@ -71,18 +71,18 @@ public class CoinPaymentsController {
                           @RequestHeader HttpHeaders headers, @RequestBody String body) {
 
         //WE can't trust this request because i failed to decipher HMAC - so making new request to the server
-        System.out.println("!!!!!!!!!!!!!! ");
-        System.out.println("!!!!!!!!!!!!!! ");
-        System.out.println("!!!!!!!!!!!!!! ");
-        System.out.println("!!!!!!!!!!!!!! ");
-        System.out.println("NOTIFY! ");
+        logger.info("!!!!!!!!!!!!!! ");
+        logger.info("!!!!!!!!!!!!!! ");
+        logger.info("!!!!!!!!!!!!!! ");
+        logger.info("!!!!!!!!!!!!!! ");
+        logger.info("NOTIFY! ");
 
         params.forEach((k, v)->{
-            System.out.println("K:" + k + " V:" + v);
+            logger.info("K:" + k + " V:" + v);
         });
 
         headers.keySet().forEach(k->{
-            System.out.println("First header " +  headers.getFirst(k));
+            logger.info("First header " +  headers.getFirst(k));
         });
 
         String hmac = headers.getFirst("hmac");
@@ -97,13 +97,13 @@ public class CoinPaymentsController {
             logger.error("Type " + ipn_type + " is unknown");
         }
 
-        System.out.println("BODY: " + body);
-        headers.forEach((k, v)-> System.out.println("K:" + k + ", " + "V: " + v));
+        logger.info("BODY: " + body);
+        headers.forEach((k, v)-> logger.info("K:" + k + ", " + "V: " + v));
 
-        System.out.println("!!!!!!!!!!!!!! ");
-        System.out.println("!!!!!!!!!!!!!! ");
-        System.out.println("!!!!!!!!!!!!!! ");
-        System.out.println("!!!!!!!!!!!!!! ");
-        System.out.println("!!!!!!!!!!!!!! ");
+        logger.info("!!!!!!!!!!!!!! ");
+        logger.info("!!!!!!!!!!!!!! ");
+        logger.info("!!!!!!!!!!!!!! ");
+        logger.info("!!!!!!!!!!!!!! ");
+        logger.info("!!!!!!!!!!!!!! ");
     }
 }

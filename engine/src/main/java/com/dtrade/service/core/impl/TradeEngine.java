@@ -90,7 +90,7 @@ public class TradeEngine implements ITradeEngine {
        //TODO rewrite
        service.scheduleWithFixedDelay(()->{
            try{
-              // System.out.println("IN THE LOOP!!!");
+              // logger.info("IN THE LOOP!!!");
                calculateTradeOrders();
            }catch (Exception e){
                e.printStackTrace();
@@ -107,19 +107,19 @@ public class TradeEngine implements ITradeEngine {
 
         bookOrderService.getBookOrders().entrySet().parallelStream().forEach((entry)->{
 
-            //System.out.println("NEW THREAD");
+            //logger.info("NEW THREAD");
 
             long start1 = System.currentTimeMillis();
             int exitCounter = 0;
             while (true) {
-                //System.out.println("STRAT WHILE");
+                //logger.info("STRAT WHILE");
                 Pair<TradeOrder, TradeOrder> buySell = bookOrderService.findClosest(entry.getKey());
                 if(checkIfCanExecute(buySell)){
 
                     Runnable quoteRunnable = () -> quotesService.issueQuote(buySell);
                     executor.execute(quoteRunnable);
 
-                    System.out.println("CAN EXECUTE " + entry.getKey());
+                    logger.info("CAN EXECUTE " + entry.getKey());
                     transactionTemplate.execute(status -> {
                         return executeTradeOrders(buySell);
                     });
@@ -175,7 +175,7 @@ public class TradeEngine implements ITradeEngine {
         TradeOrder sellOrder = pair.getSecond();
 
         if(buyOrder==null || sellOrder == null){
-            System.out.println("wtf null");
+            logger.info("wtf null");
             return false;
         }
 
@@ -183,30 +183,30 @@ public class TradeEngine implements ITradeEngine {
         //sellOrder = tradeOrderRepository.findById(sellOrder.getId()).orElse(null);
 
 //        if(buyOrder==null || sellOrder == null){
-//            System.out.println("wtf null 2");
+//            logger.info("wtf null 2");
 //            return false;
 //        }
 
         if (buyOrder.getInitialAmount().compareTo(BigDecimal.ZERO) == 0){
             logger.error("trade order amount is null " + buyOrder.getId());
-            System.out.println("wtf amount");
+            logger.info("wtf amount");
             return false;
         }
 
         if (sellOrder.getInitialAmount().compareTo(BigDecimal.ZERO) == 0){
             logger.error("trade order amount is null " + sellOrder.getId());
-            System.out.println("wtf amount 2");
+            logger.info("wtf amount 2");
             return false;
         }
 
         /*
         if(sellOrder.getTraderOrderStatus()==TraderOrderStatus.EXECUTED){
-            System.out.println("wtf executed");
+            logger.info("wtf executed");
             return false;
         }
 
         if(buyOrder.getTraderOrderStatus()==TraderOrderStatus.EXECUTED){
-            System.out.println("wtf executed");
+            logger.info("wtf executed");
             return false;
         }*/
 
@@ -222,14 +222,14 @@ public class TradeEngine implements ITradeEngine {
             return true;
         }
 
-        // System.out.println("wtf end");
+        // logger.info("wtf end");
         return false;
     }
 
     private boolean checkIfExecuted(TradeOrder order){
-        // System.out.println("checking if executed " + order.getAmount().setScale(8));
+        // logger.info("checking if executed " + order.getAmount().setScale(8));
         if (order.getAmount().compareTo(ITradeOrderService.ZERO_VALUE)==0) {
-            System.out.println("EXECUTED: " + order.getId());
+            logger.info("EXECUTED: " + order.getId());
             order.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
             setExecutionDate(order);
             bookOrderService.remove(order);
@@ -261,12 +261,12 @@ public class TradeEngine implements ITradeEngine {
                         5) work only during one minute
                      */
 
-            System.out.println("1.1");
+            logger.info("1.1");
             long start = System.currentTimeMillis();
 
             TradeOrder buyOrder = tradeOrderRepository.findById(pair.getFirst().getId()).orElse(null);
             TradeOrder sellOrder = tradeOrderRepository.findById(pair.getSecond().getId()).orElse(null);
-            System.out.println("1.2 " + " " + pair.getFirst().getId() + " " + pair.getSecond().getId());
+            logger.info("1.2 " + " " + pair.getFirst().getId() + " " + pair.getSecond().getId());
             if (sellOrder==null){
                 //TODO this patch - you have a deadlock
                 bookOrderService.remove(pair.getSecond());
@@ -277,17 +277,17 @@ public class TradeEngine implements ITradeEngine {
                 bookOrderService.remove(pair.getFirst());
             }
 
-            System.out.println("1.3");
-            //System.out.println("1.3");
+            logger.info("1.3");
+            //logger.info("1.3");
 
             if (!buyOrder.getDiamond().equals(sellOrder.getDiamond())) {
                 throw new TradeException("Something wrong with COINS pairs.");
             }
 
-            System.out.println("1.4");
+            logger.info("1.4");
 
-            System.out.println("1.4.1: status b: " +  buyOrder.getTraderOrderStatus() + " " + buyOrder.getId());
-            System.out.println("1.4.3: status s: " +  sellOrder.getTraderOrderStatus() + " " + sellOrder.getId());
+            logger.info("1.4.1: status b: " +  buyOrder.getTraderOrderStatus() + " " + buyOrder.getId());
+            logger.info("1.4.3: status s: " +  sellOrder.getTraderOrderStatus() + " " + sellOrder.getId());
 
             if (!(buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                     || buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
@@ -295,7 +295,7 @@ public class TradeEngine implements ITradeEngine {
                 return Pair.of(false, true);
             }
 
-            System.out.println("1.5");
+            logger.info("1.5");
 
             if (!(sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                     || sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
@@ -303,13 +303,13 @@ public class TradeEngine implements ITradeEngine {
                 return Pair.of(true, false);
             }
 
-            System.out.println("1.6");
+            logger.info("1.6");
 
             if (!checkIfCanExecute(pair)) {
                 return Pair.of(false, false);
             }
 
-            System.out.println("1.7");
+            logger.info("1.7");
 
             Account buyAccount = buyOrder.getAccount();
             Account sellAccount = sellOrder.getAccount();
@@ -319,7 +319,7 @@ public class TradeEngine implements ITradeEngine {
 //                        return;
 //                    }
 
-            System.out.println("1.8");
+            logger.info("1.8");
 
             //Decided to buy side to prevail on sell side
             BigDecimal orderPrice = tradeOrderService.definePrice(sellOrder, buyOrder);
@@ -333,7 +333,7 @@ public class TradeEngine implements ITradeEngine {
             Balance buyBalance = balanceService.getBalance(currency, buyAccount);
             Balance sellBalance = balanceService.getBalance(currency, sellAccount);
 
-            System.out.println("1.9");
+            logger.info("1.9");
             //seller don't have enough stocks
             if (buyBalance.getAmount().compareTo(realAmount) < 0) {
                 //TODO notify user
@@ -349,13 +349,13 @@ public class TradeEngine implements ITradeEngine {
                 return Pair.of(true, false);
             }
 
-            System.out.println("1.10");
+            logger.info("1.10");
 
             BigDecimal cash = realAmount.multiply(orderPrice);
 
             long startActivity = System.currentTimeMillis();
             try {
-                System.out.println("1.10.1 " + Thread.currentThread().getName());
+                logger.info("1.10.1 " + Thread.currentThread().getName());
                 balanceActivityService.createBalanceActivities(buyAccount, sellAccount, buyOrder,
                         sellOrder, realAmount, orderPrice);
             }catch (TradeException e){
@@ -365,11 +365,11 @@ public class TradeEngine implements ITradeEngine {
                 return Pair.of(false, true);
             }
 
-            System.out.println("1.11");
+            logger.info("1.11");
 
             logger.debug(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
 
-            System.out.println("1.12");
+            logger.info("1.12");
 
             buyOrder.setAmount(buyOrder.getAmount().subtract(realAmount));
             sellOrder.setAmount(sellOrder.getAmount().subtract(realAmount));
@@ -377,28 +377,28 @@ public class TradeEngine implements ITradeEngine {
             buyOrder.setExecutionSum(buyOrder.getExecutionSum().add(cash));
             sellOrder.setExecutionSum(sellOrder.getExecutionSum().add(cash));
 
-            System.out.println("1.13");
+            logger.info("1.13");
             boolean buyResult = checkIfExecuted(buyOrder);
             boolean sellResult = checkIfExecuted(sellOrder);
 
-            System.out.println("1.14");
+            logger.info("1.14");
             buyOrder = tradeOrderRepository.save(buyOrder);
             sellOrder = tradeOrderRepository.save(sellOrder);
 
             rabbitService.tradeOrderUpdated(tradeOrderService.convert(buyOrder));
             rabbitService.tradeOrderUpdated(tradeOrderService.convert(sellOrder));
 
-            System.out.println("1.15");
+            logger.info("1.15");
             long end = System.currentTimeMillis() - start;
 
             logger.debug("SUC EXEC TIME: " + end);
 
-            System.out.println("exec1: "
+            logger.info("exec1: "
                     + sellOrder.getId() + " "
                     + sellOrder.getTraderOrderStatus() + ", "
                     + buyOrder.getId() + ":"
                     + buyOrder.getTraderOrderStatus());
-            System.out.println("exec2:  " + sellOrder.getDiamond().getName() +  " " + realAmount + " " + orderPrice);
+            logger.info("exec2:  " + sellOrder.getDiamond().getName() +  " " + realAmount + " " + orderPrice);
 
             return Pair.of(!buyResult, !sellResult);
         }catch (Exception e){

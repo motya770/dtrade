@@ -165,7 +165,7 @@ public class BalanceService  implements IBalanceService{
             }
             return balance;
         }catch (Throwable e){
-            System.out.println("erroor " + e.getMessage());
+            logger.error("erroor " + e.getMessage());
             e.printStackTrace();
         }
         return null;

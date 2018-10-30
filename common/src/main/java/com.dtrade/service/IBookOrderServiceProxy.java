@@ -5,7 +5,6 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.util.Pair;
 
-
 import java.math.BigDecimal;
 import java.util.List;
 
