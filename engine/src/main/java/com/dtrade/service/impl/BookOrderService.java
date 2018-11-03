@@ -266,16 +266,4 @@ public class BookOrderService implements IBookOrderService {
             }
         });
     }
-
-
-    @Autowired
-    private ITradeEngine tradeEngine;
-
-
-
-    public void init() {
-
-
-
-    }
 }

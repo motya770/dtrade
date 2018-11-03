@@ -11,6 +11,7 @@ import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
 import com.dtrade.service.core.ITradeEngine;
+import com.google.common.util.concurrent.MoreExecutors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.PreDestroy;
 import java.math.BigDecimal;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -62,7 +64,7 @@ public class TradeEngine implements ITradeEngine {
 
     private TransactionTemplate transactionTemplate;
 
-    private ScheduledExecutorService executor = Executors.newScheduledThreadPool(25);
+    private ScheduledExecutorService executor = Executors.newScheduledThreadPool(50);
 
     @Autowired
     public void setTransactionManager(PlatformTransactionManager transactionManager){
@@ -96,8 +98,10 @@ public class TradeEngine implements ITradeEngine {
                e.printStackTrace();
            }
 
-       }, 1_000,  40, TimeUnit.MILLISECONDS);
+       }, 1_000,  15, TimeUnit.MILLISECONDS);
     }
+
+    //private Executor ex = MoreExecutors.newSequentialExecutor(Executors.newFixedThreadPool(20));
 
     @Transactional
     @Override
@@ -105,7 +109,7 @@ public class TradeEngine implements ITradeEngine {
 
         //logger.debug("CALCULATING TRADE ORDERS");
 
-        bookOrderService.getBookOrders().entrySet().parallelStream().forEach((entry)->{
+        bookOrderService.getBookOrders().entrySet().stream().forEach((entry)->{
 
             //logger.info("NEW THREAD");
 
@@ -113,20 +117,35 @@ public class TradeEngine implements ITradeEngine {
             int exitCounter = 0;
             while (true) {
                 //logger.info("STRAT WHILE");
+               long start = System.currentTimeMillis();
                 Pair<TradeOrder, TradeOrder> buySell = bookOrderService.findClosest(entry.getKey());
+                //System.out.println("t1: " + (System.currentTimeMillis() - start));
                 if(checkIfCanExecute(buySell)){
 
                     Runnable quoteRunnable = () -> quotesService.issueQuote(buySell);
                     executor.execute(quoteRunnable);
 
+                    //System.out.println("t2: " + (System.currentTimeMillis() - start));
+
                     logger.info("CAN EXECUTE " + entry.getKey());
+
                     transactionTemplate.execute(status -> {
                         return executeTradeOrders(buySell);
                     });
+                    /*
+                    Runnable pairRunnable = () -> {
+
+                    };
+
+                    executor.execute(pairRunnable);*/
+
+                    //System.out.println("t3: " + (System.currentTimeMillis() - start));
+                   // System.out.println("time: " + (System.currentTimeMillis() - start));
                 }else {
                     break;
                 }
 
+                logger.debug("inside " + exitCounter);
                 if(exitCounter==100){
                     break;
                 }
@@ -251,6 +270,7 @@ public class TradeEngine implements ITradeEngine {
     @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = NotEnoughMoney.class)
     public Pair<Boolean, Boolean> executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
 
+        long start = System.currentTimeMillis();
         try {
                     /*
                         1) Simple example of market order should be produced
@@ -262,7 +282,7 @@ public class TradeEngine implements ITradeEngine {
                      */
 
             logger.info("1.1");
-            long start = System.currentTimeMillis();
+
 
             TradeOrder buyOrder = tradeOrderRepository.findById(pair.getFirst().getId()).orElse(null);
             TradeOrder sellOrder = tradeOrderRepository.findById(pair.getSecond().getId()).orElse(null);
@@ -295,7 +315,7 @@ public class TradeEngine implements ITradeEngine {
                 return Pair.of(false, true);
             }
 
-            logger.info("1.5");
+            logger.info("1.5" +  (System.currentTimeMillis() - start));
 
             if (!(sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                     || sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
@@ -303,7 +323,7 @@ public class TradeEngine implements ITradeEngine {
                 return Pair.of(true, false);
             }
 
-            logger.info("1.6");
+            logger.info("1.6" );
 
             if (!checkIfCanExecute(pair)) {
                 return Pair.of(false, false);
@@ -333,7 +353,7 @@ public class TradeEngine implements ITradeEngine {
             Balance buyBalance = balanceService.getBalance(currency, buyAccount);
             Balance sellBalance = balanceService.getBalance(currency, sellAccount);
 
-            logger.info("1.9");
+            logger.info("1.9 " + (System.currentTimeMillis() - start));
             //seller don't have enough stocks
             if (buyBalance.getAmount().compareTo(realAmount) < 0) {
                 //TODO notify user
@@ -349,7 +369,7 @@ public class TradeEngine implements ITradeEngine {
                 return Pair.of(true, false);
             }
 
-            logger.info("1.10");
+            logger.info("1.10 " + (System.currentTimeMillis() - start));
 
             BigDecimal cash = realAmount.multiply(orderPrice);
 
@@ -365,7 +385,7 @@ public class TradeEngine implements ITradeEngine {
                 return Pair.of(false, true);
             }
 
-            logger.info("1.11");
+            logger.info("1.11 " + + (System.currentTimeMillis() - start));
 
             logger.debug(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
 
@@ -377,7 +397,7 @@ public class TradeEngine implements ITradeEngine {
             buyOrder.setExecutionSum(buyOrder.getExecutionSum().add(cash));
             sellOrder.setExecutionSum(sellOrder.getExecutionSum().add(cash));
 
-            logger.info("1.13");
+            logger.info("1.13 " + (System.currentTimeMillis() - start));
             boolean buyResult = checkIfExecuted(buyOrder);
             boolean sellResult = checkIfExecuted(sellOrder);
 
@@ -388,10 +408,10 @@ public class TradeEngine implements ITradeEngine {
             rabbitService.tradeOrderUpdated(tradeOrderService.convert(buyOrder));
             rabbitService.tradeOrderUpdated(tradeOrderService.convert(sellOrder));
 
-            logger.info("1.15");
+            logger.info("1.15 ");
             long end = System.currentTimeMillis() - start;
 
-            logger.debug("SUC EXEC TIME: " + end);
+
 
             logger.info("exec1: "
                     + sellOrder.getId() + " "
@@ -400,10 +420,13 @@ public class TradeEngine implements ITradeEngine {
                     + buyOrder.getTraderOrderStatus());
             logger.info("exec2:  " + sellOrder.getDiamond().getName() +  " " + realAmount + " " + orderPrice);
 
+            logger.info("SUC EXEC TIME1 : " + end);
             return Pair.of(!buyResult, !sellResult);
         }catch (Exception e){
+            logger.error("{}", e);
             e.printStackTrace();
         }
+        logger.info("SUC EXEC TIME: " + (System.currentTimeMillis() - start));
         return Pair.of(false, false);
     }
 

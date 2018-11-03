@@ -126,6 +126,8 @@ public class TradeSimulator {
             Random rand = new Random();
             int random = rand.nextInt(2);
 
+            int accountRandom = rand.nextInt(IAccountService.MAX_ROBO_ACCOUNT_COUNT);
+
             //logger.info("rand value " + random);
             //random buy and random sell (simulation!! :-))
             TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
@@ -146,7 +148,7 @@ public class TradeSimulator {
             tradeOrder.setAmount(amount);
             tradeOrder.setDiamond(diamond);
 
-            String mail = accountService.getRoboAccountMail(diamond, random);
+            String mail = accountService.getRoboAccountMail(diamond, accountRandom);
             login(mail);
 
             Account account =  accountService.getStrictlyLoggedAccount();
@@ -208,6 +210,8 @@ public class TradeSimulator {
             Random rand = new Random();
             int random = rand.nextInt(2);
 
+            int accountRand = rand.nextInt(IAccountService.MAX_ROBO_ACCOUNT_COUNT);
+
             //logger.info("rand value " + random);
             //random buy and random sell (simulation!! :-))
            TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
@@ -240,7 +244,7 @@ public class TradeSimulator {
             tradeOrder.setAmount(amount);
             tradeOrder.setDiamond(diamond);
 
-            String mail = accountService.getRoboAccountMail(diamond, random);
+            String mail = accountService.getRoboAccountMail(diamond, accountRand);
             login(mail);
 
             Account account =  accountService.getStrictlyLoggedAccount();
