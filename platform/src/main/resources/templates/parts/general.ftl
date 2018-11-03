@@ -6,6 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+<meta property="og:image" content="/theme/app/img/logo.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1024">
+
 <!-- Template Basic Images Start -->
 <meta property="og:image" content="/theme/app/path/to/image.jpg">
 <link rel="shortcut icon" href="/theme/app/img/favicon/favicon.ico" type="image/x-icon">

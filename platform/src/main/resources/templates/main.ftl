@@ -2,6 +2,12 @@
 <html>
 
 <head>
+
+    <meta property="og:image" content="/theme/app/img/logo.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1024">
+    <meta property="og:image:height" content="1024">
+
     <link rel="stylesheet" href="/theme/app/header.min.css">
     <link rel="stylesheet" href="/theme/app/css/main.min.css">
     <link rel="stylesheet" href="/theme/app/css/custom.css">
