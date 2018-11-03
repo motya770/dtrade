@@ -9,10 +9,13 @@ import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.repository.balance.BalanceRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceService;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -30,6 +33,9 @@ public class BalanceService  implements IBalanceService{
 
     @Autowired
     private IAccountService accountService;
+
+    @Autowired
+    private HazelcastInstance hazelcastInstance;
 
     @Transactional
     @Override
@@ -81,6 +87,7 @@ public class BalanceService  implements IBalanceService{
         return balanceRepository.save(balance);
     }
 
+
     @Override
     public List<Balance> getBalancesByAccount(Account account){
         return account.getBalances();
@@ -99,7 +106,34 @@ public class BalanceService  implements IBalanceService{
     @Override
     @Transactional
     public Balance updateBalance(Balance balance) {
-        return balanceRepository.save(balance);
+
+        Long balanceId = balance.getId();
+
+        IMap<Long, Long> balancesMap = hazelcastInstance.getMap("balancesMap");
+
+        //create
+        if(balanceId==null){
+            balance =  balanceRepository.save(balance);
+            balancesMap.put(balance.getId(), balance.getId());
+            return balance;
+        //update
+        }else {
+
+            if (!balancesMap.isLocked(balanceId)) {
+
+                balancesMap.put(balanceId, balanceId);
+                balancesMap.lock(balanceId);
+
+                Balance savedBalance = balanceRepository.save(balance);
+
+                balancesMap.unlock(balanceId);
+
+                return savedBalance;
+
+            } else {
+                throw new TradeException("Can't update current balance because its is locked" + balance.getId());
+            }
+        }
     }
 
     @Override
@@ -107,7 +141,7 @@ public class BalanceService  implements IBalanceService{
     public Balance updateBalance(Currency currency, Account account, BigDecimal addedValue) {
         Balance balance = getBalance(currency, account);
         balance.setAmount(balance.getAmount().add(addedValue));
-        return balanceRepository.save(balance);
+        return updateBalance(balance);
     }
 
     @Override
@@ -147,6 +181,8 @@ public class BalanceService  implements IBalanceService{
         return balance.getDTO().getBalance();
     }
 
+
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
     @Override
     public Balance getBalance(Currency currency, Account account){
 
@@ -156,17 +192,13 @@ public class BalanceService  implements IBalanceService{
                 throw new TradeException("Currency not defined.");
             }
 
-           // System.out.println("account: " + account.getMail() + " " + currency + " " + Thread.currentThread().getName());
-            //Balance balance =  account.getBalances().stream().filter((b)->b.getCurrency()
-              ///      .equals(currency)).findFirst().orElse(null);
             Balance balance = balanceRepository.getBalance(account, currency);
             if (balance == null) {
-                return createBalance(account, currency);
+                balance = createBalance(account, currency);
             }
             return balance;
         }catch (Throwable e){
-            logger.error("erroor " + e.getMessage());
-            e.printStackTrace();
+            logger.error("erroor {}", e);
         }
         return null;
     }

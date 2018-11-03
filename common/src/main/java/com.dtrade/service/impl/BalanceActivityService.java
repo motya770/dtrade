@@ -168,7 +168,7 @@ public class BalanceActivityService implements IBalanceActivityService {
                                                                           TradeOrder buyOrder,
                                                                           TradeOrder sellOrder,
                                                                           BigDecimal realAmount, BigDecimal price) {
-
+        long start = System.currentTimeMillis();
        // BTC/USD - transfer USD
         Diamond diamond = sellOrder.getDiamond();
         Currency currency = diamond.getCurrency();
@@ -191,11 +191,15 @@ public class BalanceActivityService implements IBalanceActivityService {
         baseSellerBa.setBalance(baseSellerBalance);
         balanceActivityRepository.save(baseSellerBa);
 
+        //System.out.println("ba1: " + (System.currentTimeMillis()-start));
+
         baseSellerBalance.setAmount(baseSellerBalance.getAmount().add(sum));
         //addUpdater(baseSellerBalance);
         balanceService.updateBalance(baseSellerBalance);
 
         Balance baseBuyerBalance = balanceService.getBalance(baseCurrency, buyer);
+
+        //System.out.println("ba2: " + (System.currentTimeMillis()-start));
 
         BigDecimal minusSum = sum.multiply(new BigDecimal("-1"));
 
@@ -213,10 +217,14 @@ public class BalanceActivityService implements IBalanceActivityService {
         baseBuyerBa.setBalance(baseBuyerBalance);
         balanceActivityRepository.save(baseBuyerBa);
 
+        //System.out.println("ba3: " + (System.currentTimeMillis()-start));
+
         baseBuyerBalance.setAmount(baseBuyerBalance.getAmount().add(minusSum));
         //addUpdater(baseBuyerBalance);
+
         balanceService.updateBalance(baseBuyerBalance);
 
+        //System.out.println("ba4: " + (System.currentTimeMillis()-start));
         // BTC/USD transfer BTC
 
         Balance sellerBalance = balanceService.getBalance(currency, seller);
@@ -234,9 +242,13 @@ public class BalanceActivityService implements IBalanceActivityService {
         sellerBa.setBalance(sellerBalance);
         balanceActivityRepository.save(sellerBa);
 
+       // System.out.println("ba5: " + (System.currentTimeMillis()-start));
+
         sellerBalance.setAmount(sellerBalance.getAmount().subtract(realAmount));
         //addUpdater(sellerBalance);
         balanceService.updateBalance(sellerBalance);
+
+       // System.out.println("ba6: " + (System.currentTimeMillis()-start));
 
         Balance buyerBalance = balanceService.getBalance(currency, buyer);
 
@@ -253,6 +265,8 @@ public class BalanceActivityService implements IBalanceActivityService {
         buyerBa.setBalance(buyerBalance);
         balanceActivityRepository.save(buyerBa);
 
+        //System.out.println("ba7: " + (System.currentTimeMillis()-start));
+
         buyerBalance.setAmount(buyerBalance.getAmount().add(realAmount));
        // addUpdater(buyerBalance);
 
@@ -261,6 +275,7 @@ public class BalanceActivityService implements IBalanceActivityService {
         balanceService.updateOpenSum(sellOrder, seller, minusSum, realAmount.multiply(new BigDecimal("-1")));
         balanceService.updateOpenSum(buyOrder, buyer, minusSum, realAmount.multiply(new BigDecimal("-1")));
 
+        //System.out.println("ba8: " + (System.currentTimeMillis()-start));
         /*
         System.out.println("updating for : " + buyOrder.getDiamond().getName());
         Currency currency = null;

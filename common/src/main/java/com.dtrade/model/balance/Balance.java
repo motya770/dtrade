@@ -69,9 +69,7 @@ public class Balance {
     public String toString(){
         return "{id:  " + getId() + "}";
     }
-
     /*
-
     @NotNull
     @Column(precision=19, scale=8)
     private BigDecimal bitcoinAmount;
@@ -108,11 +106,5 @@ public class Balance {
     @Column(precision=19, scale=8)
     private BigDecimal etherOpen;
     */
-
-    /*
-    @Version
-    private Long version;*/
-
-
 
 }

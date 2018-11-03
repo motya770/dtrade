@@ -81,7 +81,7 @@ public class AccountService implements IAccountService, UserDetailsService {
     public void createRoboAccounts() {
         List<Diamond> diamonds = diamondService.getAllAvailable("");
         diamonds.forEach(diamond -> {
-            for(int i = 0; i < 2; i ++) {
+            for(int i = 0; i < MAX_ROBO_ACCOUNT_COUNT; i ++) {
                 String mail = getRoboAccountMail(diamond, i);
                 Account account  = findByMail(mail);
                 if(account==null){
@@ -141,7 +141,6 @@ public class AccountService implements IAccountService, UserDetailsService {
         }
         return account;
     }
-
 
 
     @Override
