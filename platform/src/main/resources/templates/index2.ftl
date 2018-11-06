@@ -37,8 +37,9 @@
 
 <#include "parts/bootom-scripts.ftl">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <!-- Go to www.addthis.com/dashboard to customize your tools -->
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5bde07ec854a3731"></script>
+
 
 </body>
 </html>

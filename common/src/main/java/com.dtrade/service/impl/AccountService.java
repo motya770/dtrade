@@ -93,6 +93,11 @@ public class AccountService implements IAccountService, UserDetailsService {
     }
 
     @Override
+    public Account findByReferral(String referral) {
+        return accountRepository.findByReferral(referral);
+    }
+
+    @Override
     public Account createReferalAccount(String mail, String ref) {
         Account account = createRealAccount(mail, "demo1345", null, null);
 

@@ -13,6 +13,8 @@ public interface IAccountService {
 
     Integer MAX_ROBO_ACCOUNT_COUNT = 100;
 
+    Account findByReferral(String referral);
+
     Account createReferalAccount(String mail, String ref);
 
     void createRoboAccounts();
