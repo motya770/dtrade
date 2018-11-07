@@ -21,9 +21,6 @@ public class TemplateService implements ITemplateService {
 
     private static final String DOMAIN_HOST = "DOMAIN_HOST";
 
-//    @Resource(name="generalSettings")
-//    private Map<String, String> generalSettings;
-
     @Autowired
     private Environment environment;
 

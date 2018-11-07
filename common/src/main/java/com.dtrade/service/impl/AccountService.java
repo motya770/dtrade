@@ -110,6 +110,7 @@ public class AccountService implements IAccountService, UserDetailsService {
             }
         }
 
+        mailService.sendReferralMail(account);
         return accountRepository.save(account);
     }
 
@@ -234,6 +235,11 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         String ref = generateReferral();
         account.setReferral(ref);
+
+        Account checkAccount =  accountRepository.findByMail(account.getMail());
+        if(checkAccount!=null){
+            throw new TradeException("Account with mail: " + account.getMail() + " already exists.");
+        }
 
         Account saved =  accountRepository.save(account);
 

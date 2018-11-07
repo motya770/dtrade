@@ -3,14 +3,22 @@ package com.dtrade.service.impl;
 import com.dtrade.model.account.Account;
 import com.dtrade.service.IMailService;
 import com.dtrade.service.ITemplateService;
+import com.sendgrid.*;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import javax.annotation.PostConstruct;
 import javax.mail.*;
 import javax.mail.internet.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -19,89 +27,71 @@ import java.util.Properties;
 @Service
 public class MailService implements IMailService {
 
-    private static final Logger logger = LoggerFactory.getLogger(MailService.class);
-
-    private final static String USER_NAME = "support@unityoptions.com";  // GMail user name (just the part before "@gmail.com")
-    private final static String PASSWORD = "pragma1pragma1"; // GMail password
-    private final static String from = USER_NAME;
-    private final static String pass = PASSWORD;
-
-    private Properties props;
-    private String host;
-
-//    @Autowired
-//    @Qualifier(value = "taskExecutor")
-//    private ThreadPoolTaskExecutor taskExecutor;
+    @Value(value = "${SENDGRID_API_KEY}")
+    private String sendGridApiKey;
 
     @Autowired
-    private ITemplateService templateService;
+    private Configuration freemarkerConfig;
 
-    @PostConstruct
-    private void init() {
-        Properties props = System.getProperties();
-        String host = "smtp.gmail.com";
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", from);
-        props.put("mail.smtp.password", pass);
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
+    @Override
+    public void sendReferralMail(Account account) {
 
-        this.props = props;
-        this.host = host;
+        try {
+
+            Template t = freemarkerConfig.getTemplate("mail.ftl");
+            Map<String, String> map= new HashMap<>();
+            map.put("accountLink", "www.exchange1.io/referral?myRef=" + account.getReferral());
+            map.put("referralLink", "www.exchange1.io/?ref="+account.getReferral());
+
+            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
+
+            Email from = new Email("support@exchange1.io");
+            String subject = "Successfully added to the waiting list";
+            Email to = new Email("matvei.kudelin@gmail.com");
+            Content content = new Content("text/html", html);
+
+            Mail mail = new Mail(from, subject, to, content);
+
+            SendGrid sg = new SendGrid(sendGridApiKey);
+            Request request = new Request();
+
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
     public void sendRegistrationMail(Account account) {
 
-        //Runnable runnable = () -> {
-        String RECIPIENT = account.getMail();
+    }
 
-        String[] to = {RECIPIENT}; // list of recipient email addresses
-        String subject = "Регистрация в Diaminds.";
-        String body = templateService.getRegistrationMail(account);
+    public static void main(String[] args) throws IOException {
+        Email from = new Email("test@example.com");
+        String subject = "Sending with SendGrid is Fun";
+        Email to = new Email("test@example.com");
+        Content content = new Content("text/plain", "and easy to do anywhere, even with Java");
+        Mail mail = new Mail(from, subject, to, content);
 
-        Session session = Session.getDefaultInstance(props);
-        MimeMessage message = new MimeMessage(session);
 
+        SendGrid sg = new SendGrid("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");
+        Request request = new Request();
         try {
-            message.setFrom(new InternetAddress(from));
-            InternetAddress[] toAddress = new InternetAddress[to.length];
-
-            // To get the array of addresses
-            for (int i = 0; i < to.length; i++) {
-                toAddress[i] = new InternetAddress(to[i]);
-            }
-
-            for (int i = 0; i < toAddress.length; i++) {
-                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
-            }
-
-            logger.debug(body);
-            Multipart mp = new MimeMultipart();
-
-            MimeBodyPart textPart = new MimeBodyPart();
-            textPart.setText("", "utf-8");
-
-            MimeBodyPart htmlPart = new MimeBodyPart();
-            htmlPart.setContent(body, "text/html; charset=utf-8");
-
-            mp.addBodyPart(textPart);
-            mp.addBodyPart(htmlPart);
-            message.setContent(mp);
-
-            message.setSubject(subject);
-            ///message.setText(body, null, "html");
-            Transport transport = session.getTransport("smtp");
-            transport.connect(host, from, pass);
-            transport.sendMessage(message, message.getAllRecipients());
-            transport.close();
-        } catch (AddressException ae) {
-            logger.error("{}", ae);
-            ae.printStackTrace();
-        } catch (MessagingException me) {
-            logger.error("{}", me);
-            me.printStackTrace();
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+            System.out.println(response.getStatusCode());
+            System.out.println(response.getBody());
+            System.out.println(response.getHeaders());
+        } catch (IOException ex) {
+            throw ex;
         }
     }
 }

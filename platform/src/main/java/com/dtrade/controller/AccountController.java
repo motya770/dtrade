@@ -37,6 +37,7 @@ public class AccountController {
                                  @RequestParam(value = "hidden_ref", required = false) String ref)
     {
         Account account = accountService.createReferalAccount(mail, ref);
+
         return "redirect:/referral?myRef=" + account.getReferral();
     }
 
