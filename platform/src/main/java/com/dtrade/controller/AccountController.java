@@ -32,14 +32,14 @@ public class AccountController {
 
     private ObjectMapper mapper = new ObjectMapper();
 
+
     @CrossOrigin
     @RequestMapping(value = "/create-referral", method = RequestMethod.POST)
-    public String signToReferral(@RequestParam String mail,
+    public @ResponseBody AccountDTO signToReferral(@RequestParam String mail,
                                  @RequestParam(value = "hidden_ref", required = false) String ref)
     {
-        Account account = accountService.createReferalAccount(mail, ref);
-
-        return "redirect:/referral?myRef=" + account.getReferral();
+        return accountService.createReferalAccount(mail, ref);
+        //return "redirect:/referral?myRef=" +
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

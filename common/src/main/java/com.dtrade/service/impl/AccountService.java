@@ -98,7 +98,7 @@ public class AccountService implements IAccountService, UserDetailsService {
     }
 
     @Override
-    public Account createReferalAccount(String mail, String ref) {
+    public AccountDTO createReferalAccount(String mail, String ref) {
         Account account = createRealAccount(mail, "demo1345", null, null);
 
         //adding to referral account
@@ -111,7 +111,8 @@ public class AccountService implements IAccountService, UserDetailsService {
         }
 
         mailService.sendReferralMail(account);
-        return accountRepository.save(account);
+        account = accountRepository.save(account);
+        return getAccountDTO(account);
     }
 
     //TODO hardcoded - change
@@ -267,15 +268,20 @@ public class AccountService implements IAccountService, UserDetailsService {
             return null;
         }
 
+        AccountDTO accountDTO = getAccountDTO(account);
+
+        List<Balance> balances = balanceService.getBaseBalancesByAccount(account);
+        accountDTO.setBalance(balances);
+
+        return accountDTO;
+    }
+
+    private AccountDTO getAccountDTO(Account account) {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setId(account.getId());
         accountDTO.setMail(account.getMail());
         accountDTO.setReferral(account.getReferral());
         accountDTO.setReferredCount(account.getReferredCount());
-
-        List<Balance> balances = balanceService.getBaseBalancesByAccount(account);
-        accountDTO.setBalance(balances);
-
         return accountDTO;
     }
 

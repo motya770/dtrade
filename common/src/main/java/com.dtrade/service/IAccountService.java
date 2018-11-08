@@ -15,7 +15,7 @@ public interface IAccountService {
 
     Account findByReferral(String referral);
 
-    Account createReferalAccount(String mail, String ref);
+    AccountDTO createReferalAccount(String mail, String ref);
 
     void createRoboAccounts();
 
