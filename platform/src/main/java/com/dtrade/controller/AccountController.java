@@ -32,6 +32,7 @@ public class AccountController {
 
     private ObjectMapper mapper = new ObjectMapper();
 
+    @CrossOrigin
     @RequestMapping(value = "/create-referral", method = RequestMethod.GET)
     public String signToReferral(@RequestParam String mail,
                                  @RequestParam(value = "hidden_ref", required = false) String ref)
