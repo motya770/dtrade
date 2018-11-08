@@ -20,7 +20,7 @@ import java.util.Arrays;
 @Configuration
 public class HazelcastHttpSessionConfig {
 
-§    @Profile("dev")
+    @Profile("dev")
     @Bean
     public HazelcastInstance hazelcastInstanceDev() {
         MapAttributeConfig attributeConfig = new MapAttributeConfig()
