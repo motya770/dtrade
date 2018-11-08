@@ -106,6 +106,9 @@ public class BalanceService  implements IBalanceService{
     @Override
     @Transactional
     public Balance updateBalance(Balance balance) {
+        if(true){
+            return null;
+        }
 
         Long balanceId = balance.getId();
 
