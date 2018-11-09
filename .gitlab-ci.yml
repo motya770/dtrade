@@ -1,7 +1,0 @@
-stages:
-  - build
-
-build1:
-  stage: build
-  script:
-    - 'echo "Please use branch: prod"'
