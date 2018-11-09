@@ -1,21 +1,6 @@
 stages:
-  - build
-  - deploy
-   
-build1:
-  stage: build
+  - information
+
+information1:
   script:
-    - env
-    - pwd
-    - 'mvn clean install -DskipTests'
-    - 'scp -i "/keys/scp" -o StrictHostKeyChecking=no ./backoffice/target/backoffice-0.0.1-SNAPSHOT.jar scp@backoffice-01:'
-    - 'scp -i "/keys/scp" -o StrictHostKeyChecking=no ./platform/target/platfrom-0.0.1-SNAPSHOT.jar scp@platform-01:'
-    - 'scp -i "/keys/scp" -o StrictHostKeyChecking=no ./simulator/target/simulator-0.0.1-SNAPSHOT.jar scp@simulator-01:'
-    - 'scp -i "/keys/scp" -o StrictHostKeyChecking=no ./engine/target/engine-0.0.1-SNAPSHOT.jar scp@engine-01:'
-    - 'scp -i "/keys/scp" -o StrictHostKeyChecking=no ./platform/target/platfrom-0.0.1-SNAPSHOT.jar scp@platform-02:'
-    
-deploy1:
-  stage: deploy
-  script:
-    - pwd
-    - env
+    - 'echo "Please use branch: prod"'
