@@ -1,6 +1,6 @@
 stages:
-  - information
+  - build
 
-information1:
+build1:
   script:
     - 'echo "Please use branch: prod"'
