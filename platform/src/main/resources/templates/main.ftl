@@ -85,7 +85,7 @@
 				</div>
 
 				<div class="hero__text">
-					<form type="POST" action="/accounts/create-referral" style="margin-top: -30px;">
+					<form method="post" action="/accounts/create-referral" style="margin-top: -30px;">
                         <p class="hero__descr">Get free tokens with your mail</p>
                         <input id="hidden_ref" name="hidden_ref" type="hidden"/>
 					    <input name="mail" style="font-size: 14px; height: 30px; width: 300px;" value=""/>
