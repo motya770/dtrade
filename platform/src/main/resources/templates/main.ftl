@@ -18,10 +18,15 @@
     <meta property="og:image:width" content="1024">
     <meta property="og:image:height" content="1024">
 
+	<!--
+
     <link rel="stylesheet" href="/theme/app/header.min.css">
     <link rel="stylesheet" href="/theme/app/css/main.min.css">
     <link rel="stylesheet" href="/theme/app/css/custom.css">
     <link rel="stylesheet" href="/theme/app/css/fonts.min.css">
+
+    -->
+	<#include "parts/general.ftl">
 
 <script type="text/javascript">
 	function submitForm(that) {
