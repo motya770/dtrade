@@ -40,7 +40,7 @@ public class MailService implements IMailService {
 
             Template t = freemarkerConfig.getTemplate("mail.ftl");
             Map<String, String> map= new HashMap<>();
-            map.put("accountLink", "www.exchange1.io/referral?myRef=" + account.getReferral());
+            map.put("accountLink", "p.exchange1.io/referral?myRef=" + account.getReferral());
             map.put("referralLink", "www.exchange1.io/?ref="+account.getReferral());
 
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
