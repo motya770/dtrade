@@ -289,7 +289,7 @@ public class AccountService implements IAccountService, UserDetailsService {
     public Account buildAccount(String mail, String pwd, String phone, String curr) throws TradeException {
         Account anotherAccount = accountRepository.findByMail(mail);
         if (anotherAccount != null) {
-            throw new TradeException("Can't create account with this login!");
+            throw new TradeException("Can't create account with this mail!");
         }
 
         pwd = passwordEncoder.encode(pwd);
