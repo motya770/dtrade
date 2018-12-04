@@ -115,10 +115,12 @@
 
 <!-- Custom HTML -->
 <div class="site">
-    <header class="header header--page" style="background-color: #4C4D65;">
+    <header class="header header--page" style="background-image: linear-gradient(#0861E4, #0453DD);">
         <div class="header__inner">
             <div class="header__logo">
-                <a href="/">Exchange 1<br><small>Free stock and crypto trading</small></a>
+                <a href="http://korono.io">
+                    <img style="height: 50%; width: 50%;" src="/theme/app/img/logo_korono.png"></img>
+                </a>
             </div>
         </div>
     </header>
@@ -133,7 +135,7 @@
                         <div class="lk-main-tab">
                             <div class="lk-main-tab__table" style="margin-left: 20px;" >
                                 Share this link with your friends to get free tokens
-                                <div>Link www.exchange1.io/?ref=${account.referral}</div>
+                                <div>Link www.korono.io/?ref=${account.referral}</div>
                                 <div>Referred count ${account.referredCount}</div>
 
                                 <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">This is new trading application that created by professionals in field of software development and finance, we decided to disrupt industry and create trading application that don't take commissions on trade (it is free). Currently we decided to give our token for free if you brought us your friend, so if many people will join out trading application that will really dominate on the market. We reserved up to 10k dollars for person who bring us most clients, based on economic algorithms but every day the sum is shrinking because other people are joining, you can use this link www.korono.io/?ref=${account.referral}(Don't worry we are not scam, you need to enlist only by providing you mail and your tokens are gonna be reserved.)
@@ -142,7 +144,7 @@
                                     <!-- Go to www.addthis.com/dashboard to customize your tools -->
                                     <div class="addthis_inline_share_toolbox" data-url="www.korono.io/?ref=${account.referral}"
                                          data-title="This is unique invitation. Access your free tokens and trade for free stocks and crypto." data-description="Free stock and crypto trading"
-                                         data-media="/theme/app/img/logo.png"></div>
+                                         data-media="/theme/app/img/logo_korono.png"></div>
 
                             </div>
                         </div>
