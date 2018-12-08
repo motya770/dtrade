@@ -30,7 +30,7 @@
                                  filePattern="logs/all.log.%d{yyyy-MM-dd-hh-mm}.gz">
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="1 KB"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
             </Policies>
             <DefaultRolloverStrategy max="30"/>
         </RollingRandomAccessFile>
