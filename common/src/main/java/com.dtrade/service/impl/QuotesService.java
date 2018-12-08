@@ -71,6 +71,7 @@ public class QuotesService implements IQuotesService {
 
     private void executeLandingRequests(){
         Runnable r = ()-> {
+            logger.info("before request");
             String appleUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=VNIJIMUF5VAZOUM4";
             String teslaUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=TSLA&apikey=VNIJIMUF5VAZOUM4";
             String btcUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
@@ -94,6 +95,8 @@ public class QuotesService implements IQuotesService {
 
             String resp = restTemplate.getForObject(url, String.class);
 
+            logger.info("resp: " + resp);
+
             JSONObject obj = new JSONObject(resp);
             String price = null;
             if(isStock) {
@@ -101,6 +104,8 @@ public class QuotesService implements IQuotesService {
             }else {
                 price = obj.getJSONObject("Realtime Currency Exchange Rate").getString( "5. Exchange Rate");
             }
+
+            logger.info("price: " + price);
             return price;
         }catch (Exception e){
             logger.error("{}", e);
