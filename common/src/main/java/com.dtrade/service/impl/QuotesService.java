@@ -90,17 +90,22 @@ public class QuotesService implements IQuotesService {
     }
 
     private String getLandingPrice(String url, boolean isStock){
+        try{
 
-        String resp = restTemplate.getForObject(url, String.class);
+            String resp = restTemplate.getForObject(url, String.class);
 
-        JSONObject obj = new JSONObject(resp);
-        String price = null;
-        if(isStock) {
-            price = obj.getJSONObject("Global Quote").getString("05. price");
-        }else {
-            price = obj.getJSONObject("Realtime Currency Exchange Rate").getString( "5. Exchange Rate");
+            JSONObject obj = new JSONObject(resp);
+            String price = null;
+            if(isStock) {
+                price = obj.getJSONObject("Global Quote").getString("05. price");
+            }else {
+                price = obj.getJSONObject("Realtime Currency Exchange Rate").getString( "5. Exchange Rate");
+            }
+            return price;
+        }catch (Exception e){
+            logger.error("{}", e);
         }
-        return price;
+        return null;
     }
 
     @Override
