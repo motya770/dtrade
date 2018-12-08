@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by matvei on 1/23/15.
@@ -31,6 +32,11 @@ public class QuoteController {
 
     @Autowired
     private IQuotesServiceProxy quotesServiceProxy;
+
+    @RequestMapping(value = "/get-landing-quotes", method = RequestMethod.POST)
+    public Map<String, String> getLandingQuotes() throws TradeException {
+        return quotesService.getLandingQuotes();
+    }
 
     @RequestMapping(value = "/get-depth-quotes", method = RequestMethod.GET)
     public String getDepthQuotes(@RequestParam(required = true) Diamond diamond

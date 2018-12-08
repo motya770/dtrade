@@ -11,11 +11,14 @@ import org.springframework.data.util.Pair;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by matvei on 1/3/15.
  */
 public interface IQuotesService {
+
+    Map<String, String> getLandingQuotes();
 
     Quote issueQuote(Pair<TradeOrder, TradeOrder> pair);
 

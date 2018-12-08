@@ -11,6 +11,7 @@ import com.dtrade.repository.quote.QuoteRepository;
 import com.dtrade.service.IBookOrderServiceProxy;
 import com.dtrade.service.IQuotesService;
 import com.dtrade.service.IRabbitService;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -49,6 +54,54 @@ public class QuotesService implements IQuotesService {
 
     @Autowired
     private IRabbitService rabbitService;
+
+    /*Welcome to Alpha Vantage! Here is your API key:*/
+    //VNIJIMUF5VAZOUM4
+
+    private RestTemplate restTemplate = new RestTemplate();
+
+    private Map<String, String> landingQuotes = new ConcurrentHashMap<>();
+
+    private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+
+    @PostConstruct
+    private void init(){
+        executeLandingRequests();
+    }
+
+    private void executeLandingRequests(){
+        Runnable r = ()-> {
+            String appleUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=VNIJIMUF5VAZOUM4";
+            String teslaUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=TSLA&apikey=VNIJIMUF5VAZOUM4";
+            String btcUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
+            String ethUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=ETH&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
+            landingQuotes.put("APPLE", getLandingPrice(appleUrl, true));
+            landingQuotes.put("TESLA", getLandingPrice(teslaUrl, true));
+            landingQuotes.put("BTC", getLandingPrice(btcUrl, false));
+            landingQuotes.put("ETH", getLandingPrice(ethUrl, false));
+        };
+
+        executor.scheduleAtFixedRate(r, 5000, 60_000, TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    public Map<String, String> getLandingQuotes() {
+        return landingQuotes;
+    }
+
+    private String getLandingPrice(String url, boolean isStock){
+
+        String resp = restTemplate.getForObject(url, String.class);
+
+        JSONObject obj = new JSONObject(resp);
+        String price = null;
+        if(isStock) {
+            price = obj.getJSONObject("Global Quote").getString("05. price");
+        }else {
+            price = obj.getJSONObject("Realtime Currency Exchange Rate").getString( "5. Exchange Rate");
+        }
+        return price;
+    }
 
     @Override
     public Quote issueQuote(Pair<TradeOrder, TradeOrder> pair){
