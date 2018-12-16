@@ -40,14 +40,24 @@ public class MailService implements IMailService {
 
             Template t = freemarkerConfig.getTemplate("mail.ftl");
             Map<String, String> map= new HashMap<>();
-            map.put("accountLink", "p.exchange1.io/referral?myRef=" + account.getReferral());
-            map.put("referralLink", "www.exchange1.io/?ref="+account.getReferral());
+            map.put("accountLink", "x.korono.io/referral?myRef=" + account.getReferral());
+            map.put("referralLink", "www.korono.io/?ref="+account.getReferral());
 
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
 
-            Email from = new Email("support@exchange1.io");
+            Email from = new Email("support@korono.io");
             String subject = "Successfully added to the waiting list";
-            Email to = new Email("matvei.kudelin@gmail.com");
+
+            //mail for tests
+            String toMail = account.getMail();
+            String sendMail;
+            if(toMail.contains("test123")){
+                sendMail = "matvei.kudelin@gmail.com";
+            }else {
+                sendMail = toMail;
+            }
+
+            Email to = new Email(sendMail);
             Content content = new Content("text/html", html);
 
             Mail mail = new Mail(from, subject, to, content);
