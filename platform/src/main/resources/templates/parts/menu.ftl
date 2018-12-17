@@ -4,15 +4,19 @@
                 <li ng-class="{ active: isActive('/basic')}" >
                     <a href="/trade#!/basic">Basic</a>
                 </li>
+                <!--
                 <li ng-class="{ active: isActive('/trade')}">
                     <a href="/trade#!/trade">Advanced</a>
-                </li>
+                </li>-->
+
+            <!--
                 <li ng-class="{ active: isActive('/coins')}" >
                     <a href="/trade#!/coins">Coins</a>
-                    <!--
-                    <a href="/{{cc.config.assetType|lowercase}}">{{cc.config.assetName}}</a>
-                    -->
-                </li>
+
+                </li>-->
+            <!--
+                   <a href="/{{cc.config.assetType|lowercase}}">{{cc.config.assetName}}</a>
+                   -->
                 <li ng-show="vm.account" ng-class="{ active: isActive('/account')}">
                     <a href="/trade#!/account">My account</a>
                 </li>

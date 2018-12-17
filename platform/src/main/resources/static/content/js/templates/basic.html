@@ -3,10 +3,12 @@
         <div class="sep-cab-page__content">
             <div class="sep-cab-page__top">
                 <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm" style="height:491px;">
+
+                    <!--
                     <div class="sep-cab-page__heading">
                         <h2>{{::cc.config.assetName}} listing</h2>
                         <p>All {{::cc.config.assetName}} are available</p>
-                    </div>
+                    </div>-->
 
                     <form class="searchform">
                         <input type="text" class="searchform__inp" ng-model="searchInputValue" placeholder="Enter the name of the {{::cc.config.assetName}}">
@@ -15,8 +17,8 @@
 
                     <div class="type-diamond-table">
                         <div class="table-container">
-                            <div >
-                                <table class="diamont-table">
+                            <div class="sep-cab-page__side" style="height: 590px;">
+                                <table class="diamont-table ">
                                     <thead>
                                     <tr>
                                         <th>{{::cc.config.assetNameForListing}}</th>
@@ -45,6 +47,7 @@
                                         <!--
                                         <td><span ng-if="::!diamond.hideTotalStockAmount">{{::diamond.totalStockAmount/10000000 | number}} mln </span></td>-->
                                     </tr>
+
                                     <script type="text/ng-template" id="dialog1.tmpl.html">
                                         <md-dialog aria-label="Diamond">
                                             <form ng-cloak>
@@ -152,7 +155,8 @@
 
                                     </tbody>
                                 </table>
-                                <div class="coming-soon">New offerings coming soon ... </div>
+                                <!--
+                                <div class="coming-soon">New offerings coming soon ... </div>-->
                             </div>
                         </div>
                     </div>
