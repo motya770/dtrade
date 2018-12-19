@@ -33,7 +33,7 @@ public class BitfinexClient extends WebSocketClient {
     }
 
     private String getBitfinexPairName(){
-        return "t" + diamond.getName().replace("/", "");
+        return "t" + diamond.getTicketName();
     }
 
     public BitfinexClient(Diamond diamond, IDiamondService diamondService, List<BitfinexClient> clients) throws Exception {
@@ -102,9 +102,9 @@ public class BitfinexClient extends WebSocketClient {
 
             JSONArray arr = new JSONArray(message);
             JSONArray values = arr.getJSONArray(1);
-           logger.debug("values: " + values);
-            BigDecimal bid = new BigDecimal(values.getDouble(0));//BID
-            BigDecimal ask = new BigDecimal(values.getDouble(2));//ASK
+           logger.debug("values: " + arr);
+            BigDecimal bid = new BigDecimal(values.get(0).toString());//BID
+            BigDecimal ask = new BigDecimal(values.get(2).toString());//ASK
 
             diamondService.defineRobotBorders(diamond, bid, ask);
         }

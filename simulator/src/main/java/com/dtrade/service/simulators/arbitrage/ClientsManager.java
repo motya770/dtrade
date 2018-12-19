@@ -1,7 +1,12 @@
 package com.dtrade.service.simulators.arbitrage;
 
+import com.dtrade.model.config.AssetType;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.diamond.TicketProvider;
 import com.dtrade.service.IDiamondService;
+import com.dtrade.service.IQuotesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -17,10 +22,16 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class ClientsManager {
 
+    private static final Logger logger = LoggerFactory.getLogger(BitfinexClient.class);
+
     @Autowired
     private IDiamondService diamondService;
 
-    private List<BitfinexClient> clients = Collections.synchronizedList(new ArrayList<>());
+    @Autowired
+    private IQuotesService quotesService;
+
+    private List<BitfinexClient> bitfinexClients = Collections.synchronizedList(new ArrayList<>());
+    private List<AdvatageClient> advantageClients = Collections.synchronizedList(new ArrayList<>());
 
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -28,23 +39,52 @@ public class ClientsManager {
     public void init(){
 
         List<Diamond> diamonds = diamondService.getEnlistedOrRoboHidden();
-        diamonds.forEach(d-> {
+        startBitfinexClients(diamonds);
+        startAdvantageProviders(diamonds);
+
+    }
+
+    private void startAdvantageProviders(List<Diamond> diamonds){
+        diamonds.stream().filter(d->d.getTicketProvider().equals(TicketProvider.ALPHAVANTAGE)).forEach(d->{
+            AdvatageClient advatageClient = new AdvatageClient();
+            advatageClient.setDiamond(d);
+            advatageClient.setAssetType(AssetType.STOCKS);
+            advatageClient.setQuotesService(quotesService);
+            advatageClient.setDiamondService(diamondService);
+            advantageClients.add(advatageClient);
+        });
+
+        Runnable runnable = ()->{
+            advantageClients.forEach(advatageClient -> {
+                advatageClient.execute();
+            });
+        };
+        executorService.scheduleAtFixedRate(runnable, 1_000, 20_000, TimeUnit.MILLISECONDS);
+
+    }
+
+    private void startBitfinexClients(List<Diamond> diamonds){
+        diamonds.stream().filter(d->d.getTicketProvider().equals(TicketProvider.BITFINEX)).forEach(d-> {
             BitfinexClient client = null;
             try{
-                client = new BitfinexClient(d, diamondService, clients);
+                client = new BitfinexClient(d, diamondService, bitfinexClients);
             }catch (Exception e){
                 e.printStackTrace();
             }
-            clients.add(client);
+            bitfinexClients.add(client);
             client.connect();
         });
 
         Runnable runnable = ()->{
-            clients.forEach(client->{
-                if(client.isClosed()){
-                    client.reconnect();
-                }
-            });
+            try {
+                bitfinexClients.forEach(client -> {
+                    if (client.isClosed()) {
+                        client.reconnect();
+                    }
+                });
+            }catch (Exception e){
+                logger.error("{}", e);
+            }
         };
         executorService.scheduleAtFixedRate(runnable, 1_000, 5_000, TimeUnit.MILLISECONDS);
     }

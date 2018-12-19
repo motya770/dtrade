@@ -173,7 +173,7 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public List<TradeOrder> getLiveTradeOrders() {
         logger.info("CALLING getLiveTradeOrders");
-        return tradeOrderRepository.getLiveTradeOrders(PageRequest.of(0, 2000));
+        return tradeOrderRepository.getLiveTradeOrders();//PageRequest.of(0, 2000));
     }
 
     @Override

@@ -18,9 +18,7 @@ import java.util.List;
 public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
     @Query("select to from TradeOrder to where to.traderOrderStatusIndex = 'LIVE' order by to.creationDate desc")
-    List<TradeOrder> getLiveTradeOrders(Pageable pageable);
-
-
+    List<TradeOrder> getLiveTradeOrders();
 
     @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} and (to.traderOrderStatusIndex =  'LIVE') " +
             " order by to.creationDate desc")

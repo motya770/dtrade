@@ -2,9 +2,11 @@ package com.dtrade.service;
 
 
 import com.dtrade.exception.TradeException;
+import com.dtrade.model.config.AssetType;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.utils.MyPair;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Pair;
@@ -17,6 +19,8 @@ import java.util.Map;
  * Created by matvei on 1/3/15.
  */
 public interface IQuotesService {
+
+    MyPair<String, String> getLandingPrice(String ticketName, AssetType assetType);
 
     Map<String, String> getLandingQuotes();
 

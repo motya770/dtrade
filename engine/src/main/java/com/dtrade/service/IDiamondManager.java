@@ -1,4 +1,4 @@
-package com.dtrade.service.core;
+package com.dtrade.service;
 
 public interface IDiamondManager {
 }

@@ -1,8 +1,7 @@
-package com.dtrade.service.core.impl;
+package com.dtrade.service.impl;
 import com.dtrade.model.diamond.DiamondStatus;
+import com.dtrade.service.IDiamondManager;
 import com.dtrade.service.IDiamondService;
-import com.dtrade.service.core.IDiamondManager;
-import com.dtrade.service.impl.TradeOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +26,21 @@ public class DiamondManager implements IDiamondManager {
     @EventListener(ContextRefreshedEvent.class)
     public void init(){
         Runnable runnable = ()->{
-            diamondService.getAllAvailable("").forEach(diamond -> {
-                Long lastUpdated = diamond.getLastRoboUpdated();
-                if(lastUpdated!=null){
-                   if(lastUpdated + 60_000 < System.currentTimeMillis()){
-                       logger.info("Hidding pair because its not updated {}", diamond.getId());
-                       diamond.setDiamondStatus(DiamondStatus.HIDDEN);
-                       diamondService.update(diamond);
-                   }
-                }
-            });
+            try {
+                diamondService.getAllAvailable("").forEach(diamond -> {
+                    Long lastUpdated = diamond.getLastRoboUpdated();
+                    if (lastUpdated != null) {
+                        //TODO fix timeout
+                        if (lastUpdated + (60_000 * 5) < System.currentTimeMillis()) {
+                            logger.info("Hidding pair because its not updated {}", diamond.getId());
+                            diamond.setDiamondStatus(DiamondStatus.ROBO_HIDDEN);
+                            diamondService.unsecuredUpdate(diamond);
+                        }
+                    }
+                });
+            }catch (Exception e){
+              logger.error("{}", e );
+            }
         };
         executorService.scheduleAtFixedRate(runnable, 1_000, 5_000, TimeUnit.MILLISECONDS);
     }

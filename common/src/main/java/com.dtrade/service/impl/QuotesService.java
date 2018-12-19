@@ -2,6 +2,7 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.bookorder.BookOrder;
+import com.dtrade.model.config.AssetType;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
 import com.dtrade.model.quote.QuoteType;
@@ -11,6 +12,7 @@ import com.dtrade.repository.quote.QuoteRepository;
 import com.dtrade.service.IBookOrderServiceProxy;
 import com.dtrade.service.IQuotesService;
 import com.dtrade.service.IRabbitService;
+import com.dtrade.utils.MyPair;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
@@ -55,6 +58,7 @@ public class QuotesService implements IQuotesService {
     @Autowired
     private IRabbitService rabbitService;
 
+
     /*Welcome to Alpha Vantage! Here is your API key:*/
     //VNIJIMUF5VAZOUM4
 
@@ -72,14 +76,16 @@ public class QuotesService implements IQuotesService {
     private void executeLandingRequests(){
         Runnable r = ()-> {
             logger.info("before request");
+            /*
             String appleUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=VNIJIMUF5VAZOUM4";
             String teslaUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=TSLA&apikey=VNIJIMUF5VAZOUM4";
             String btcUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
             String ethUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=ETH&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
-            landingQuotes.put("APPLE", getLandingPrice(appleUrl, true));
-            landingQuotes.put("TESLA", getLandingPrice(teslaUrl, true));
-            landingQuotes.put("BTC", getLandingPrice(btcUrl, false));
-            landingQuotes.put("ETH", getLandingPrice(ethUrl, false));
+           */
+            landingQuotes.put("APPLE", getLandingPrice("AAPL", AssetType.STOCKS).first);
+            landingQuotes.put("TESLA", getLandingPrice("TSLA", AssetType.STOCKS).first);
+            landingQuotes.put("BTC", getLandingPrice("BTC", AssetType.CRYPTO).first);
+            landingQuotes.put("ETH", getLandingPrice("ETH", AssetType.CRYPTO).first);
         };
 
         executor.scheduleAtFixedRate(r, 5000, 60_000, TimeUnit.MILLISECONDS);
@@ -90,8 +96,17 @@ public class QuotesService implements IQuotesService {
         return landingQuotes;
     }
 
-    private String getLandingPrice(String url, boolean isStock){
+    @Override
+    public MyPair<String, String> getLandingPrice(String quoteId, AssetType assetType){
         try{
+
+            String url=null;
+            if(assetType.equals(AssetType.STOCKS)){
+                url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + quoteId + "&apikey=VNIJIMUF5VAZOUM4";
+            }else if(assetType.equals(AssetType.CRYPTO)) {
+                url = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=" + quoteId
+                        + "&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
+            }
 
             String resp = restTemplate.getForObject(url, String.class);
 
@@ -99,14 +114,25 @@ public class QuotesService implements IQuotesService {
 
             JSONObject obj = new JSONObject(resp);
             String price = null;
-            if(isStock) {
-                price = obj.getJSONObject("Global Quote").getString("05. price");
+            String bid=null;
+            String ask=null;
+
+            if(assetType.equals(AssetType.STOCKS)) {
+                if(!obj.isNull("Global Quote")) {
+                    bid = obj.getJSONObject("Global Quote").getString("04. low");
+                    ask = obj.getJSONObject("Global Quote").getString("03. high");
+                }
             }else {
                 price = obj.getJSONObject("Realtime Currency Exchange Rate").getString( "5. Exchange Rate");
             }
 
             logger.info("price: " + price);
-            return price;
+
+            if(!StringUtils.isEmpty(price)) {
+                return  new MyPair<String, String>(price, price);
+            }else{
+                return  new MyPair<String, String>(bid, ask);
+            }
         }catch (Exception e){
             logger.error("{}", e);
         }

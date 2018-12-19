@@ -91,6 +91,8 @@ public class AdminDiamondController {
         model.addAttribute("currencies", Stream.of(Currency.values()).collect(Collectors.toMap(Currency::name, Currency::name)));
         model.addAttribute("baseCurrencies", balanceService.getBaseCurrencies().stream().collect(Collectors.toMap(Currency::name, Currency::name)));
         model.addAttribute("statuses", Stream.of(DiamondStatus.values()).collect(Collectors.toMap(DiamondStatus::name, DiamondStatus::name)));
+        model.addAttribute("ticketProviders", Stream.of(TicketProvider.values()).collect(Collectors.toMap(TicketProvider::name, TicketProvider::name)));
+
         return model;
     }
 

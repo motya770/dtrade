@@ -86,10 +86,10 @@ public class TradeSimulator {
             Runnable r1 = getRunnable();// "motya770@gmail.com"
 
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(6);
-            executorService.scheduleAtFixedRate(r1, 100, 3_000, TimeUnit.MILLISECONDS);
+            executorService.scheduleAtFixedRate(r1, 15_000, 12_000, TimeUnit.MILLISECONDS);
 
             Runnable r2 = getRunnable();  // "test@test.com"
-            executorService.scheduleAtFixedRate(r2, 100, 3_000, TimeUnit.MILLISECONDS);
+            executorService.scheduleAtFixedRate(r2, 30_000, 10_000, TimeUnit.MILLISECONDS);
 
          }else{
              logger.info("Simulation is disabled");
@@ -113,7 +113,7 @@ public class TradeSimulator {
     }
 
     private void startTrade(){
-        createTradeOrderSimulated();
+        //createTradeOrderSimulated();
         createMarketMakerTrades();
     }
 
@@ -122,46 +122,48 @@ public class TradeSimulator {
         List<Diamond> diamonds =   diamondService.getAllAvailable("");
 
         diamonds.forEach(diamond -> {
+            TradeOrder to =  transactionTemplate.execute(status -> {
+                Random rand = new Random();
+                int random = rand.nextInt(2);
 
-            Random rand = new Random();
-            int random = rand.nextInt(2);
+                int accountRandom = rand.nextInt(IAccountService.MAX_ROBO_ACCOUNT_COUNT);
 
-            int accountRandom = rand.nextInt(IAccountService.MAX_ROBO_ACCOUNT_COUNT);
+                //logger.info("rand value " + random);
+                //random buy and random sell (simulation!! :-))
+                TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
 
-            //logger.info("rand value " + random);
-            //random buy and random sell (simulation!! :-))
-            TradeOrderDirection tradeOrderDirection = (random == 0) ? TradeOrderDirection.BUY : TradeOrderDirection.SELL;
+                BigDecimal highEnd =  diamond.getRoboHighEnd();
+                BigDecimal lowEnd = diamond.getRoboLowEnd();
 
-            BigDecimal highEnd =  diamond.getRoboHighEnd();
-            BigDecimal lowEnd = diamond.getRoboLowEnd();
+                BigDecimal highEndSecond = highEnd.multiply(new BigDecimal("1.003"));
+                BigDecimal lowEndFirst = lowEnd.multiply(new BigDecimal("0.997"));
 
-            BigDecimal highEndSecond = highEnd.multiply(new BigDecimal("1.003"));
-            BigDecimal lowEndFirst = lowEnd.multiply(new BigDecimal("0.997"));
+                //we just want to create the market but not to buy or sell
+                BigDecimal price =  (tradeOrderDirection == TradeOrderDirection.BUY) ?
+                        getRandomRangePrice(lowEndFirst, lowEnd) : getRandomRangePrice(highEnd, highEndSecond);
 
-            //we just want to create the market but not to buy or sell
-            BigDecimal price =  (tradeOrderDirection == TradeOrderDirection.BUY) ?
-                    getRandomRangePrice(lowEndFirst, lowEnd) : getRandomRangePrice(highEnd, highEndSecond);
+                BigDecimal amount =getRandomAmount(diamond);
 
-            BigDecimal amount =getRandomAmount(diamond);
+                TradeOrder tradeOrder = new TradeOrder();
+                tradeOrder.setAmount(amount);
+                tradeOrder.setDiamond(diamond);
 
-            TradeOrder tradeOrder = new TradeOrder();
-            tradeOrder.setAmount(amount);
-            tradeOrder.setDiamond(diamond);
+                String mail = accountService.getRoboAccountMail(diamond, accountRandom);
+                login(mail);
 
-            String mail = accountService.getRoboAccountMail(diamond, accountRandom);
-            login(mail);
+                Account account =  accountService.getStrictlyLoggedAccount();
 
-            Account account =  accountService.getStrictlyLoggedAccount();
+                Arrays.stream(Currency.values()).forEach(currency ->
+                        balanceService.updateRoboBalances(currency, account));
 
-            Arrays.stream(Currency.values()).forEach(currency ->
-                    balanceService.updateRoboBalances(currency, account));
+                tradeOrder.setAccount(accountService.getCurrentAccount());
+                tradeOrder.setPrice(price);
+                tradeOrder.setTradeOrderType(TradeOrderType.LIMIT);
+                tradeOrder.setTradeOrderDirection(tradeOrderDirection);
+                return tradeOrder;
+            });
 
-            tradeOrder.setAccount(accountService.getCurrentAccount());
-            tradeOrder.setPrice(price);
-            tradeOrder.setTradeOrderType(TradeOrderType.LIMIT);
-            tradeOrder.setTradeOrderDirection(tradeOrderDirection);
-
-            transactionTemplate.execute(status -> tradeOrderService.createTradeOrder(tradeOrder));
+            transactionTemplate.execute(status -> tradeOrderService.createTradeOrder(to));
         });
     }
 

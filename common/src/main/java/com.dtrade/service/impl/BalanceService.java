@@ -107,7 +107,6 @@ public class BalanceService  implements IBalanceService{
     @Transactional
     public Balance updateBalance(Balance balance) {
 
-
         Long balanceId = balance.getId();
 
         IMap<Long, Long> balancesMap = hazelcastInstance.getMap("balancesMap");

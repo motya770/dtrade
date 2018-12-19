@@ -108,7 +108,6 @@
             document.body.removeChild(aux);
         }
     </script>
-
 </head>
 
 <body class="page">

@@ -48,8 +48,9 @@ public class DiamondService implements IDiamondService {
     @Override
     public void validateDiamondCanTrade(Diamond diamond) {
 
+        //TODO fix robo hidden times
         Long lastUpdated =  diamond.getLastRoboUpdated();
-        if(lastUpdated==null || (System.currentTimeMillis() - lastUpdated > 60_000)) {
+        if(lastUpdated==null || (System.currentTimeMillis() - lastUpdated > (60_000 * 5))) {
 
             if(diamond.getDiamondStatus().equals(DiamondStatus.ENLISTED)){
                 diamond.setDiamondStatus(DiamondStatus.ROBO_HIDDEN);
@@ -57,7 +58,7 @@ public class DiamondService implements IDiamondService {
             }
         }
 
-        if(lastUpdated!=null && (System.currentTimeMillis() - lastUpdated < 60_000)){
+        if(lastUpdated!=null && (System.currentTimeMillis() - lastUpdated < (60_000 * 5))){
             if(diamond.getDiamondStatus().equals(DiamondStatus.ROBO_HIDDEN)){
                 diamond.setDiamondStatus(DiamondStatus.ENLISTED);
                 diamond = diamondRepository.save(diamond);
@@ -65,8 +66,13 @@ public class DiamondService implements IDiamondService {
         }
 
         if(!diamond.getDiamondStatus().equals(DiamondStatus.ENLISTED)){
-            throw new TradeException("Can't open trade because pair in status: " + diamond.getDiamondStatus());
+            throw new TradeException("Can't open trade because pair in status: " + diamond.getDiamondStatus() + " " + diamond.getName());
         }
+    }
+
+    @Override
+    public Diamond unsecuredUpdate(Diamond diamond) {
+        return diamondRepository.save(diamond);
     }
 
     @Override
@@ -92,9 +98,14 @@ public class DiamondService implements IDiamondService {
         diamond.setRoboLowEnd(low);
         diamond.setRoboHighEnd(high);
         diamond.setLastRoboUpdated(System.currentTimeMillis());
+        if(diamond.getDiamondStatus().equals(DiamondStatus.ROBO_HIDDEN)) {
+            diamond.setDiamondStatus(DiamondStatus.ENLISTED);
+        }
 
         return diamondRepository.save(diamond);
     }
+
+
 
     @Override
     public Diamond update(Diamond diamond) {

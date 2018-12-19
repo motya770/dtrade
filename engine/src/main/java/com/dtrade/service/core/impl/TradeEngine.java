@@ -356,14 +356,14 @@ public class TradeEngine implements ITradeEngine {
             //seller don't have enough stocks
             if (buyBalance.getAmount().compareTo(realAmount) < 0) {
                 //TODO notify user
-                logger.error("Not enough coins at {}" + buyBalance);
+                logger.error("Not enough coins at {} {}", buyBalance, buyAccount);
                 sellOrder = rejectTradeOrder(sellOrder);
                 return Pair.of(true, false);
             }
 
             if (sellBalance.getAmount().compareTo(realAmount) < 0) {
                 //TODO notify user
-                logger.error("Not enough coins at {}" + sellBalance);
+                logger.error("Not enough coins at {} {}", sellBalance, sellAccount);
                 sellOrder = rejectTradeOrder(sellOrder);
                 return Pair.of(true, false);
             }

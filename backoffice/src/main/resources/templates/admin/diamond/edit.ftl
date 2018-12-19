@@ -112,6 +112,15 @@
             <input type="text" class="form-control" id="name" name="name" placeholder="name" value="${(diamond.name)!""}">
         </div>
         <div class="form-group">
+                <label for="ticketName">Ticket Name</label>
+                <input type="text" class="form-control" id="ticketName" name="ticketName" placeholder="ticketName" value="${(diamond.ticketName)!""}">
+        </div>
+        <div class="radio">
+            <label>Ticket provider</label><br/>
+            <#assign stringTicketProviderValue = (diamond.ticketProvider)!"" />
+            <@spring.formRadioButtons "diamond.ticketProvider", ticketProviders, ""/><br><br>
+        </div>
+        <div class="form-group">
             <label for="name">Price</label>
         ${(diamond.price)!""}
             <input type="number" step="0.01" class="form-control" name="price" id="price" placeholder="price" value="${(diamond.price?replace(",", ""))!""}">

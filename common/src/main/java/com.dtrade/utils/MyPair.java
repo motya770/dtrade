@@ -9,4 +9,9 @@ public class MyPair<L, R>  {
     /** Right object */
     public R second;
 
+    public MyPair(L l, R r){
+        this.first = l;
+        this.second = r;
+    }
+
 }

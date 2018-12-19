@@ -30,7 +30,14 @@ public class Diamond implements Serializable {
     @GeneratedValue
     private Long id;
 
+    @NotNull
     private String name;
+
+    @NotNull
+    private String ticketName;
+
+    @NotNull
+    private TicketProvider ticketProvider;
 
     @NotNull
     private BigDecimal price;
