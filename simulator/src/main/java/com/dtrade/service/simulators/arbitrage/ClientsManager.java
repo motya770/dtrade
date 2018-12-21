@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Component
 public class ClientsManager {
@@ -33,15 +34,31 @@ public class ClientsManager {
     private List<BitfinexClient> bitfinexClients = Collections.synchronizedList(new ArrayList<>());
     private List<AdvatageClient> advantageClients = Collections.synchronizedList(new ArrayList<>());
 
+    @Autowired
+    private KrakenClient krakenClient;
+
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     @EventListener(ContextRefreshedEvent.class)
     public void init(){
 
         List<Diamond> diamonds = diamondService.getEnlistedOrRoboHidden();
-        startBitfinexClients(diamonds);
-        startAdvantageProviders(diamonds);
+        //startBitfinexClients(diamonds);
+        //startAdvantageProviders(diamonds);
+        startKrakenClient(diamonds);
+    }
 
+    //TODO fix about restart
+    private void startKrakenClient(List<Diamond> diamonds){
+        List<Diamond> filtered = diamonds.stream().filter(d->d.getTicketProvider().equals(TicketProvider.KRAKEN)).collect(Collectors.toList());
+        Runnable runnable = ()->{
+            try {
+                krakenClient.execute(filtered);
+            }catch (Exception e){
+                logger.error("{}", e);
+            }
+        };
+        executorService.scheduleAtFixedRate(runnable, 1_000, 20_000, TimeUnit.MILLISECONDS);
     }
 
     private void startAdvantageProviders(List<Diamond> diamonds){
