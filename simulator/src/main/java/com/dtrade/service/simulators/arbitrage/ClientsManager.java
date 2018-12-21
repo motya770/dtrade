@@ -72,11 +72,16 @@ public class ClientsManager {
         });
 
         Runnable runnable = ()->{
-            advantageClients.forEach(advatageClient -> {
-                advatageClient.execute();
-            });
+                advantageClients.forEach(advatageClient -> {
+                    try {
+                        advatageClient.execute();
+                        Thread.sleep(10_000);
+                    }catch (Exception e){
+                        logger.error("{}", e);
+                    }
+                });
         };
-        executorService.scheduleAtFixedRate(runnable, 1_000, 20_000, TimeUnit.MILLISECONDS);
+        executorService.scheduleAtFixedRate(runnable, 1_000, 60_000, TimeUnit.MILLISECONDS);
 
     }
 

@@ -20,9 +20,17 @@ public class KrakenClient {
 
     private RestTemplate restTemplate = new RestTemplate();
 
+    private Map<String, String> krakenPairNames = new HashMap<>();
+
+    public KrakenClient(){
+        krakenPairNames.put("ETHUSD", "XETHZUSD");
+        krakenPairNames.put("LTCUSD", "XLTCZUSD");
+        krakenPairNames.put("XBTUSD", "XXBTZUSD");
+    }
+
     public void execute(List<Diamond> diamonds){
 
-        Map<String, Diamond> map = new HashMap<>();
+         Map<String, Diamond> map = new HashMap<>();
         StringBuilder builder = new StringBuilder();
 
         for(int i=0; i<diamonds.size(); i++){
@@ -39,8 +47,10 @@ public class KrakenClient {
         JSONObject jsonObject = new JSONObject(resp);
         JSONObject resultJson = jsonObject.getJSONObject("result");
         for(Map.Entry<String, Diamond> entry: map.entrySet()){
-            String  bid = resultJson.getJSONObject(entry.getKey()).getJSONArray("a").getString(0);
-            String  ask = resultJson.getJSONObject(entry.getKey()).getJSONArray("a").getString(1);
+
+            String pairName = krakenPairNames.get(entry.getKey());
+            String  ask = resultJson.getJSONObject(pairName).getJSONArray("a").getString(0);
+            String  bid = resultJson.getJSONObject(pairName).getJSONArray("b").getString(0);
             diamondService.defineRobotBorders(entry.getValue(), new BigDecimal(bid), new BigDecimal(ask));
         }
     }
