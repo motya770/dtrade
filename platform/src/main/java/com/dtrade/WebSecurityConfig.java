@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/diamonds").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/**").permitAll()
-                .and().formLogin().defaultSuccessUrl("/trade")
+                .and().formLogin().defaultSuccessUrl("/trade#!/basic")
                 .loginPage("/trade#!/login-form").permitAll()
                 .loginProcessingUrl("/login")
                 //.failureUrl("/trade#!/login-form")

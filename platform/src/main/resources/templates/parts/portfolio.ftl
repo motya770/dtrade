@@ -6,7 +6,7 @@
                     <h3>Account:  {{vm.account.mail}}</h3>
                     <p><span class="accent">Balance</span>
                         <span class="accent" ng-repeat="balance in vm.account.balance">
-                            <span ng-if="balance.baseBalance">
+                            <span ng-if="balance.baseBalance && balance.currency=='USD'">
                             {{balance.amount | number}}
                             {{balance.currency}}
                             </span>

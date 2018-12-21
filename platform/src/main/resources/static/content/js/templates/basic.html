@@ -267,8 +267,8 @@
                                         <tbody>
                                         <tr ng-repeat="tradeOrder in vm.liveTradeOrders.content">
                                             <td>{{tradeOrder.diamond.name}}</td>
-                                            <td>{{tradeOrder.price | number : 4 }}</td>
-                                            <td>{{tradeOrder.initialAmount | number : 4}}</td>
+                                            <td>{{tradeOrder.price | number : 2 }}</td>
+                                            <td>{{tradeOrder.initialAmount | number : 2}}</td>
                                             <td>{{tradeOrder.executionSum | number : 2}}</td>
                                             <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
                                             <td>{{tradeOrder.tradeOrderDirection | lowercase}} {{tradeOrder.tradeOrderType | lowercase}}</td>
