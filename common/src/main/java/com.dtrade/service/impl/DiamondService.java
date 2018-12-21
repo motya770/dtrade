@@ -53,8 +53,8 @@ public class DiamondService implements IDiamondService {
         if(lastUpdated==null || (System.currentTimeMillis() - lastUpdated > (60_000 * 5))) {
 
             if(diamond.getDiamondStatus().equals(DiamondStatus.ENLISTED)){
-                diamond.setDiamondStatus(DiamondStatus.ROBO_HIDDEN);
-                diamond = diamondRepository.save(diamond);
+                //diamond.setDiamondStatus(DiamondStatus.ROBO_HIDDEN);
+                //diamond = diamondRepository.save(diamond);
             }
         }
 

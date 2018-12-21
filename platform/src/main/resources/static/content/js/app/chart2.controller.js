@@ -9,6 +9,9 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
 
     $scope.tab = 11;
     var simpleTheme = {
+        "scrollbar":{
+            enabled: false
+        },
         "time": {
             "useUTC": false
         },

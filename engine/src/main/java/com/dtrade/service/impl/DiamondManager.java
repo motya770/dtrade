@@ -32,8 +32,8 @@ public class DiamondManager implements IDiamondManager {
                     if (lastUpdated != null) {
                         //TODO fix timeout
                         if (lastUpdated + (60_000 * 5) < System.currentTimeMillis()) {
-                            logger.info("Hidding pair because its not updated {}", diamond.getId());
-                            diamond.setDiamondStatus(DiamondStatus.ROBO_HIDDEN);
+                            //logger.info("Hidding pair because its not updated {}", diamond.getId());
+                            //diamond.setDiamondStatus(DiamondStatus.ROBO_HIDDEN);
                             diamondService.unsecuredUpdate(diamond);
                         }
                     }
