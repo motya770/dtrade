@@ -58,8 +58,6 @@
                 </dependencies>
 
             </plugin>
-
-            <!--
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
@@ -79,7 +77,6 @@
                         <workingDirectory>${basedir}/src/main/resources/static</workingDirectory>
                     </configuration>
                 </plugin>
-                -->
             <!--
             <plugin>
                 <groupId>com.spotify</groupId>
