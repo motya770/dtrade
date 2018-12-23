@@ -22,7 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
         http.authorizeRequests().antMatchers("/**").hasRole("ADMIN")
-                .and().logout()
                 .and().httpBasic();
 
 //        http
