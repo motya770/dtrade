@@ -20,8 +20,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+
+        http.authorizeRequests().antMatchers("/**").hasRole("ADMIN")
+                .and().logout()
+                .and().httpBasic();
+
+//        http
+//                .csrf().disable()
+//                .httpBasic()
+//                .and()
+//                .authorizeRequests()
+//                .anyRequest().authenticated();
+
         //TODO investigate
-        http
+       /* http
                 .csrf().disable().
                  authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
@@ -31,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.failureUrl("/trade#!/login-form")
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler("/trade#!/login-form"))
                 //.failureForwardUrl("/trade#!/login-form")
-                .and().logout().permitAll().logoutSuccessUrl("/trade");
+                .and().logout().permitAll().logoutSuccessUrl("/trade");*/
 
         http.headers()
                 .frameOptions().disable();
