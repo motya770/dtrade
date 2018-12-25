@@ -21,8 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
 
-        http.authorizeRequests().antMatchers("/**").hasRole("ADMIN")
-                .and().httpBasic();
+        http.cors().and().csrf().disable().
+                authorizeRequests().antMatchers("/**").hasRole("ADMIN").and().httpBasic();
 
 //        http
 //                .csrf().disable()
