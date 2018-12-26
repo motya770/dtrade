@@ -33,6 +33,15 @@ public class AccountController {
     private ObjectMapper mapper = new ObjectMapper();
 
 
+    @RequestMapping(value = "/demo-login", method = RequestMethod.GET)
+    public String demoLogin(@RequestParam String ref)
+
+    {
+        Account account = accountService.findByReferral(ref);
+        accountService.login(account);
+        return "redirect:/trade#!/basic";
+    }
+
     @CrossOrigin
     @RequestMapping(value = "/create-referral", method = RequestMethod.POST)
     public @ResponseBody AccountDTO signToReferral(@RequestParam String mail,

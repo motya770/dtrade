@@ -137,7 +137,7 @@
                                 <div>Link www.korono.io/?ref=${account.referral}</div>
                                 <div>Referred count ${account.referredCount}</div>
                                 <div>We also created demo account for you with password <b>demo1234</b>
-                                    Trade with demo account: <a href="https://x.korono.io/trade#!/basic">trade</a>
+                                    Trade with demo account: <a href="https://x.korono.io/accounts/demo-login/?ref=${account.referral}">trade</a>
                                 . (Don't worry before launch of the system you gonna change it)
                                 </div>
 
