@@ -136,9 +136,9 @@
                                 Share this link with your friends to get free tokens
                                 <div>Link www.korono.io/?ref=${account.referral}</div>
                                 <div>Referred count ${account.referredCount}</div>
-                                <div>We also created demo account for you with password ${account.password}
+                                <div>We also created demo account for you with password <b>demo1234</b>
                                     Trade with demo account: <a href="https://x.korono.io/trade#!/basic">trade</a>
-                                . (Don't worry before launch of teh system you gonna change it)
+                                . (Don't worry before launch of the system you gonna change it)
                                 </div>
 
                                 <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">This is new trading application that created by professionals in field of software development and finance, we decided to disrupt industry and create trading application that don't take commissions on trade (it is free). Currently we decided to give our token for free if you brought us your friend, so if many people will join out trading application that will really dominate on the market. We reserved up to 10k dollars for person who bring us most clients, based on economic algorithms but every day the sum is shrinking because other people are joining, you can use this link www.korono.io/?ref=${account.referral}(Don't worry we are not scam, you need to enlist only by providing you mail and your tokens are gonna be reserved.)
