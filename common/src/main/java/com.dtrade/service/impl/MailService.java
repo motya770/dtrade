@@ -39,9 +39,10 @@ public class MailService implements IMailService {
         try {
 
             Template t = freemarkerConfig.getTemplate("mail.ftl");
-            Map<String, String> map= new HashMap<>();
+            Map<String, Object> map= new HashMap<>();
             map.put("accountLink", "x.korono.io/referral?myRef=" + account.getReferral());
             map.put("referralLink", "www.korono.io/?ref="+account.getReferral());
+            map.put("account", account);
 
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
 

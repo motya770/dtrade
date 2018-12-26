@@ -325,6 +325,9 @@ a[x-apple-data-detectors=true] {
 		<div style="line-height:14px;font-size:12px;color:#555555;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px">&#160;</p><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="line-height: 14px; font-size: 12px;"><span style="font-size: 24px; line-height: 28px;"><strong>You mail was successfully&#160;added to waiting list,</strong></span></span></p><p style="margin: 0;font-size: 12px;line-height: 14px">&#160;</p><p style="margin: 0;font-size: 14px;line-height: 17px"><span style="font-size: 14px; line-height: 16px;"><span style="line-height: 16px; font-size: 14px;">After launch of the platform and sharing with your friends you&#160; gonna get you tokens.</span></span></p><p style="margin: 0;font-size: 14px;line-height: 17px"><span style="font-size: 14px; line-height: 16px;"><span style="line-height: 16px; font-size: 14px;">
             You can check the count of referrals in queue:&#160;<strong><a href="${accountLink}">link</a></strong></span></span></p><p style="margin: 0;line-height: 14px;font-size: 12px"><span style="line-height: 14px; font-size: 12px;"><span style="line-height: 14px; font-size: 12px;"><strong style="font-size: 14px;">
             This is the link ${referralLink} to share with your&#160;</strong>
+            Also you have access to demo account assosiated with your email ${account.mail}
+            and password is ${account.password}.
+            (Don't worry - after launch of teh system you gonna change demo password.)
             <span style="line-height: 14px; font-size: 12px;">
                 <span style="font-size: 14px; line-height: 16px;"><strong>friends
                 </strong></span><strong style="font-size: 14px;">:&#160;</strong></span></span></span></p></div>

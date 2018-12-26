@@ -112,6 +112,9 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         mailService.sendReferralMail(account);
         account = accountRepository.save(account);
+        balanceService.updateBalance(Currency.USD, account, new BigDecimal("10000"));
+
+        login(account);
         return getAccountDTO(account);
     }
 
