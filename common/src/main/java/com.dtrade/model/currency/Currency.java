@@ -1,7 +1,9 @@
 package com.dtrade.model.currency;
 
 public enum  Currency {
-    USD(true), BTC(true), ETH(true), LTC(false), BHC(false), ETC(false);
+    USD(true), BTC(true), ETH(true),
+    LTC, BHC, ETC,
+    APPLE, MICROSOFT, FACEBOOK, GOOGLE, TESLA;
 
     Currency(){
         this.baseCurrency = false;
