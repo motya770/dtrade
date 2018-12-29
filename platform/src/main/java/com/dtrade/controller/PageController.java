@@ -6,6 +6,7 @@ import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,8 +37,13 @@ public class PageController {
     }
 
     @RequestMapping(value = "/referral", method = RequestMethod.GET)
-    public String referral(@RequestParam String myRef, Model model){
-        Account account =  accountService.findByReferral(myRef);
+    public String referral(@RequestParam(required = false) String myRef, Model model){
+        Account account = null;
+        if(!StringUtils.isEmpty(myRef)) {
+             account = accountService.findByReferral(myRef);
+        }else{
+             account = accountService.getStrictlyLoggedAccount();
+        }
         model.addAttribute("account", account);
         return "referral";
     }

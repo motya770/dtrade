@@ -114,7 +114,7 @@
 
                <md-input-container class="md-block">
                 <md-checkbox name="tos" ng-model="project.tos" required="">
-                  I accept the terms of service.
+                  I accept the <a href="https://www.korono.io/legal"> terms of service </a>.
                 </md-checkbox>
                 <div ng-messages="projectForm.tos.$error" multiple="" md-auto-hide="false">
                   <div ng-message="required">

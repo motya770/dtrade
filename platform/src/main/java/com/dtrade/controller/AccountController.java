@@ -38,6 +38,9 @@ public class AccountController {
 
     {
         Account account = accountService.findByReferral(ref);
+        if(account==null){
+            throw new TradeException("Can't find account by ref:" + ref);
+        }
         accountService.login(account);
         return "redirect:/trade#!/basic";
     }

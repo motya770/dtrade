@@ -20,12 +20,10 @@
                 <li ng-show="vm.account" ng-class="{ active: isActive('/account')}">
                     <a href="/trade#!/account">My account</a>
                 </li>
-
-            <!--
                 <li ng-show="vm.account" ng-class="{ active: isActive('/referral')}">
-                    <a href="/trade#!/referral">Referral</a>
+                    <a href="/referral">Referral</a>
                 </li>
-                -->
+
 
             <!--
             <li ng-show="vm.account">
