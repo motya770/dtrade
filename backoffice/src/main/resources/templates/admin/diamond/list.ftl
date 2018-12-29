@@ -19,6 +19,8 @@
             <th>Robo High End</th>
             <th>Robo Low End</th>
             <th>Robo Max Amount</th>
+            <th>Currency</th>
+            <th>Base Currency</th>
         </tr>
         <#if diamonds??>
             <#list diamonds as diamond>
@@ -39,6 +41,8 @@
                 <#else>
                     <td></td>
                 </#if>
+                <td>${diamond.currency}</td>
+                <td>${diamond.baseCurrency}</td>
             </tr>
             </#list>
         </#if>
