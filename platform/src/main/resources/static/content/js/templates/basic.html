@@ -239,12 +239,14 @@
 
                 <div ng-controller="LiveTradeOrderController as vm" class="sep-cab-page__side sep-cab-page__bottom-right">
                     <ul class="sep-cab-tabs sep-cab-tabs--tables">
-
                         <li ng-class="{active:tab===1}">
-                            <a href ng-click="tab = tab==1 ? a : 1" >Open Orders</a>
+                            <a  href ng-click="tab = tab==1 ? a : 1">Open Orders</a>
                         </li>
                         <li ng-class="{active:tab===2}">
-                            <a href ng-click="tab = tab==2 ? a : 2">My {{::cc.config.assetName}}</a>
+                            <a href ng-click="tab = tab==2 ? a : 2">History Orders</a>
+                        </li>
+                        <li ng-class="{active:tab===10}">
+                            <a href ng-click="tab = tab==10 ? a : 10">My {{::cc.config.assetName}}</a>
                         </li>
                     </ul>
                     <div class="sep-cab-tabs-container">
@@ -281,6 +283,39 @@
                             <a href ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
                         </div>
                         <div ng-show="tab===2" class="sep-cab-tab" >
+                            <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
+                                <div>
+                                    <table class="diamont-table">
+                                        <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>t created</th>
+                                            <th>t executed</th>
+                                            <th>Amount</th>
+                                            <th>Price</th>
+                                            <th>Sum</th>
+                                            <th>Status</th>
+                                            <th>Type</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="tradeOrder in vm.accountHistoryTradeOrders.content">
+                                            <td>{{tradeOrder.diamond.name}}</td>
+                                            <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
+                                            <td>{{tradeOrder.executionDate | date:'dd/MM HH:mm:ss' }}</td>
+                                            <td>{{tradeOrder.initialAmount | number : 2}}</td>
+                                            <td><span ng-if="tradeOrder.tradeOrderType == 'LIMIT' ">{{tradeOrder.price | number : 2}}</span></td>
+                                            <td>{{tradeOrder.executionSum | number : 2}}</td>
+                                            <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
+                                            <td>{{tradeOrder.tradeOrderDirection | lowercase}} {{tradeOrder.tradeOrderType | lowercase}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <a href ng-click="getPreviousAccountHistoryOrders(vm.accountHistoryTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
+                            </div>
+                        </div>
+                        <div ng-show="tab===10" class="sep-cab-tab" >
                             <div class="table-container">
 
                                 <div ng-controller="BalanceController as vm">
