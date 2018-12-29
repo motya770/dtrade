@@ -113,7 +113,7 @@ public class TradeSimulator {
     }
 
     private void startTrade(){
-        //createTradeOrderSimulated();
+        createTradeOrderSimulated();
         createMarketMakerTrades();
     }
 
