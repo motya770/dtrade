@@ -85,8 +85,13 @@ public class AccountService implements IAccountService, UserDetailsService {
                 String mail = getRoboAccountMail(diamond, i);
                 Account account  = findByMail(mail);
                 if(account==null){
-                    account = createRoboAccount(mail);
-                    logger.info("robo account is created for {}, account:  {} ", diamond, account);
+                    try {
+                        account = createRoboAccount(mail);
+                        logger.info("robo account is created for {}, account:  {} ", diamond, account);
+                    }catch (Exception e){
+                        logger.error("{}", e);
+                    }
+
                 }
             }
         });
