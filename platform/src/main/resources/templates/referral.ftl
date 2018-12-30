@@ -142,14 +142,12 @@
                                      (Don't worry before launch of the system you gonna change demo password)
                                     </div>
 
-                                    <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">This is new trading application that created by professionals in field of software development and finance,
-                                        we decided to disrupt industry and create trading application that don't take
-                                        commissions on trade (it is free). Currently we decided to give stocks for free for the one of you who brings us his friends,
-                                        so if many people will join from your link than more stock you will get.
-                                        We reserved up to 10k dollars for person who bring us most clients, based on economic algorithms but every day the sum is shrinking
-                                        because other people are joining,
-                                        you can use this link www.korono.io/?ref=${account.referral}. (Don't worry we are not scam,
-                                        you need to enlist only by providing you mail and your stocks are gonna be reserved.)
+                                    <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">
+                                        We decided to disrupt industry and create trading application that don't take
+                                        commissions on trade (it is free). Currently we to give stocks for free for the one of you who brings us his friends,
+                                        so if than more people will join from your link than more stock you will get.
+                                        We reserved up to 10k dollars for person who bring us most clients.
+                                        You can use this link www.korono.io/?ref=${account.referral} for sharing with you friends.
                                     </div>
                                     <a href="#" onclick="copyText();return false;">Copy text</a>
                                         <!-- Go to www.addthis.com/dashboard to customize your tools -->
