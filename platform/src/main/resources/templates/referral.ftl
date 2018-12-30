@@ -124,6 +124,25 @@
         </div>
     </header>
 
+    <nav class="subnav">
+        <div class="subnav__inner">
+            <ul class="subnav__list">
+                <li>
+                    <a href="/trade#!/basic">Basic</a>
+                </li>
+                <li>
+                    <a href="/trade#!/trade">Advanced</a>
+                </li>
+                <li>
+                    <a href="/trade#!/account">My account</a>
+                </li>
+                <li class="active">
+                    <a href="/referral">Referral</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <main class="content">
         <div class="def-cab-page">
             <div class="def-cab-page__inner">
