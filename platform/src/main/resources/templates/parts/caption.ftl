@@ -2,7 +2,7 @@
     <div class="header__inner">
         <div class="header__logo">
             <a href="http://korono.io">
-                <img style="height: 50%; width: 50%;" src="/theme/app/img/logo_korono.png"></img>
+                <img style="height: 39px; width: 131px;" src="/theme/app/img/logo_korono.png"></img>
             </a>
         </div>
         <!--

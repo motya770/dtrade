@@ -32,8 +32,8 @@
         <div ng-view></div>
     </main>
     <#include "parts/footer.ftl">
-    </div>
 </div>
+
 
 <#include "parts/bootom-scripts.ftl">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
