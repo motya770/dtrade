@@ -29,7 +29,7 @@ public class HazelcastHttpSessionConfig {
 
 
         Config config = new Config();
-        config.setProperty("hazelcast.partition.count", "2");
+        config.setProperty("hazelcast.partition.count", "6");
 
 
         config.getMapConfig(HazelcastSessionRepository.DEFAULT_SESSION_MAP_NAME)
@@ -47,7 +47,7 @@ public class HazelcastHttpSessionConfig {
                 .setExtractor(PrincipalNameExtractor.class.getName());
 
         Config config = new Config();
-        config.setProperty("hazelcast.partition.count", "2");
+        config.setProperty("hazelcast.partition.count", "6");
 
         config.getMapConfig(HazelcastSessionRepository.DEFAULT_SESSION_MAP_NAME)
                 .addMapAttributeConfig(attributeConfig)

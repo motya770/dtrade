@@ -25,7 +25,7 @@
            xmlns="http://www.hazelcast.com/schema/config"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <properties>
-        <property name="hazelcast.partition.count">2</property>
+        <property name="hazelcast.partition.count">6</property>
     </properties>
 
     <group>
