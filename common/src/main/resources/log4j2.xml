@@ -36,19 +36,19 @@
         </RollingRandomAccessFile>
     </Appenders>
     <Loggers>
-        <AsyncLogger name="com.dtrade" level="debug" additivity="true">
+        <Logger name="com.dtrade" level="debug" additivity="true">
             <AppenderRef ref="RandomAccessFile"/>
-        </AsyncLogger>
+        </Logger>
 
-        <AsyncLogger name="org.springframework.boot.actuate.endpoint.mvc.EndpointHandlerMapping" level="INFO"/>
-        <AsyncLogger name="org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter" level="INFO"/>
+        <Logger name="org.springframework.boot.actuate.endpoint.mvc.EndpointHandlerMapping" level="INFO"/>
+        <Logger name="org.springframework.boot.web.servlet.filter.OrderedRequestContextFilter" level="INFO"/>
 
-        <AsyncLogger name="org.springframework.boot.web.filter" level="INFO"/>
+        <Logger name="org.springframework.boot.web.filter" level="INFO"/>
 
-        <AsyncRoot level="INFO">
+        <Root level="INFO">
             <AppenderRef ref="ConsoleAppender" />
             <AppenderRef ref="RandomAccessFile"/>
-        </AsyncRoot>
+        </Root>
 
     </Loggers>
 </Configuration>
