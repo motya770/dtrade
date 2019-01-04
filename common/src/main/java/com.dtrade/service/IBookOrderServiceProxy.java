@@ -12,7 +12,7 @@ public interface IBookOrderServiceProxy {
 
     boolean addNew(TradeOrder tradeOrder);
 
-    boolean remove(TradeOrder tradeOrder);
+    Boolean remove(TradeOrder tradeOrder);
 
     Pair<Diamond, Pair<BigDecimal, BigDecimal>>  getSpread(Diamond diamond);
 

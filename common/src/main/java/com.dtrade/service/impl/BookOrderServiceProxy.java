@@ -73,11 +73,19 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
     }
 
     @Override
-    public boolean remove(TradeOrder tradeOrder) {
-        String url = consulUtils.engineUrl() + "/book-order/remove";
-        boolean result = restTemplate.postForObject(url, tradeOrder, boolean.class);
-        System.out.println("result: " + result);
-        return result;
+    public Boolean remove(TradeOrder tradeOrder) {
+        try{
+            String url = consulUtils.engineUrl() + "/book-order/remove";
+            System.out.println(url);
+            System.out.println(restTemplate);
+            System.out.println(tradeOrder);
+
+            RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(tradeOrder);
+            ResponseEntity<Boolean> responseEntity = restTemplate.exchange(requestEntity, Boolean.class);
+           return  responseEntity.getBody();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

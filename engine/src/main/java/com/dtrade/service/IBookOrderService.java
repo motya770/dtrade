@@ -23,7 +23,7 @@ public interface IBookOrderService {
 
      void addNew(TradeOrder order);
 
-     void remove(TradeOrder order);
+     boolean remove(TradeOrder order);
 
      void update(TradeOrder order);
 

@@ -228,7 +228,7 @@ public class BookOrderService implements IBookOrderService {
     }
 
     @Override
-    public void remove(TradeOrder order){
+    public boolean remove(TradeOrder order){
 
         BookOrder book = bookOrders.get(order.getDiamond().getId());
 
@@ -240,16 +240,17 @@ public class BookOrderService implements IBookOrderService {
 
         logger.debug("remove D 1.1 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
 
-        Optional.ofNullable(book).ifPresent((bookOrder)->{
-            //System.out.println("remove D 1.2 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
+        Optional.ofNullable(book).map(bookOrder -> {
             if(order.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
-                  logger.debug("remove D 1.3 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
-                 bookOrder.getBuyOrders().remove(order);
+                logger.debug("remove D 1.3 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
+                 return bookOrder.getBuyOrders().remove(order);
             }else if(order.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
-               logger.debug("remove D 1.4 : " + order.getId() + " " + order.getPrice() +  " " + Thread.currentThread().getName() + " " + LocalTime.now());
-                bookOrder.getSellOrders().remove(order);
+                logger.debug("remove D 1.4 : " + order.getId() + " " + order.getPrice() +  " " + Thread.currentThread().getName() + " " + LocalTime.now());
+                return bookOrder.getSellOrders().remove(order);
             }
-        });
+            return false;
+        }).orElse(Boolean.FALSE);
+        return false;
     }
 
     @Override
