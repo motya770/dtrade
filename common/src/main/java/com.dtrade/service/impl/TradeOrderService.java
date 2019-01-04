@@ -239,7 +239,7 @@ public class TradeOrderService  implements ITradeOrderService{
                 Balance balance = balanceService.getBalance(diamond.getBaseCurrency(), account);
 
                 if (balance.getAmount().compareTo(BigDecimal.ZERO) == 0) {
-                    throw new TradeException("Account " + account.getMail() + " don't have enough currency " + diamond.getBaseCurrency() + " . Please make deposit. ");
+                    throw new TradeException("Account " + account.getMail() + " don't have enough  " + diamond.getBaseCurrency() + " . Please, buy or make deposit. ");
                 }
 
                 BigDecimal actualBalance = balance.getActualBalance();
@@ -254,7 +254,7 @@ public class TradeOrderService  implements ITradeOrderService{
                 Balance balance = balanceService.getBalance(diamond.getCurrency(), account);
 
                 if (balance.getAmount().compareTo(BigDecimal.ZERO) == 0) {
-                    throw new TradeException("Account " + account.getMail() + " don't have enough currency " + diamond.getCurrency() + " . Please make deposit. ");
+                    throw new TradeException("Account " + account.getMail() + " don't have enough  " + diamond.getCurrency() + " . Please, buy or make deposit. ");
                 }
 
                 BigDecimal actualBalance = balance.getActualBalance();
