@@ -2,6 +2,7 @@ package com.dtrade.service;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderAccountHolder;
 import com.dtrade.model.tradeorder.TradeOrderDTO;
 import org.springframework.data.domain.Page;
 
@@ -38,7 +39,7 @@ public interface ITradeOrderService {
 
     Page<TradeOrder> getLiveTradeOrdersByAccount(Integer pageNumber);
 
-    TradeOrder createTradeOrder(TradeOrder tradeOrder);
+    TradeOrderAccountHolder createTradeOrder(TradeOrder tradeOrder);
 
     TradeOrder cancelTradeOrder(TradeOrder tradeOrder);
 

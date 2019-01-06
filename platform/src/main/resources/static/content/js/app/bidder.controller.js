@@ -36,15 +36,16 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
                 AlertService.showAlert(response.data.message);
                 return;
             }
-            if(response.data.id == null) {
+            if(response.data.tradeOrder.id == null) {
                 AlertService.showAlert("You should make login first.", "Notification");
                 return;
             }
-            TradeOrderService.addLiveOrder(response.data);
+            TradeOrderService.addLiveOrder(response.data.tradeOrder);
+            AccountService.refreshAccount(response.data.accountDTO);
 
-            if(response.data.tradeOrderDirection=="BUY") {
-                AccountService.refreshCurrentAccount();
-            }
+            //if(response.data.tradeOrderDirection=="BUY") {
+               // AccountService.refreshCurrentAccount();
+            //}
 
             //TODO add stock service
         }, function (response) {

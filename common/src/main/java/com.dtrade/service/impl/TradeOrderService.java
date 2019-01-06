@@ -269,7 +269,7 @@ public class TradeOrderService  implements ITradeOrderService{
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
-    public TradeOrder createTradeOrder(TradeOrder tradeOrder) {
+    public TradeOrderAccountHolder createTradeOrder(TradeOrder tradeOrder) {
 
         //TODO maybe we should price too.
         //TODO check account balance.
@@ -309,7 +309,11 @@ public class TradeOrderService  implements ITradeOrderService{
         });
 
         afterTradeOrderCreation(order, account);
-        return order;
+
+        TradeOrderAccountHolder holder = new TradeOrderAccountHolder();
+        holder.setTradeOrder(order);
+        holder.setAccountDTO(accountService.getCurrentAccountDTO());
+        return holder;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

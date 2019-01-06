@@ -23,10 +23,15 @@ diamondApp.factory( 'AccountService', ["$http", function($http) {
         }
     }
     
+    var refreshAccount = function (account) {
+        self.currentAccount.balance = account.balance;
+    }
+    
     return {
+        refreshAccount: refreshAccount,
         currentAccountCall: currentAccountCall,
         refreshCurrentAccount: currentAccountRefresh
-    }
+    };
     /*
 
     if(currentAccount!=null) {

@@ -90,7 +90,7 @@ public class BaseTest {
             tradeOrderDirection = TradeOrderDirection.BUY;
         }
         tradeOrder.setTradeOrderDirection(tradeOrderDirection);
-        tradeOrder = tradeOrderService.createTradeOrder(tradeOrder);
+        tradeOrder = tradeOrderService.createTradeOrder(tradeOrder).getTradeOrder();
         return tradeOrder;
     }
 

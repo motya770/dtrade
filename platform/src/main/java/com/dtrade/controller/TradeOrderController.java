@@ -1,6 +1,7 @@
 package com.dtrade.controller;
 
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderAccountHolder;
 import com.dtrade.model.tradeorder.TradeOrderDTO;
 import com.dtrade.service.ITradeOrderService;
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class TradeOrderController {
 
    // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/create")
-    public TradeOrder create(@RequestBody TradeOrder tradeOrder){
+    public TradeOrderAccountHolder create(@RequestBody TradeOrder tradeOrder){
 
         return tradeOrderService.createTradeOrder(tradeOrder);
 
