@@ -5,12 +5,14 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.TicketProvider;
 import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IQuotesService;
+import org.mockito.internal.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import reactor.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -62,7 +64,8 @@ public class ClientsManager {
     }
 
     private void startAdvantageProviders(List<Diamond> diamonds){
-        diamonds.stream().filter(d->d.getTicketProvider().equals(TicketProvider.ALPHAVANTAGE)).forEach(d->{
+        diamonds.stream().filter(d->d.getTicketProvider()!=null
+                && d.getTicketProvider().equals(TicketProvider.ALPHAVANTAGE)).forEach(d->{
             AdvatageClient advatageClient = new AdvatageClient();
             advatageClient.setDiamond(d);
             advatageClient.setAssetType(AssetType.STOCKS);

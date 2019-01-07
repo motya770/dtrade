@@ -86,10 +86,10 @@ public class TradeSimulator {
             Runnable r1 = getRunnable();// "motya770@gmail.com"
 
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(6);
-            executorService.scheduleAtFixedRate(r1, 15_000, 12_000, TimeUnit.MILLISECONDS);
+            executorService.scheduleAtFixedRate(r1, 15_000, 15_000, TimeUnit.MILLISECONDS);
 
             Runnable r2 = getRunnable();  // "test@test.com"
-            executorService.scheduleAtFixedRate(r2, 30_000, 10_000, TimeUnit.MILLISECONDS);
+            executorService.scheduleAtFixedRate(r2, 40_000, 10_000, TimeUnit.MILLISECONDS);
 
          }else{
              logger.info("Simulation is disabled");
@@ -99,12 +99,13 @@ public class TradeSimulator {
     private Runnable getRunnable(){
         Runnable r1 = ()->{
             logger.debug("First account simulation");
-            try{
+            try {
                 transactionTemplate.execute((status) -> {
                     startTrade();
                     return null;
                 });
-                Thread.currentThread().sleep(1_000);}
+                //Thread.currentThread().sleep(1_000);}
+            }
             catch (Exception e){
                 logger.error("{}", e);
             }
