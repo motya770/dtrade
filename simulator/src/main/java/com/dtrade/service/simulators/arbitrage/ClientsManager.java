@@ -44,7 +44,7 @@ public class ClientsManager {
 
         List<Diamond> diamonds = diamondService.getEnlistedOrRoboHidden();
         //startBitfinexClients(diamonds);
-        //startAdvantageProviders(diamonds);
+        startAdvantageProviders(diamonds);
         startKrakenClient(diamonds);
     }
 
