@@ -45,7 +45,7 @@ diamondApp.controller('AvailableController', function AvailableController($scope
             var onlyFive = [];
             for(var i in data){
                 onlyFive[i] = data[i];
-                if(i > 3){
+                if(i > 10){
                     break;
                 }
             }

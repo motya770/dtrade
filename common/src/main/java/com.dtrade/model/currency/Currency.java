@@ -1,5 +1,6 @@
 package com.dtrade.model.currency;
 
+//do not edit names !!!
 public enum  Currency {
     USD(true), BTC(true), ETH(true),
     LTC, BHC, ETC,
