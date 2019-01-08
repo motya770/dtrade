@@ -52,7 +52,7 @@ public class KrakenClient {
             return;
         }
 
-        String url = "https://api.kraken.com/0/public/Ticker?pair=" +
+        String url = "https://api.kraken.com/0/public/Ticker?pair=" + pairs;
         String resp = restTemplate.getForObject(url, String.class);
         JSONObject jsonObject = new JSONObject(resp);
         JSONObject resultJson = jsonObject.getJSONObject("result");
