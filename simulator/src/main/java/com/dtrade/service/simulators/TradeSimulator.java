@@ -67,6 +67,7 @@ public class TradeSimulator {
     @Autowired
     public void setTransactionManager(PlatformTransactionManager transactionManager){
         transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.setIsolationLevel(TransactionDefinition.ISOLATION_READ_UNCOMMITTED);
         transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
     }
 
@@ -100,11 +101,10 @@ public class TradeSimulator {
         Runnable r1 = ()->{
             logger.debug("First account simulation");
             try {
-                transactionTemplate.execute((status) -> {
+                //transactionTemplate.execute((status) -> {
                     startTrade();
-                    return null;
-                });
-                //Thread.currentThread().sleep(1_000);}
+                //});
+                Thread.currentThread().sleep(1_000);
             }
             catch (Exception e){
                 logger.error("{}", e);
