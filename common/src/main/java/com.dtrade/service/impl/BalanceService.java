@@ -78,14 +78,16 @@ public class BalanceService  implements IBalanceService{
 
         Balance balance = getBalance(currency, account);
         balance.setOpen(balance.getOpen().add(amount));
-        return balanceRepository.save(balance);
+        return updateBalance(balance);
+        //return balanceRepository.save(balance);
     }
 
     @Override
     public Balance updateFrozenBalance(Currency currency, Account account, BigDecimal amount){
         Balance balance = getBalance(currency, account);
         balance.setFrozen(balance.getFrozen().add(amount));
-        return balanceRepository.save(balance);
+        return updateBalance(balance);
+        //return balanceRepository.save(balance);
     }
 
 
@@ -109,10 +111,8 @@ public class BalanceService  implements IBalanceService{
     @Transactional
     public Balance updateBalance(Balance balance) {
 
-        Long balanceId = balance.getId();
-
         IMap<Long, Long> balancesMap = hazelcastInstance.getMap("balancesMap");
-
+        Long balanceId = balance.getId();
         //create
         if(balanceId==null){
             balance =  balanceRepository.save(balance);
