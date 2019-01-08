@@ -99,7 +99,7 @@ public class BalanceService  implements IBalanceService{
         return Arrays.stream(Currency.values()).filter(c->c.isBaseCurrency()).collect(Collectors.toList());
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
     @Override
     public List<Balance> getBaseBalancesByAccount(Account account){
         return balanceRepository.getBaseBalancesByAccount(account, getBaseCurrencies());
