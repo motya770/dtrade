@@ -17,6 +17,7 @@ import reactor.util.StringUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -39,7 +40,7 @@ public class ClientsManager {
     @Autowired
     private KrakenClient krakenClient;
 
-    private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(5);
 
     @EventListener(ContextRefreshedEvent.class)
     public void init(){
@@ -52,7 +53,7 @@ public class ClientsManager {
 
     //TODO fix about restart
     private void startKrakenClient(List<Diamond> diamonds){
-        List<Diamond> filtered = diamonds.stream().filter(d->d.getTicketProvider().equals(TicketProvider.KRAKEN)).collect(Collectors.toList());
+        List<Diamond> filtered = diamonds.stream().filter(d->d.getTicketProvider()!=null && d.getTicketProvider().equals(TicketProvider.KRAKEN)).collect(Collectors.toList());
         Runnable runnable = ()->{
             try {
                 krakenClient.execute(filtered);
@@ -74,18 +75,20 @@ public class ClientsManager {
             advantageClients.add(advatageClient);
         });
 
+        //decided rand to lower requests number to advantage api
         Runnable runnable = ()->{
-                advantageClients.forEach(advatageClient -> {
-                    try {
-                        advatageClient.execute();
-                        Thread.sleep(10_000);
-                    }catch (Exception e){
-                        logger.error("{}", e);
-                    }
-                });
-        };
-        executorService.scheduleAtFixedRate(runnable, 1_000, 60_000, TimeUnit.MILLISECONDS);
 
+            Random random = new Random();
+            int rand = random.nextInt(advantageClients.size());
+            try {
+                AdvatageClient advatageClient =  advantageClients.get(rand);
+                advatageClient.execute();
+            }catch (Exception e){
+                logger.error("{}", e);
+            }
+        };
+
+        executorService.scheduleAtFixedRate(runnable, 40_000, 20_000, TimeUnit.MILLISECONDS);
     }
 
     private void startBitfinexClients(List<Diamond> diamonds){
