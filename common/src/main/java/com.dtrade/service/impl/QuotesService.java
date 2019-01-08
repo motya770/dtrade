@@ -82,13 +82,27 @@ public class QuotesService implements IQuotesService {
             String btcUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
             String ethUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=ETH&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
            */
-            landingQuotes.put("APPLE", getLandingPrice("AAPL", AssetType.STOCKS).first);
-            landingQuotes.put("TESLA", getLandingPrice("TSLA", AssetType.STOCKS).first);
-            landingQuotes.put("BTC", getLandingPrice("BTC", AssetType.CRYPTO).first);
-            landingQuotes.put("ETH", getLandingPrice("ETH", AssetType.CRYPTO).first);
+
+            //sorry hardcode
+            Random random = new Random();
+            int rand = random.nextInt(4);
+            switch (rand){
+                case 0:
+                    landingQuotes.put("APPLE", getLandingPrice("AAPL", AssetType.STOCKS).first);
+                    break;
+                case 1:
+                    landingQuotes.put("TESLA", getLandingPrice("TSLA", AssetType.STOCKS).first);
+                    break;
+                case 2:
+                    landingQuotes.put("BTC", getLandingPrice("BTC", AssetType.CRYPTO).first);
+                    break;
+                case 3:
+                    landingQuotes.put("ETH", getLandingPrice("ETH", AssetType.CRYPTO).first);
+                    break;
+            }
         };
 
-        executor.scheduleAtFixedRate(r, 5000, 60_000, TimeUnit.MILLISECONDS);
+        executor.scheduleAtFixedRate(r, 5_000, 30_000, TimeUnit.MILLISECONDS);
     }
 
     @Override

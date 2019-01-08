@@ -14,6 +14,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import reactor.util.StringUtils;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +43,8 @@ public class ClientsManager {
 
     private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(5);
 
-    @EventListener(ContextRefreshedEvent.class)
+    @PostConstruct
+    //@EventListener(ContextRefreshedEvent.class)
     public void init(){
 
         List<Diamond> diamonds = diamondService.getEnlistedOrRoboHidden();
