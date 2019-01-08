@@ -2,16 +2,20 @@ package com.dtrade.service.simulators.arbitrage;
 
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.service.IDiamondService;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import reactor.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class KrakenClient {
 
@@ -42,7 +46,13 @@ public class KrakenClient {
             map.put(diamond.getTicketName(), diamond);
         }
 
-        String url = "https://api.kraken.com/0/public/Ticker?pair=" + builder.toString();
+        String pairs =  builder.toString();
+        if(StringUtils.isEmpty(pairs)){
+            log.info("Kraken pairs is empty.");
+            return;
+        }
+
+        String url = "https://api.kraken.com/0/public/Ticker?pair=" +
         String resp = restTemplate.getForObject(url, String.class);
         JSONObject jsonObject = new JSONObject(resp);
         JSONObject resultJson = jsonObject.getJSONObject("result");
