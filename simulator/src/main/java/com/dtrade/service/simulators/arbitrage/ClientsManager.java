@@ -43,6 +43,7 @@ public class ClientsManager {
 
     private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(5);
 
+    //test
     @PostConstruct
     //@EventListener(ContextRefreshedEvent.class)
     public void init(){
