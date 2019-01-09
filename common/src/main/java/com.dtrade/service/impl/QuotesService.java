@@ -102,7 +102,7 @@ public class QuotesService implements IQuotesService {
             }
         };
 
-        executor.scheduleAtFixedRate(r, 5_000, 30_000, TimeUnit.MILLISECONDS);
+        executor.scheduleAtFixedRate(r, 5_000, 120_000, TimeUnit.MILLISECONDS);
     }
 
     @Override
