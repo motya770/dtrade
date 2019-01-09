@@ -4,10 +4,12 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.bookorder.BookOrder;
 import com.dtrade.model.config.AssetType;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.landquotes.LandingQuotes;
 import com.dtrade.model.quote.Quote;
 import com.dtrade.model.quote.QuoteType;
 import com.dtrade.model.quote.depth.DepthQuote;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.repository.landquotes.LandingQuotesRepository;
 import com.dtrade.repository.quote.QuoteRepository;
 import com.dtrade.service.IBookOrderServiceProxy;
 import com.dtrade.service.IQuotesService;
@@ -23,6 +25,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
@@ -68,6 +71,9 @@ public class QuotesService implements IQuotesService {
 
     private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
+    @Autowired
+    private LandingQuotesRepository landingQuotesRepository;
+
     @PostConstruct
     private void init(){
         executeLandingRequests();
@@ -88,26 +94,59 @@ public class QuotesService implements IQuotesService {
             int rand = random.nextInt(4);
             switch (rand){
                 case 0:
-                    landingQuotes.put("APPLE", getLandingPrice("AAPL", AssetType.STOCKS).first);
+                    createOrUpdateLandingQuote("APPLE", "AAPL");
                     break;
                 case 1:
-                    landingQuotes.put("TESLA", getLandingPrice("TSLA", AssetType.STOCKS).first);
+                    createOrUpdateLandingQuote("TESLA", "TSLA");
                     break;
                 case 2:
-                    landingQuotes.put("BTC", getLandingPrice("BTC", AssetType.CRYPTO).first);
+                    createOrUpdateLandingQuote("BTC", "BTC");
                     break;
                 case 3:
-                    landingQuotes.put("ETH", getLandingPrice("ETH", AssetType.CRYPTO).first);
+                    createOrUpdateLandingQuote("ETH", "ETH");
                     break;
             }
         };
 
-        executor.scheduleAtFixedRate(r, 5_000, 120_000, TimeUnit.MILLISECONDS);
+        executor.scheduleAtFixedRate(r, 5_000, 30_000, TimeUnit.MILLISECONDS);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void createOrUpdateLandingQuote(String name, String advantageTicketName){
+
+        String price = null;
+
+        LandingQuotes landingQuote = landingQuotesRepository.findByName(name);
+        if(landingQuote==null){
+            landingQuote = new LandingQuotes();
+            landingQuote.setName(name);
+            price = getLandingPrice(advantageTicketName, AssetType.STOCKS).first;
+        }else {
+            if(System.currentTimeMillis() - landingQuote.getTime() > (5 *  60 * 1000)){
+                price = getLandingPrice(advantageTicketName, AssetType.STOCKS).first;
+            }else{
+                logger.info("too early to update {}", name);
+                return;
+            }
+        }
+
+        landingQuote.setTime(System.currentTimeMillis());
+        landingQuote.setValue(price);
+
+        if(StringUtils.isEmpty(price)){
+            logger.info("Landing price is null for {}", name);
+            return;
+        }
+        landingQuotesRepository.save(landingQuote);
     }
 
     @Override
     public Map<String, String> getLandingQuotes() {
-        return landingQuotes;
+        Map<String, String> map = new HashMap<>();
+        landingQuotesRepository.findAll().forEach(landingQuotes->{
+            map.put(landingQuotes.getName(), landingQuotes.getValue());
+        });
+        return map;
     }
 
     @Override
