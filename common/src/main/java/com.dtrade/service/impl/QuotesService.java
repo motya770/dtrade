@@ -67,8 +67,6 @@ public class QuotesService implements IQuotesService {
 
     private RestTemplate restTemplate = new RestTemplate();
 
-    private Map<String, String> landingQuotes = new ConcurrentHashMap<>();
-
     private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     @Autowired
