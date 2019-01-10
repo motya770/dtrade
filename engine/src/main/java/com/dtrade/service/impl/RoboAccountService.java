@@ -7,6 +7,8 @@ import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IRoboAccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -22,7 +24,7 @@ public class RoboAccountService implements IRoboAccountService {
     @Autowired
     private IAccountService accountService;
 
-    @PostConstruct
+    @EventListener(ContextRefreshedEvent.class)
     public void init(){
         createRoboAccounts();
     }
