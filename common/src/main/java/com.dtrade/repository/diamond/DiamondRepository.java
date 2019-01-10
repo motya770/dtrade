@@ -32,6 +32,8 @@ public interface DiamondRepository extends JpaRepository<Diamond, Long> {
     @Query("select d from Diamond d where diamondStatus = 'ENLISTED' or diamondStatus = 'ROBO_HIDDEN'")
     List<Diamond> getEnlistedAndRoboHidded();
 
+    Diamond findByName(String name);
+
     //@Query("select d from Diamond d where diamondStatus = 'ENLISTED'")
     //List<Diamond> getAllAvailable();
 

@@ -38,4 +38,6 @@ public interface IDiamondService {
     List<Diamond> getDiamondsByScoreBounds(int lowerBound, int upperBound);
 
     Diamond create(Diamond diamond);
+
+    Diamond getDiamondByName(String name);
 }

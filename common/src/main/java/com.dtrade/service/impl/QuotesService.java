@@ -12,6 +12,7 @@ import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.repository.landquotes.LandingQuotesRepository;
 import com.dtrade.repository.quote.QuoteRepository;
 import com.dtrade.service.IBookOrderServiceProxy;
+import com.dtrade.service.IDiamondService;
 import com.dtrade.service.IQuotesService;
 import com.dtrade.service.IRabbitService;
 import com.dtrade.utils.MyPair;
@@ -61,6 +62,9 @@ public class QuotesService implements IQuotesService {
     @Autowired
     private IRabbitService rabbitService;
 
+    @Autowired
+    private IDiamondService diamondService;
+
 
     /*Welcome to Alpha Vantage! Here is your API key:*/
     //VNIJIMUF5VAZOUM4
@@ -74,7 +78,7 @@ public class QuotesService implements IQuotesService {
 
     @PostConstruct
     private void init(){
-        executeLandingRequests();
+       // executeLandingRequests();
     }
 
     private void executeLandingRequests(){
@@ -106,7 +110,7 @@ public class QuotesService implements IQuotesService {
             }
         };
 
-        executor.scheduleAtFixedRate(r, 5_000, 30_000, TimeUnit.MILLISECONDS);
+        //executor.scheduleAtFixedRate(r, 5_000, 30_000, TimeUnit.MILLISECONDS);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -140,10 +144,32 @@ public class QuotesService implements IQuotesService {
 
     @Override
     public Map<String, String> getLandingQuotes() {
+
+        Diamond apple = diamondService.getDiamondByName("Apple");
+        Diamond bitcoin = diamondService.getDiamondByName("Bitcoin");
+        Diamond tesla = diamondService.getDiamondByName("Tesla");
+        Diamond ethereum = diamondService.getDiamondByName("Ethereum");
+
+        Quote appleQuote = quoteRepository.findFirstByDiamondOrderByTimeDesc(apple);
+        Quote bitcoinQuote = quoteRepository.findFirstByDiamondOrderByTimeDesc(bitcoin);
+        Quote teslaQuote = quoteRepository.findFirstByDiamondOrderByTimeDesc(tesla);
+        Quote ethereumQuote = quoteRepository.findFirstByDiamondOrderByTimeDesc(ethereum);
+
         Map<String, String> map = new HashMap<>();
-        landingQuotesRepository.findAll().forEach(landingQuotes->{
-            map.put(landingQuotes.getName(), landingQuotes.getValue());
-        });
+        if(appleQuote!=null) {
+            map.put("APPLE", appleQuote.getAvg().toString());
+        }
+        if(teslaQuote!=null) {
+            map.put("TESLA", teslaQuote.getAvg().toString());
+        }
+        if(bitcoinQuote!=null) {
+            map.put("BTC", bitcoinQuote.getAvg().toString());
+        }
+
+        if(ethereumQuote!=null) {
+            map.put("ETH", ethereumQuote.getAvg().toString());
+        }
+
         return map;
     }
 

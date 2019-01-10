@@ -124,6 +124,11 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
+    public Diamond getDiamondByName(String name) {
+        return diamondRepository.findByName(name);
+    }
+
+    @Override
     public Diamond create(Diamond diamond) {
         //Diamond diamond = new Diamond();
         diamond.setDiamondStatus(DiamondStatus.CREATED);
