@@ -17,7 +17,7 @@ public interface IAccountService {
 
     AccountDTO createReferalAccount(String mail, String ref);
 
-    void createRoboAccounts();
+
 
     String getRoboAccountMail(Diamond diamond, int rand);
 

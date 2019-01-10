@@ -54,8 +54,7 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Autowired
     private IBalanceService balanceService;
 
-    @Autowired
-    private IDiamondService diamondService;
+
 
     @Override
     public Account find(Long accountId) {
@@ -70,31 +69,6 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Override
     public Account disable(Long accountId) {
         return changeEnablement(accountId, false);
-    }
-
-    @PostConstruct //EventListener(ContextRefreshedEvent.class)
-    public void init(){
-        createRoboAccounts();
-    }
-
-    @Override
-    public void createRoboAccounts() {
-        List<Diamond> diamonds = diamondService.getAllAvailable("");
-        diamonds.forEach(diamond -> {
-            for(int i = 0; i < MAX_ROBO_ACCOUNT_COUNT; i ++) {
-                String mail = getRoboAccountMail(diamond, i);
-                Account account  = findByMail(mail);
-                if(account==null){
-                    try {
-                        account = createRoboAccount(mail);
-                        logger.info("robo account is created for {}, account:  {} ", diamond, account);
-                    }catch (Exception e){
-                        logger.error("{}", e);
-                    }
-
-                }
-            }
-        });
     }
 
     @Override
@@ -121,13 +95,6 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         //login(account);
         return getAccountDTO(account);
-    }
-
-    //TODO hardcoded - change
-    private Account createRoboAccount(String email){
-        Account account = createRealAccount(email, "qwerty1345", null, null);
-        account.setRoboAccount(true);
-        return accountRepository.save(account);
     }
 
     @Override
