@@ -4,22 +4,26 @@ import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderServiceProxy;
+import com.dtrade.service.IWebClientService;
 import com.dtrade.utils.ConsulUtils;
-import com.dtrade.utils.MyPair;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.util.Pair;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URI;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+@Slf4j
 @Service
 public class BookOrderServiceProxy implements IBookOrderServiceProxy {
 
@@ -28,28 +32,31 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
     @Autowired
     private ConsulUtils consulUtils;
 
+    @Autowired
+    private IWebClientService webClient;
+
     @Override
-    public String getSpreadForDiamonds(List<Long> diamonds) {
+    public Mono<String> getSpreadForDiamonds(List<Long> diamonds) {
         try {
             String url = consulUtils.engineUrl() + "/book-order/get-diamonds-spread";
-            RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(diamonds);
-            ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
-            return responseEntity.getBody();
+            WebClient.ResponseSpec responseSpec =  webClient.getResponse(url, diamonds);
+            return responseSpec.bodyToMono(String.class);
         }catch (Exception e){
             e.printStackTrace();
         }
         return null;
     }
 
+
     @Override
-    public BookOrderView getBookOrderView(Long diamondId) {
+    public Mono<BookOrderView> getBookOrderView(Long diamondId) {
         try {
             String url = consulUtils.engineUrl() + "/book-order/get-view";
-            RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(diamondId);
-            ResponseEntity<BookOrderView> responseEntity = restTemplate.exchange(requestEntity, BookOrderView.class);
-            return responseEntity.getBody();
+            WebClient.ResponseSpec responseSpec = webClient.getResponse(url, diamondId);
+            return responseSpec.bodyToMono(BookOrderView.class);
+
         }catch (Exception e){
-            e.printStackTrace();
+           log.error("{}", e);
         }
         return null;
     }
@@ -89,17 +96,24 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
     }
 
     @Override
-    public boolean addNew(TradeOrder tradeOrder) {
+    public Mono<Boolean> addNew(TradeOrder tradeOrder) {
         try {
             String url = consulUtils.engineUrl() + "/book-order/add-new";
+
+            WebClient.ResponseSpec responseSpec =  webClient.getResponse(url, tradeOrder);
+            responseSpec.bodyToMono(String.class);
             RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(tradeOrder);
             ResponseEntity<?> responseEntity = restTemplate.exchange(requestEntity, String.class);
-            if(responseEntity.getStatusCode().equals(HttpStatus.OK)){
-                return true;
-            }
+
+//            if(responseSpec.onStatus(HttpStatus.OK, ()->{})){
+//                return null;
+//                //return Mono.from(Boolean.TRUE);
+//            }else {
+//                log.error("Can't open order {}", tradeOrder);
+//            }
         }catch (Exception e){
-            e.printStackTrace();
+            log.error("{}", e);
         }
-        return false;
+        return null;
     }
 }

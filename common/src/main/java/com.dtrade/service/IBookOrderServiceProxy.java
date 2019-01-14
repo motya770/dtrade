@@ -4,19 +4,20 @@ import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.util.Pair;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 public interface IBookOrderServiceProxy {
 
-    boolean addNew(TradeOrder tradeOrder);
+    Mono<Boolean> addNew(TradeOrder tradeOrder);
 
     Boolean remove(TradeOrder tradeOrder);
 
     Pair<Diamond, Pair<BigDecimal, BigDecimal>>  getSpread(Diamond diamond);
 
-    String getSpreadForDiamonds(List<Long> diamonds);
+    Mono<String> getSpreadForDiamonds(List<Long> diamonds);
 
-    BookOrderView getBookOrderView(Long diamondId);
+    Mono<BookOrderView> getBookOrderView(Long diamondId);
 }
