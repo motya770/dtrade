@@ -106,15 +106,22 @@ public class BookOrderService implements IBookOrderService {
         if(TradeOrderDirection.BUY.equals(order.getTradeOrderDirection())){
             logger.debug("adding buy " + order.getId());
             bookOrder.getBuyOrders().add(order);
-
+            //long size = bookOrder.getBuyCount().incrementAndGet();
+            //if(size>2000){
+              //  bookOrder.getBuyOrders().pollLast();
+                //bookOrder.getBuyCount().decrementAndGet();
+            //}
         }else if(TradeOrderDirection.SELL.equals(order.getTradeOrderDirection())){
             logger.debug("adding sell " + order.getId());
             bookOrder.getSellOrders().add(order);
+            //long size = bookOrder.getSellCount().incrementAndGet();
+            //if(size > 2000){
+              //  bookOrder.getSellOrders().pollLast();
+               // bookOrder.getSellCount().decrementAndGet();
+            //}
         }else{
             throw new TradeException("Type of the order is not defined!");
         }
-
-        //bookOrders.put(order.getDiamond(), bookOrder);
 
         if(newBookOrder) {
             bookOrders.put(order.getDiamond().getId(), bookOrder);
@@ -243,10 +250,19 @@ public class BookOrderService implements IBookOrderService {
         Optional.ofNullable(book).map(bookOrder -> {
             if(order.getTradeOrderDirection().equals(TradeOrderDirection.BUY)){
                 logger.debug("remove D 1.3 : " + order.getId() + " " + Thread.currentThread().getName() + " " + LocalTime.now());
-                 return bookOrder.getBuyOrders().remove(order);
+
+                 boolean res = bookOrder.getBuyOrders().remove(order);
+                 if(res){
+                     bookOrder.getBuyCount().decrementAndGet();
+                 }
+                 return res;
             }else if(order.getTradeOrderDirection().equals(TradeOrderDirection.SELL)){
                 logger.debug("remove D 1.4 : " + order.getId() + " " + order.getPrice() +  " " + Thread.currentThread().getName() + " " + LocalTime.now());
-                return bookOrder.getSellOrders().remove(order);
+
+                boolean res = bookOrder.getSellOrders().remove(order);
+                if(res) {
+                    bookOrder.getSellCount().decrementAndGet();
+                }
             }
             return false;
         }).orElse(Boolean.FALSE);

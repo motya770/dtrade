@@ -101,10 +101,10 @@ public class TradeSimulator {
         Runnable r1 = ()->{
             logger.debug("First account simulation");
             try {
-                transactionTemplate.execute((status) -> {
+                //transactionTemplate.execute((status) -> {
                     startTrade();
-                    return null;
-                });
+                    //return null;
+                //});
                 Thread.currentThread().sleep(1_000);
             }
             catch (Exception e){

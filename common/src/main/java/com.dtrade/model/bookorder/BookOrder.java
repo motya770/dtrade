@@ -4,6 +4,8 @@ import com.dtrade.model.tradeorder.TradeOrder;
 import lombok.Data;
 
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
 
 /**
  * Created by kudelin on 7/10/17.
@@ -15,6 +17,9 @@ public class BookOrder {
 
     private ConcurrentSkipListSet<TradeOrder> sellOrders;
 
+    private AtomicLong buyCount = new AtomicLong(0L);
+
+    private AtomicLong sellCount = new AtomicLong(0L);
 
     public static int comparatorSell(TradeOrder o1, TradeOrder o2){
         int response = o1.getPrice().compareTo(o2.getPrice());
