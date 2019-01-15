@@ -20,13 +20,14 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
@@ -50,6 +51,30 @@ public class BookOrderService implements IBookOrderService {
 
     //THINK about equals for diamond
     private ConcurrentHashMap<Long, BookOrder> bookOrders = new ConcurrentHashMap<>();
+
+    private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+
+    @PostConstruct
+    public void init(){
+        executorService.scheduleAtFixedRate(()->cleanBookOrders(), 10, 5, TimeUnit.MINUTES);
+    }
+
+    private void cleanList(ConcurrentSkipListSet<TradeOrder> list){
+         int size = list.size();
+         int counter = size - 500;
+         if(counter > 0){
+             for(int i = 0; i<counter; i++){
+                 list.pollLast();
+             }
+         }
+    }
+
+    private void  cleanBookOrders(){
+        bookOrders.forEach((k, v)->{
+            cleanList(v.getSellOrders());
+            cleanList(v.getBuyOrders());
+        });
+    }
 
     @Override
     public BookOrder getBookOrder(Long diamondId) {
