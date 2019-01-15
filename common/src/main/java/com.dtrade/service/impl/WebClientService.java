@@ -24,7 +24,15 @@ public class WebClientService implements IWebClientService {
     }
 
     @Override
-    public WebClient.ResponseSpec getResponse(String url, Object body){
+    public WebClient.ResponseSpec getGetResponse(String url) {
+        WebClient.RequestHeadersUriSpec<?> request = client.get();
+        request.uri(url);
+        WebClient.ResponseSpec responseSpec =  request.retrieve();
+        return responseSpec;
+    }
+
+    @Override
+    public WebClient.ResponseSpec getPostResponse(String url, Object body){
 
         WebClient.UriSpec<WebClient.RequestBodySpec> request = client.post();
         request.uri(url);

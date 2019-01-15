@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.util.WebUtils;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -28,20 +29,24 @@ public class AdvatageClient {
 
     public void execute(){
         try{
-            MyPair<String, String> pair = quotesService.getLandingPrice(diamond.getTicketName(), assetType);
-            if(pair!=null) {
-                if(pair.first!=null && pair.second!=null) {
+            quotesService.getLandingPrice(diamond.getTicketName(), assetType)
+                    .subscribe((v)->{
+                        MyPair<?, ?> pair = (MyPair<?, ?>)((Mono) v).block();
+                        if(pair!=null) {
+                            if(pair.first!=null && pair.second!=null) {
 
-                    BigDecimal f = new BigDecimal(pair.first);
-                    BigDecimal s =  new BigDecimal(pair.second);
+                                BigDecimal f = new BigDecimal((String) pair.first);
+                                BigDecimal s =  new BigDecimal((String) pair.second);
 
-                    if (f.compareTo(s)==-1) {
-                        diamondService.defineRobotBorders(diamond, f, s);
-                    }else{
-                        diamondService.defineRobotBorders(diamond, s, f);
-                    }
-                }
-            }
+                                if (f.compareTo(s)==-1) {
+                                    diamondService.defineRobotBorders(diamond, f, s);
+                                }else{
+                                    diamondService.defineRobotBorders(diamond, s, f);
+                                }
+                            }
+                        }
+                    });
+
         }catch (Exception e){
             logger.error("{}", e);
         }

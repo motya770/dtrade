@@ -11,10 +11,7 @@ import com.dtrade.model.quote.depth.DepthQuote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.repository.landquotes.LandingQuotesRepository;
 import com.dtrade.repository.quote.QuoteRepository;
-import com.dtrade.service.IBookOrderServiceProxy;
-import com.dtrade.service.IDiamondService;
-import com.dtrade.service.IQuotesService;
-import com.dtrade.service.IRabbitService;
+import com.dtrade.service.*;
 import com.dtrade.utils.MyPair;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -30,6 +27,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
@@ -52,6 +51,9 @@ public class QuotesService implements IQuotesService {
     private static long max_history =  2 *  30 *  24 *  60 * 60 * 1_000;
 
     private static final Logger logger = LoggerFactory.getLogger(QuotesService.class);
+
+    @Autowired
+    private IWebClientService webClientService;
 
     @Autowired
     private QuoteRepository quoteRepository;
@@ -174,7 +176,7 @@ public class QuotesService implements IQuotesService {
     }
 
     @Override
-    public MyPair<String, String> getLandingPrice(String quoteId, AssetType assetType){
+    public Mono<?> getLandingPrice(String quoteId, AssetType assetType){
         try{
 
             String url=null;
@@ -185,31 +187,38 @@ public class QuotesService implements IQuotesService {
                         + "&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
             }
 
-            String resp = restTemplate.getForObject(url, String.class);
+            WebClient.ResponseSpec responseSpec  =  webClientService.getGetResponse(url);
+            Mono<String> mono = responseSpec.bodyToMono(String.class);
+            return mono.map((resp)->{
+                logger.info("resp: " + resp);
 
-            logger.info("resp: " + resp);
+                JSONObject obj = new JSONObject(resp);
+                String price = null;
+                String bid=null;
+                String ask=null;
 
-            JSONObject obj = new JSONObject(resp);
-            String price = null;
-            String bid=null;
-            String ask=null;
-
-            if(assetType.equals(AssetType.STOCKS)) {
-                if(!obj.isNull("Global Quote")) {
-                    bid = obj.getJSONObject("Global Quote").getString("04. low");
-                    ask = obj.getJSONObject("Global Quote").getString("03. high");
+                if(assetType.equals(AssetType.STOCKS)) {
+                    if(!obj.isNull("Global Quote")) {
+                        bid = obj.getJSONObject("Global Quote").getString("04. low");
+                        ask = obj.getJSONObject("Global Quote").getString("03. high");
+                    }
+                }else {
+                    price = obj.getJSONObject("Realtime Currency Exchange Rate").getString( "5. Exchange Rate");
                 }
-            }else {
-                price = obj.getJSONObject("Realtime Currency Exchange Rate").getString( "5. Exchange Rate");
-            }
 
-            logger.info("price: " + price);
+                logger.info("price: " + price);
 
-            if(!StringUtils.isEmpty(price)) {
-                return  new MyPair<String, String>(price, price);
-            }else{
-                return  new MyPair<String, String>(bid, ask);
-            }
+                if(!StringUtils.isEmpty(price)) {
+                    return  Mono.just(new MyPair<>(price, price));
+                }else{
+                    return  Mono.just(new MyPair<>(bid, ask));
+                }
+            });
+           // resp.doOnSuccess
+
+            //String resp = restTemplate.getForObject(url, String.class);
+
+
         }catch (Exception e){
             logger.error("{}", e);
         }

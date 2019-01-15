@@ -10,6 +10,7 @@ import com.dtrade.utils.MyPair;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.util.Pair;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 public interface IQuotesService {
 
-    MyPair<String, String> getLandingPrice(String ticketName, AssetType assetType);
+    Mono<?> getLandingPrice(String ticketName, AssetType assetType);
 
     Map<String, String> getLandingQuotes();
 

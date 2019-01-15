@@ -12,11 +12,9 @@ import org.springframework.data.util.Pair;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URI;
@@ -39,7 +37,7 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
     public Mono<String> getSpreadForDiamonds(List<Long> diamonds) {
         try {
             String url = consulUtils.engineUrl() + "/book-order/get-diamonds-spread";
-            WebClient.ResponseSpec responseSpec =  webClient.getResponse(url, diamonds);
+            WebClient.ResponseSpec responseSpec =  webClient.getPostResponse(url, diamonds);
             return responseSpec.bodyToMono(String.class);
         }catch (Exception e){
             e.printStackTrace();
@@ -52,7 +50,7 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
     public Mono<BookOrderView> getBookOrderView(Long diamondId) {
         try {
             String url = consulUtils.engineUrl() + "/book-order/get-view";
-            WebClient.ResponseSpec responseSpec = webClient.getResponse(url, diamondId);
+            WebClient.ResponseSpec responseSpec = webClient.getPostResponse(url, diamondId);
             return responseSpec.bodyToMono(BookOrderView.class);
 
         }catch (Exception e){
@@ -100,7 +98,7 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
         try {
             String url = consulUtils.engineUrl() + "/book-order/add-new";
 
-            WebClient.ResponseSpec responseSpec =  webClient.getResponse(url, tradeOrder);
+            WebClient.ResponseSpec responseSpec =  webClient.getPostResponse(url, tradeOrder);
             responseSpec.bodyToMono(String.class);
             RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(tradeOrder);
             ResponseEntity<?> responseEntity = restTemplate.exchange(requestEntity, String.class);
