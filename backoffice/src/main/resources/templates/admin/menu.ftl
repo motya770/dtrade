@@ -1,9 +1,9 @@
 <div>
     <ul>
-        <li><a href="/admin/diamond/list">Diamonds</a></li>
+        <li><a href="/admin/diamond/list">Trading Items</a></li>
         <li><a href="/admin/account/list">Accounts</a></li>
         <li><a href="/admin/balanceactivity/list">Balance Activities</a></li>
-        <li><a href="/admin/diamondactivity/list">Diamond Activities</a></li>
+        <li><a href="/admin/diamondactivity/list">Trading Items Activities</a></li>
         <li><a href="/admin/tradeorder/list">Trade Orders</a></li>
         <li>Stocks</li>
         <li><a href="/admin/coinpayment/list">Coin Payments</a></li>
