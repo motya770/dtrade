@@ -31,7 +31,7 @@ public class AdvatageClient {
         try{
             quotesService.getLandingPrice(diamond.getTicketName(), assetType)
                     .subscribe((v)->{
-                        MyPair<?, ?> pair = (MyPair<?, ?>)((Mono) v).block();
+                        MyPair<?, ?> pair = (MyPair<?, ?>)v;
                         if(pair!=null) {
                             if(pair.first!=null && pair.second!=null) {
 

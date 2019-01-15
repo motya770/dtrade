@@ -209,9 +209,9 @@ public class QuotesService implements IQuotesService {
                 logger.info("price: " + price);
 
                 if(!StringUtils.isEmpty(price)) {
-                    return  Mono.just(new MyPair<>(price, price));
+                    return new MyPair<>(price, price);
                 }else{
-                    return  Mono.just(new MyPair<>(bid, ask));
+                    return new MyPair<>(bid, ask);
                 }
             });
            // resp.doOnSuccess
