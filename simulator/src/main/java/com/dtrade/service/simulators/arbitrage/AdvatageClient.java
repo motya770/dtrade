@@ -28,7 +28,7 @@ public class AdvatageClient {
 
     public void execute(){
         try{
-            MyPair<String, String> pair = quotesService.getLandingPrice(diamond.getTicketName(), AssetType.STOCKS);
+            MyPair<String, String> pair = quotesService.getLandingPrice(diamond.getTicketName(), assetType);
             if(pair!=null) {
                 if(pair.first!=null && pair.second!=null) {
 

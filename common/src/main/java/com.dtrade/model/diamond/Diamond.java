@@ -1,6 +1,7 @@
 package com.dtrade.model.diamond;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.config.AssetType;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.image.Image;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -115,6 +116,10 @@ public class Diamond implements Serializable {
 
     @JsonIgnore
     private Long lastRoboUpdated;
+
+    @Column(nullable = true)
+    @Enumerated(EnumType.STRING)
+    private AssetType assetType;
 
     /*
     @Column(columnDefinition = "boolean default true")

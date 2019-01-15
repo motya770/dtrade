@@ -88,7 +88,7 @@ public class DiamondService implements IDiamondService {
         }
 
 
-        logger.info("ask, bid1: " + bid + " " + ask);
+        logger.info("diamond  ask, bid1: " + bid + " " + ask + " " + diamond.getName());
 
         BigDecimal low = bid.multiply(LOW_BORDER_PERCENT);
         BigDecimal high = low.multiply(HIGH_BORDER_PERCENT);

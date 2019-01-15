@@ -72,7 +72,7 @@ public class ClientsManager {
                 && d.getTicketProvider().equals(TicketProvider.ALPHAVANTAGE)).forEach(d->{
             AdvatageClient advatageClient = new AdvatageClient();
             advatageClient.setDiamond(d);
-            advatageClient.setAssetType(AssetType.STOCKS);
+            advatageClient.setAssetType(d.getAssetType());
             advatageClient.setQuotesService(quotesService);
             advatageClient.setDiamondService(diamondService);
             advantageClients.add(advatageClient);
@@ -100,7 +100,7 @@ public class ClientsManager {
             try{
                 client = new BitfinexClient(d, diamondService, bitfinexClients);
             }catch (Exception e){
-                e.printStackTrace();
+                logger.error("{}", e);
             }
             bitfinexClients.add(client);
             client.connect();

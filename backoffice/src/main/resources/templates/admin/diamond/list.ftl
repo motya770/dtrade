@@ -11,10 +11,13 @@
             <th>Name</th>
             <th>Price</th>
             <th>Owner</th>
+            <!-- do not remove
             <th>Type</th>
             <th>Status</th>
             <th>Carats</th>
             <th>Clarity</th>
+            -->
+            <th>Asset Type</th>
             <th>Total Stock Amount</th>
             <th>Robo High End</th>
             <th>Robo Low End</th>
@@ -29,10 +32,13 @@
                 <td>${diamond.name}</td>
                 <td>${diamond.price}</td>
                 <td><a href="/admin/account/show?id=${diamond.account.id}"> ${diamond.account.id}</a> </td>
+                <td>${diamond.assetType!""}</td>
+                <!--
                 <td>${diamond.diamondType}</td>
                 <td>${diamond.diamondStatus}</td>
                 <td>${diamond.carats}</td>
                 <td>${diamond.clarity}</td>
+                -->
                 <td>${diamond.totalStockAmount}</td>
                 <td>${diamond.roboHighEnd!""}</td>
                 <td>${diamond.roboLowEnd!""}</td>

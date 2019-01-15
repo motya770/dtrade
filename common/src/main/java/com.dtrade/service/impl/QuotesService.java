@@ -81,66 +81,66 @@ public class QuotesService implements IQuotesService {
        // executeLandingRequests();
     }
 
-    private void executeLandingRequests(){
-        Runnable r = ()-> {
-            logger.info("before request");
-            /*
-            String appleUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=VNIJIMUF5VAZOUM4";
-            String teslaUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=TSLA&apikey=VNIJIMUF5VAZOUM4";
-            String btcUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
-            String ethUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=ETH&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
-           */
+//    private void executeLandingRequests(){
+//        Runnable r = ()-> {
+//            logger.info("before request");
+//            /*
+//            String appleUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=VNIJIMUF5VAZOUM4";
+//            String teslaUrl = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=TSLA&apikey=VNIJIMUF5VAZOUM4";
+//            String btcUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
+//            String ethUrl = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=ETH&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
+//           */
+//
+//            //sorry hardcode
+//            Random random = new Random();
+//            int rand = random.nextInt(4);
+//            switch (rand){
+//                case 0:
+//                    createOrUpdateLandingQuote("APPLE", "AAPL");
+//                    break;
+//                case 1:
+//                    createOrUpdateLandingQuote("TESLA", "TSLA");
+//                    break;
+//                case 2:
+//                    createOrUpdateLandingQuote("BTC", "BTC");
+//                    break;
+//                case 3:
+//                    createOrUpdateLandingQuote("ETH", "ETH");
+//                    break;
+//            }
+//        };
+//
+//        //executor.scheduleAtFixedRate(r, 5_000, 30_000, TimeUnit.MILLISECONDS);
+//    }
 
-            //sorry hardcode
-            Random random = new Random();
-            int rand = random.nextInt(4);
-            switch (rand){
-                case 0:
-                    createOrUpdateLandingQuote("APPLE", "AAPL");
-                    break;
-                case 1:
-                    createOrUpdateLandingQuote("TESLA", "TSLA");
-                    break;
-                case 2:
-                    createOrUpdateLandingQuote("BTC", "BTC");
-                    break;
-                case 3:
-                    createOrUpdateLandingQuote("ETH", "ETH");
-                    break;
-            }
-        };
-
-        //executor.scheduleAtFixedRate(r, 5_000, 30_000, TimeUnit.MILLISECONDS);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void createOrUpdateLandingQuote(String name, String advantageTicketName){
-
-        String price = null;
-
-        LandingQuotes landingQuote = landingQuotesRepository.findByName(name);
-        if(landingQuote==null){
-            landingQuote = new LandingQuotes();
-            landingQuote.setName(name);
-            price = getLandingPrice(advantageTicketName, AssetType.STOCKS).first;
-        }else {
-            if(System.currentTimeMillis() - landingQuote.getTime() > (5 *  60 * 1000)){
-                price = getLandingPrice(advantageTicketName, AssetType.STOCKS).first;
-            }else{
-                logger.info("too early to update {}", name);
-                return;
-            }
-        }
-
-        landingQuote.setTime(System.currentTimeMillis());
-        landingQuote.setValue(price);
-
-        if(StringUtils.isEmpty(price)){
-            logger.info("Landing price is null for {}", name);
-            return;
-        }
-        landingQuotesRepository.save(landingQuote);
-    }
+//    @Transactional(propagation = Propagation.REQUIRES_NEW)
+//    public void createOrUpdateLandingQuote(String name, String advantageTicketName){
+//
+//        String price = null;
+//
+//        LandingQuotes landingQuote = landingQuotesRepository.findByName(name);
+//        if(landingQuote==null){
+//            landingQuote = new LandingQuotes();
+//            landingQuote.setName(name);
+//            price = getLandingPrice(advantageTicketName, AssetType.STOCKS).first;
+//        }else {
+//            if(System.currentTimeMillis() - landingQuote.getTime() > (5 *  60 * 1000)){
+//                price = getLandingPrice(advantageTicketName, AssetType.STOCKS).first;
+//            }else{
+//                logger.info("too early to update {}", name);
+//                return;
+//            }
+//        }
+//
+//        landingQuote.setTime(System.currentTimeMillis());
+//        landingQuote.setValue(price);
+//
+//        if(StringUtils.isEmpty(price)){
+//            logger.info("Landing price is null for {}", name);
+//            return;
+//        }
+//        landingQuotesRepository.save(landingQuote);
+//    }
 
     @Override
     public Map<String, String> getLandingQuotes() {

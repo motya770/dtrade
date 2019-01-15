@@ -162,6 +162,13 @@
             <@spring.formRadioButtons "diamond.diamondStatus", statuses, ""/><br><br>
             </div>
 
+
+            <div class="radio">
+                <label>AssetType</label><br/>
+                <#assign stringStatusValue = (diamond.assetType)!"" />
+                <@spring.formRadioButtons "diamond.assetType", assetTypes, ""/><br><br>
+            </div>
+
             <div class="form-group">
                 <label for="hideTotalStockAmount">Hide Total Stock Amount</label>
 
