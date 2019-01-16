@@ -37,11 +37,7 @@ public class AccountController {
     public String demoLogin(@RequestParam String ref)
 
     {
-        Account account = accountService.findByReferral(ref);
-        if(account==null){
-            throw new TradeException("Can't find account by ref:" + ref);
-        }
-        accountService.login(account);
+        accountService.loginByRef(ref);
         return "redirect:/trade#!/basic";
     }
 

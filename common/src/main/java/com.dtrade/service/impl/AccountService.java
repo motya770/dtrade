@@ -300,4 +300,13 @@ public class AccountService implements IAccountService, UserDetailsService {
         SecurityContextHolder.getContext().setAuthentication(auth);
         return account;
     }
+
+    @Override
+    public Account loginByRef(String ref) {
+        Account account = findByReferral(ref);
+        if(account==null){
+            throw new TradeException("Can't find account by ref:" + ref);
+        }
+        return login(account);
+    }
 }

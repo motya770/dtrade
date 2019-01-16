@@ -53,4 +53,6 @@ public interface IAccountService {
 
     Account login(Account account);
 
+    Account loginByRef(String ref);
+
 }

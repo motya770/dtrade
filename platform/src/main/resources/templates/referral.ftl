@@ -127,18 +127,20 @@
     <nav class="subnav">
         <div class="subnav__inner">
             <ul class="subnav__list">
+                <#if account.referral??>
                 <li>
-                    <a href="/trade#!/basic">Basic</a>
+                    <a href="/trade?l-ref=${account.referral}#!/basic">Basic</a>
                 </li>
                 <li>
-                    <a href="/trade#!/trade">Advanced</a>
+                    <a href="/trade?l-ref=${account.referral}#!/trade">Advanced</a>
                 </li>
                 <li>
-                    <a href="/trade#!/account">My account</a>
+                    <a href="/trade?l-ref=${account.referral}#!/account">My account</a>
                 </li>
                 <li class="active">
-                    <a href="/referral">Referral</a>
+                    <a href="/referral?l-ref=${account.referral}">Referral</a>
                 </li>
+                </#if>
             </ul>
         </div>
     </nav>
