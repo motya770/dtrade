@@ -20,8 +20,8 @@
                 <th>Activity Id</th>
                 <th>Seller mail</th>
                 <th>Buyer mail</th>
-                <th>Diamond Id</th>
-                <th>Diamond Name</th>
+                <th>Asset Id</th>
+                <th>Asset Name</th>
                 <th>Price</th>
                 <th>Date</th>
                 <th>Activity Type</th>

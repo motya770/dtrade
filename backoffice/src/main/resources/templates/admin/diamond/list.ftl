@@ -1,6 +1,6 @@
 <#include "/admin/header.ftl">
 
-<h1>Diamonds</h1>
+<h1>Assets</h1>
 <a href="/admin/diamond/new-entity">Create Item</a>
 
 <div class="table-responsive">

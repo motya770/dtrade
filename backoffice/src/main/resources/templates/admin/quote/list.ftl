@@ -1,13 +1,13 @@
 <#include "/admin/header.ftl">
 
-<h1>Diamonds</h1>
+<h1>Assets</h1>
 
 <div class="table-responsive">
     <table class="table">
         <tr>
             <th>ID</th>
-            <th>Diamond Id</th>
-            <th>Diamond Name</th>
+            <th>Asset Id</th>
+            <th>Asset Name</th>
             <th>Price</th>
              <th>Ask</th>
              <th>Bid</th>

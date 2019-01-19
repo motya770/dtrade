@@ -16,11 +16,11 @@
     </div>
 
     <div>
-        Owned Diamonds
+        Owned Assets
     </div>
 
     <div>
-        Diamonds for Sale
+        Assets for Sale
     </div>
 
     <div>
@@ -28,7 +28,7 @@
     </div>
 
     <div>
-        Diamond Trade Activity
+        Asset Trade Activity
     </div>
 </div>
 

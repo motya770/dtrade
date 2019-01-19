@@ -383,8 +383,8 @@
                         <thead>
                         <tr>
                             <th>Number</th>
-                            <th>Diamond Id</th>
-                            <th>Diamond Name</th>
+                            <th>Asset Id</th>
+                            <th>Asset Name</th>
                             <th>Amount</th>
                         </tr>
                         </thead>
