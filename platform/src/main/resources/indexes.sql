@@ -8,3 +8,5 @@ create index stock_account_diamond_index on stock (account_id, diamond_id) using
 CREATE INDEX diamond_quotes_index ON quote (diamond_id, time);
 CREATE INDEX diamond_trade_order_status_time on trade_order (diamond_id, trader_order_status_index, execution_date);
 CREATE INDEX account_trade_order_status_time on trade_order (account_id, trader_order_status_index, creation_date);
+ALTER TABLE balance_activity
+  ADD INDEX balance_activity_account_date_index (account_id, create_date DESC)
