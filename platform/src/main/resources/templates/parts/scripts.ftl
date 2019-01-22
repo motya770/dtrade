@@ -11,7 +11,7 @@
 -->
 
 <link rel="stylesheet" href= "/bower_components/angular-material/angular-material.min.css"/>
-<!--
+
 <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
 <script src="/bower_components/angular-route/angular-route.min.js"></script>
 <script src="/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
@@ -51,10 +51,10 @@
 <script src="/content/js/app/coinpayment.controller.js"></script>
 <script src="/content/js/app/coin.controller.js"></script>
 <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
--->
 
+<!--
 <script src="/dist.min/js/app.js"></script>
-
+-->
 
 <!--
 <script>var scr = {"scripts":[
