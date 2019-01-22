@@ -48,8 +48,8 @@
                                                     <input ng-if="::cc.config.assetType=='WINE'" style="height: 30px;" type="image" src="/theme/app/img/bottle.png" alt="Submit Form" class="md-primary md-raised" ng-click="showAdvanced( $event)" />
                                                 </div>
                                             </td>
-                                            <td>{{diamond.askBidPair.first | number: 5}} </td>
-                                            <td>{{diamond.askBidPair.second | number : 5}}</td>
+                                            <td>{{diamond.askBidPair.first | number: 2}} </td>
+                                            <td>{{diamond.askBidPair.second | number : 2}}</td>
                                             <td><span ng-if="::!diamond.hideTotalStockAmount">{{::diamond.totalStockAmount/10000000 | number}} mln </span></td>
                                         </tr>
                                         <script type="text/ng-template" id="dialog1.tmpl.html">
@@ -366,15 +366,15 @@
                                             <tbody>
 
                                             <tr ng-repeat="tradeOrder in vm.historyTradeOrders track by tradeOrder.id">
-                                                <td>{{tradeOrder.initialAmount | number : 8}}</td>
+                                                <td>{{tradeOrder.initialAmount | number : 4}}</td>
                                                 <td ng-if="tradeOrder.tradeOrderDirection == 'BUY'" class="up">
-                                                    {{tradeOrder.price | number : 8 }}
+                                                    {{tradeOrder.price | number : 2 }}
 
                                                     <img ng-src="/theme/app/img/up.png" alt="up">
 
                                                 </td>
                                                 <td ng-if="tradeOrder.tradeOrderDirection == 'SELL'" class="down">
-                                                    {{tradeOrder.price | number : 8}}
+                                                    {{tradeOrder.price | number : 2}}
                                                     <img ng-src="/theme/app/img/down.png" alt="down">
 
                                                 </td>
@@ -399,8 +399,8 @@
                                         <tbody>
 
                                         <tr ng-repeat="tradeOrder in vm.bookOrder.sellOrders track by tradeOrder.id">
-                                            <td style="padding-right: 10px;">{{tradeOrder.amount | number : 6}}</td>
-                                            <td style="padding-right: 10px" class="down">{{tradeOrder.price | number : 8}}</td>
+                                            <td style="padding-right: 10px;">{{tradeOrder.amount | number : 4}}</td>
+                                            <td style="padding-right: 10px" class="down">{{tradeOrder.price | number : 2}}</td>
                                             <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
 
 
@@ -422,8 +422,8 @@
 
 
                                         <tr ng-repeat="tradeOrder in vm.bookOrder.buyOrders track by tradeOrder.id">
-                                            <td>{{tradeOrder.amount | number : 6}}</td>
-                                            <td class="up">{{tradeOrder.price | number : 8 }}</td>
+                                            <td>{{tradeOrder.amount | number : 4}}</td>
+                                            <td class="up">{{tradeOrder.price | number : 2 }}</td>
                                             <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                         </tr>
 
@@ -554,7 +554,7 @@
                                                 <td>{{tradeOrder.diamond.name}}</td>
                                                 <td>{{tradeOrder.creationDate | date:'dd/MM HH:mm:ss' }}</td>
                                                 <td>{{tradeOrder.executionDate | date:'dd/MM HH:mm:ss' }}</td>
-                                                <td>{{tradeOrder.initialAmount | number : 2}}</td>
+                                                <td>{{tradeOrder.initialAmount | number : 4}}</td>
                                                 <td><span ng-if="tradeOrder.tradeOrderType == 'LIMIT' ">{{tradeOrder.price | number : 2}}</span></td>
                                                 <td>{{tradeOrder.executionSum | number : 2}}</td>
                                                 <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>

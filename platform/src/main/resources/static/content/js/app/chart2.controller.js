@@ -15,7 +15,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
         "time": {
             "useUTC": false
         },
-        "colors": ["#d35400", "#2980b9", "#2ecc71", "#f1c40f", "#2c3e50", "#7f8c8d"],
+        "colors": ["#1147D4", "#1147D4", "#1147D4", "#1147D4", "#1147D4", "#1147D4"],
         "chart": {
             "style": {
                 "fontFamily": "Roboto",
@@ -210,9 +210,12 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
                 },
 
                 series: [{
-                    name: '',
-                    data: result
-
+                    name: 'Price',
+                    data: result,
+                    type: 'spline',
+                    tooltip: {
+                        valueDecimals: 2
+                    }
                 }]
             });
         });
