@@ -131,7 +131,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
             var result = parseQuotesToArray(response.data);
             //console.log(result.length);
             for(var i in result){
-                series.addPoint(result[i], true, true);
+                series.addPoint(result[i], true, true, false);
                 if(i == result.length - 1){
                     self.lastTimeQuote = result[i][0];
                 }
