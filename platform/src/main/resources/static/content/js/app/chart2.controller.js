@@ -17,6 +17,7 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
         },
         "colors": ["#1147D4", "#1147D4", "#1147D4", "#1147D4", "#1147D4", "#1147D4"],
         "chart": {
+            "height" : 360,
             "style": {
                 "fontFamily": "Roboto",
                 "color": "#666666"
