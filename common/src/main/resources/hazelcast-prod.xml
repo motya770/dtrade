@@ -168,7 +168,7 @@
             Any integer between 0 and Integer.MAX_VALUE. 0 means
             Integer.MAX_VALUE. Default is 0.
         -->
-        <max-size policy="USED_HEAP_PERCENTAGE">10</max-size>
+        <max-size policy="FREE_HEAP_PERCENTAGE">10</max-size>
         <!--
             `eviction-percentage` property is deprecated and will be ignored when it is set.
 

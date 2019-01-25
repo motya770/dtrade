@@ -35,7 +35,7 @@ public class HazelcastHttpSessionConfig {
         config.setProperty("hazelcast.partition.count", "6");
 
         MaxSizeConfig maxSizeConfig = new MaxSizeConfig();
-        maxSizeConfig.setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.USED_HEAP_PERCENTAGE);
+        maxSizeConfig.setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.FREE_HEAP_PERCENTAGE);
         maxSizeConfig.setSize(10);
 
         config.getMapConfig(HazelcastSessionRepository.DEFAULT_SESSION_MAP_NAME)
