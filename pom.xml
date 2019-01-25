@@ -371,6 +371,11 @@
             <version>3.23.1-GA</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast-client</artifactId>
+            <version>3.9.4</version>
+        </dependency>
     </dependencies>
 
 
