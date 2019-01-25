@@ -161,14 +161,14 @@
             LFU (Least Frequently Used).
             NONE is the default.
         -->
-        <eviction-policy>NONE</eviction-policy>
+        <eviction-policy>LRU</eviction-policy>
         <!--
             Maximum size of the map. When max size is reached,
             map is evicted based on the policy defined.
             Any integer between 0 and Integer.MAX_VALUE. 0 means
             Integer.MAX_VALUE. Default is 0.
         -->
-        <max-size policy="PER_NODE">0</max-size>
+        <max-size policy="USED_HEAP_PERCENTAGE">10</max-size>
         <!--
             `eviction-percentage` property is deprecated and will be ignored when it is set.
 

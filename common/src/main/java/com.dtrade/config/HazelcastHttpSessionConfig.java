@@ -1,9 +1,6 @@
 package com.dtrade.config;
 
-import com.hazelcast.config.Config;
-import com.hazelcast.config.JoinConfig;
-import com.hazelcast.config.MapAttributeConfig;
-import com.hazelcast.config.MapIndexConfig;
+import com.hazelcast.config.*;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +20,12 @@ public class HazelcastHttpSessionConfig {
     @Profile("dev")
     @Bean
     public HazelcastInstance hazelcastInstanceDev() {
+
+        Config config =  createConfig();
+        return Hazelcast.newHazelcastInstance(config);
+    }
+
+    private Config createConfig(){
         MapAttributeConfig attributeConfig = new MapAttributeConfig()
                 .setName(HazelcastSessionRepository.PRINCIPAL_NAME_ATTRIBUTE)
                 .setExtractor(PrincipalNameExtractor.class.getName());
@@ -31,28 +34,26 @@ public class HazelcastHttpSessionConfig {
         Config config = new Config();
         config.setProperty("hazelcast.partition.count", "6");
 
+        MaxSizeConfig maxSizeConfig = new MaxSizeConfig();
+        maxSizeConfig.setMaxSizePolicy(MaxSizeConfig.MaxSizePolicy.USED_HEAP_PERCENTAGE);
+        maxSizeConfig.setSize(10);
 
         config.getMapConfig(HazelcastSessionRepository.DEFAULT_SESSION_MAP_NAME)
                 .addMapAttributeConfig(attributeConfig)
                 .addMapIndexConfig(new MapIndexConfig(
-                        HazelcastSessionRepository.PRINCIPAL_NAME_ATTRIBUTE, false));
-        return Hazelcast.newHazelcastInstance(config);
+                        HazelcastSessionRepository.PRINCIPAL_NAME_ATTRIBUTE, false))
+                .setEvictionPolicy(EvictionPolicy.LRU)
+                //.setMaxIdleSeconds(3 * 60 * 60)
+                .setMaxSizeConfig(maxSizeConfig);
+
+        return config;
+
     }
 
     @Profile("prod")
     @Bean
     public HazelcastInstance hazelcastInstanceProd() {
-        MapAttributeConfig attributeConfig = new MapAttributeConfig()
-                .setName(HazelcastSessionRepository.PRINCIPAL_NAME_ATTRIBUTE)
-                .setExtractor(PrincipalNameExtractor.class.getName());
-
-        Config config = new Config();
-        config.setProperty("hazelcast.partition.count", "6");
-
-        config.getMapConfig(HazelcastSessionRepository.DEFAULT_SESSION_MAP_NAME)
-                .addMapAttributeConfig(attributeConfig)
-                .addMapIndexConfig(new MapIndexConfig(
-                        HazelcastSessionRepository.PRINCIPAL_NAME_ATTRIBUTE, false));
+        Config config = createConfig();
 
         JoinConfig join = config.getNetworkConfig().getJoin();
         join.getMulticastConfig().setEnabled(false);
