@@ -9,8 +9,10 @@ import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.repository.balance.BalanceRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceService;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
+
+//import com.hazelcast.core.HazelcastInstance;
+//import com.hazelcast.core.IMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +37,8 @@ public class BalanceService  implements IBalanceService{
     @Autowired
     private IAccountService accountService;
 
-    @Autowired
-    private HazelcastInstance hazelcastInstance;
+   // @Autowired
+   // private HazelcastInstance hazelcastInstance;
 
     @Transactional
     @Override
@@ -111,31 +113,34 @@ public class BalanceService  implements IBalanceService{
     @Transactional
     public Balance updateBalance(Balance balance) {
 
-        IMap<Long, Long> balancesMap = hazelcastInstance.getMap("balancesMap");
-        Long balanceId = balance.getId();
-        //create
-        if(balanceId==null){
-            balance =  balanceRepository.save(balance);
-            balancesMap.put(balance.getId(), balance.getId());
-            return balance;
-        //update
-        }else {
+        Balance savedBalance = balanceRepository.save(balance);
+        return savedBalance;
 
-            if (!balancesMap.isLocked(balanceId)) {
-
-                balancesMap.put(balanceId, balanceId);
-                balancesMap.lock(balanceId);
-
-                Balance savedBalance = balanceRepository.save(balance);
-
-                balancesMap.unlock(balanceId);
-
-                return savedBalance;
-
-            } else {
-                throw new TradeException("Can't update current balance because its is locked" + balance.getId());
-            }
-        }
+//        IMap<Long, Long> balancesMap = hazelcastInstance.getMap("balancesMap");
+//        Long balanceId = balance.getId();
+//        //create
+//        if(balanceId==null){
+//            balance =  balanceRepository.save(balance);
+//            balancesMap.put(balance.getId(), balance.getId());
+//            return balance;
+//        //update
+//        }else {
+//
+//            if (!balancesMap.isLocked(balanceId)) {
+//
+//                balancesMap.put(balanceId, balanceId);
+//                balancesMap.lock(balanceId);
+//
+//                Balance savedBalance = balanceRepository.save(balance);
+//
+//                balancesMap.unlock(balanceId);
+//
+//                return savedBalance;
+//
+//            } else {
+//                throw new TradeException("Can't update current balance because its is locked" + balance.getId());
+//            }
+//        }
     }
 
     @Override

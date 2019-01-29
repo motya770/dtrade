@@ -1,21 +1,23 @@
 package com.dtrade.config;
 
-import com.hazelcast.config.*;
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
+//import com.hazelcast.config.*;
+//import com.hazelcast.core.Hazelcast;
+//import com.hazelcast.core.HazelcastInstance;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.session.hazelcast.HazelcastSessionRepository;
-import org.springframework.session.hazelcast.PrincipalNameExtractor;
-import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
+//import org.springframework.session.hazelcast.HazelcastSessionRepository;
+//import org.springframework.session.hazelcast.PrincipalNameExtractor;
+//import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
 
 import java.util.Arrays;
 
 
-@EnableHazelcastHttpSession
-@Configuration
+//@EnableHazelcastHttpSession
+//@Configuration
 public class HazelcastHttpSessionConfig {
+
+    /*
 
     @Profile("dev")
     @Bean
@@ -62,6 +64,6 @@ public class HazelcastHttpSessionConfig {
                 Arrays.asList("engine-01"));
 
         return Hazelcast.newHazelcastInstance(config);
-    }
+    }*/
 }
 
