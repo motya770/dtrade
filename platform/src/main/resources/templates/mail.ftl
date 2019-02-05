@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width">
     <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
     <title></title>
-    
-    
+
+
     <style type="text/css" id="media-query">
       body {
   margin: 0;
@@ -230,8 +230,8 @@ a[x-apple-data-detectors=true] {
               <div style="background-color: transparent; width: 100% !important;">
               <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:0px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
-                  
-                    
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -249,9 +249,9 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
-                  
-                    
+
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -269,8 +269,8 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
-                  
+
+
                     <div align="center" class="img-container center  autowidth  fullwidth " style="padding-right: 0px;  padding-left: 0px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
 
@@ -280,7 +280,7 @@ a[x-apple-data-detectors=true] {
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 
-                  
+
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
               </div>
             </div>
@@ -298,8 +298,8 @@ a[x-apple-data-detectors=true] {
               <div style="background-color: transparent; width: 100% !important;">
               <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:0px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
-                  
-                    
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -317,26 +317,54 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
-                  
+
+
                     <div class="">
 	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 30px; padding-top: 10px; padding-bottom: 5px;"><![endif]-->
-	<div style="color:#555555;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:120%; padding-right: 10px; padding-left: 30px; padding-top: 10px; padding-bottom: 5px;">	
-		<div style="line-height:14px;font-size:12px;color:#555555;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px">&#160;</p><p style="margin: 0;font-size: 12px;line-height: 14px"><span style="line-height: 14px; font-size: 12px;"><span style="font-size: 24px; line-height: 28px;"><strong>You mail was successfully&#160;added to waiting list,</strong></span></span></p><p style="margin: 0;font-size: 12px;line-height: 14px">&#160;</p><p style="margin: 0;font-size: 14px;line-height: 17px"><span style="font-size: 14px; line-height: 16px;"><span style="line-height: 16px; font-size: 14px;">After launch of the platform and sharing with your friends you&#160; gonna get you tokens.</span></span></p><p style="margin: 0;font-size: 14px;line-height: 17px"><span style="font-size: 14px; line-height: 16px;"><span style="line-height: 16px; font-size: 14px;">
-            You can check the count of referrals in queue:&#160;<strong><a href="${accountLink}">link</a></strong></span></span></p><p style="margin: 0;line-height: 14px;font-size: 12px"><span style="line-height: 14px; font-size: 12px;"><span style="line-height: 14px; font-size: 12px;"><strong style="font-size: 14px;">
-            This is the link ${referralLink} to share with your&#160;</strong>
-            Also you have access to demo account assosiated with your email ${account.mail}
-            and password is ${account.password}.
-            (Don't worry - after launch of teh system you gonna change demo password.)
-            <span style="line-height: 14px; font-size: 12px;">
-                <span style="font-size: 14px; line-height: 16px;"><strong>friends
-                </strong></span><strong style="font-size: 14px;">:&#160;</strong></span></span></span></p></div>
+	<div style="color:#555555;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:120%; padding-right: 10px; padding-left: 30px; padding-top: 10px; padding-bottom: 5px;">
+		<div style="line-height:14px;font-size:12px;color:#555555;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;">
+            <p style="margin: 0;font-size: 14px;line-height: 17px">&#160;</p><p style="margin: 0;font-size: 12px;line-height: 14px">
+                <span style="line-height: 14px; font-size: 12px;"><span style="font-size: 24px; line-height: 28px;">
+                        <strong>You mail was successfully&#160;added to waiting list,</strong>
+                        </span>
+                        </span></p>
+                <p style="margin: 0;font-size: 12px;line-height: 14px">&#160;</p>
+                <p style="margin: 0;font-size: 14px;line-height: 17px">
+                    <span style="font-size: 14px; line-height: 16px;">
+                        <span style="line-height: 16px; font-size: 14px;">
+                            After launch of the platform and sharing with your friends you&#160; gonna get your stocks.</span>
+                    </span></p>
+                <p style="margin: 0;font-size: 14px;line-height: 17px">
+                <span style="font-size: 14px; line-height: 16px;">
+                    <span style="line-height: 16px; font-size: 14px;">
+                            Start trading with demo account:&#160;<strong>
+                           <a href="https://x.korono.io/accounts/demo-login/?ref=${account.referral}">click here</a>.
+                    </span>
+                </span>
+                </p>
+            <p style="margin: 0;line-height: 14px;font-size: 12px">
+                <span style="line-height: 14px; font-size: 12px;"><span style="line-height: 14px; font-size: 12px;"><strong style="font-size: 14px;">
+                    This is the link ${referralLink} to share with your friends&#160;</strong>
+                    Also you have access to demo account assosiated with your email ${account.mail}
+                    and demo password is demo1234.
+                    (Don't worry - after launch of teh system you gonna change demo password.)
+                    <span style="line-height: 14px; font-size: 12px;">
+                <span style="font-size: 14px; line-height: 16px;">
+                    <strong>friends
+                    </strong>
+                </span>
+                        <strong style="font-size: 14px;">:&#160;</strong>
+                    </span>
+                    </span>
+                </span>
+            </p>
+        </div>
 	</div>
 	<!--[if mso]></td></tr></table><![endif]-->
 </div>
-                  
-                  
-                    
+
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -354,7 +382,7 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
+
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
               </div>
             </div>
@@ -372,15 +400,15 @@ a[x-apple-data-detectors=true] {
               <div style="background-color: transparent; width: 100% !important;">
               <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
-                  
+
                     <div class="">
 	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 30px; padding-left: 30px; padding-top: 30px; padding-bottom: 30px;"><![endif]-->
-	<div style="color:#555555;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:180%; padding-right: 30px; padding-left: 30px; padding-top: 30px; padding-bottom: 30px;">	
-		<div style="line-height:22px;font-size:12px;color:#555555;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 22px"><span style="font-size: 14px; line-height: 25px;">If you didn't attempt to verify your email address with our service, delete this email.</span></p><p style="margin: 0;font-size: 12px;line-height: 22px"><span style="font-size: 14px; line-height: 25px;">Cheers,</span></p><p style="margin: 0;line-height: 22px;font-size: 12px"><span style="font-size: 14px; line-height: 25px;"><strong><em>Exchange1 Team</em></strong></span></p></div>	
+	<div style="color:#555555;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:180%; padding-right: 30px; padding-left: 30px; padding-top: 30px; padding-bottom: 30px;">
+		<div style="line-height:22px;font-size:12px;color:#555555;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 12px;line-height: 22px"><span style="font-size: 14px; line-height: 25px;">If you didn't attempt to verify your email address with our service, delete this email.</span></p><p style="margin: 0;font-size: 12px;line-height: 22px"><span style="font-size: 14px; line-height: 25px;">Cheers,</span></p><p style="margin: 0;line-height: 22px;font-size: 12px"><span style="font-size: 14px; line-height: 25px;"><strong><em>Exchange1 Team</em></strong></span></p></div>
 	</div>
 	<!--[if mso]></td></tr></table><![endif]-->
 </div>
-                  
+
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
               </div>
             </div>
@@ -398,8 +426,8 @@ a[x-apple-data-detectors=true] {
               <div style="background-color: transparent; width: 100% !important;">
               <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
-                  
-                    
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -417,9 +445,9 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
-                  
-                    
+
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -437,7 +465,7 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
+
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
               </div>
             </div>
@@ -446,8 +474,8 @@ a[x-apple-data-detectors=true] {
               <div style="background-color: transparent; width: 100% !important;">
               <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
-                  
-                    
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -465,8 +493,8 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
-                  
+
+
                     <div align="center" class="img-container center  autowidth  " style="padding-right: 0px;  padding-left: 0px;">
 <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr style="line-height:0px;line-height:0px;"><td style="padding-right: 0px; padding-left: 0px;" align="center"><![endif]-->
 <div style="line-height:10px;font-size:1px">&#160;</div>
@@ -476,18 +504,19 @@ a[x-apple-data-detectors=true] {
 <!--[if mso]></td></tr></table><![endif]-->
 </div>
 
-                  
-                  
+
+
                     <div class="">
 	<!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;"><![endif]-->
-	<div style="color:#FFFFFF;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:120%; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">	
-		<div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 14px; line-height: 16px;"><strong>support@exchange1.io</strong></span></p></div>	
+	<div style="color:#FFFFFF;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;line-height:120%; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;">
+		<div style="font-size:12px;line-height:14px;color:#FFFFFF;font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;text-align:left;"><p style="margin: 0;font-size: 14px;line-height: 17px;text-align: center"><span style="font-size: 14px; line-height: 16px;">
+                    <strong>support@korono.io</strong></span></p></div>
 	</div>
 	<!--[if mso]></td></tr></table><![endif]-->
 </div>
-                  
-                  
-                    
+
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -505,7 +534,7 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
+
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
               </div>
             </div>
@@ -514,8 +543,8 @@ a[x-apple-data-detectors=true] {
               <div style="background-color: transparent; width: 100% !important;">
               <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
-                  
-                    
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -533,9 +562,9 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
-                  
-                    
+
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -553,7 +582,7 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
+
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
               </div>
             </div>
@@ -571,8 +600,8 @@ a[x-apple-data-detectors=true] {
               <div style="background-color: transparent; width: 100% !important;">
               <!--[if (!mso)&(!IE)]><!--><div style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;"><!--<![endif]-->
 
-                  
-                    
+
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="divider " style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 100%;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%">
     <tbody>
         <tr style="vertical-align: top">
@@ -590,7 +619,7 @@ a[x-apple-data-detectors=true] {
         </tr>
     </tbody>
 </table>
-                  
+
               <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
               </div>
             </div>
