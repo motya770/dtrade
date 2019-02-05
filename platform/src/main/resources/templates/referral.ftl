@@ -163,13 +163,13 @@
                                     </div>
 
                                      <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">
-                                     We decided to disrupt an industry and create a trading application that doesn't take commissions on trade (it is free).
-                                     Currently, we to give stocks for free for one of you who brings us his friends,
-                                     so if then more people will join from your link than more stock you will get.
-                                     We reserved up to 10k dollars for a person who brings us most clients.
-                                     You can use this link www.korono.io/?ref=${account.referral} for sharing with your friends.
+                                     Hi friends, this startup decided to disrupt an industry and created a trading application that
+                                         doesn't take commissions on trade (it is free).
+                                     Currently, they give stocks for free for one of us who brings his friends,
+                                     so if more people will join from my link than more stock I will get.
+                                     They reserved up to 10k dollars for a person who brings them most friends to have fun.
+                                     Please go to my link www.korono.io/?ref=${account.referral} and register.
                                      </div>
-
 
                                     <a href="#" onclick="copyText();return false;">Copy text</a>
                                         <!-- Go to www.addthis.com/dashboard to customize your tools -->
