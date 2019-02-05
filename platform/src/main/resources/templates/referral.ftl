@@ -160,16 +160,17 @@
                                     <div>Referred count ${account.referredCount}</div>
                                     <div>We also created demo account for you with password <b>demo1234</b>.<br/>
                                         <a href="https://x.korono.io/accounts/demo-login/?ref=${account.referral}">Trade</a> with demo account.
-                                     (Don't worry before launch of the system you gonna change demo password)
                                     </div>
 
-                                    <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">
-                                        We decided to disrupt industry and create trading application that don't take
-                                        commissions on trade (it is free). Currently we to give stocks for free for the one of you who brings us his friends,
-                                        so if than more people will join from your link than more stock you will get.
-                                        We reserved up to 10k dollars for person who bring us most clients.
-                                        You can use this link www.korono.io/?ref=${account.referral} for sharing with you friends.
-                                    </div>
+                                     <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">
+                                     We decided to disrupt an industry and create a trading application that doesn't take commissions on trade (it is free).
+                                     Currently, we to give stocks for free for one of you who brings us his friends,
+                                     so if then more people will join from your link than more stock you will get.
+                                     We reserved up to 10k dollars for a person who brings us most clients.
+                                     You can use this link www.korono.io/?ref=${account.referral} for sharing with your friends.
+                                     </div>
+
+
                                     <a href="#" onclick="copyText();return false;">Copy text</a>
                                         <!-- Go to www.addthis.com/dashboard to customize your tools -->
                                         <div class="addthis_inline_share_toolbox" data-url="www.korono.io/?ref=${account.referral}"
