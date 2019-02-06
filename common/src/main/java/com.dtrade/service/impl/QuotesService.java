@@ -181,10 +181,10 @@ public class QuotesService implements IQuotesService {
 
             String url=null;
             if(assetType.equals(AssetType.STOCKS)){
-                url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + quoteId + "&apikey=VNIJIMUF5VAZOUM4";
+                url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + quoteId + "&apikey=2C3GNY2TJLGGW88S";
             }else if(assetType.equals(AssetType.CRYPTO)) {
                 url = "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=" + quoteId
-                        + "&to_currency=USD&apikey=VNIJIMUF5VAZOUM4";
+                        + "&to_currency=USD&apikey=2C3GNY2TJLGGW88S";
             }
 
             WebClient.ResponseSpec responseSpec  =  webClientService.getGetResponse(url);
