@@ -17,7 +17,7 @@ public interface IAccountService {
 
     AccountDTO createReferalAccount(String mail, String ref);
 
-
+    void resendReferralEmail(Long account);
 
     String getRoboAccountMail(Diamond diamond, int rand);
 

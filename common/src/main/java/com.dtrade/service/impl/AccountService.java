@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -98,6 +99,12 @@ public class AccountService implements IAccountService, UserDetailsService {
     }
 
     @Override
+    public void resendReferralEmail(Long accountId) {
+        Account account = find(accountId);
+        mailService.sendReferralMail(account);
+    }
+
+    @Override
     public String getRoboAccountMail(Diamond diamond, int rand){
         String simpleName = diamond.getName().replace("/", "");
         return  "testAccount" + simpleName + rand  + "@gmail.com";
@@ -155,7 +162,7 @@ public class AccountService implements IAccountService, UserDetailsService {
         if(pageNumber==null){
             pageNumber = 0;
         }
-        return accountRepository.findAll(new PageRequest(pageNumber, 20));
+        return accountRepository.findAll(new PageRequest(pageNumber, 20,   Sort.Direction.DESC, "id"));
     }
 
     @Override

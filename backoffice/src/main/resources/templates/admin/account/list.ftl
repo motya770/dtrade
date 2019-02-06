@@ -9,6 +9,7 @@
             <th>USD</th>
             <th>BTC</th>
             <th>ETH</th>
+            <th>Resend referall</th>
 
         </tr>
         <tbody>
@@ -21,6 +22,7 @@
                 <td>${(account.balance.usdAmount)!""}</td>
                 <td>${(account.balance.bitcoinAmount)!""}</td>
                 <td>${(account.balance.etherAmount)!""}</td>
+                <td><a href="/admin/account/resend-email?accountId=#{account.id}">Resend</a></td>
             </tr>
             </#list>
 

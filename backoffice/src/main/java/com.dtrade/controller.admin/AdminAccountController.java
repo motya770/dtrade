@@ -27,6 +27,12 @@ public class AdminAccountController {
         return "/admin/account/list";
     }
 
+    @RequestMapping(value = "/resend-email", method = RequestMethod.GET)
+    public String resendReferralEmail(Model model, @RequestParam Long accountId) {
+        accountService.resendReferralEmail(accountId);
+        return "redirect:/admin/account/list";
+    }
+
     @RequestMapping(value = "/disable", method = RequestMethod.GET)
     public String disable(Model model, Long accountId) {
         Account account = accountService.disable(accountId);
