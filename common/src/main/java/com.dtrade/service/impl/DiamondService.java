@@ -16,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
@@ -44,6 +47,14 @@ public class DiamondService implements IDiamondService {
 
     private static final BigDecimal LOW_BORDER_PERCENT = new BigDecimal("0.997");
     private static final BigDecimal HIGH_BORDER_PERCENT = new BigDecimal("1.003");
+
+    private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    public void setTransactionManager(PlatformTransactionManager transactionManager){
+        transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+    }
 
     @Override
     public void validateDiamondCanTrade(Diamond diamond) {
@@ -76,36 +87,39 @@ public class DiamondService implements IDiamondService {
     }
 
     @Override
-    public Diamond defineRobotBorders(Diamond diamond, BigDecimal bid, BigDecimal ask) {
-        diamond = diamondRepository.findById(diamond.getId()).get();
+    public Diamond defineRobotBorders( Diamond oldDiamond, BigDecimal bid, BigDecimal ask) {
 
-        if(bid==null){
-            throw new TradeException("Can't define bid for " + diamond.getName());
-        }
+        return transactionTemplate.execute((transactionStatus)->{
 
-        if(ask==null){
-            throw new TradeException("Can't define ask for " + diamond.getName());
-        }
+            Diamond diamond = diamondRepository.findById(oldDiamond.getId()).get();
+
+            if(bid==null){
+                throw new TradeException("Can't define bid for " + diamond.getName());
+            }
+
+            if(ask==null){
+                throw new TradeException("Can't define ask for " + diamond.getName());
+            }
 
 
-        logger.info("diamond  ask, bid1: " + bid + " " + ask + " " + diamond.getName());
+            logger.info("diamond  ask, bid1: " + bid + " " + ask + " " + diamond.getName());
 
-        BigDecimal low = bid.multiply(LOW_BORDER_PERCENT);
-        BigDecimal high = low.multiply(HIGH_BORDER_PERCENT);
+            BigDecimal low = bid.multiply(LOW_BORDER_PERCENT);
+            BigDecimal high = low.multiply(HIGH_BORDER_PERCENT);
 
-        logger.info("ask, bid2: " + low + " " + high);
+            logger.info("ask, bid2: " + low + " " + high);
 
-        diamond.setRoboLowEnd(low);
-        diamond.setRoboHighEnd(high);
-        diamond.setLastRoboUpdated(System.currentTimeMillis());
-        if(diamond.getDiamondStatus().equals(DiamondStatus.ROBO_HIDDEN)) {
-            diamond.setDiamondStatus(DiamondStatus.ENLISTED);
-        }
+            diamond.setRoboLowEnd(low);
+            diamond.setRoboHighEnd(high);
+            diamond.setLastRoboUpdated(System.currentTimeMillis());
+            if(diamond.getDiamondStatus().equals(DiamondStatus.ROBO_HIDDEN)) {
+                diamond.setDiamondStatus(DiamondStatus.ENLISTED);
+            }
 
-        return diamondRepository.save(diamond);
+            return diamondRepository.save(diamond);
+        });
+
     }
-
-
 
     @Override
     public Diamond update(Diamond diamond) {
