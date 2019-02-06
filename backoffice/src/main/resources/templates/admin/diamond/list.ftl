@@ -21,6 +21,7 @@
             <th>Total Stock Amount</th>
             <th>Robo High End</th>
             <th>Robo Low End</th>
+            <th>Robo Last Updated</th>
             <th>Robo Max Amount</th>
             <th>Currency</th>
             <th>Base Currency</th>
@@ -42,6 +43,12 @@
                 <td>${diamond.totalStockAmount}</td>
                 <td>${diamond.roboHighEnd!""}</td>
                 <td>${diamond.roboLowEnd!""}</td>
+                <#if diamond.lastRoboUpdated??>
+                    <td>${diamond.lastRoboUpdated?number_to_datetime}</td>
+                <#else>
+                    <td></td>
+                </#if>
+
                 <#if diamond.roboMaxAmount??>
                     <td>#{diamond.roboMaxAmount!""}</td>
                 <#else>
