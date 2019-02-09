@@ -1,4 +1,4 @@
-var diamondApp = angular.module('diamondApp', ['ngMaterial','ngMessages', 'ngCookies', 'ngRoute'])
+var diamondApp = angular.module('diamondApp', ['ngMaterial','ngMessages', 'ngCookies', 'ngRoute', 'angular-nicescroll'])
     .filter('diamondTypeFilter', function() {
         return function(input) {
             input = input || '';

@@ -55,19 +55,20 @@ gulp.task('app', function() {
         './content/js/app/balanceactivity.controller.js',
         './content/js/app/coinpayment.controller.js',
         './content/js/app/coin.controller.js',
-        './bower_components/highcharts/highstock.js'
+        './bower_components/highcharts/highstock.js',
+        './bower_components/jquery/dist/jquery.js',
+        './bower_components/jquery.nicescroll/dist/jquery.nicescroll.js',
+        './bower_components/angular-nicescroll/angular-nicescroll.js'
     ]).pipe(debug({title: 'unicorn:'}))
         .pipe(plumber())
         .pipe(concat('app.js', {newLine: ';'}))
         .pipe(ngAnnotate({add: true}))
         .pipe(plumber.stop())
-        .pipe(gulp.dest('./dist.min/'));
+        .pipe(uglify()).pipe(gulp.dest('./dist.min/js'));
 });
 
-gulp.task('minify', function() {
-    return gulp.src('./dist.min/*.js')
-    // Minify the file
-        .pipe(uglify())
-        // Output
-        .pipe(gulp.dest('./dist.min/js'))
-});
+// gulp.task('minify', function() {
+//     return gulp.src('./dist.min/*.js')
+//         .pipe(uglify())
+//         .pipe(gulp.dest('./dist.min/js'))
+// });
