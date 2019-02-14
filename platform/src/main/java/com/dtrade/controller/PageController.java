@@ -55,7 +55,7 @@ public class PageController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String main(){
-        return "main"; //"ico/index";
+        return "redirect:https://www.korono.io/"; //"ico/index";
     }
 
     @RequestMapping(value = "/widget", method = RequestMethod.GET)
