@@ -26,10 +26,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -143,6 +140,9 @@ public class TradeOrderService  implements ITradeOrderService{
         tradeOrderDTO.setTradeOrderDirection(to.getTradeOrderDirection());
         tradeOrderDTO.setCreationDate(to.getCreationDate());
         tradeOrderDTO.setDiamondId(to.getDiamond().getId());
+
+//        tradeOrderDTO.setDiamondName(to.getDiamond().getName());
+//        tradeOrderDTO.setTraderOrderStatus(to.getTraderOrderStatus());
         return tradeOrderDTO;
     }
 
@@ -164,10 +164,26 @@ public class TradeOrderService  implements ITradeOrderService{
         return tradeOrderRepository.getHistoryTradeOrders(diamond.getId(), oneDay);
     }
 
+
+    private Map<Diamond, BigDecimal> casheSpread = new ConcurrentHashMap<>();
+
     @Override
     public Page<TradeOrder> getHistoryTradeOrdersByAccount(Integer pageNumber){
         Account account = accountService.getStrictlyLoggedAccount();
-        return tradeOrderRepository.getHistoryTradeOrdersForAccount(account, PageRequest.of(pageNumber, 10));
+        Page<TradeOrder> tradeOrders = tradeOrderRepository.getHistoryTradeOrdersForAccount(account, PageRequest.of(pageNumber, 10));
+
+        for(TradeOrder tradeOrder: tradeOrders.getContent()){
+            if(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)) {
+                Pair<Diamond, Pair<BigDecimal, BigDecimal>> pair = bookOrderServiceProxy.getSpread(tradeOrder.getDiamond());
+                BigDecimal bidPrice = pair.getSecond().getFirst();
+                BigDecimal sum = tradeOrder.getAmount().multiply(bidPrice);
+                BigDecimal profit = sum.subtract(tradeOrder.getExecutionSum());
+                tradeOrder.setProfit(profit);
+            }else{
+                tradeOrder.setProfit(BigDecimal.ZERO);
+            }
+        }
+        return tradeOrders;
     }
 
     @Override

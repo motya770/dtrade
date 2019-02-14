@@ -96,6 +96,7 @@
                                         <th>Price</th>
                                         <th>Sum</th>
                                         <th>Status</th>
+                                        <th>Profit</th>
                                         <!--
                                         <th>Баланс</th>
                                         -->
@@ -111,6 +112,7 @@
                                         <td>{{tradeOrder.price | number : 2}}</td>
                                         <td>{{tradeOrder.price * tradeOrder.initialAmount | number : 2}}</td>
                                         <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
+                                        <td>{{tradeOrder.profit}}</td>
                                         <!--
                                         <td>{{tradeOrder.}} </td>
                                         -->

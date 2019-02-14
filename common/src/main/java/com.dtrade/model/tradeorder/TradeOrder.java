@@ -71,6 +71,8 @@ public class TradeOrder implements Serializable {
     @NotNull
     private TraderOrderStatusIndex traderOrderStatusIndex;
 
+    @Transient
+    private BigDecimal profit;
 
     public void setTraderOrderStatus(TraderOrderStatus status){
         this.traderOrderStatus = status;

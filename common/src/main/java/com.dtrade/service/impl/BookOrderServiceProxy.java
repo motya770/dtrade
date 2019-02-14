@@ -72,7 +72,7 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
             Pair<Diamond, ?> diamondPair = Pair.of(diamond, bidAsk);
             return (Pair<Diamond, Pair<BigDecimal, BigDecimal>>) diamondPair;
         }catch (Exception e){
-            e.printStackTrace();
+           log.error("{}", e);
         }
         return null;
     }

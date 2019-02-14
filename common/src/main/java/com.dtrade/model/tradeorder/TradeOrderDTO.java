@@ -22,4 +22,10 @@ public class TradeOrderDTO {
     private TradeOrderDirection tradeOrderDirection;
 
     private Long diamondId;
+
+//    private String diamondName;
+//
+//    private TraderOrderStatus traderOrderStatus;
+//
+//    private BigDecimal profit;
 }
