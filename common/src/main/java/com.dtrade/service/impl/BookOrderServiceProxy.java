@@ -2,6 +2,7 @@ package com.dtrade.service.impl;
 
 import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.quote.SimpleQuote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderServiceProxy;
 import com.dtrade.service.IWebClientService;
@@ -60,17 +61,24 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
     }
 
     @Override
-    public Pair<Diamond, Pair<BigDecimal, BigDecimal>> getSpread(Diamond diamond) {
+    public Mono<SimpleQuote> getSpread(Diamond diamond) {
         try {
             String url = consulUtils.engineUrl() + "/book-order/get-spread";
-            RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(diamond);
-            ResponseEntity<LinkedHashMap> responseEntity = restTemplate.exchange(requestEntity, LinkedHashMap.class);
-            LinkedHashMap<Diamond, LinkedHashMap<Double, Double>> result = (LinkedHashMap<Diamond, LinkedHashMap<Double, Double>>) responseEntity.getBody();
+            WebClient.ResponseSpec responseSpec = webClient.getPostResponse(url, diamond);
+            Mono<SimpleQuote> mono =  responseSpec.bodyToMono(SimpleQuote.class);
 
-            Pair<?, ?> bidAsk = Pair.of(new BigDecimal(result.get("second").get("first")).setScale(8, RoundingMode.HALF_UP),
-                    new BigDecimal(result.get("second").get("second")).setScale(8, RoundingMode.HALF_UP));
-            Pair<Diamond, ?> diamondPair = Pair.of(diamond, bidAsk);
-            return (Pair<Diamond, Pair<BigDecimal, BigDecimal>>) diamondPair;
+            return mono;
+            //String url = consulUtils.engineUrl() + "/book-order/get-spread";
+            //RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(diamond);
+            // ResponseEntity<LinkedHashMap> responseEntity = restTemplate.exchange(requestEntity, LinkedHashMap.class);
+
+
+//            LinkedHashMap<Diamond, LinkedHashMap<Double, Double>> result = (LinkedHashMap<Diamond, LinkedHashMap<Double, Double>>) responseEntity.getBody();
+//
+//            Pair<?, ?> bidAsk = Pair.of(new BigDecimal(result.get("second").get("first")).setScale(8, RoundingMode.HALF_UP),
+//                    new BigDecimal(result.get("second").get("second")).setScale(8, RoundingMode.HALF_UP));
+//            Pair<Diamond, ?> diamondPair = Pair.of(diamond, bidAsk);
+//            return (Pair<Diamond, Pair<BigDecimal, BigDecimal>>) diamondPair;
         }catch (Exception e){
            log.error("{}", e);
         }
@@ -100,8 +108,9 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
 
             WebClient.ResponseSpec responseSpec =  webClient.getPostResponse(url, tradeOrder);
             responseSpec.bodyToMono(String.class);
-            RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(tradeOrder);
-            ResponseEntity<?> responseEntity = restTemplate.exchange(requestEntity, String.class);
+
+            //RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(tradeOrder);
+           // ResponseEntity<?> responseEntity = restTemplate.exchange(requestEntity, String.class);
 
 //            if(responseSpec.onStatus(HttpStatus.OK, ()->{})){
 //                return null;

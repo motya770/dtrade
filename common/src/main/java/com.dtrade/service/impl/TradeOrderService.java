@@ -5,6 +5,7 @@ import com.dtrade.model.Const;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.quote.SimpleQuote;
 import com.dtrade.model.tradeorder.*;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
@@ -171,14 +172,15 @@ public class TradeOrderService  implements ITradeOrderService{
     public Page<TradeOrder> getHistoryTradeOrdersByAccount(Integer pageNumber){
         Account account = accountService.getStrictlyLoggedAccount();
         Page<TradeOrder> tradeOrders = tradeOrderRepository.getHistoryTradeOrdersForAccount(account, PageRequest.of(pageNumber, 10));
-
         for(TradeOrder tradeOrder: tradeOrders.getContent()){
             if(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)) {
-                Pair<Diamond, Pair<BigDecimal, BigDecimal>> pair = bookOrderServiceProxy.getSpread(tradeOrder.getDiamond());
-                BigDecimal bidPrice = pair.getSecond().getFirst();
+                //TODO fix not performant
+                SimpleQuote simpleQuote = bookOrderServiceProxy.getSpread(tradeOrder.getDiamond()).block();
+                BigDecimal bidPrice = simpleQuote.getBid();
                 BigDecimal sum = tradeOrder.getAmount().multiply(bidPrice);
                 BigDecimal profit = sum.subtract(tradeOrder.getExecutionSum());
                 tradeOrder.setProfit(profit);
+
             }else{
                 tradeOrder.setProfit(BigDecimal.ZERO);
             }
@@ -359,19 +361,19 @@ public class TradeOrderService  implements ITradeOrderService{
     private void defineMarketPrice(TradeOrder tradeOrder){
         if(tradeOrder.getTradeOrderType().equals(TradeOrderType.MARKET)) {
 
-            Pair<Diamond, Pair<BigDecimal, BigDecimal>> spread = bookOrderServiceProxy.getSpread(tradeOrder.getDiamond());
+            SimpleQuote simpleQuote = bookOrderServiceProxy.getSpread(tradeOrder.getDiamond()).block();
 
-            if(spread == null) {
+            if(simpleQuote == null) {
                 logger.info("Can't define market price because spread is empty.");
                 tradeOrder.setPrice(new BigDecimal("100").setScale(8, BigDecimal.ROUND_HALF_UP));
             }else{
                 if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
                     // for buy order we take sell price
-                    tradeOrder.setPrice(spread.getSecond().getSecond().setScale(8, BigDecimal.ROUND_HALF_UP));
+                    tradeOrder.setPrice(simpleQuote.getAsk().setScale(8, BigDecimal.ROUND_HALF_UP));
 
                 } else if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)) {
                     // for sell order we take buy price
-                    tradeOrder.setPrice(spread.getSecond().getFirst().setScale(8, BigDecimal.ROUND_HALF_UP));
+                    tradeOrder.setPrice(simpleQuote.getBid().setScale(8, BigDecimal.ROUND_HALF_UP));
                 } else {
                     throw new TradeException("Unexpected behavior");
                 }

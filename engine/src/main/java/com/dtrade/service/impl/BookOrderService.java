@@ -4,6 +4,7 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.bookorder.BookOrder;
 import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.quote.SimpleQuote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDTO;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
@@ -21,7 +22,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -155,18 +155,22 @@ public class BookOrderService implements IBookOrderService {
 
     @Transactional
     @Override
-    public Pair<Diamond, Pair<BigDecimal, BigDecimal>> getSpread(Diamond diamond) {
+    public SimpleQuote getSpread(Diamond diamond) {
             Pair<TradeOrder, TradeOrder> closest = this.findClosest(diamond.getId());
             if(closest!=null) {
-                return Pair.of(diamond, Pair.of(closest.getFirst().getPrice(), closest.getSecond().getPrice()));
+                SimpleQuote simpleQuote = new SimpleQuote();
+                simpleQuote.setDiamond(diamond);
+                simpleQuote.setBid(closest.getFirst().getPrice());
+                simpleQuote.setAsk(closest.getSecond().getPrice());
+                return simpleQuote;
             }
         return null;
     }
 
     @Transactional
     @Override
-    public List<Pair<?, ?>> getSpreadForDiamonds(List<Long> diamonds) {
-        List<Pair<?, ?>> response = new ArrayList<>();
+    public List<SimpleQuote> getSpreadForDiamonds(List<Long> diamonds) {
+        List<SimpleQuote> response = new ArrayList<>();
         for(Long id : diamonds){
             Diamond diamond = diamondService.find(id);
             response.add(getSpread(diamond));

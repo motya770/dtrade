@@ -2,6 +2,7 @@ package com.dtrade.controller;
 
 import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.quote.SimpleQuote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.service.IBookOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class BookOrderController {
     private IBookOrderService bookOrderService;
 
     @RequestMapping(value = "/get-diamonds-spread", method = RequestMethod.POST)
-    public List<Pair<?,?>> getDiamondSpread(@RequestBody(required = true) List<Long> diamondIds){
+    public List<SimpleQuote> getDiamondSpread(@RequestBody(required = true) List<Long> diamondIds){
         return bookOrderService.getSpreadForDiamonds(diamondIds);
     }
 
@@ -39,7 +40,7 @@ public class BookOrderController {
     }
 
     @RequestMapping(value = "/get-spread", method = RequestMethod.POST)
-    public Pair<Diamond, Pair<BigDecimal, BigDecimal>> getSpread(@RequestBody(required = true) Diamond diamond){
+    public SimpleQuote getSpread(@RequestBody(required = true) Diamond diamond){
         return bookOrderService.getSpread(diamond);
     }
 }

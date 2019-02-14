@@ -14,25 +14,25 @@ diamondApp.controller('AvailableController', function AvailableController($scope
 
         return $http.post('/book-order/get-diamonds-spread', self.availableDiamondsIds).then(function(response) {
             //console.log(response);
-            var pairs = response.data;
-            for(var i in pairs){
-                var pair = pairs[i];
-                if(pair==null){
+            var simpleQuotes = response.data;
+            for(var i in simpleQuotes){
+                var simpleQuote = simpleQuotes[i];
+                if(simpleQuote==null){
                     continue;
                 }
-                var diamond = pair.first;
-                var askBidPair = pair.second;
+                var diamond = simpleQuote.diamond;
+                var bid  = simpleQuote.bid;
+                var ask = simpleQuote.ask;
 
-
-                var avg = (askBidPair.first + askBidPair.second)/2;
+                var avg = (bid + ask)/2;
                 //if(angular.isNumber(avg)){
-                    askBidPair.avg = avg;
+                    simpleQuote.avg = avg;
                 //}
 
                 for(var j in self.availableDiamonds){
                     var currentDiamond = self.availableDiamonds[j];
                     if(currentDiamond.id == diamond.id){
-                        currentDiamond.askBidPair = askBidPair;
+                        currentDiamond.simpleQuote = simpleQuote;
                     }
                 }
             }
