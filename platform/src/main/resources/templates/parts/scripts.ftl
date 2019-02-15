@@ -11,8 +11,10 @@
 -->
 
 <link rel="stylesheet" href= "/bower_components/angular-material/angular-material.min.css"/>
+<link rel="stylesheet" href= "/bower_components/ng-material-datetimepicker/dist/material-datetimepicker.min.css"/>
 
 <!--
+
 <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
 <script src="/bower_components/angular-route/angular-route.min.js"></script>
 <script src="/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
@@ -25,7 +27,8 @@
 <script src="/bower_components/jquery/dist/jquery.js"></script>
 <script src="/bower_components/jquery.nicescroll/dist/jquery.nicescroll.js"></script>
 <script src="/bower_components/angular-nicescroll/angular-nicescroll.js"></script>
-
+<script src="/bower_components/moment/min/moment-with-locales.js"></script>
+<script src="/bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js"></script>
 
 <script src="/content/js/app.js"></script>
 <script src="/content/js/app/app.config.js"></script>
@@ -58,7 +61,9 @@
 <script src="/content/js/app/coin.controller.js"></script>
 <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
 -->
+
 <script src="/dist.min/js/app.js"></script>
+
 
 <!--
 <script>var scr = {"scripts":[

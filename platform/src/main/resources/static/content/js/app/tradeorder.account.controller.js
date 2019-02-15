@@ -2,6 +2,9 @@ diamondApp.controller("TradeOrderAccountController", function TradeOrderAccountC
 
     var self = this;
 
+    self.fromTime = moment().startOf('month')._d;
+    self.toTime = new Date();
+
     $scope.getPreviousAccountHistoryOrders = function (pageNumber) {
         TradeOrderAccountService.getAccountHistoryTradeOrders(pageNumber + 1).then(function (data) {
             self.accountHistoryTradeOrders = data;
@@ -18,7 +21,13 @@ diamondApp.controller("TradeOrderAccountController", function TradeOrderAccountC
         return totalProfit;
     }
 
-    TradeOrderAccountService.getAccountHistoryTradeOrders().then(function (data) {
+    $scope.filter = function(){
+        TradeOrderAccountService.getAccountHistoryTradeOrders(self.fromTime.getTime(), self.toTime.getTime()).then(function (data) {
+            self.accountHistoryTradeOrders = data;
+        });
+    }
+
+    TradeOrderAccountService.getAccountHistoryTradeOrders(self.fromTime.getTime(), self.toTime.getTime()).then(function (data) {
         self.accountHistoryTradeOrders = data;
     });
 

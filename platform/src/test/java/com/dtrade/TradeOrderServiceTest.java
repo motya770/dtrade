@@ -247,7 +247,7 @@ public class TradeOrderServiceTest extends BaseTest {
     @Test
     public void testGetHistoryTradeOrdersByAccount(){
         Account currentAccount = accountService.getCurrentAccount();
-        Page<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrdersByAccount(0);
+        Page<TradeOrder> tradeOrders = tradeOrderService.getHistoryTradeOrdersByAccount(0L, 0L, 0);
         List<TradeOrder> content = tradeOrders.getContent();
 
         content.forEach(tradeOrder -> {

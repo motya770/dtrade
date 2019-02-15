@@ -83,8 +83,50 @@
                 </div>
                 <div class="lk-main-tab" ng-show="tab===2">
                     <div class="lk-main-tab__table" style="width: 1100px;">
+
+                        <!--
+                        <md-content layout-padding layout-margin>
+                            <md-datepicker md-placeholder="Enter date"></md-datepicker>
+                            Date:
+                        </md-content>
+                        -->
+
+
+
+
                         <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
-                            <div >
+
+                            <div style="margin-left: 20px;">
+                                <md-input-container flex-gt-md="30">
+                                    <label>From</label>
+                                    <input mdc-datetime-picker="" date="true" time="true" type="text" id="toPicker"
+                                           placeholder="YYYY-MM-DD HH:MM" show-todays-date="false" minutes="true" short-time="true"
+                                           edit-input="true" show-icon="true"
+                                           ng-model="vm.fromTime"
+                                           ng-change="filter()"
+                                           name="toPicker" class=" dtp-no-msclear dtp-input md-input">
+                                    <!--
+                                    <input mdc-datetime-picker date="true" time="true" type="text" id="time" short-time="true"
+                                           show-todays-date click-outside-to-close="true"
+                                           placeholder="Time" auto-ok="true"
+                                           min-date="minDate" minute-steps="1"
+                                           format="hh:mm a"
+                                           ng-change="vm.filter()"
+                                           ng-model="time">-->
+                                </md-input-container>
+
+                                <md-input-container flex-gt-md="30">
+                                    <label>To</label>
+                                    <input mdc-datetime-picker="" date="true" time="true" type="text" id="fromPicker"
+                                           placeholder="YYYY-MM-DD HH:MM" show-todays-date="false" minutes="true" short-time="true"
+                                           edit-input="true" show-icon="true"
+                                           ng-model="vm.toTime"
+                                           ng-change="filter()"
+                                           name="fromPicker" class=" dtp-no-msclear dtp-input md-input">
+                                </md-input-container>
+                            </div>
+
+                            <div>
                                 <table class="diamont-table">
                                     <thead>
                                     <tr>
@@ -112,7 +154,7 @@
                                         <td>{{tradeOrder.price | number : 2}}</td>
                                         <td>{{tradeOrder.price * tradeOrder.initialAmount | number : 2}}</td>
                                         <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
-                                        <td>{{tradeOrder.profit}}</td>
+                                        <td>{{tradeOrder.profit | number : 2}}</td>
                                         <!--
                                         <td>{{tradeOrder.}} </td>
                                         -->
@@ -127,7 +169,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>{{ getTotalProfit() }}</td>
+                                        <td>{{ getTotalProfit() | number : 2}}</td>
                                     </tr>
                                     </tbody>
                                 </table>

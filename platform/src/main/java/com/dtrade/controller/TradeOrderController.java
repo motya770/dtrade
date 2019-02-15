@@ -88,8 +88,10 @@ public class TradeOrderController {
 
    // @Cacheable(value="A", cacheManager="timeoutCacheManager")
     @RequestMapping(value = "/account-history-orders")
-    public Page<TradeOrder> getHistoryTradeOrdersByAcount(@RequestParam Integer pageNumber){
-        return tradeOrderService.getHistoryTradeOrdersByAccount(pageNumber);
+    public Page<TradeOrder> getHistoryTradeOrdersByAcount(@RequestParam Integer pageNumber,
+                                                          @RequestParam Long startTime,
+                                                          @RequestParam Long endTime){
+        return tradeOrderService.getHistoryTradeOrdersByAccount(startTime, endTime, pageNumber);
 
 //        return CompletableFuture.supplyAsync(() -> {
 //

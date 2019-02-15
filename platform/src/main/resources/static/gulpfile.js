@@ -26,6 +26,9 @@ gulp.task('app', function() {
         './bower_components/angular-messages/angular-messages.min.js',
         './bower_components/angular-material/angular-material.min.js',
         './bower_components/angular-cookies/angular-cookies.js',
+        './bower_components/moment/min/moment-with-locales.js',
+        './bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js',
+        './bower_components/highcharts/highstock.js',
         './content/js/app.js',
         './content/js/app/app.config.js',
         './content/js/components/advanced.component.js',
@@ -55,7 +58,6 @@ gulp.task('app', function() {
         './content/js/app/balanceactivity.controller.js',
         './content/js/app/coinpayment.controller.js',
         './content/js/app/coin.controller.js',
-        './bower_components/highcharts/highstock.js',
         './bower_components/jquery/dist/jquery.js',
         './bower_components/jquery.nicescroll/dist/jquery.nicescroll.js',
         './bower_components/angular-nicescroll/angular-nicescroll.js'

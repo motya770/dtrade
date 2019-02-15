@@ -169,9 +169,9 @@ public class TradeOrderService  implements ITradeOrderService{
     private Map<Diamond, BigDecimal> casheSpread = new ConcurrentHashMap<>();
 
     @Override
-    public Page<TradeOrder> getHistoryTradeOrdersByAccount(Integer pageNumber){
+    public Page<TradeOrder> getHistoryTradeOrdersByAccount(Long startTime, Long endTime, Integer pageNumber){
         Account account = accountService.getStrictlyLoggedAccount();
-        Page<TradeOrder> tradeOrders = tradeOrderRepository.getHistoryTradeOrdersForAccount(account, PageRequest.of(pageNumber, 10));
+        Page<TradeOrder> tradeOrders = tradeOrderRepository.getHistoryTradeOrdersForAccount(account, startTime, endTime, PageRequest.of(pageNumber, 10));
         for(TradeOrder tradeOrder: tradeOrders.getContent()){
             if(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)) {
                 //TODO fix not performant

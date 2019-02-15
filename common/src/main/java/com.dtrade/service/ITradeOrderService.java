@@ -29,7 +29,7 @@ public interface ITradeOrderService {
 
     void validateFields(TradeOrder tradeOrder);
 
-    Page<TradeOrder> getHistoryTradeOrdersByAccount(Integer pageNumber);
+    Page<TradeOrder> getHistoryTradeOrdersByAccount(Long startTime, Long endTime, Integer pageNumber);
 
     List<TradeOrder> getHistoryTradeOrders(Long diamondId);
 
