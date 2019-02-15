@@ -8,6 +8,16 @@ diamondApp.controller("TradeOrderAccountController", function TradeOrderAccountC
         });
     }
 
+    $scope.getTotalProfit = function(){
+        var totalProfit = 0;
+        if(self.accountHistoryTradeOrders!=undefined && self.accountHistoryTradeOrders.content!=undefined) {
+            for (var i = 0; i < self.accountHistoryTradeOrders.content.length; i++) {
+                totalProfit += self.accountHistoryTradeOrders.content[i].profit;
+            }
+        }
+        return totalProfit;
+    }
+
     TradeOrderAccountService.getAccountHistoryTradeOrders().then(function (data) {
         self.accountHistoryTradeOrders = data;
     });
