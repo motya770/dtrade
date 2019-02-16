@@ -161,7 +161,7 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public List<TradeOrder> getHistoryTradeOrders(Long diamondId) {
         Diamond diamond = diamondService.find(diamondId);
-        long oneDay = System.currentTimeMillis() -Duration.ofDays(1).toMillis();
+        long oneDay = System.currentTimeMillis() - Duration.ofDays(1).toMillis();
         return tradeOrderRepository.getHistoryTradeOrders(diamond.getId(), oneDay);
     }
 
@@ -171,13 +171,13 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public Page<TradeOrder> getHistoryTradeOrdersByAccount(Long startTime, Long endTime, Integer pageNumber){
         Account account = accountService.getStrictlyLoggedAccount();
-        Page<TradeOrder> tradeOrders = tradeOrderRepository.getHistoryTradeOrdersForAccount(account, startTime, endTime, PageRequest.of(pageNumber, 10));
+        Page<TradeOrder> tradeOrders = tradeOrderRepository.getHistoryTradeOrdersForAccount(account, startTime, endTime, PageRequest.of(pageNumber, 20));
         for(TradeOrder tradeOrder: tradeOrders.getContent()){
             if(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)) {
                 //TODO fix not performant
                 SimpleQuote simpleQuote = bookOrderServiceProxy.getSpread(tradeOrder.getDiamond()).block();
                 BigDecimal bidPrice = simpleQuote.getBid();
-                BigDecimal sum = tradeOrder.getAmount().multiply(bidPrice);
+                BigDecimal sum = tradeOrder.getInitialAmount().multiply(bidPrice);
                 BigDecimal profit = sum.subtract(tradeOrder.getExecutionSum());
                 tradeOrder.setProfit(profit);
 
