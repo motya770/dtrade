@@ -22,7 +22,7 @@ public interface IBookOrderService {
 
      BookOrder getBookOrder(Long diamondId);
 
-     void addNew(TradeOrder order);
+     void addNew(TradeOrder order, boolean initialize);
 
      boolean remove(TradeOrder order);
 

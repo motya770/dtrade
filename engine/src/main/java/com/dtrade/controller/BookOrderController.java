@@ -31,11 +31,11 @@ public class BookOrderController {
 
     @RequestMapping(value = "/add-new", method = RequestMethod.POST)
     public void addNew(@RequestBody(required = true) TradeOrder tradeOrder){
-        bookOrderService.addNew(tradeOrder);
+        bookOrderService.addNew(tradeOrder, false);
     }
 
     @RequestMapping(value = "/get-view", method = RequestMethod.POST)
-    public BookOrderView addNew(@RequestBody(required = true) Long diamondId){
+    public BookOrderView getView(@RequestBody(required = true) Long diamondId){
        return bookOrderService.getBookOrderView(diamondId);
     }
 

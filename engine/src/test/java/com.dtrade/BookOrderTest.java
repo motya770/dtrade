@@ -26,7 +26,7 @@ public class BookOrderTest extends BaseTest {
         TradeOrder order = createTestBuyTradeOrder();
         System.out.println("Order: " + order.getId());
 
-        bookOrderService.addNew(order);
+        bookOrderService.addNew(order, false);
 
         BookOrder bookOrder = bookOrderService.getBookOrder(order.getDiamond().getId());
 

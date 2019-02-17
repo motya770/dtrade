@@ -5,7 +5,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.PostConstruct;
 
@@ -21,6 +23,14 @@ public class WebClientService implements IWebClientService {
                 .defaultCookie("cookieKey", "cookieValue")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
+    }
+
+    @Override
+    public Mono<ClientResponse> postExchange(String url, Object body) {
+        WebClient.UriSpec<WebClient.RequestBodySpec> request = client.post();
+        request.uri(url);
+        ((WebClient.RequestBodyUriSpec) request).body(BodyInserters.fromObject(body));
+        return  ((WebClient.RequestBodyUriSpec) request).exchange();
     }
 
     @Override

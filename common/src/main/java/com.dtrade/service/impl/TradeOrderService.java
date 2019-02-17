@@ -284,7 +284,6 @@ public class TradeOrderService  implements ITradeOrderService{
         }
     }
 
-
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public TradeOrderAccountHolder createTradeOrder(TradeOrder tradeOrder) {

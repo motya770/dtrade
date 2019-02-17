@@ -6,6 +6,7 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.model.tradeorder.TradeOrderType;
 import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
@@ -63,7 +64,7 @@ public class TradeEngine implements ITradeEngine {
 
     private TransactionTemplate transactionTemplate;
 
-    private ScheduledExecutorService executor = Executors.newScheduledThreadPool(50);
+    private ScheduledExecutorService executor = Executors.newScheduledThreadPool(20);
 
     @Autowired
     public void setTransactionManager(PlatformTransactionManager transactionManager){
@@ -74,7 +75,7 @@ public class TradeEngine implements ITradeEngine {
     @Override
     public void prepareAndLaunch() {
         Runnable runnable = () -> {
-            tradeOrderService.getLiveTradeOrders().parallelStream().forEach(tradeOrder -> bookOrderService.addNew(tradeOrder));
+            tradeOrderService.getLiveTradeOrders().stream().forEach(tradeOrder -> bookOrderService.addNew(tradeOrder, true));
             logger.info("Starting trade engine");
             launch();
         };
@@ -87,20 +88,56 @@ public class TradeEngine implements ITradeEngine {
     @Override
     public void launch(){
 
-       service = Executors.newScheduledThreadPool(10);
-       //TODO rewrite
+       service = Executors.newScheduledThreadPool(50);
        service.scheduleWithFixedDelay(()->{
            try{
-              // logger.info("IN THE LOOP!!!");
+               // logger.info("IN THE LOOP!!!");
                calculateTradeOrders();
            }catch (Exception e){
-               e.printStackTrace();
+               logger.error("{}", e);
            }
 
-       }, 40_000,  15, TimeUnit.MILLISECONDS);
+       }, 40_000,  40, TimeUnit.MILLISECONDS);
     }
 
     //private Executor ex = MoreExecutors.newSequentialExecutor(Executors.newFixedThreadPool(20));
+
+
+    @Override
+    public void execute(TradeOrder tradeOrder) {
+
+        try {
+
+            Pair<TradeOrder, TradeOrder> pair = bookOrderService.findClosest(tradeOrder.getDiamond().getId());
+            boolean canExecute = false;
+            Pair<TradeOrder, TradeOrder> buySell = null;
+            if (pair == null || pair.getFirst() == null || pair.getSecond() == null) {
+                return;
+            }
+
+            if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.BUY)) {
+                buySell = Pair.of(tradeOrder, pair.getSecond());
+                canExecute = checkIfCanExecute(buySell);
+            } else if (tradeOrder.getTradeOrderDirection().equals(TradeOrderDirection.SELL)) {
+                buySell = Pair.of(pair.getFirst(), tradeOrder);
+                canExecute = checkIfCanExecute(buySell);
+            }
+
+            final Pair<TradeOrder, TradeOrder> buySellPair = buySell;
+            if (canExecute) {
+                Runnable quoteRunnable = () -> quotesService.issueQuote(buySellPair);
+                executor.execute(quoteRunnable);
+
+                logger.info("CAN EXECUTE " + tradeOrder.getId());
+
+                transactionTemplate.execute(status -> {
+                    return executeTradeOrders(buySellPair);
+                });
+            }
+        }catch (Exception e){
+            logger.error("{}", e);
+        }
+    }
 
     @Transactional
     @Override
@@ -115,7 +152,7 @@ public class TradeEngine implements ITradeEngine {
             long start1 = System.currentTimeMillis();
             int exitCounter = 0;
             while (true) {
-                //logger.info("STRAT WHILE");
+               // logger.debug("STRAT WHILE " + entry.getKey());
                long start = System.currentTimeMillis();
                 Pair<TradeOrder, TradeOrder> buySell = bookOrderService.findClosest(entry.getKey());
                 //System.out.println("t1: " + (System.currentTimeMillis() - start));
@@ -124,28 +161,18 @@ public class TradeEngine implements ITradeEngine {
                     Runnable quoteRunnable = () -> quotesService.issueQuote(buySell);
                     executor.execute(quoteRunnable);
 
-                    //System.out.println("t2: " + (System.currentTimeMillis() - start));
-
                     logger.info("CAN EXECUTE " + entry.getKey());
 
                     transactionTemplate.execute(status -> {
                         return executeTradeOrders(buySell);
                     });
-                    /*
-                    Runnable pairRunnable = () -> {
 
-                    };
-
-                    executor.execute(pairRunnable);*/
-
-                    //System.out.println("t3: " + (System.currentTimeMillis() - start));
-                   // System.out.println("time: " + (System.currentTimeMillis() - start));
                 }else {
                     break;
                 }
 
                 logger.debug("inside " + exitCounter);
-                if(exitCounter==100){
+                if(exitCounter>=6){
                     break;
                 }
                 exitCounter++;
@@ -240,7 +267,7 @@ public class TradeEngine implements ITradeEngine {
             return true;
         }
 
-        // logger.info("wtf end");
+        //logger.info("can't execute");
         return false;
     }
 

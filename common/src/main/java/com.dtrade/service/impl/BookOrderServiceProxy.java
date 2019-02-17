@@ -13,6 +13,7 @@ import org.springframework.data.util.Pair;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -106,11 +107,10 @@ public class BookOrderServiceProxy implements IBookOrderServiceProxy {
         try {
             String url = consulUtils.engineUrl() + "/book-order/add-new";
 
-            WebClient.ResponseSpec responseSpec =  webClient.getPostResponse(url, tradeOrder);
-            responseSpec.bodyToMono(String.class);
+            //Mono<ClientResponse> responseMono =  webClient.postExchange(url, tradeOrder);
 
-            //RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(tradeOrder);
-           // ResponseEntity<?> responseEntity = restTemplate.exchange(requestEntity, String.class);
+            RequestEntity<?> requestEntity = RequestEntity.post(new URI(url)).body(tradeOrder);
+            ResponseEntity<?> responseEntity = restTemplate.exchange(requestEntity, String.class);
 
 //            if(responseSpec.onStatus(HttpStatus.OK, ()->{})){
 //                return null;

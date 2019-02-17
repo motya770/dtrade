@@ -117,7 +117,7 @@ public class BookOrderService implements IBookOrderService {
     }
 
     @Override
-    public void addNew(TradeOrder order){
+    public void addNew(TradeOrder order, boolean initialize){
 
         order = tradeOrderRepository.findById(order.getId()).get();
 
@@ -131,19 +131,9 @@ public class BookOrderService implements IBookOrderService {
         if(TradeOrderDirection.BUY.equals(order.getTradeOrderDirection())){
             logger.debug("adding buy " + order.getId());
             bookOrder.getBuyOrders().add(order);
-            //long size = bookOrder.getBuyCount().incrementAndGet();
-            //if(size>2000){
-              //  bookOrder.getBuyOrders().pollLast();
-                //bookOrder.getBuyCount().decrementAndGet();
-            //}
         }else if(TradeOrderDirection.SELL.equals(order.getTradeOrderDirection())){
             logger.debug("adding sell " + order.getId());
             bookOrder.getSellOrders().add(order);
-            //long size = bookOrder.getSellCount().incrementAndGet();
-            //if(size > 2000){
-              //  bookOrder.getSellOrders().pollLast();
-               // bookOrder.getSellCount().decrementAndGet();
-            //}
         }else{
             throw new TradeException("Type of the order is not defined!");
         }
@@ -151,6 +141,11 @@ public class BookOrderService implements IBookOrderService {
         if(newBookOrder) {
             bookOrders.put(order.getDiamond().getId(), bookOrder);
         }
+
+        //if(!initialize) {
+           // tradeEngine.execute(order);
+        //}
+
     }
 
     @Transactional
