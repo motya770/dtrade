@@ -3,13 +3,11 @@
         <div ng-controller="BalanceActivityController as vm" class="def-cab-page__content">
             <h2 class="def-cab-page__heading">My history</h2>
             <ul class="lk-tabs-heading">
-
-
-                <li ng-class="{active:tab===1}">
-                    <a href ng-click="tab = tab==1 ? a : 1">Balance activity</a>
-                </li>
                 <li ng-class="{active:tab===2}">
                     <a  href ng-click="tab = tab==2 ? a : 2">Trade history</a>
+                </li>
+                <li ng-class="{active:tab===1}">
+                    <a href ng-click="tab = tab==1 ? a : 1">Balance activity</a>
                 </li>
                 <!--
                 <li ng-class="{active:tab===3}">
@@ -43,16 +41,15 @@
                                         <td>{{balanceActivity.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
                                         <td>{{balanceActivity.balanceActivityType | lowercase}}</td>
                                         <td>{{balanceActivity.currency}}</td>
-                                        <td>{{balanceActivity.amount | number:7 }}</td>
-                                        <td>{{balanceActivity.price | number:7 }}</td>
-                                        <td>{{balanceActivity.sum | number:7  }}</td>
-                                        <td>{{balanceActivity.balanceSnapshot | number:7}}</td>
+                                        <td>{{balanceActivity.amount | number:2 }}</td>
+                                        <td>{{balanceActivity.price | number:2}}</td>
+                                        <td>{{balanceActivity.sum | number:2  }}</td>
+                                        <td>{{balanceActivity.balanceSnapshot | number:2}}</td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                             </div>
-                            <a href="#" ng-click="getPreviousBalanceActivities(vm.balanceActivities.number)" class="sep-cab-tab__more">Previous activities</a>
+                            <a href ng-click="getPreviousBalanceActivities(vm.balanceActivities.number)" class="sep-cab-tab__more">Previous activities</a>
                         </div>
                     </div>
                     <div class="lk-main-tab__info">
@@ -174,7 +171,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <a href="#" ng-click="getPreviousAccountHistoryOrders(vm.accountHistoryTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
+                            <a href ng-click="getPreviousAccountHistoryOrders(vm.accountHistoryTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
                         </div>
                     </div>
                     <div class="lk-main-tab__info">

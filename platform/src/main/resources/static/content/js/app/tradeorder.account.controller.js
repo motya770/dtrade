@@ -6,7 +6,7 @@ diamondApp.controller("TradeOrderAccountController", function TradeOrderAccountC
     self.toTime = new Date();
 
     $scope.getPreviousAccountHistoryOrders = function (pageNumber) {
-        TradeOrderAccountService.getAccountHistoryTradeOrders(pageNumber + 1).then(function (data) {
+        TradeOrderAccountService.getAccountHistoryTradeOrders(self.fromTime.getTime(), self.toTime.getTime(), pageNumber + 1).then(function (data) {
             self.accountHistoryTradeOrders = data;
         });
     }
