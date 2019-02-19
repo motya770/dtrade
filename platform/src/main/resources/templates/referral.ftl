@@ -163,23 +163,24 @@
                                     </div>
 
                                      <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">
-                                     Hi friends, this startup decided to disrupt an industry and created a trading application that
-                                         doesn't take commissions on trade (it is free).
-                                     Currently, they give stocks for free for one of us who brings his friends,
-                                     so if more people will join from my link than more stock I will get.
-                                     They reserved up to 10k dollars for a person whose friends decided to join their demo.
-                                     Please go to my link www.korono.io/?ref=${account.referral} and register.
+                                         Hi friends! This startup decided to disrupt an industry and created a trading application
+                                         that doesn't take commissions (it’s free). Currently,
+                                         they give Google and Test stocks for free to those who bring friends,
+                                         so the more people join using my link, the more stock I’ll get. Stocks will be
+                                         available after the official launch of the broker.
+                                         They reserved upto 10k dollars for anyone whose friends join their demo.
+                                         Please go to my link (www.korono.io/?ref=${account.referral}) and register.
                                      </div>
 
                                     <a href="#" onclick="copyText();return false;">Copy text</a>
                                         <!-- Go to www.addthis.com/dashboard to customize your tools -->
                                         <div class="addthis_inline_share_toolbox" data-url="www.korono.io/?ref=${account.referral}"
-                                             data-title="This is unique invitation. Access your free tokens and trade for free stocks and crypto." data-description="Free stock and crypto trading"
+                                             data-title="This is unique invitation. Access your free stocks and trade for free stocks and crypto." data-description="Free stocks and crypto trading"
                                              data-media="/theme/app/img/logo_korono.png"></div>
 
                                  <#else>
                                   <div class="addthis_inline_share_toolbox" data-url="www.korono.io/"
-                                       data-title="This is unique invitation. Access your free tokens and trade for free stocks and crypto." data-description="Free stock and crypto trading"
+                                       data-title="This is unique invitation. Access your free tokens and trade for free stocks and crypto." data-description="Free stocks and crypto trading"
                                        data-media="/theme/app/img/logo_korono.png"></div>
                                  </#if>
 
