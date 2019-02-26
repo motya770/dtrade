@@ -172,6 +172,9 @@ public class TradeOrderService  implements ITradeOrderService{
     public Page<TradeOrder> getHistoryTradeOrdersByAccount(Long startTime, Long endTime, Integer pageNumber){
         Account account = accountService.getStrictlyLoggedAccount();
         Page<TradeOrder> tradeOrders = tradeOrderRepository.getHistoryTradeOrdersForAccount(account, startTime, endTime, PageRequest.of(pageNumber, 20));
+        return tradeOrders;
+
+        /*
         for(TradeOrder tradeOrder: tradeOrders.getContent()){
             if(tradeOrder.getTraderOrderStatus().equals(TraderOrderStatus.EXECUTED)) {
                 //TODO fix not performant
@@ -186,6 +189,7 @@ public class TradeOrderService  implements ITradeOrderService{
             }
         }
         return tradeOrders;
+        */
     }
 
     @Override

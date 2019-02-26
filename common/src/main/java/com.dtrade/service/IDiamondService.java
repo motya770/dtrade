@@ -2,6 +2,7 @@ package com.dtrade.service;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondDTO;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,8 @@ public interface IDiamondService {
     List<Diamond> getEnlistedOrRoboHidden();
 
     List<Diamond> getAllAvailable(String name);
+
+    Diamond getDiamondByCurrency(Currency currency);
 
     List<DiamondDTO> getAllAvailableDTO(String name);
 

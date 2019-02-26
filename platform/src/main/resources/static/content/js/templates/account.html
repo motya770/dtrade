@@ -3,6 +3,9 @@
         <div ng-controller="BalanceActivityController as vm" class="def-cab-page__content">
             <h2 class="def-cab-page__heading">My history</h2>
             <ul class="lk-tabs-heading">
+                <li ng-class="{active:tab===4}">
+                    <a  href ng-click="tab = tab==4 ? a : 4">Balances</a>
+                </li>
                 <li ng-class="{active:tab===2}">
                     <a  href ng-click="tab = tab==2 ? a : 2">Trade history</a>
                 </li>
@@ -17,65 +20,28 @@
             </ul>
 
             <div class="lk-main-tabs">
-                <div class="lk-main-tab" ng-show="tab===1">
+                <div class="lk-main-tab" ng-show="tab===4">
                     <div class="lk-main-tab__table" style="width: 1100px;">
-                        <div class="table-container"  ng-cloak>
+                        <div class="table-container" ng-controller="BalanceController as vm"   ng-cloak>
                             <div>
                                 <table class="diamont-table">
                                     <thead>
                                     <tr>
-                                        <th>№</th>
-                                        <th>Date</th>
-                                        <th>Operation type</th>
-                                        <th>Base Currency</th>
+                                        <th>Currency</th>
                                         <th>Amount</th>
-                                        <th>Price</th>
-                                        <th>Sum</th>
-                                        <th>Balance</th>
+                                        <th>Estimated sum</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-
-                                    <tr ng-repeat="balanceActivity in vm.balanceActivities.content">
-                                        <td>{{balanceActivity.id}}</td>
-                                        <td>{{balanceActivity.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
-                                        <td>{{balanceActivity.balanceActivityType | lowercase}}</td>
-                                        <td>{{balanceActivity.currency}}</td>
-                                        <td>{{balanceActivity.amount | number:2 }}</td>
-                                        <td>{{balanceActivity.price | number:2}}</td>
-                                        <td>{{balanceActivity.sum | number:2  }}</td>
-                                        <td>{{balanceActivity.balanceSnapshot | number:2}}</td>
+                                    <tr ng-repeat="balance in vm.balances">
+                                        <td>{{balance.currency}}</td>
+                                        <td>{{(balance.amount) | number : 2}}</td>
+                                        <td>{{balance.sellSum | number : 2}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <a href ng-click="getPreviousBalanceActivities(vm.balanceActivities.number)" class="sep-cab-tab__more">Previous activities</a>
                         </div>
-                    </div>
-                    <div class="lk-main-tab__info">
-                        <!--
-                        <div class="lk-stat-info">
-                            <div class="lk-stat-info__elem lk-stat-info__elem--calendar">
-                                <h3>Декабрь 2017</h3>
-                                <p>Последние изменения — 17 декабря 2017</p>
-                            </div>
-                            <div class="lk-stat-info__elem lk-stat-info__elem--graph">
-                                <h3>Доход 20000 руб</h3>
-                                <h3>Потери 5000 руб</h3>
-                            </div>
-                            <div class="lk-stat-info__elem lk-stat-info__elem--reverse">
-                                <h3>Продажа акций на сумму $10000</h3>
-                                <h3>Покупка акций на сумму $20000</h3>
-                            </div>
-                        </div>
-                        <div class="lk-stat-charts">
-                            <div class="chart">
-                                <div class="donut-chart" data-percent="0.75" data-val="20000" data-title="доход"></div>
-                            </div>
-                            <div class="chart chart--red">
-                                <div class="donut-chart" data-percent="0.75" data-val="5000" data-title="расход"></div>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
                 <div class="lk-main-tab" ng-show="tab===2">
@@ -135,7 +101,6 @@
                                         <th>Price</th>
                                         <th>Sum</th>
                                         <th>Status</th>
-                                        <th>Profit</th>
                                         <!--
                                         <th>Баланс</th>
                                         -->
@@ -151,7 +116,9 @@
                                         <td>{{tradeOrder.price | number : 2}}</td>
                                         <td>{{tradeOrder.price * tradeOrder.initialAmount | number : 2}}</td>
                                         <td>{{tradeOrder.traderOrderStatus | lowercase}}</td>
+                                        <!--
                                         <td>{{tradeOrder.profit | number : 2}}</td>
+                                        -->
                                         <!--
                                         <td>{{tradeOrder.}} </td>
                                         -->
@@ -172,6 +139,67 @@
                                 </table>
                             </div>
                             <a href ng-click="getPreviousAccountHistoryOrders(vm.accountHistoryTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
+                        </div>
+                    </div>
+                    <div class="lk-main-tab__info">
+                        <!--
+                        <div class="lk-stat-info">
+                            <div class="lk-stat-info__elem lk-stat-info__elem--calendar">
+                                <h3>Декабрь 2017</h3>
+                                <p>Последние изменения — 17 декабря 2017</p>
+                            </div>
+                            <div class="lk-stat-info__elem lk-stat-info__elem--graph">
+                                <h3>Доход 20000 руб</h3>
+                                <h3>Потери 5000 руб</h3>
+                            </div>
+                            <div class="lk-stat-info__elem lk-stat-info__elem--reverse">
+                                <h3>Продажа акций на сумму $10000</h3>
+                                <h3>Покупка акций на сумму $20000</h3>
+                            </div>
+                        </div>
+                        <div class="lk-stat-charts">
+                            <div class="chart">
+                                <div class="donut-chart" data-percent="0.75" data-val="20000" data-title="доход"></div>
+                            </div>
+                            <div class="chart chart--red">
+                                <div class="donut-chart" data-percent="0.75" data-val="5000" data-title="расход"></div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <div class="lk-main-tab" ng-show="tab===1">
+                    <div class="lk-main-tab__table" style="width: 1100px;">
+                        <div class="table-container"  ng-cloak>
+                            <div>
+                                <table class="diamont-table">
+                                    <thead>
+                                    <tr>
+                                        <th>№</th>
+                                        <th>Date</th>
+                                        <th>Operation type</th>
+                                        <th>Base Currency</th>
+                                        <th>Amount</th>
+                                        <th>Price</th>
+                                        <th>Sum</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr ng-repeat="balanceActivity in vm.balanceActivities.content">
+                                        <td>{{balanceActivity.id}}</td>
+                                        <td>{{balanceActivity.createDate | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                        <td>{{balanceActivity.balanceActivityType | lowercase}}</td>
+                                        <td>{{balanceActivity.currency}}</td>
+                                        <td>{{balanceActivity.amount | number:2 }}</td>
+                                        <td>{{balanceActivity.price | number:2}}</td>
+                                        <td>{{balanceActivity.sum | number:2  }}</td>
+                                        <td>{{balanceActivity.balanceSnapshot | number:2}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a href ng-click="getPreviousBalanceActivities(vm.balanceActivities.number)" class="sep-cab-tab__more">Previous activities</a>
                         </div>
                     </div>
                     <div class="lk-main-tab__info">
@@ -337,6 +365,6 @@
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     </div>
 </div>

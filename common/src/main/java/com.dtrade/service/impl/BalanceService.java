@@ -4,6 +4,8 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
+import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.quote.SimpleQuote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.repository.balance.BalanceRepository;
@@ -13,6 +15,8 @@ import com.dtrade.service.IBalanceService;
 //import com.hazelcast.core.HazelcastInstance;
 //import com.hazelcast.core.IMap;
 
+import com.dtrade.service.IBookOrderServiceProxy;
+import com.dtrade.service.IDiamondService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,9 +97,27 @@ public class BalanceService  implements IBalanceService{
     }
 
 
+    @Autowired
+    private IDiamondService diamondService;
+
+    @Autowired
+    private IBookOrderServiceProxy bookOrderServiceProxy;
+
     @Override
     public List<Balance> getBalancesByAccount(Account account){
-        return account.getBalances();
+        List<Balance> balances =  account.getBalances();
+        balances.forEach(balance -> {
+            if(!balance.getCurrency().equals(Currency.USD)){
+                Diamond diamond =  diamondService.getDiamondByCurrency(balance.getCurrency());
+                SimpleQuote simpleQuote = bookOrderServiceProxy.getSpread(diamond).block();
+                BigDecimal bidPrice = simpleQuote.getBid();
+                BigDecimal sum = balance.getAmount().multiply(bidPrice);
+                balance.setSellSum(sum);
+            }else {
+                balance.setSellSum(balance.getAmount());
+            }
+        });
+        return balances;
     }
 
     @Override

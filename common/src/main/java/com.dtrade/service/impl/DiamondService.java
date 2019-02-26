@@ -2,6 +2,7 @@ package com.dtrade.service.impl;
 
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
+import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.diamond.DiamondDTO;
 import com.dtrade.model.diamond.DiamondStatus;
@@ -185,6 +186,12 @@ public class DiamondService implements IDiamondService {
 
         });
         return diamondDTOS;
+    }
+
+
+    @Override
+    public Diamond getDiamondByCurrency(Currency currency) {
+        return diamondRepository.findByCurrencyAndDiamondStatus(currency, DiamondStatus.ENLISTED);
     }
 
     @Override

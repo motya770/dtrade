@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by kudelin on 12/4/16.
@@ -85,6 +86,17 @@ public class BalanceActivityService implements IBalanceActivityService {
         transactionTemplate = new TransactionTemplate(transactionManager);
         transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
     }*/
+
+
+    @Override
+    public List<BalanceActivity> getDeposits() {
+        return null;
+    }
+
+    @Override
+    public List<BalanceActivity> getWithdraws() {
+        return null;
+    }
 
     @Override
     public Page<BalanceActivity> findAll(Integer pageNumber) {
