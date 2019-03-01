@@ -1,6 +1,7 @@
 package com.dtrade.repository.tradeorder;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -33,8 +35,11 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
             nativeQuery = true)
     //@Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' and to.diamond.id = :#{#diamond.id} order by to.executionDate desc ")
     List<TradeOrder> getHistoryTradeOrders(Long diamondId, Long time);
-}
 
+    @Query(value = "select sum(to.executionSum) / sum(to.initialAmount) from TradeOrder to where to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
+            " and to.diamond.id = :#{#diamond.id} and to.tradeOrderDirection = 'BUY' ")
+    BigDecimal getAvaragePositionPrice(@Param("account") Account account, @Param("diamond") Diamond diamond);
+}
 
   /*
     @Query("select sum((to.amount * to.price))  from TradeOrder to where to.account.id =  :#{#account.id} " +

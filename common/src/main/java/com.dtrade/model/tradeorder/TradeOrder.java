@@ -54,6 +54,9 @@ public class TradeOrder implements Serializable {
     @NotNull
     private BigDecimal executionSum;
 
+//    @Column(precision=19, scale=8)
+//    private BigDecimal avgPrice;
+
     //BUY, SELL
     @Enumerated(EnumType.STRING)
     @NotNull

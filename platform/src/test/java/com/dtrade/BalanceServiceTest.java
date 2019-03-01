@@ -3,6 +3,7 @@ package com.dtrade;
 
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
+import com.dtrade.model.balance.BalancePos;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
@@ -51,7 +52,7 @@ public class BalanceServiceTest extends BaseTest {
     public void testGetBalancesByAccount(){
         Account account = accountService.getStrictlyLoggedAccount();
 
-        List<Balance> balances = balanceService.getBalancesByAccount(account);
+        List<BalancePos> balances = balanceService.getBalancesByAccount(account);
         Assert.assertTrue(balances.size()>0);
 
         balances.forEach(balance -> {
@@ -64,7 +65,7 @@ public class BalanceServiceTest extends BaseTest {
     public void testUpdateBalance1(){
         Account account = accountService.getStrictlyLoggedAccount();
 
-        List<Balance> balances = balanceService.getBalancesByAccount(account);
+        List<BalancePos> balances = balanceService.getBalancesByAccount(account);
 
         List<Balance> saved = new ArrayList<>();
 
@@ -102,7 +103,7 @@ public class BalanceServiceTest extends BaseTest {
             Account roboAccount =  accountService.findByMail(roboMail);
             List<Currency> currencies = balanceService.getBaseCurrencies();
 
-            List<Balance> balances = balanceService.getBalancesByAccount(roboAccount);
+            List<BalancePos> balances = balanceService.getBalancesByAccount(roboAccount);
             Balance btcBalnce = balances.stream().filter(b->b.getCurrency().equals(Currency.BTC)).findFirst().get();
             BigDecimal amount = btcBalnce.getAmount();
             Assert.assertTrue(amount.compareTo(BigDecimal.ZERO)==0);

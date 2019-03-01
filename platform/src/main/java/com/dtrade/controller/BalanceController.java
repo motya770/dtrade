@@ -1,6 +1,6 @@
 package com.dtrade.controller;
 
-import com.dtrade.model.balance.Balance;
+import com.dtrade.model.balance.BalancePos;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class BalanceController {
     private IAccountService accountService;
 
     @PostMapping(value = "/get-balances")
-    public List<Balance> getBalancesByAccount(){
+    public List<BalancePos> getBalancesByAccount(){
         return balanceService.getBalancesByAccount(accountService.getStrictlyLoggedAccount());
     }
 }

@@ -29,7 +29,10 @@
                                     <tr>
                                         <th>Currency</th>
                                         <th>Amount</th>
-                                        <th>Estimated sum</th>
+                                        <th>Equity($)</th>
+                                        <th>Average price($)</th>
+                                        <th>Today profit</th>
+                                        <th>General profit</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -37,6 +40,8 @@
                                         <td>{{balance.currency}}</td>
                                         <td>{{(balance.amount) | number : 2}}</td>
                                         <td>{{balance.sellSum | number : 2}}</td>
+                                        <td>{{balance.avgPrice | number : 2}}</td>
+                                        <td></td>
                                     </tr>
                                     </tbody>
                                 </table>

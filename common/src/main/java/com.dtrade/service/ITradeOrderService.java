@@ -1,6 +1,7 @@
 package com.dtrade.service;
 
 import com.dtrade.model.account.Account;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderAccountHolder;
 import com.dtrade.model.tradeorder.TradeOrderDTO;
@@ -16,6 +17,8 @@ public interface ITradeOrderService {
 
     public final static BigDecimal ZERO_VALUE = BigDecimal.ZERO;
     public final static BigDecimal MINUS_ONE_VALUE = new BigDecimal("-1.00");
+
+    BigDecimal getAverageTradeOrderPrice(Diamond diamond, Account account);
 
     TradeOrder afterTradeOrderCreation(TradeOrder order, Account account);
 

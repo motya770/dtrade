@@ -51,9 +51,6 @@ public class Balance {
     @Column(columnDefinition = "boolean default true")
     private boolean baseBalance;
 
-    @Transient
-    private BigDecimal sellSum;
-
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "balance")
     private List<BalanceActivity> balanceActivities;

@@ -337,6 +337,13 @@ public class TradeOrderService  implements ITradeOrderService{
         return holder;
     }
 
+
+    @Transactional(readOnly = true)
+    @Override
+    public BigDecimal getAverageTradeOrderPrice(Diamond diamond, Account account) {
+        return tradeOrderRepository.getAvaragePositionPrice(account, diamond);
+    }
+
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public TradeOrder afterTradeOrderCreation(TradeOrder order, Account account) {

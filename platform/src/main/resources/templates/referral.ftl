@@ -162,14 +162,7 @@
                                         <a href="https://x.korono.io/accounts/demo-login/?ref=${account.referral}">Trade</a> with demo account.
                                     </div>
 
-                                     <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">
-                                         Hi friends! This startup decided to disrupt an industry and created a trading application
-                                         that doesn't take commissions (it’s free). Currently,
-                                         they give Google and Test stocks for free to those who bring friends,
-                                         so the more people join using my link, the more stock I’ll get. Stocks will be
-                                         available after the official launch of the broker.
-                                         They reserved upto 10k dollars for anyone whose friends join their demo.
-                                         Please go to my link (www.korono.io/?ref=${account.referral}) and register.
+                                     <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">Hi friends! This startup decided to disrupt an industry and created a trading application that doesn't take commissions (it’s free). Currently, they give Google and Test stocks for free to those who bring friends,  so the more people join using my link, the more stock I’ll get. Stocks will be available after the official launch of the broker.  Please go to my link (www.korono.io/?ref=${account.referral}) and register.
                                      </div>
 
                                     <a href="#" onclick="copyText();return false;">Copy text</a>
