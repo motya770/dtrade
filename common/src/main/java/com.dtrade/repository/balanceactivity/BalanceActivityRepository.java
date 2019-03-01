@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -33,6 +34,9 @@ public interface BalanceActivityRepository extends JpaRepository<BalanceActivity
             " and ba.balanceActivityType = :balanceActivityType order by ba.createDate desc")
     List<Account> getByStatusAndByAccount(@Param("account") Account account,
                                           @Param("balanceActivityType") BalanceActivityType balanceActivityType);
+
+//    @Query("select sum(ba.sum) / sum(ba.amount)  from BalanceActivity ba where ba.buyOrder.id = :#{#tradeOrder.id} and ba.balanceActivityType = 'BUY' ")
+//    BigDecimal getAvaregePrice(@Param("tradeOrder") TradeOrder tradeOrder);
 
 }
 

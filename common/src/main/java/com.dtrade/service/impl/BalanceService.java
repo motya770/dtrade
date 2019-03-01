@@ -3,22 +3,21 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
+import com.dtrade.model.balance.BalancePos;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.SimpleQuote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.repository.balance.BalanceRepository;
-import com.dtrade.service.IAccountService;
-import com.dtrade.service.IBalanceService;
+import com.dtrade.service.*;
 
 //import com.hazelcast.core.HazelcastInstance;
 //import com.hazelcast.core.IMap;
 
-import com.dtrade.service.IBookOrderServiceProxy;
-import com.dtrade.service.IDiamondService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -26,6 +25,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -103,21 +103,37 @@ public class BalanceService  implements IBalanceService{
     @Autowired
     private IBookOrderServiceProxy bookOrderServiceProxy;
 
+    @Autowired
+    private ITradeOrderService tradeOrderService;
+
     @Override
-    public List<Balance> getBalancesByAccount(Account account){
+    public List<BalancePos> getBalancesByAccount(Account account){
         List<Balance> balances =  account.getBalances();
+        List<BalancePos> balancePosList = new ArrayList<>();
+
         balances.forEach(balance -> {
+            BalancePos balancePos = new BalancePos();
+            BeanUtils.copyProperties(balance, balancePos);
+
             if(!balance.getCurrency().equals(Currency.USD)){
                 Diamond diamond =  diamondService.getDiamondByCurrency(balance.getCurrency());
                 SimpleQuote simpleQuote = bookOrderServiceProxy.getSpread(diamond).block();
+
+                BigDecimal avgPrice = tradeOrderService.getAverageTradeOrderPrice(diamond, account);
+
                 BigDecimal bidPrice = simpleQuote.getBid();
                 BigDecimal sum = balance.getAmount().multiply(bidPrice);
-                balance.setSellSum(sum);
+                balancePos.setSellSum(sum);
+                balancePos.setAvgPrice(avgPrice);
             }else {
-                balance.setSellSum(balance.getAmount());
+                balancePos.setSellSum(balance.getAmount());
             }
+
+
+
+            balancePosList.add(balancePos);
         });
-        return balances;
+        return balancePosList;
     }
 
     @Override
