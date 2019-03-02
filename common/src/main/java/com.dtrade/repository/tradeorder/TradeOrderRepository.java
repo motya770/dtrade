@@ -42,13 +42,14 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
             " and to.diamond.id = :#{#diamond.id} and to.tradeOrderDirection = 'BUY' ")
     BigDecimal getAvaragePositionPrice(@Param("account") Account account, @Param("diamond") Diamond diamond);
 
-    @Query(value = "select sum(to.executionSum) from TradeOrder to where to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
-            " and to.diamond.id = :#{#diamond.id} and to.tradeOrderDirection = :#{#tradeOrderDirection} ")
-    Optional<BigDecimal> getTotalPositionExpences(@Param("account") Account account, @Param("diamond") Diamond diamond, TradeOrderDirection tradeOrderDirection);
+    @Query(value = "select sum(to.executionSum)  from TradeOrder to where to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
+            " and to.diamond.id = :#{#diamond.id} and to.tradeOrderDirection = :#{#tradeOrderDirection} and to.executionDate >= :#{#executionDate} ")
+    Optional<BigDecimal> getTotalPositionExpences(@Param("account") Account account, @Param("diamond") Diamond diamond, TradeOrderDirection tradeOrderDirection, Long executionDate);
 
     @Query(value = "select sum(to.initialAmount) from TradeOrder to where to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
-            " and to.diamond.id = :#{#diamond.id} and to.tradeOrderDirection = :#{#tradeOrderDirection} ")
-    Optional<BigDecimal> getTotalPositionInitialAmount(@Param("account") Account account, @Param("diamond") Diamond diamond, TradeOrderDirection tradeOrderDirection);
+            " and to.diamond.id = :#{#diamond.id} and to.tradeOrderDirection = :#{#tradeOrderDirection} and to.executionDate < :#{#executionDate} ")
+    Optional<BigDecimal> getTotalPositionInitialAmount(@Param("account") Account account, @Param("diamond") Diamond diamond,
+                                                       TradeOrderDirection tradeOrderDirection, Long executionDate);
 }
 
   /*

@@ -41,4 +41,6 @@ public interface IQuotesService {
 
     Quote getLastQuote(Diamond diamond);
 
+    Quote getLastQoute(Diamond diamond, Long time);
+
 }

@@ -9,6 +9,7 @@ import com.dtrade.model.quote.SimpleQuote;
 import com.dtrade.model.tradeorder.*;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
+import com.dtrade.utils.UtilsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -344,17 +348,30 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
     @Override
-    public BigDecimal getTotalPositionAmount(Diamond diamond, Account account) {
-        BigDecimal buyAmount =  tradeOrderRepository.getTotalPositionInitialAmount(account, diamond, TradeOrderDirection.BUY).orElse(BigDecimal.ZERO);
-        BigDecimal sellAmount = tradeOrderRepository.getTotalPositionInitialAmount(account, diamond, TradeOrderDirection.SELL).orElse(BigDecimal.ZERO);
+    public BigDecimal getTodayPositionSum(Diamond diamond, Account account) {
+        Long millis = UtilsHelper.getTodayStart();
+
+        BigDecimal buySum =  tradeOrderRepository.getTotalPositionExpences(account, diamond, TradeOrderDirection.BUY, millis).orElse(BigDecimal.ZERO);
+        BigDecimal sellSum = tradeOrderRepository.getTotalPositionExpences(account, diamond, TradeOrderDirection.SELL, millis).orElse(BigDecimal.ZERO);
+        return buySum.subtract(sellSum);
+    }
+
+
+
+    @Override
+    public BigDecimal getUntilTodayPositionAmount(Diamond diamond, Account account) {
+        Long today = UtilsHelper.getTodayStart();
+
+        BigDecimal buyAmount =  tradeOrderRepository.getTotalPositionInitialAmount(account, diamond, TradeOrderDirection.BUY, today).orElse(BigDecimal.ZERO);
+        BigDecimal sellAmount = tradeOrderRepository.getTotalPositionInitialAmount(account, diamond, TradeOrderDirection.SELL, today).orElse(BigDecimal.ZERO);
         return buyAmount.subtract(sellAmount);
     }
 
     @Transactional(readOnly = true)
     @Override
     public BigDecimal getTotalPositionSum(Diamond diamond, Account account) {
-        BigDecimal buySum =  tradeOrderRepository.getTotalPositionExpences(account, diamond, TradeOrderDirection.BUY).orElse(BigDecimal.ZERO);
-        BigDecimal sellSum = tradeOrderRepository.getTotalPositionExpences(account, diamond, TradeOrderDirection.SELL).orElse(BigDecimal.ZERO);
+        BigDecimal buySum =  tradeOrderRepository.getTotalPositionExpences(account, diamond, TradeOrderDirection.BUY, 0L).orElse(BigDecimal.ZERO);
+        BigDecimal sellSum = tradeOrderRepository.getTotalPositionExpences(account, diamond, TradeOrderDirection.SELL, 0L).orElse(BigDecimal.ZERO);
         return buySum.subtract(sellSum);
     }
 

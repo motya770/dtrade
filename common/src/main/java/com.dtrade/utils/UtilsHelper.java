@@ -2,6 +2,9 @@ package com.dtrade.utils;
 
 import com.dtrade.exception.TradeException;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 /**
  * Created by matvei on 4/6/15.
  */
@@ -17,5 +20,11 @@ public class UtilsHelper {
             e.printStackTrace();
             throw new TradeException("Mail not valid");
         }
+    }
+
+    public static Long getTodayStart() {
+        LocalDateTime dateTime =  LocalDateTime.now(ZoneOffset.UTC);
+        LocalDateTime today = dateTime.toLocalDate().atStartOfDay();
+        return today.toInstant(ZoneOffset.UTC).toEpochMilli();
     }
 }

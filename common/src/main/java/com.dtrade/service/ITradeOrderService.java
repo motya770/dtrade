@@ -22,7 +22,9 @@ public interface ITradeOrderService {
 
     BigDecimal getTotalPositionSum(Diamond diamond, Account account);
 
-    BigDecimal getTotalPositionAmount(Diamond diamond, Account account);
+    BigDecimal getUntilTodayPositionAmount(Diamond diamond, Account account);
+
+    BigDecimal getTodayPositionSum(Diamond diamond, Account account);
 
     TradeOrder afterTradeOrderCreation(TradeOrder order, Account account);
 

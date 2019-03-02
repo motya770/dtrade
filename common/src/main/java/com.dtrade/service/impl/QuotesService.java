@@ -307,6 +307,12 @@ public class QuotesService implements IQuotesService {
         return responce;
     }
 
+
+    @Override
+    public Quote getLastQoute(Diamond diamond, Long time) {
+        return quoteRepository.findFirstByDiamondAndTimeIsLessThanEqualOrderByTimeDesc(diamond, time);
+    }
+
     @Override
     public Quote getLastQuote(Diamond diamond) {
         return quoteRepository.findFirstByDiamondOrderByTimeDesc(diamond);

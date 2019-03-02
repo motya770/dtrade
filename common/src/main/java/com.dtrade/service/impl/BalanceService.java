@@ -6,6 +6,7 @@ import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balance.BalancePos;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
+import com.dtrade.model.quote.Quote;
 import com.dtrade.model.quote.SimpleQuote;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
@@ -15,6 +16,7 @@ import com.dtrade.service.*;
 //import com.hazelcast.core.HazelcastInstance;
 //import com.hazelcast.core.IMap;
 
+import com.dtrade.utils.UtilsHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -126,7 +128,8 @@ public class BalanceService  implements IBalanceService{
                 BigDecimal avgPrice = tradeOrderService.getAverageTradeOrderPrice(diamond, account);
 
                 BigDecimal totalPositionSum = tradeOrderService.getTotalPositionSum(diamond, account);
-                //BigDecimal totalPostionAmount = tradeOrderService.getTotalPositionAmount(diamond, account);
+
+
 
                 BigDecimal bidPrice = simpleQuote.getBid();
                 BigDecimal sellSum = balance.getAmount().multiply(bidPrice);
@@ -134,10 +137,20 @@ public class BalanceService  implements IBalanceService{
                 // totalPositionSum / sellSum = 100 / x;
                 BigDecimal generalProfitPercent = sellSum.multiply(new BigDecimal("100")).divide(sellSum);
 
+                BigDecimal todayPositionSum = tradeOrderService.getTodayPositionSum(diamond, account);
+                BigDecimal untilTodayPositionAmount = tradeOrderService.getUntilTodayPositionAmount(diamond, account);
+                Quote quote = quotesService.getLastQoute(diamond, UtilsHelper.getTodayStart());
+                BigDecimal todayStartPrice = quote.getBid();
+
+                BigDecimal todayStart  = todayStartPrice.multiply(untilTodayPositionAmount).subtract(todayPositionSum);
+                BigDecimal todayProfit = sellSum.subtract(todayStart);
+
                 balancePos.setSellSum(sellSum);
                 balancePos.setAvgPrice(avgPrice);
                 balancePos.setGeneralProfit(sellSum.subtract(totalPositionSum));
                 balancePos.setGeneralProfitPercent(generalProfitPercent);
+                balancePos.setTodayProfit(todayProfit);
+
             }else {
                 balancePos.setSellSum(balance.getAmount());
             }

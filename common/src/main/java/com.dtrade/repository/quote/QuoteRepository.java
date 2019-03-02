@@ -28,4 +28,6 @@ public interface QuoteRepository extends JpaRepository<Quote, Long> {
                                        QuoteType quoteType, Pageable pageable);
 
     Quote findFirstByDiamondOrderByTimeDesc(Diamond diamond);
+
+    Quote findFirstByDiamondAndTimeIsLessThanEqualOrderByTimeDesc(Diamond diamond, Long time);
 }
