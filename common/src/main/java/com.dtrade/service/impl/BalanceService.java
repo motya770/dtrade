@@ -106,6 +106,10 @@ public class BalanceService  implements IBalanceService{
     @Autowired
     private ITradeOrderService tradeOrderService;
 
+    @Autowired
+    private IQuotesService quotesService;
+
+    //TODO refactor it, pls
     @Override
     public List<BalancePos> getBalancesByAccount(Account account){
         List<Balance> balances =  account.getBalances();
@@ -121,15 +125,22 @@ public class BalanceService  implements IBalanceService{
 
                 BigDecimal avgPrice = tradeOrderService.getAverageTradeOrderPrice(diamond, account);
 
+                BigDecimal totalPositionSum = tradeOrderService.getTotalPositionSum(diamond, account);
+                //BigDecimal totalPostionAmount = tradeOrderService.getTotalPositionAmount(diamond, account);
+
                 BigDecimal bidPrice = simpleQuote.getBid();
-                BigDecimal sum = balance.getAmount().multiply(bidPrice);
-                balancePos.setSellSum(sum);
+                BigDecimal sellSum = balance.getAmount().multiply(bidPrice);
+
+                // totalPositionSum / sellSum = 100 / x;
+                BigDecimal generalProfitPercent = sellSum.multiply(new BigDecimal("100")).divide(sellSum);
+
+                balancePos.setSellSum(sellSum);
                 balancePos.setAvgPrice(avgPrice);
+                balancePos.setGeneralProfit(sellSum.subtract(totalPositionSum));
+                balancePos.setGeneralProfitPercent(generalProfitPercent);
             }else {
                 balancePos.setSellSum(balance.getAmount());
             }
-
-
 
             balancePosList.add(balancePos);
         });

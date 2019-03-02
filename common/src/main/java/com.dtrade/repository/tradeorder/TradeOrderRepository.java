@@ -3,6 +3,7 @@ package com.dtrade.repository.tradeorder;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
+import com.dtrade.model.tradeorder.TradeOrderDirection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by kudelin on 6/27/17.
@@ -39,6 +41,14 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
     @Query(value = "select sum(to.executionSum) / sum(to.initialAmount) from TradeOrder to where to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
             " and to.diamond.id = :#{#diamond.id} and to.tradeOrderDirection = 'BUY' ")
     BigDecimal getAvaragePositionPrice(@Param("account") Account account, @Param("diamond") Diamond diamond);
+
+    @Query(value = "select sum(to.executionSum) from TradeOrder to where to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
+            " and to.diamond.id = :#{#diamond.id} and to.tradeOrderDirection = :#{#tradeOrderDirection} ")
+    Optional<BigDecimal> getTotalPositionExpences(@Param("account") Account account, @Param("diamond") Diamond diamond, TradeOrderDirection tradeOrderDirection);
+
+    @Query(value = "select sum(to.initialAmount) from TradeOrder to where to.account.id = :#{#account.id} and to.traderOrderStatus = 'EXECUTED' " +
+            " and to.diamond.id = :#{#diamond.id} and to.tradeOrderDirection = :#{#tradeOrderDirection} ")
+    Optional<BigDecimal> getTotalPositionInitialAmount(@Param("account") Account account, @Param("diamond") Diamond diamond, TradeOrderDirection tradeOrderDirection);
 }
 
   /*

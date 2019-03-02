@@ -17,7 +17,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -342,6 +341,21 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public BigDecimal getAverageTradeOrderPrice(Diamond diamond, Account account) {
         return tradeOrderRepository.getAvaragePositionPrice(account, diamond);
+    }
+
+    @Override
+    public BigDecimal getTotalPositionAmount(Diamond diamond, Account account) {
+        BigDecimal buyAmount =  tradeOrderRepository.getTotalPositionInitialAmount(account, diamond, TradeOrderDirection.BUY).orElse(BigDecimal.ZERO);
+        BigDecimal sellAmount = tradeOrderRepository.getTotalPositionInitialAmount(account, diamond, TradeOrderDirection.SELL).orElse(BigDecimal.ZERO);
+        return buyAmount.subtract(sellAmount);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public BigDecimal getTotalPositionSum(Diamond diamond, Account account) {
+        BigDecimal buySum =  tradeOrderRepository.getTotalPositionExpences(account, diamond, TradeOrderDirection.BUY).orElse(BigDecimal.ZERO);
+        BigDecimal sellSum = tradeOrderRepository.getTotalPositionExpences(account, diamond, TradeOrderDirection.SELL).orElse(BigDecimal.ZERO);
+        return buySum.subtract(sellSum);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

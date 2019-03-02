@@ -20,6 +20,10 @@ public interface ITradeOrderService {
 
     BigDecimal getAverageTradeOrderPrice(Diamond diamond, Account account);
 
+    BigDecimal getTotalPositionSum(Diamond diamond, Account account);
+
+    BigDecimal getTotalPositionAmount(Diamond diamond, Account account);
+
     TradeOrder afterTradeOrderCreation(TradeOrder order, Account account);
 
     TradeOrderDTO convert(TradeOrder to);

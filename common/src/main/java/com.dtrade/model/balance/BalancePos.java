@@ -14,4 +14,7 @@ public class BalancePos extends Balance {
     private BigDecimal todayProfit;
 
     private BigDecimal generalProfit;
+
+    private BigDecimal generalProfitPercent;
+
 }
