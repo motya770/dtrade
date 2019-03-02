@@ -130,7 +130,6 @@ public class BalanceService  implements IBalanceService{
                 BigDecimal totalPositionSum = tradeOrderService.getTotalPositionSum(diamond, account);
 
 
-
                 BigDecimal bidPrice = simpleQuote.getBid();
                 BigDecimal sellSum = balance.getAmount().multiply(bidPrice);
 
@@ -142,8 +141,8 @@ public class BalanceService  implements IBalanceService{
                 Quote quote = quotesService.getLastQoute(diamond, UtilsHelper.getTodayStart());
                 BigDecimal todayStartPrice = quote.getBid();
 
-                BigDecimal todayStart  = todayStartPrice.multiply(untilTodayPositionAmount).subtract(todayPositionSum);
-                BigDecimal todayProfit = sellSum.subtract(todayStart);
+                BigDecimal todayStart  = todayStartPrice.multiply(untilTodayPositionAmount);
+                BigDecimal todayProfit = sellSum.subtract(todayPositionSum).subtract(todayStart);
 
                 balancePos.setSellSum(sellSum);
                 balancePos.setAvgPrice(avgPrice);
