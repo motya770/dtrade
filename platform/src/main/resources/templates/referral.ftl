@@ -158,7 +158,7 @@
                                  <#if account.referral??>
                                     <div>Link www.korono.io/?ref=${account.referral}</div>
                                     <div>Referred count ${account.referredCount}</div>
-                                    <div>We also created demo account for you with password <b>demo1234</b>.<br/>
+                                    <div>We also created demo account for you with password <b>demo1345</b>.<br/>
                                         <a href="https://x.korono.io/accounts/demo-login/?ref=${account.referral}">Trade</a> with demo account.
                                     </div>
 
