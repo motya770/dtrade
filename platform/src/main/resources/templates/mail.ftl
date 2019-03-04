@@ -401,7 +401,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" style="font-size:0px;padding:50px 40px 0 40px;word-break:break-word;">
-                                        <div style="font-family:Montserrat, Helvetica, Arial, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:center;color:#000000;"> This is the link ${referralLink} for sharing with your friends&#160;</strong> You registered as ${account.mail} and your demo password is demo1234. (Don't worry - after launch of the system you gonna change demo password.) </div>
+                                        <div style="font-family:Montserrat, Helvetica, Arial, sans-serif;font-size:16px;font-weight:300;line-height:24px;text-align:center;color:#000000;"> This is the link ${referralLink} for sharing with your friends&#160;</strong> You registered as ${account.mail} and your demo password is demo1345. (Don't worry - after launch of the system you gonna change demo password.) </div>
                                     </td>
                                 </tr>
                                 <tr>
