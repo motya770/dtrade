@@ -375,8 +375,9 @@ public class TradeEngine implements ITradeEngine {
             BigDecimal realAmount = buyAmount.min(sellAmount);
 
             Currency currency = buyOrder.getDiamond().getCurrency();
+            Currency baseCurrency = buyOrder.getDiamond().getBaseCurrency();
 
-            Balance buyBalance = balanceService.getBalance(currency, buyAccount);
+            Balance buyBalance = balanceService.getBalance(baseCurrency, buyAccount);
             Balance sellBalance = balanceService.getBalance(currency, sellAccount);
 
             logger.info("1.9 " + (System.currentTimeMillis() - start));
@@ -384,7 +385,7 @@ public class TradeEngine implements ITradeEngine {
             if (buyBalance.getAmount().compareTo(realAmount) < 0) {
                 //TODO notify user
                 logger.error("Not enough coins at {} {}", buyBalance, buyAccount);
-                sellOrder = rejectTradeOrder(sellOrder);
+                buyOrder = rejectTradeOrder(buyOrder);
                 return Pair.of(true, false);
             }
 
