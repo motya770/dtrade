@@ -130,7 +130,6 @@ public class BalanceService  implements IBalanceService{
 
                 BigDecimal totalPositionSum = tradeOrderService.getTotalPositionSum(diamond, account);
 
-
                 BigDecimal bidPrice = simpleQuote.getBid();
                 BigDecimal equity = balance.getAmount().multiply(bidPrice);
 
@@ -141,7 +140,8 @@ public class BalanceService  implements IBalanceService{
                 if(totalPositionSum.compareTo(BigDecimal.ZERO)==0){
                     generalProfitPercent = BigDecimal.ZERO;
                 }else {
-                    generalProfitPercent = equity.multiply(new BigDecimal("100")).divide(totalPositionSum, RoundingMode.HALF_UP);
+                    BigDecimal percent  = equity.multiply(new BigDecimal("100")).divide(totalPositionSum, RoundingMode.HALF_UP);
+                    generalProfitPercent = percent.subtract(new BigDecimal("100"));
                 }
 
                 BigDecimal todayPositionSum = tradeOrderService.getTodayPositionSum(diamond, account);
