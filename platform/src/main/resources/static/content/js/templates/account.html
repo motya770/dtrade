@@ -41,7 +41,7 @@
                                         <td>{{(balance.amount) | number : 2}}</td>
                                         <td>{{balance.sellSum | number : 2}}</td>
                                         <td>{{balance.avgPrice | number : 2}}</td>
-                                        <td>{{balance.todayProfit | number : 2}}</td>
+                                        <td>({{balance.todayProfit | number : 2}}) - %({{balance.todayProfitPercent | number : 2}})</td>
                                         <td>({{balance.generalProfit | number : 2}}) - %({{balance.generalProfitPercent | number : 2}}) </td>
                                     </tr>
                                     </tbody>

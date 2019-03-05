@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -131,10 +132,17 @@ public class BalanceService  implements IBalanceService{
 
 
                 BigDecimal bidPrice = simpleQuote.getBid();
-                BigDecimal sellSum = balance.getAmount().multiply(bidPrice);
+                BigDecimal equity = balance.getAmount().multiply(bidPrice);
 
                 // totalPositionSum / sellSum = 100 / x;
-                BigDecimal generalProfitPercent = sellSum.multiply(new BigDecimal("100")).divide(sellSum);
+                // x = sellSum
+
+                BigDecimal generalProfitPercent = null;
+                if(totalPositionSum.compareTo(BigDecimal.ZERO)==0){
+                    generalProfitPercent = BigDecimal.ZERO;
+                }else {
+                    generalProfitPercent = equity.multiply(new BigDecimal("100")).divide(totalPositionSum, RoundingMode.HALF_UP);
+                }
 
                 BigDecimal todayPositionSum = tradeOrderService.getTodayPositionSum(diamond, account);
                 BigDecimal untilTodayPositionAmount = tradeOrderService.getUntilTodayPositionAmount(diamond, account);
@@ -142,13 +150,21 @@ public class BalanceService  implements IBalanceService{
                 BigDecimal todayStartPrice = quote.getBid();
 
                 BigDecimal todayStart  = todayStartPrice.multiply(untilTodayPositionAmount);
-                BigDecimal todayProfit = sellSum.subtract(todayPositionSum).subtract(todayStart);
+                BigDecimal todayProfit = equity.subtract(todayPositionSum).subtract(todayStart);
 
-                balancePos.setSellSum(sellSum);
+                BigDecimal todayProfitPercent = null;
+                        if(todayStart.compareTo(BigDecimal.ZERO)==0){
+                            todayProfitPercent = BigDecimal.ZERO;
+                        }else {
+                            todayProfitPercent= todayProfit.multiply(new BigDecimal("100")).divide(todayStart, RoundingMode.HALF_UP);
+                        }
+
+                balancePos.setSellSum(equity);
                 balancePos.setAvgPrice(avgPrice);
-                balancePos.setGeneralProfit(sellSum.subtract(totalPositionSum));
+                balancePos.setGeneralProfit(equity.subtract(totalPositionSum));
                 balancePos.setGeneralProfitPercent(generalProfitPercent);
                 balancePos.setTodayProfit(todayProfit);
+                balancePos.setTodayProfitPercent(todayProfitPercent);
 
             }else {
                 balancePos.setSellSum(balance.getAmount());
