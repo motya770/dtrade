@@ -4,9 +4,11 @@ import com.dtrade.model.account.Account;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IDiamondService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +30,13 @@ public class PageController {
     @RequestMapping(value = "/basic", method = RequestMethod.GET)
     public String simple(){
         return "basic";
+    }
+
+
+    @CrossOrigin
+    @RequestMapping(value = "/info/presentation", method = RequestMethod.GET)
+    public String pdf(){
+        return "redirect:https://static.wixstatic.com/ugd/c5b996_6997d84d2d9d435c815ec972828f3112.pdf";
     }
 
 
@@ -53,9 +62,16 @@ public class PageController {
         return "login";
     }
 
+   // @Profile("prod")
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String main(){
+    public String mainProd(){
         return "redirect:https://www.korono.io/"; //"ico/index";
+    }
+
+    //@Profile("dev")
+    //@RequestMapping(value = "/", method = RequestMethod.GET)
+    public String mainDev(){
+        return "main"; //"ico/index";
     }
 
     @RequestMapping(value = "/widget", method = RequestMethod.GET)
