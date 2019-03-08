@@ -131,7 +131,7 @@
         </div>
         <div class="radio">
             <#assign stringStatusValue = (diamond.diamondType)!"" />
-            <@spring.formRadioButtons "diamond.diamondType", diamondTypes, ""/><br><br>
+            <@spring.formSingleSelect "diamond.diamondType", diamondTypes, ""/><br><br>
         </div>
 
         <div class="form-group">
@@ -159,14 +159,14 @@
             <div class="radio">
                 <label>Status</label><br/>
             <#assign stringStatusValue = (diamond.diamondStatus)!"" />
-            <@spring.formRadioButtons "diamond.diamondStatus", statuses, ""/><br><br>
+            <@spring.formSingleSelect "diamond.diamondStatus", statuses, ""/><br><br>
             </div>
 
 
             <div class="radio">
                 <label>AssetType</label><br/>
                 <#assign stringStatusValue = (diamond.assetType)!"" />
-                <@spring.formRadioButtons "diamond.assetType", assetTypes, ""/><br><br>
+                <@spring.formSingleSelect "diamond.assetType", assetTypes, ""/><br><br>
             </div>
 
             <div class="form-group">
@@ -182,13 +182,13 @@
          <div class="radio">
                 <label>Currency</label><br/>
             <#assign stringStatusValue = (diamond.currency)!"" />
-            <@spring.formRadioButtons "diamond.currency", currencies, ""/><br><br>
+            <@spring.formSingleSelect "diamond.currency", currencies, ""/><br><br>
          </div>
 
             <div class="radio">
                 <label>Base Currency</label><br/>
             <#assign stringStatusValue = (diamond.getBase)!"" />
-            <@spring.formRadioButtons "diamond.baseCurrency", currencies, ""/><br><br>
+            <@spring.formSingleSelect "diamond.baseCurrency", currencies, ""/><br><br>
             </div>
 
             <div class="form-group">
