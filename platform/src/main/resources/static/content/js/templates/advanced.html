@@ -170,10 +170,10 @@
                         <div class="sep-cab-page__form" style="height: 491px;" ng-controller="BidderController as vm">
                             <ul class="sep-cab-tabs sep-cab-tabs--form">
                                 <li ng-class="{active:tab===5}">
-                                    <a href ng-click="tab = tab==5 ? a : 5" >Market</a>
+                                    <a href ng-click="tab = 5" >Market</a>
                                 </li>
                                 <li ng-class="{active:tab===6}">
-                                    <a href ng-click="tab = tab==6 ? a : 6">Limit</a>
+                                    <a href ng-click="tab = 6">Limit</a>
                                 </li>
                             </ul>
 
@@ -264,10 +264,10 @@
                         <div class="">
                             <ul class="sep-cab-tabs sep-cab-tabs--graph">
                                 <li ng-class="{active:tab===11}">
-                                    <a href ng-click="tab = tab==11 ? a : 11">Graph</a>
+                                    <a href ng-click="tab = 11">Graph</a>
                                 </li>
                                 <li ng-class="{active:tab===12}">
-                                    <a a href ng-click="tab = tab==12 ? a : 12">Depth</a>
+                                    <a a href ng-click="tab = 12">Depth</a>
                                 </li>
                             </ul>
                             <!--
@@ -344,10 +344,10 @@
                     <div ng-controller="HistoryTradeOrderController as vm" class="sep-cab-page__side sep-cab-page__bottom-left">
                         <ul class="sep-cab-tabs sep-cab-tabs--trade">
                             <li ng-class="{active:tab===3}">
-                                <a href ng-click="tab = tab==3 ? a : 3">Trade history</a>
+                                <a href ng-click="tab = 3">Trade history</a>
                             </li>
                             <li ng-class="{active:tab===4}">
-                                <a href ng-click="tab = tab==4 ? a : 4">Order Book</a>
+                                <a href ng-click="tab = 4">Order Book</a>
                             </li>
                         </ul>
                         <div class="trades-tabs">
@@ -458,13 +458,13 @@
                     <div ng-controller="LiveTradeOrderController as vm"  class="sep-cab-page__side sep-cab-page__bottom-right">
                         <ul class="sep-cab-tabs sep-cab-tabs--tables">
                             <li ng-class="{active:tab===1}">
-                                <a  href ng-click="tab = tab==1 ? a : 1">Open Orders</a>
+                                <a  href ng-click="tab = 1">Open Orders</a>
                             </li>
                             <li ng-class="{active:tab===2}">
-                                <a href ng-click="tab = tab==2 ? a : 2">History Orders</a>
+                                <a href ng-click="tab = 2">History Orders</a>
                             </li>
                             <li ng-class="{active:tab===10}">
-                                <a href ng-click="tab = tab==10 ? a : 10">My {{::cc.config.assetName}}</a>
+                                <a href ng-click="tab = 10">My {{::cc.config.assetName}}</a>
                             </li>
                         </ul>
                         <div class="sep-cab-tabs-container">

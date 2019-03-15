@@ -240,13 +240,13 @@
                 <div ng-controller="LiveTradeOrderController as vm" class="sep-cab-page__side sep-cab-page__bottom-right">
                     <ul class="sep-cab-tabs sep-cab-tabs--tables">
                         <li ng-class="{active:tab===1}">
-                            <a  href ng-click="tab = tab==1 ? a : 1">Open Orders</a>
+                            <a  href ng-click="tab = 1">Open Orders</a>
                         </li>
                         <li ng-class="{active:tab===2}">
-                            <a href ng-click="tab = tab==2 ? a : 2">History Orders</a>
+                            <a href ng-click="tab = 2">History Orders</a>
                         </li>
                         <li ng-class="{active:tab===10}">
-                            <a href ng-click="tab = tab==10 ? a : 10">My {{::cc.config.assetName}}</a>
+                            <a href ng-click="tab = 10">My {{::cc.config.assetName}}</a>
                         </li>
                     </ul>
                     <div class="sep-cab-tabs-container">
