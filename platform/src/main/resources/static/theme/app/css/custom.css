@@ -132,3 +132,16 @@ body {
 .trades-tab .diamont-table tr td:last-child {
   padding-left: 0px;
 }
+
+
+@media only screen and (max-width: 600px) {
+  .sep-cab-page__side {
+    height: 450px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .sep-cab-page__side {
+    height: 590px;
+  }
+}
