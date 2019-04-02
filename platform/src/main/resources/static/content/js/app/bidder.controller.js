@@ -21,7 +21,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
     $scope.createTradeOrder = function (tradeOrder, diamond, tradeOrderType) {
 
         if(self.currentAccount == null || self.currentAccount.account == "empty"){
-            AlertService.showAlert("You should make login first!", "Notification");
+            AlertService.showAlert("You should make login first!", "Notification", "EMPTY_ACCOUNT");
             return;
         }
 
@@ -55,6 +55,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
             }
         });
     };
+
 
     $scope.sellOption = function (tradeOrder) {
         $scope.tradeOrder.tradeOrderDirection = "SELL";

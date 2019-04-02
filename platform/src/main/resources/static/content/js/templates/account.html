@@ -1,16 +1,16 @@
 <div class="def-cab-page">
     <div class="def-cab-page__inner">
         <div ng-controller="BalanceActivityController as vm" class="def-cab-page__content">
-            <h2 class="def-cab-page__heading">My history</h2>
+            <h2 class="def-cab-page__heading">{{'MY_ACCOUNT.MY_HISTORY' | translate}}</h2>
             <ul class="lk-tabs-heading">
                 <li ng-class="{active:tab===4}">
-                    <a  href ng-click="tab = 4">Balances</a>
+                    <a  href ng-click="tab = 4">{{'MY_ACCOUNT.BALANCES' | translate}}</a>
                 </li>
                 <li ng-class="{active:tab===2}">
-                    <a  href ng-click="tab = 2">Trade history</a>
+                    <a  href ng-click="tab = 2">{{'MY_ACCOUNT.TRADE_HISTORY' | translate}}</a>
                 </li>
                 <li ng-class="{active:tab===1}">
-                    <a href ng-click="tab = 1">Balance activity</a>
+                    <a href ng-click="tab = 1">{{'MY_ACCOUNT.BALANCE_ACTIVITY' | translate}}</a>
                 </li>
                 <!--
                 <li ng-class="{active:tab===3}">
@@ -27,12 +27,12 @@
                                 <table class="diamont-table">
                                     <thead>
                                     <tr>
-                                        <th>Currency</th>
-                                        <th>Amount</th>
-                                        <th>Equity($)</th>
-                                        <th>Average price($)</th>
-                                        <th>Today profit</th>
-                                        <th>General profit</th>
+                                        <th>{{'MY_ACCOUNT.CURRENCY' | translate}}</th>
+                                        <th>{{'MY_ACCOUNT.AMOUNT' | translate}}</th>
+                                        <th>{{'MY_ACCOUNT.EQUITY' | translate}}</th>
+                                        <th>{{'MY_ACCOUNT.AVERAGE_PRICE' | translate}}</th>
+                                        <th>{{'MY_ACCOUNT.TODAY_PROFIT' | translate}}</th>
+                                        <th>{{'MY_ACCOUNT.TOTAL_PROFIT' | translate}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -59,9 +59,6 @@
                             Date:
                         </md-content>
                         -->
-
-
-
 
                         <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
 
@@ -100,13 +97,13 @@
                                     <thead>
                                     <tr>
                                         <th>№</th>
-                                        <th>Date created</th>
-                                        <th>Date executed</th>
-                                        <th>Name</th>
-                                        <th>№ Amount</th>
-                                        <th>Price</th>
-                                        <th>Sum</th>
-                                        <th>Status</th>
+                                        <th>{{'MY_ACCOUNT.DATE_CREATED' | translate}}</th>
+                                        <th>{{'MY_ACCOUNT.DATE_EXECUTED' | translate}}</th>
+                                        <th>{{'MY_ACCOUNT.NAME' | translate}}</th>
+                                        <th>№ {{'MY_ACCOUNT.AMOUNT' | translate}}</th>
+                                        <th>{{'MY_ACCOUNT.PRICE' | translate}}</th>
+                                        <th>{{'MY_ACCOUNT.SUM' | translate}}</th>
+                                        <th>{{'MY_ACCOUNT.STATUS' | translate}}</th>
                                         <!--
                                         <th>Баланс</th>
                                         -->
@@ -131,7 +128,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td>Summary</td>
+                                        <td>{{'MY_ACCOUNT.SUMMARY' | translate}}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
