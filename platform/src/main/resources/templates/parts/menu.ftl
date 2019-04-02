@@ -2,11 +2,11 @@
     <div class="subnav__inner">
         <ul ng-controller="MenuController as vm" class="subnav__list">
                 <li ng-class="{ active: isActive('/basic')}" >
-                    <a href="/trade#!/basic">Basic</a>
+                    <a href="/trade#!/basic">{{'MENU.BASIC' | translate}}</a>
                 </li>
 
                 <li ng-class="{ active: isActive('/trade')}">
-                    <a href="/trade#!/trade">Advanced</a>
+                    <a href="/trade#!/trade">{{'MENU.ADVANCED' | translate}}</a>
                 </li>
 
             <!--
@@ -18,10 +18,10 @@
                    <a href="/{{cc.config.assetType|lowercase}}">{{cc.config.assetName}}</a>
                    -->
                 <li ng-show="vm.account" ng-class="{ active: isActive('/account')}">
-                    <a href="/trade#!/account">My account</a>
+                    <a href="/trade#!/account">{{'MENU.MY_ACCOUNT' | translate}}</a>
                 </li>
                 <li ng-show="vm.account" ng-class="{ active: isActive('/referral')}">
-                    <a href="/referral">Referral</a>
+                    <a href="/referral">{{'MENU.REFERRAL' | translate}}</a>
                 </li>
 
 

@@ -6,8 +6,8 @@
                 <div class="sep-cab-page__top">
                     <div class="sep-cab-page__side sep-cab-page__left" ng-controller="AvailableController as vm" style="height:491px;">
                         <div class="sep-cab-page__heading">
-                            <h2>{{::cc.config.assetName}} listing</h2>
-                            <p>All {{::cc.config.assetName}} are available</p>
+                            <h2>{{'ITEMS_LISTING.MAIN_CAPTION_LISTING' | translate}} </h2> <!--{{::cc.config.assetName}} listing-->
+                            <p>{{'ITEMS_LISTING.SUB_CAPTION_LISTING' | translate}}</p><!--All {{::cc.config.assetName}} are available-->
                         </div>
 
                         <!--
@@ -22,11 +22,11 @@
                                     <table class="diamont-table diamond-list">
                                         <thead>
                                         <tr>
-                                            <th>{{::cc.config.assetNameForListing}}</th>
+                                            <th>{{'ITEMS_LISTING.ITEM_NAME' | translate}}</th> <!--{{::cc.config.assetNameForListing}}-->
                                             <th></th>
 
-                                            <th>Bid <!--<span class="inf">?</span>--></th>
-                                            <th>Ask <!--<span class="inf">?</span>--></th>
+                                            <th>{{'ITEMS_LISTING.BID' | translate}} <!--<span class="inf">?</span>--> </th>
+                                            <th>{{'ITEMS_LISTING.ASK' | translate}} <!--<span class="inf">?</span>--></th>
                                             <!--
                                             <th>N</th>
                                             -->
@@ -170,10 +170,10 @@
                         <div class="sep-cab-page__form" style="height: 491px;" ng-controller="BidderController as vm">
                             <ul class="sep-cab-tabs sep-cab-tabs--form">
                                 <li ng-class="{active:tab===5}">
-                                    <a href ng-click="tab = 5" >Market</a>
+                                    <a href ng-click="tab = 5" >{{'BIDDER.MARKET' | translate}}</a>
                                 </li>
                                 <li ng-class="{active:tab===6}">
-                                    <a href ng-click="tab = 6">Limit</a>
+                                    <a href ng-click="tab = 6">{{'BIDDER.LIMIT' | translate}}</a>
                                 </li>
                             </ul>
 
@@ -190,20 +190,20 @@
                                         <div class="form-tabs__boxes">
                                             <label class="typebox">
                                                 <input type="radio" class="typebox__input" name="type" checked>
-                                                <span class="typebox__capt" ng-click="buyOption(vm.tradeOrder);" >Buy</span>
+                                                <span class="typebox__capt" ng-click="buyOption(vm.tradeOrder);" >{{'BIDDER.BUY' | translate}}</span>
                                             </label>
                                             <label class="typebox">
                                                 <input type="radio" class="typebox__input" name="type">
-                                                <span class="typebox__capt" ng-click="sellOption(vm.tradeOrder);">Sell</span>
+                                                <span class="typebox__capt" ng-click="sellOption(vm.tradeOrder);">{{'BIDDER.SELL' | translate}}</span>
                                             </label>
                                         </div>
                                         <div class="form-tabs__row">
-                                            <label for="input03">Amount</label>
+                                            <label for="input03">{{'BIDDER.AMOUNT' | translate}}</label>
                                             <input type="text" ng-model="vm.tradeOrder.amount" value="0.00" id="input03">
                                         </div>
                                         <div class="form-tabs__submit">
-                                            <h3>Total ({{vm.diamond.baseCurrency}})</h3>
-                                            <button class="form-tabs__subm" ng-click="alert('test'); createTradeOrder(vm.tradeOrder, vm.diamond, 'MARKET');">Place order</button>
+                                            <h3>{{'BIDDER.TOTAL' | translate}} ({{vm.diamond.baseCurrency}})</h3>
+                                            <button class="form-tabs__subm" ng-click="alert('test'); createTradeOrder(vm.tradeOrder, vm.diamond, 'MARKET');">{{'BIDDER.PLACE_ORDER' | translate}}</button>
                                         </div>
                                     </form>
                                     <form class="form-tabs__tab"  ng-show="tab === 6">
@@ -217,19 +217,19 @@
                                         <div class="form-tabs__boxes">
                                             <label class="typebox">
                                                 <input type="radio" class="typebox__input" name="type" checked>
-                                                <span class="typebox__capt" ng-click="buyOption(vm.tradeOrder);">Buy</span>
+                                                <span class="typebox__capt" ng-click="buyOption(vm.tradeOrder);">{{'BIDDER.BUY' | translate}}</span>
                                             </label>
                                             <label class="typebox">
                                                 <input type="radio" class="typebox__input" name="type">
-                                                <span class="typebox__capt" ng-click="sellOption(vm.tradeOrder);">Sell</span>
+                                                <span class="typebox__capt" ng-click="sellOption(vm.tradeOrder);">{{'BIDDER.SELL' | translate}}</span>
                                             </label>
                                         </div>
                                         <div class="form-tabs__row">
-                                            <label for="input01">Amount</label>
+                                            <label for="input01">{{'BIDDER.AMOUNT' | translate}}</label>
                                             <input type="number" ng-init="vm.tradeOrder.amount=0" ng-model="vm.tradeOrder.amount" value="0.00" id="input01" min="0">
                                         </div>
                                         <div class="form-tabs__row">
-                                            <label for="input02">Limit price</label>
+                                            <label for="input02">{{'BIDDER.LIMIT_PRICE' | translate}}</label>
                                             <input type="number"  ng-init="vm.tradeOrder.price=0" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr" min="0" step="0.01">
                                             <small>{{vm.diamond.baseCurrency}}</small>
                                         </div>
@@ -243,9 +243,9 @@
                                         </div>-->
                                         <div class="form-tabs__submit">
                                             <h3>Total ({{vm.diamond.baseCurrency}}): {{vm.tradeOrder.amount * vm.tradeOrder.price | number:2}}</h3>
-                                            <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond, 'LIMIT')">Place order</button>
+                                            <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond, 'LIMIT')">{{'BIDDER.PLACE_ORDER' | translate}}</button>
                                         </div>
-                                    </form sty sty>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -264,10 +264,10 @@
                         <div class="">
                             <ul class="sep-cab-tabs sep-cab-tabs--graph">
                                 <li ng-class="{active:tab===11}">
-                                    <a href ng-click="tab = 11">Graph</a>
+                                    <a href ng-click="tab = 11">{{'GRAPH.GRAPH' | translate}}</a>
                                 </li>
                                 <li ng-class="{active:tab===12}">
-                                    <a a href ng-click="tab = 12">Depth</a>
+                                    <a a href ng-click="tab = 12">{{'GRAPH.DEPTH' | translate}}</a>
                                 </li>
                             </ul>
                             <!--
@@ -344,10 +344,10 @@
                     <div ng-controller="HistoryTradeOrderController as vm" class="sep-cab-page__side sep-cab-page__bottom-left">
                         <ul class="sep-cab-tabs sep-cab-tabs--trade">
                             <li ng-class="{active:tab===3}">
-                                <a href ng-click="tab = 3">Trade history</a>
+                                <a href ng-click="tab = 3">{{'BOOK_ORDER.TRADE_HISTORY' | translate}}</a>
                             </li>
                             <li ng-class="{active:tab===4}">
-                                <a href ng-click="tab = 4">Order Book</a>
+                                <a href ng-click="tab = 4">{{'BOOK_ORDER.ORDER_BOOK' | translate}}</a>
                             </li>
                         </ul>
                         <div class="trades-tabs">
@@ -358,9 +358,9 @@
                                         <table class="diamont-table">
                                             <thead>
                                             <tr>
-                                                <th>Amount</th>
-                                                <th>Price</th>
-                                                <th>Time</th>
+                                                <th>{{'BOOK_ORDER.AMOUNT' | translate}}</th>
+                                                <th>{{'BOOK_ORDER.PRICE' | translate}}</th>
+                                                <th>{{'BOOK_ORDER.TIME' | translate}}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -391,9 +391,9 @@
                                     <table class="diamont-table diamont-table--pdb">
                                         <thead>
                                         <tr>
-                                            <th>Amount</th>
-                                            <th>Price</th>
-                                            <th>Time</th>
+                                            <th>{{'BOOK_ORDER.AMOUNT' | translate}}</th>
+                                            <th>{{'BOOK_ORDER.PRICE' | translate}}</th>
+                                            <th>{{'BOOK_ORDER.TIME' | translate}}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -414,7 +414,7 @@
 
                                         <thead style="border-top: 1px solid #e7e7e7;">
                                         <tr>
-                                            <th>Spread</th>
+                                            <th>{{'BOOK_ORDER.SPREAD' | translate}}</th>
                                             <th></th>
                                             <th>{{vm.spread | number : 4}}</th>
                                         </tr>
@@ -458,13 +458,13 @@
                     <div ng-controller="LiveTradeOrderController as vm"  class="sep-cab-page__side sep-cab-page__bottom-right">
                         <ul class="sep-cab-tabs sep-cab-tabs--tables">
                             <li ng-class="{active:tab===1}">
-                                <a  href ng-click="tab = 1">Open Orders</a>
+                                <a  href ng-click="tab = 1"> {{'PERSONAL.OPEN_ORDERS' | translate}}</a>
                             </li>
                             <li ng-class="{active:tab===2}">
-                                <a href ng-click="tab = 2">History Orders</a>
+                                <a href ng-click="tab = 2"> {{'PERSONAL.HISTORY_ORDERS' | translate}}</a>
                             </li>
                             <li ng-class="{active:tab===10}">
-                                <a href ng-click="tab = 10">My {{::cc.config.assetName}}</a>
+                                <a href ng-click="tab = 10">{{'PERSONAL.MY_STOCKS_AND_COINS' | translate}} </a> <!--{{::cc.config.assetName}}-->
                             </li>
                         </ul>
                         <div class="sep-cab-tabs-container">
@@ -475,14 +475,14 @@
                                             <thead>
                                             <tr>
 
-                                                <th>Name</th>
-                                                <th>Price</th>
-                                                <th>Amount</th>
-                                                <th>Executed sum</th>
-                                                <th>t creation </th>
-                                                <th>Status</th>
-                                                <th>Type</th>
-                                                <th>Action</th>
+                                                <th>{{'PERSONAL.NAME' | translate}}</th>
+                                                <th>{{'PERSONAL.PRICE' | translate}}</th>
+                                                <th>{{'PERSONAL.AMOUNT' | translate}}</th>
+                                                <th>{{'PERSONAL.EXECUTED_SUM' | translate}}</th>
+                                                <th>{{'PERSONAL.T_CREATION' | translate}} </th>
+                                                <th>{{'PERSONAL.STATUS' | translate}}</th>
+                                                <th>{{'PERSONAL.TYPE' | translate}}</th>
+                                                <th>{{'PERSONAL.ACTION' | translate}}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -531,7 +531,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <a href ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">Previous orders</a>
+                                <a href ng-click="getPreviousLiveOrders(vm.liveTradeOrders.number)" class="sep-cab-tab__more">{{'PERSONAL.PREVIOUS_ORDERS' | translate}}</a>
                             </div>
                             <div ng-show="tab===2" class="sep-cab-tab" >
                                 <div class="table-container" ng-controller="TradeOrderAccountController as vm" ng-cloak>
@@ -539,14 +539,14 @@
                                         <table class="diamont-table">
                                             <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>t created</th>
-                                                <th>t executed</th>
-                                                <th>Amount</th>
-                                                <th>Price</th>
-                                                <th>Sum</th>
-                                                <th>Status</th>
-                                                <th>Type</th>
+                                                <th>{{'PERSONAL.NAME' | translate}}</th>
+                                                <th>{{'PERSONAL.T_CREATED' | translate}}</th>
+                                                <th>{{'PERSONAL.T_EXECUTED' | translate}}</th>
+                                                <th>{{'PERSONAL.AMOUNT' | translate}}</th>
+                                                <th>{{'PERSONAL.PRICE' | translate}}</th>
+                                                <th>{{'PERSONAL.SUM' | translate}}</th>
+                                                <th>{{'PERSONAL.STATUS' | translate}}</th>
+                                                <th>{{'PERSONAL.TYPE' | translate}}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -573,14 +573,14 @@
                                         <table class="diamont-table">
                                             <thead>
                                             <tr>
-                                                <th>Name</th>
+                                                <th>{{'PERSONAL.NAME' | translate}}</th>
                                                 <!--
                                                 <th>Цена</th>
                                                 <th>t покупки</th>
                                                 <th>Статус</th>
                                                 <th>Цена продажи</th>
                                                 -->
-                                                <th>Amount</th>
+                                                <th>{{'PERSONAL.AMOUNT' | translate}}</th>
                                                 <!--
                                                 <th>Action</th>
                                                 -->
