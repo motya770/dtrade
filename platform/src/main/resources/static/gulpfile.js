@@ -25,6 +25,7 @@ gulp.task('app', function() {
         './bower_components/angular-aria/angular-aria.min.js',
         './bower_components/angular-messages/angular-messages.min.js',
         './bower_components/angular-material/angular-material.min.js',
+        './bower_components/angular-cookies/angular-cookies.js',
         './bower_components/angular-translate/angular-translate.js',
         './bower_components/angular-sanitize/angular-sanitize.js',
         './bower_components/moment/min/moment-with-locales.js',
