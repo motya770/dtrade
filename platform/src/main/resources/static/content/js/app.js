@@ -81,7 +81,7 @@ var translations = {
         SUB_CAPTION_LISTING : ' All Stocks and coins are available',
         ITEM_NAME : 'Stocks and coins',
         BID: 'Bid',
-        ASK: 'ASK'
+        ASK: 'Ask'
     },
     GRAPH: {
         GRAPH: 'GRAPH',
@@ -132,6 +132,7 @@ var translations = {
         PREVIOUS_ORDERS: 'Previous orders',
         T_CREATED: 't created',
         T_EXECUTED: 't executed',
+        SUM:  'Sum'
     },
     BIDDER: {
          MARKET: 'MARKET',
