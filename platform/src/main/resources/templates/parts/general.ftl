@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 
-<title>Free stock and crypto trading</title>
+<title>Invest for free & share with friends</title>
 <meta name="description" content="">
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
