@@ -3,6 +3,7 @@ package com.dtrade.service.impl;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
+import com.dtrade.model.account.RecoveryPassword;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
@@ -55,8 +56,6 @@ public class AccountService implements IAccountService, UserDetailsService {
     @Autowired
     private IBalanceService balanceService;
 
-
-
     @Override
     public Account find(Long accountId) {
         return accountRepository.findById(accountId).get();
@@ -73,8 +72,44 @@ public class AccountService implements IAccountService, UserDetailsService {
     }
 
     @Override
+    public void forgotPassword(String email) {
+        Account account = findByMail(email);
+        if(account==null){
+            throw new TradeException("Account doesn't exist");
+        }
+
+        account.setRecoveryGuid(UUID.randomUUID().toString());
+        accountRepository.save(account);
+        mailService.sendForgotPasswordMail(account);
+    }
+
+    @Override
     public Account findByReferral(String referral) {
         return accountRepository.findByReferral(referral);
+    }
+
+
+    @Override
+    public void recoverPassword(RecoveryPassword recoveryPassword) {
+
+        Account account = accountRepository.findByRecoveryGuid(recoveryPassword.getRecoveryGuid());
+        if(account==null){
+            throw new TradeException("Can't find account.");
+        }
+
+        //TODO add length pwd check
+        String pwd = recoveryPassword.getPwd();
+        if(StringUtils.isEmpty(pwd)){
+            throw new TradeException("New password is empty");
+        }
+
+        pwd = passwordEncoder.encode(pwd);
+
+        account.setPassword(pwd);
+        account.setRecoveryGuid(null);
+        save(account);
+
+        login(account);
     }
 
     @Override

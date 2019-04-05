@@ -60,6 +60,10 @@ gulp.task('app', function() {
         './content/js/app/balanceactivity.controller.js',
         './content/js/app/coinpayment.controller.js',
         './content/js/app/coin.controller.js',
+        './content/js/app/coin.controller.js',
+        './content/js/app/coin.controller.js',
+        "./content/js/app/forgotpassword.controller.js",
+        "./content/js/app/recoverypassword.controller.js",
         './bower_components/jquery/dist/jquery.js',
         './bower_components/jquery.nicescroll/dist/jquery.nicescroll.js',
         './bower_components/angular-nicescroll/angular-nicescroll.js'

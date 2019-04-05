@@ -25,6 +25,14 @@ component('accountComponent', {
 component('referralComponent', {
     // Note: The URL is relative to our `index.html` file
     templateUrl: '/content/js/templates/referral.html'
-});
+}).
+component('forgotPasswordComponent', {
+    // Note: The URL is relative to our `index.html` file
+    templateUrl: '/content/js/templates/forgot-password.html'
+})
+.component('recoveryPasswordComponent', {
+    // Note: The URL is relative to our `index.html` file
+    templateUrl: '/content/js/templates/recovery-password.html'
+})
 
 

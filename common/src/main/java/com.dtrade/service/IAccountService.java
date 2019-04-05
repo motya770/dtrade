@@ -3,6 +3,7 @@ package com.dtrade.service;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
+import com.dtrade.model.account.RecoveryPassword;
 import com.dtrade.model.diamond.Diamond;
 import org.springframework.data.domain.Page;
 
@@ -13,9 +14,13 @@ public interface IAccountService {
 
     Integer MAX_ROBO_ACCOUNT_COUNT = 100;
 
+    void forgotPassword(String email);
+
     Account findByReferral(String referral);
 
     AccountDTO createReferalAccount(String mail, String ref);
+
+    void recoverPassword(RecoveryPassword recoveryPassword);
 
     void resendReferralEmail(Long account);
 

@@ -23,6 +23,12 @@ config(['$locationProvider', '$routeProvider',
         when('/referral', {
             template: '<referral-component></referral-component>'
         }).
+        when('/forgot-password', {
+            template: '<forgot-password-component></forgot-password-component>'
+        }).
+        when('/recovery-password', {
+            template: '<recovery-password-component></recovery-password-component>'
+        }).
         otherwise('/trade');
     }
 ]);

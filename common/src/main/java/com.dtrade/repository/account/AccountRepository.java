@@ -16,4 +16,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     Account findByReferral(String ref);
 
+    Account findByRecoveryGuid(String recoveryGuid);
+
 }

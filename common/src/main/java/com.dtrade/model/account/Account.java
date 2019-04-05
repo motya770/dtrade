@@ -61,6 +61,8 @@ public class Account implements UserDetails {
 
     private boolean enabled;
 
+    private String recoveryGuid;
+
     private String guid;
 
     private boolean confirmed;

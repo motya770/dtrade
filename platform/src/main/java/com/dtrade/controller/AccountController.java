@@ -3,11 +3,14 @@ package com.dtrade.controller;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.account.AccountDTO;
+import com.dtrade.model.account.RecoveryPassword;
 import com.dtrade.model.account.RegistrationAccount;
+import com.dtrade.model.utils.StringResponse;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.ITuringService;
 import com.dtrade.utils.UtilsHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,19 @@ public class AccountController {
 
     private ObjectMapper mapper = new ObjectMapper();
 
+    @RequestMapping(value = "/recover-password", method = RequestMethod.POST)
+    @ResponseBody
+    public String recoverPassword(@RequestBody RecoveryPassword recoveryPassword) {
+        accountService.recoverPassword(recoveryPassword);
+        return "{\"success\":1}";
+    }
+
+    @RequestMapping(value = "/forgot-password", method = RequestMethod.POST)
+    @ResponseBody
+    public String forgotPassword(@RequestBody String email) {
+        accountService.forgotPassword(email);
+        return "{\"success\":1}";
+    }
 
     @RequestMapping(value = "/demo-login", method = RequestMethod.GET)
     public String demoLogin(@RequestParam String ref)

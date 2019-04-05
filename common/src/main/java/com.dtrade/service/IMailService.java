@@ -11,4 +11,6 @@ public interface IMailService {
     void sendReferralMail(Account account);
 
     void sendRegistrationMail(Account account);
+
+    void sendForgotPasswordMail(Account account);
 }
