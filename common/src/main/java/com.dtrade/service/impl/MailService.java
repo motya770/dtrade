@@ -49,7 +49,7 @@ public class MailService implements IMailService {
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
 
             Email from = new Email("support@korono.io");
-            String subject = "Successfully added to the waiting list";
+            String subject = "KORONO: Password recovery.";
 
             //mail for tests
             String toMail = account.getMail();
