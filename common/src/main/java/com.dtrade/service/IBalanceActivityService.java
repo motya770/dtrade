@@ -27,8 +27,8 @@ public interface IBalanceActivityService {
 
     Page<BalanceActivity> findAll(Integer pageNumber);
 
-    List<BalanceActivity> getDeposits();
+    List<BalanceActivity> getDeposits(Account account);
 
-    List<BalanceActivity> getWithdraws();
+    List<BalanceActivity> getWithdraws(Account account);
 
 }

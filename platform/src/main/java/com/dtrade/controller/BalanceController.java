@@ -1,6 +1,7 @@
 package com.dtrade.controller;
 
 import com.dtrade.model.balance.BalancePos;
+import com.dtrade.model.balance.DepositWithdraw;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class BalanceController {
 
     @Autowired
     private IAccountService accountService;
+
+    @PostMapping(value = "/get-deposits-withdrawals")
+    public DepositWithdraw getDepositWithdraw(){
+        return balanceService.getDepositWithdraw();
+    }
 
     @PostMapping(value = "/get-balances")
     public List<BalancePos> getBalancesByAccount(){

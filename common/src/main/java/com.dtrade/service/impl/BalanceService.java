@@ -4,6 +4,8 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balance.BalancePos;
+import com.dtrade.model.balance.DepositWithdraw;
+import com.dtrade.model.balanceactivity.BalanceActivity;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.Quote;
@@ -17,6 +19,7 @@ import com.dtrade.service.*;
 //import com.hazelcast.core.IMap;
 
 import com.dtrade.utils.UtilsHelper;
+import org.apache.logging.log4j.core.config.plugins.convert.TypeConverters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +34,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +44,9 @@ public class BalanceService  implements IBalanceService{
 
     @Autowired
     private BalanceRepository balanceRepository;
+
+    @Autowired
+    private IBalanceActivityService balanceActivityService;
 
     @Autowired
     private IAccountService accountService;
@@ -173,6 +180,26 @@ public class BalanceService  implements IBalanceService{
             balancePosList.add(balancePos);
         });
         return balancePosList;
+    }
+
+    @Override
+    public DepositWithdraw getDepositWithdraw() {
+        //TODO currently only USD supported
+        Account account = accountService.getStrictlyLoggedAccount();
+        List<BalanceActivity> deposits = balanceActivityService.getDeposits(account);
+
+        BigDecimal dep =  deposits.stream().filter(ba->ba.getCurrency().equals(Currency.USD))
+                .map(BalanceActivity::getSum).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        List<BalanceActivity> withdraws = balanceActivityService.getWithdraws(account);
+
+        BigDecimal with = withdraws.stream().filter(ba->ba.getCurrency().equals(Currency.USD))
+                .map(BalanceActivity::getSum).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        DepositWithdraw depositWithdraw = new DepositWithdraw();
+        depositWithdraw.setDeposit(dep);
+        depositWithdraw.setWithdraw(with);
+        return depositWithdraw;
     }
 
     @Override

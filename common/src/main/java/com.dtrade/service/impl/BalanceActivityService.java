@@ -89,13 +89,13 @@ public class BalanceActivityService implements IBalanceActivityService {
 
 
     @Override
-    public List<BalanceActivity> getDeposits() {
-        return null;
+    public List<BalanceActivity> getDeposits(Account account) {
+        return  balanceActivityRepository.findAllByBalanceActivityTypeAndAccount(BalanceActivityType.DEPOSIT, account);
     }
 
     @Override
-    public List<BalanceActivity> getWithdraws() {
-        return null;
+    public List<BalanceActivity> getWithdraws(Account account) {
+        return balanceActivityRepository.findAllByBalanceActivityTypeAndAccount(BalanceActivityType.WITHDRAW, account);
     }
 
     @Override

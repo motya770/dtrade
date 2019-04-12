@@ -21,6 +21,7 @@ import java.util.List;
 @Repository
 public interface BalanceActivityRepository extends JpaRepository<BalanceActivity, Long> {
 
+    List<BalanceActivity> findAllByBalanceActivityTypeAndAccount(BalanceActivityType balanceActivityType, Account account);
 
     List<BalanceActivity> findAllBySellOrder(TradeOrder tradeOrder);
 

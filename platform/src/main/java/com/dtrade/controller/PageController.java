@@ -27,11 +27,11 @@ public class PageController {
         return "index2";
     }
 
+    /*
     @RequestMapping(value = "/basic", method = RequestMethod.GET)
     public String simple(){
         return "basic";
-    }
-
+    }*/
 
     @CrossOrigin
     @RequestMapping(value = "/info/presentation", method = RequestMethod.GET)
@@ -39,11 +39,11 @@ public class PageController {
         return "redirect:https://static.wixstatic.com/ugd/c5b996_6997d84d2d9d435c815ec972828f3112.pdf";
     }
 
-
+    /*
     @RequestMapping(value = "/coin", method = RequestMethod.GET)
     public String coin(){
         return "coin";
-    }
+    }*/
 
     @RequestMapping(value = "/referral", method = RequestMethod.GET)
     public String referral(@RequestParam(required = false) String myRef, Model model){
@@ -57,30 +57,26 @@ public class PageController {
         return "referral";
     }
 
+    /*
     @RequestMapping(value = "/login-page", method = {RequestMethod.GET, RequestMethod.POST})
     public String loginPage(){
         return "login";
-    }
+    }*/
 
-   // @Profile("prod")
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String mainProd(){
         return "redirect:https://www.korono.io/"; //"ico/index";
     }
 
-    //@Profile("dev")
-    //@RequestMapping(value = "/", method = RequestMethod.GET)
-    public String mainDev(){
-        return "main"; //"ico/index";
-    }
 
     @RequestMapping(value = "/widget", method = RequestMethod.GET)
     public String widget(){
         return "widget";
     }
 
+    /*
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(){
         return "registration";
-    }
+    }*/
 }

@@ -3,6 +3,12 @@ diamondApp.controller('BalanceController', function BalanceController(AvailableS
     $http.post('/balance/get-balances', null).then(function(response) {
         self.balances = response.data;
     });
+
+
+    $http.post('/balance/get-deposits-withdrawals', null).then(function(response) {
+        self.depositsWithdrawals = response.data;
+    });
+
     $scope.chooseBalance = function (currency) {
         var diamond = AvailableService.getDiamondByBaseCurrency(currency);
         $rootScope.$broadcast('buyDiamondChoosed', diamond);

@@ -3,6 +3,7 @@ package com.dtrade.service;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balance.BalancePos;
+import com.dtrade.model.balance.DepositWithdraw;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.tradeorder.TradeOrder;
 
@@ -10,6 +11,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface IBalanceService {
+
+    DepositWithdraw getDepositWithdraw();
 
     List<Currency> getBaseCurrencies();
 

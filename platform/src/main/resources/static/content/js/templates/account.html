@@ -20,9 +20,9 @@
             </ul>
 
             <div class="lk-main-tabs">
-                <div class="lk-main-tab" ng-show="tab===4">
+                <div class="lk-main-tab" ng-show="tab===4" ng-controller="BalanceController as vm" >
                     <div class="lk-main-tab__table" style="width: 1100px;">
-                        <div class="table-container" ng-controller="BalanceController as vm"   ng-cloak>
+                        <div class="table-container"  ng-cloak>
                             <div>
                                 <table class="diamont-table">
                                     <thead>
@@ -46,9 +46,17 @@
                                     </tr>
                                     </tbody>
                                 </table>
+
+                                <div style="margin-left: 20px;">
+                                    Deposits/Withdraws -
+                                    {{vm.depositsWithdrawals.deposit}} - {{vm.depositsWithdrawals.withdraw}}
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
+
                 </div>
                 <div class="lk-main-tab" ng-show="tab===2">
                     <div class="lk-main-tab__table" style="width: 1100px;">
