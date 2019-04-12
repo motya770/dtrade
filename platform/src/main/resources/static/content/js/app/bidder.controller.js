@@ -27,7 +27,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
 
         tradeOrder["account"] = self.currentAccount;
         tradeOrder["diamond"] = diamond;
-        tradeOrder.tradeOrderDirection = $scope.tradeOrder.tradeOrderDirection;
+        tradeOrder.tradeOrderDirection = self.tradeOrder.tradeOrderDirection;
         tradeOrder.tradeOrderType = tradeOrderType;
 
         $http.post("/trade-order/create", tradeOrder, null).then(function (response) {

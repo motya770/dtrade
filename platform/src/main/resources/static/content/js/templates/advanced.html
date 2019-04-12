@@ -203,7 +203,7 @@
                                         </div>
                                         <div class="form-tabs__submit">
                                             <h3>{{'BIDDER.TOTAL' | translate}} ({{vm.diamond.baseCurrency}})</h3>
-                                            <button class="form-tabs__subm" ng-click="alert('test'); createTradeOrder(vm.tradeOrder, vm.diamond, 'MARKET');">{{'BIDDER.PLACE_ORDER' | translate}}</button>
+                                            <button class="form-tabs__subm" ng-click="alert('test'); createTradeOrder(vm.tradeOrder, vm.diamond, 'MARKET');">EXECUTE {{vm.tradeOrder.tradeOrderDirection}}</button>
                                         </div>
                                     </form>
                                     <form class="form-tabs__tab"  ng-show="tab === 6">
@@ -243,7 +243,7 @@
                                         </div>-->
                                         <div class="form-tabs__submit">
                                             <h3>Total ({{vm.diamond.baseCurrency}}): {{vm.tradeOrder.amount * vm.tradeOrder.price | number:2}}</h3>
-                                            <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond, 'LIMIT')">{{'BIDDER.PLACE_ORDER' | translate}}</button>
+                                            <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond, 'LIMIT')">EXECUTE {{vm.tradeOrder.tradeOrderDirection}}</button>
                                         </div>
                                     </form>
                                 </div>
