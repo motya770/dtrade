@@ -9,7 +9,7 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
         self.currentAccount = currentAccount;
     });
 
-    $scope.tradeOrder = {
+    self.tradeOrder = {
         diamond : '',
         initialAmount : '',
         price: null,
@@ -58,11 +58,11 @@ diamondApp.controller("BidderController", function BidderController($scope, $roo
 
 
     $scope.sellOption = function (tradeOrder) {
-        $scope.tradeOrder.tradeOrderDirection = "SELL";
+        self.tradeOrder.tradeOrderDirection = "SELL";
     };
 
     $scope.buyOption = function (tradeOrder) {
-        $scope.tradeOrder.tradeOrderDirection = "BUY";
+        self.tradeOrder.tradeOrderDirection = "BUY";
     };
 
     $scope.$on('buyDiamondChoosed', function (event, arg) {
