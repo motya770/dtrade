@@ -13,6 +13,7 @@ diamondApp.controller("RecoveryPasswordController", function RecoveryPasswordCon
                 if(response.error){
                     AlertService.showAlert(response.error);
                 }else {
+                    //window.location.href = "/trade#!/trade";
                     AlertService.showAlert('You password was successfully changed.', 'Password changed');
                 }
             });

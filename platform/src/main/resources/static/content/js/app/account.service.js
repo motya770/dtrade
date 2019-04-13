@@ -4,6 +4,10 @@ diamondApp.factory( 'AccountService', ["$http", function($http) {
     var self = this;
     self.currentAccount;
 
+    var currentAccount = function () {
+        return self.currentAccount;
+    };
+
     var currentAccountRefresh = function() {
         return $http.post('/accounts/get-current').then(function(response){
             if(self.currentAccount!=null){
@@ -28,6 +32,7 @@ diamondApp.factory( 'AccountService', ["$http", function($http) {
     }
     
     return {
+        currentAccount: currentAccount,
         refreshAccount: refreshAccount,
         currentAccountCall: currentAccountCall,
         refreshCurrentAccount: currentAccountRefresh

@@ -107,7 +107,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         account.setPassword(pwd);
         account.setRecoveryGuid(null);
-        save(account);
+        account = save(account);
 
         login(account);
     }
