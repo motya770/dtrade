@@ -78,7 +78,7 @@ var translations = {
     },
     ITEMS_LISTING: {
         MAIN_CAPTION_LISTING : ' STOCKS AND COINS LISTING',
-        SUB_CAPTION_LISTING : ' All Stocks and coins are available',
+        SUB_CAPTION_LISTING : ' All stocks and coins are listed',
         ITEM_NAME : 'Stocks and coins',
         BID: 'Bid',
         ASK: 'Ask'
