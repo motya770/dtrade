@@ -10,16 +10,17 @@
                             <p>{{'ITEMS_LISTING.SUB_CAPTION_LISTING' | translate}}</p><!--All {{::cc.config.assetName}} are available-->
                         </div>
 
-                        <!--
                         <form class="searchform">
-                            <input type="text" class="searchform__inp" ng-model="searchInputValue" placeholder="Enter the name of the {{::cc.config.assetName}}">
+                            <input style="width: 100%;" type="text" class="searchform__inp" ng-model="searchText" placeholder="Enter the name of the asset">
+                           <!--
                             <button class="searchform__btn" ng-click="getAvailableByName();">Find</button>
-                        </form>-->
+                            -->
+                        </form>
 
                         <div class="type-diamond-table">
-                            <div  ng-nicescroll nice-option="{cursorcolor: '#e2edff'}" class="table-container" style="height: 400px;">
+                            <div  ng-nicescroll nice-option="{cursorcolor: '#e2edff'}" class="table-container" style="height: 350px;">
                                 <div >
-                                    <table class="diamont-table diamond-list">
+                                    <table class="diamont-table">
                                         <thead>
                                         <tr>
                                             <th>{{'ITEMS_LISTING.ITEM_NAME' | translate}}</th> <!--{{::cc.config.assetNameForListing}}-->
@@ -34,7 +35,7 @@
                                         </thead>
                                         <tbody>
 
-                                        <tr ng-repeat="diamond in ::vm.availableDiamonds" ng-click="chooseAvailableDiamond(diamond)">
+                                        <tr style="height: 20p;line-height: 20px;" ng-repeat="diamond in vm.availableDiamonds | filter:searchText" ng-click="chooseAvailableDiamond(diamond)">
                                             <td>{{::diamond.name}}
                                                 <small ng-if="::cc.config.assetType=='DIAMOND'">
                                                     {{::diamond.diamondType | diamondTypeFilter }},
@@ -201,6 +202,16 @@
                                             <label for="input03">{{'BIDDER.AMOUNT' | translate}}</label>
                                             <input type="text" ng-model="vm.tradeOrder.amount" value="0.00" id="input03">
                                         </div>
+
+                                        <div class="form-tabs__info">
+                                            <div class="form-tabs__info-top">
+                                                <h3>Market price</h3>
+                                                <!--
+                                                <a href="#">Помощь</a>-->
+                                            </div>
+                                            <p>Market price means, than your order will be executed at best price available at the moment</p>
+                                        </div>
+
                                         <div class="form-tabs__submit">
                                             <h3>{{'BIDDER.TOTAL' | translate}} ({{vm.diamond.baseCurrency}})</h3>
                                             <button class="form-tabs__subm" ng-click="alert('test'); createTradeOrder(vm.tradeOrder, vm.diamond, 'MARKET');">EXECUTE {{vm.tradeOrder.tradeOrderDirection}}</button>
@@ -233,14 +244,7 @@
                                             <input type="number"  ng-init="vm.tradeOrder.price=0" ng-model="vm.tradeOrder.price"  value="0.00" id="input02" class="pdr" min="0" step="0.01">
                                             <small>{{vm.diamond.baseCurrency}}</small>
                                         </div>
-                                        <!--
-                                        <div class="form-tabs__info">
-                                            <div class="form-tabs__info-top">
-                                                <h3>Limit price</h3>
-                                                <a href="#">Помощь</a>
-                                            </div>
-                                            <p>Сообщение не выбрано. Эта сделка может выполняться только заказчиком</p>
-                                        </div>-->
+
                                         <div class="form-tabs__submit">
                                             <h3>Total ({{vm.diamond.baseCurrency}}): {{vm.tradeOrder.amount * vm.tradeOrder.price | number:2}}</h3>
                                             <button class="form-tabs__subm"  ng-click="createTradeOrder(vm.tradeOrder, vm.diamond, 'LIMIT')">EXECUTE {{vm.tradeOrder.tradeOrderDirection}}</button>
