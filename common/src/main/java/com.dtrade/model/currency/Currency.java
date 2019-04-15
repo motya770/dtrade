@@ -24,7 +24,7 @@ public enum  Currency {
     BROADCOM("Broadcom"),
     CISCO("Cisco"),
     MICRON("Micron"),
-    ALIBABA("Alibaba"),
+    BABA("Alibaba"),
     BRISTOL("Bristol"),
     BANK_OF_AMERICA("Bank of America"),
     JP_MORGAN("JPMorgan Chase"),

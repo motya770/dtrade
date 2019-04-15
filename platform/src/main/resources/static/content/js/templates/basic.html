@@ -31,7 +31,7 @@
                                     </thead>
                                     <tbody>
 
-                                    <tr ng-repeat="diamond in ::vm.availableDiamonds" ng-click="chooseAvailableDiamond(diamond)">
+                                    <tr ng-repeat="diamond in ::vm.availableDiamonds | limitTo:10" ng-click="chooseAvailableDiamond(diamond)">
                                         <td>{{::diamond.name}}
                                             <small ng-if="::cc.config.assetType=='DIAMOND'">
                                                 {{::diamond.diamondType | diamondTypeFilter }},
