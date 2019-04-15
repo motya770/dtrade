@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -85,11 +86,18 @@ public class AdminDiamondController {
 
 
     private  Model addAttributes(Model model){
-        model.addAttribute("diamondTypes", Stream.of(DiamondType.values()).collect(Collectors.toMap(DiamondType::name, DiamondType::name)));
+
+        model.addAttribute("diamondTypes", Stream.of(DiamondType.values()).collect(Collectors.toMap(DiamondType::name, DiamondType::name )));
         model.addAttribute("colors", Stream.of(Color.values()).collect(Collectors.toMap(Color::name, Color::name)));
         model.addAttribute("cuts", Stream.of(Cut.values()).collect(Collectors.toMap(Cut::name, Cut::name)));
         model.addAttribute("clarities", Stream.of(Clarity.values()).collect(Collectors.toMap(Clarity::name, Clarity::name)));
-        model.addAttribute("currencies", Stream.of(Currency.values()).collect(Collectors.toMap(Currency::name, Currency::name)));
+
+
+
+        model.addAttribute("currencies", Stream.of(Currency.values()).collect(Collectors.toMap(Currency::name, Currency::name,
+                (v1,v2) ->{ throw new RuntimeException(String.format("Duplicate key for values %s and %s", v1, v2));},
+                TreeMap::new)));
+
         model.addAttribute("baseCurrencies", balanceService.getBaseCurrencies().stream().collect(Collectors.toMap(Currency::name, Currency::name)));
         model.addAttribute("statuses", Stream.of(DiamondStatus.values()).collect(Collectors.toMap(DiamondStatus::name, DiamondStatus::name)));
         model.addAttribute("ticketProviders", Stream.of(TicketProvider.values()).collect(Collectors.toMap(TicketProvider::name, TicketProvider::name)));
