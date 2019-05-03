@@ -10,6 +10,15 @@ diamondApp.controller('AvailableController', function AvailableController($scope
         getAvailable($scope.searchInputValue);
     }
 
+    $scope.config = {
+        autoHideScrollbar: false,
+        theme: 'dark',
+        advanced:{
+            updateOnContentResize: true
+        },
+        scrollInertia: 0
+    }
+
     var getDiamondsSpreads = function () {
 
         return $http.post('/book-order/get-diamonds-spread', self.availableDiamondsIds).then(function(response) {

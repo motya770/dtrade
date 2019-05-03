@@ -12,8 +12,12 @@
 
 <link rel="stylesheet" href= "/bower_components/angular-material/angular-material.min.css"/>
 <link rel="stylesheet" href= "/bower_components/ng-material-datetimepicker/dist/material-datetimepicker.min.css"/>
+<link rel="stylesheet" href="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" type="text/css"/>
+
 
 <!--
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
 <script src="/bower_components/angular/angular.min.js" type="text/javascript"></script>
 <script src="/bower_components/angular-route/angular-route.min.js"></script>
@@ -23,12 +27,13 @@
 <script src="/bower_components/angular-messages/angular-messages.min.js"></script>
 <script src="/bower_components/angular-material/angular-material.min.js"></script>
 <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="/bower_components/angular-translate/angular-translate.js"></script>
+<script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
 
-<script src="/bower_components/jquery/dist/jquery.js"></script>
-<script src="/bower_components/jquery.nicescroll/dist/jquery.nicescroll.js"></script>
-<script src="/bower_components/angular-nicescroll/angular-nicescroll.js"></script>
 <script src="/bower_components/moment/min/moment-with-locales.js"></script>
 <script src="/bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js"></script>
+
+<script src="/bower_components/ng-scrollbars/src/scrollbars.min.js"></script>
 
 <script src="/content/js/app.js"></script>
 <script src="/content/js/app/app.config.js"></script>
@@ -59,11 +64,12 @@
 <script src="/content/js/app/balanceactivity.controller.js"></script>
 <script src="/content/js/app/coinpayment.controller.js"></script>
 <script src="/content/js/app/coin.controller.js"></script>
+<script src="/content/js/app/forgotpassword.controller.js"></script>
+<script src="/content/js/app/recoverypassword.controller.js"></script>
 <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
 -->
 
 <script src="/dist.min/js/app.js"></script>
-
 
 <!--
 <script>var scr = {"scripts":[

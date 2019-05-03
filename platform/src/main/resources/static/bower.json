@@ -27,7 +27,8 @@
     "angular-cookies": "^1.6.9",
     "angular-route": "^1.7.3",
     "angular-translate": "^2.18.1",
-    "angular-sanitize": "^1.7.8"
+    "angular-sanitize": "^1.7.8",
+    "ng-scrollbars": "^0.0.11"
   },
   "resolutions": {
     "angular": "1.7.3"

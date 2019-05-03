@@ -18,6 +18,8 @@ var debug = require('gulp-debug');
 
 gulp.task('app', function() {
     return gulp.src([
+        './bower_components/jquery/dist/jquery.js',
+        './bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
         './bower_components/angular/angular.min.js',
         './bower_components/angular-route/angular-route.min.js',
         './bower_components/angular-resource/angular-resource.min.js',
@@ -31,6 +33,7 @@ gulp.task('app', function() {
         './bower_components/moment/min/moment-with-locales.js',
         './bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js',
         './bower_components/highcharts/highstock.js',
+        './bower_components/ng-scrollbars/dist/scrollbars.min.js',
         './content/js/app.js',
         './content/js/app/app.config.js',
         './content/js/components/advanced.component.js',
@@ -64,9 +67,8 @@ gulp.task('app', function() {
         './content/js/app/coin.controller.js',
         "./content/js/app/forgotpassword.controller.js",
         "./content/js/app/recoverypassword.controller.js",
-        './bower_components/jquery/dist/jquery.js',
-        './bower_components/jquery.nicescroll/dist/jquery.nicescroll.js',
-        './bower_components/angular-nicescroll/angular-nicescroll.js'
+
+
     ]).pipe(debug({title: 'unicorn:'}))
         .pipe(plumber())
         .pipe(concat('app.js', {newLine: ';'}))
