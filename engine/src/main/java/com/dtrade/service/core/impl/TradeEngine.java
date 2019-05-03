@@ -145,7 +145,7 @@ public class TradeEngine implements ITradeEngine {
 
         //logger.debug("CALCULATING TRADE ORDERS");
 
-        bookOrderService.getBookOrders().entrySet().stream().forEach((entry)->{
+        bookOrderService.getBookOrders().entrySet().parallelStream().forEach((entry)->{
 
             //logger.info("NEW THREAD");
 
@@ -174,6 +174,11 @@ public class TradeEngine implements ITradeEngine {
                 logger.debug("inside " + exitCounter);
                 if(exitCounter>=6){
                     break;
+                }
+                try {
+                    //Thread.yield();
+                }catch (Exception e){
+                    logger.error("{}", e);
                 }
                 exitCounter++;
             }
