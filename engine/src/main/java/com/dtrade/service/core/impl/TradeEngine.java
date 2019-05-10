@@ -75,7 +75,7 @@ public class TradeEngine implements ITradeEngine {
     @Override
     public void prepareAndLaunch() {
         Runnable runnable = () -> {
-            tradeOrderService.getLiveTradeOrders().stream().forEach(tradeOrder -> bookOrderService.addNew(tradeOrder, true));
+            tradeOrderService.getLiveTradeOrders().parallelStream().forEach(tradeOrder -> bookOrderService.addNew(tradeOrder, true));
             logger.info("Starting trade engine");
             launch();
         };
@@ -97,7 +97,7 @@ public class TradeEngine implements ITradeEngine {
                logger.error("{}", e);
            }
 
-       }, 40_000,  40, TimeUnit.MILLISECONDS);
+       }, 60_000,  40, TimeUnit.MILLISECONDS);
     }
 
     //private Executor ex = MoreExecutors.newSequentialExecutor(Executors.newFixedThreadPool(20));
