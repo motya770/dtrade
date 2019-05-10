@@ -86,7 +86,7 @@ public class TradeSimulator {
 
             Runnable r1 = getRunnable();// "motya770@gmail.com"
 
-            ScheduledExecutorService executorService = Executors.newScheduledThreadPool(6);
+            ScheduledExecutorService executorService = Executors.newScheduledThreadPool(30);
             executorService.scheduleAtFixedRate(r1, 15_000, 15_000, TimeUnit.MILLISECONDS);
 
             Runnable r2 = getRunnable();  // "test@test.com"

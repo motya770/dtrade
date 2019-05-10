@@ -1,11 +1,13 @@
 package com.dtrade;
 
+import com.dtrade.config.SharedAutoConfiguration;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.Import;
 
-
+@Import(SharedAutoConfiguration.class)
 @EnableDiscoveryClient
 @SpringBootApplication
 public class DtradeApplication  implements CommandLineRunner {

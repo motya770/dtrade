@@ -52,7 +52,7 @@ public enum  Currency {
     AMGN("Amgen "),
     ADI	("Analog Devices"),
     AMAT	("Applied Materials "),
-    ASML	 ("Holding N.V."),
+    AMS	 ("Holding N.V."),
     ADSK	 ("Autodesk "),
     ADP	 ("Automatic Data Processing "),
     BIDU	 ("Baidu "),
