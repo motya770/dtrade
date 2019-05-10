@@ -10,10 +10,9 @@
 <script src="/bower_components/less/dist/less.min.js" type="text/javascript"></script>
 -->
 
-<link rel="stylesheet" href= "/bower_components/angular-material/angular-material.min.css"/>
-<link rel="stylesheet" href= "/bower_components/ng-material-datetimepicker/dist/material-datetimepicker.min.css"/>
+<link rel="stylesheet" href= "/bower_components/angular-material/angular-material.min.css" type="text/css"/>
+<link rel="stylesheet" href= "/bower_components/ng-material-datetimepicker/dist/material-datetimepicker.min.css" type="text/css" />
 <link rel="stylesheet" href="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" type="text/css"/>
-
 
 <!--
 <script src="/bower_components/jquery/dist/jquery.js"></script>
