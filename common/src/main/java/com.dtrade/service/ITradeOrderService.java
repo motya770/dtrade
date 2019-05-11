@@ -44,7 +44,7 @@ public interface ITradeOrderService {
 
     List<TradeOrder> getHistoryTradeOrdersCashed(Long diamondId);
 
-    List<TradeOrder> getLiveTradeOrders();
+    List<TradeOrder> getLiveTradeOrdersByDiamond(Diamond diamond);
 
     Page<TradeOrder> getLiveTradeOrdersByAccount(Integer pageNumber);
 

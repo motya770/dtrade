@@ -27,9 +27,6 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
@@ -196,9 +193,9 @@ public class TradeOrderService  implements ITradeOrderService{
     }
 
     @Override
-    public List<TradeOrder> getLiveTradeOrders() {
-        logger.info("CALLING getLiveTradeOrders");
-        return tradeOrderRepository.getLiveTradeOrders(PageRequest.of(0, 5000));
+    public List<TradeOrder> getLiveTradeOrdersByDiamond(Diamond diamond) {
+        logger.info("CALLING getLiveTradeOrdersByDiamond");
+        return tradeOrderRepository.getLiveTradeOrdersByDiamond(diamond, PageRequest.of(0, 1000));
     }
 
     @Override

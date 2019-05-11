@@ -5,6 +5,7 @@ import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
+import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
 import com.dtrade.model.tradeorder.TradeOrderType;
@@ -12,6 +13,7 @@ import com.dtrade.model.tradeorder.TraderOrderStatus;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
 import com.dtrade.service.core.ITradeEngine;
+import com.dtrade.service.impl.DiamondService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,6 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.PreDestroy;
 import java.math.BigDecimal;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -72,16 +73,26 @@ public class TradeEngine implements ITradeEngine {
         transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
     }
 
+
+    @Autowired
+    private DiamondService diamondService;
+
     @Override
     public void prepareAndLaunch() {
+
         Runnable runnable = () -> {
-            tradeOrderService.getLiveTradeOrders().parallelStream().forEach(tradeOrder -> bookOrderService.addNew(tradeOrder, true));
+
+            diamondService.getAvailable().parallelStream().forEach(diamond -> {
+                tradeOrderService.getLiveTradeOrdersByDiamond(diamond).parallelStream().forEach(tradeOrder -> bookOrderService.addNew(tradeOrder, true));
+            });
+
             logger.info("Starting trade engine");
             launch();
         };
 
         Thread thread = new Thread(runnable);
         thread.start();
+
     }
 
     // @EventListener(ContextRefreshedEvent.class)
