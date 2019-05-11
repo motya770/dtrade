@@ -20,10 +20,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //TODO investigate
+        http.requiresChannel()
+                .antMatchers("/login").requiresSecure();
+       // http.authorizeRequests().antMatchers("/**").permitAll();
+
+
         http
-                .csrf().disable().
-                 authorizeRequests()
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/accounts/register").permitAll()
                 .antMatchers("/bower_components/**").permitAll()
@@ -58,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler("/trade#!/login-form"))
                 //.failureForwardUrl("/trade#!/login-form")
                 .and().logout().permitAll().logoutSuccessUrl("/trade");
+
 
         http.headers()
                 .frameOptions().disable();
