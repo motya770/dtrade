@@ -161,7 +161,7 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public List<TradeOrder> getHistoryTradeOrders(Long diamondId) {
         Diamond diamond = diamondService.find(diamondId);
-        long oneDay = System.currentTimeMillis() - Duration.ofDays(1).toMillis();
+        long oneDay = System.currentTimeMillis() - Duration.ofDays(15).toMillis();
         return tradeOrderRepository.getHistoryTradeOrders(diamond.getId(), oneDay);
     }
 
