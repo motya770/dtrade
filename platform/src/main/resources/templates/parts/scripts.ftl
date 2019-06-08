@@ -14,6 +14,7 @@
 <link rel="stylesheet" href= "/bower_components/ng-material-datetimepicker/dist/material-datetimepicker.min.css" type="text/css" />
 <link rel="stylesheet" href="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" type="text/css"/>
 
+
 <!--
 <script src="/bower_components/jquery/dist/jquery.js"></script>
 <script src="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
@@ -32,7 +33,7 @@
 <script src="/bower_components/moment/min/moment-with-locales.js"></script>
 <script src="/bower_components/ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js"></script>
 
-<script src="/bower_components/ng-scrollbars/src/scrollbars.min.js"></script>
+<script src="/bower_components/ng-scrollbars/dist/scrollbars.min.js"></script>
 
 <script src="/content/js/app.js"></script>
 <script src="/content/js/app/app.config.js"></script>
@@ -69,6 +70,7 @@
 -->
 
 <script src="/dist.min/js/app.js"></script>
+
 
 <!--
 <script>var scr = {"scripts":[

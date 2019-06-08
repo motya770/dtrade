@@ -265,7 +265,9 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
               for (var i = 0; i < bidList.length; i++) {
                   var p = bidList[i];
                   var pointArr = new Array();
-                  pointArr.push(p.price);
+
+                  var price =  Math.round(p.price * 100) / 100;
+                  pointArr.push(price);
                   pointArr.push(p.amount);
                   bidData.push(pointArr);
               }
@@ -275,7 +277,9 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
               for (var i = 0; i < askList.length; i++) {
                   var p = askList[i];
                   var pointArr = new Array();
-                  pointArr.push(p.price);
+
+                  var price =  Math.round(p.price * 100) / 100;
+                  pointArr.push(price);
                   pointArr.push(p.amount);
                   askData.push(pointArr);
               }
@@ -386,12 +390,18 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
                   color: '#48d26f',
                   fillColor: '#48d26f',
                   xAxis: 0,
+                  tooltip: {
+                      valueDecimals: 2
+                  }
               }, {
                   name: 'Asks',
                   data: askData,
                   color: '#ff6565',
                   fillColor: '#ff6565',
                   xAxis: 1,
+                  tooltip: {
+                      valueDecimals: 2
+                  }
               }]
           });
       });
