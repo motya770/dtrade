@@ -21,8 +21,8 @@ import java.util.Optional;
 @Repository
 public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
-    @Query("select to from TradeOrder to where to.traderOrderStatusIndex = 'LIVE' and diamond.id =  :#{#diamond.id} order by to.creationDate desc")
-    List<TradeOrder> getLiveTradeOrdersByDiamond(@Param("diamond") Diamond diamond, Pageable pageable);
+    @Query("select to from TradeOrder to where to.traderOrderStatusIndex = 'LIVE' and to.tradeOrderDirection = :#{#direction} and diamond.id =  :#{#diamond.id} order by to.creationDate desc")
+    List<TradeOrder> getLiveTradeOrdersByDiamondDirection(@Param("diamond") Diamond diamond, @Param("direction") TradeOrderDirection direction, Pageable pageable);
 
     @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} and (to.traderOrderStatusIndex =  'LIVE') " +
             " order by to.creationDate desc")

@@ -195,7 +195,10 @@ public class TradeOrderService  implements ITradeOrderService{
     @Override
     public List<TradeOrder> getLiveTradeOrdersByDiamond(Diamond diamond) {
         logger.info("CALLING getLiveTradeOrdersByDiamond");
-        return tradeOrderRepository.getLiveTradeOrdersByDiamond(diamond, PageRequest.of(0, 100));
+        List<TradeOrder> buy = tradeOrderRepository.getLiveTradeOrdersByDiamondDirection(diamond, TradeOrderDirection.BUY, PageRequest.of(0, 100));
+        List<TradeOrder> sell = tradeOrderRepository.getLiveTradeOrdersByDiamondDirection(diamond, TradeOrderDirection.SELL, PageRequest.of(0, 100));
+        buy.addAll(sell);
+        return buy;
     }
 
     @Override

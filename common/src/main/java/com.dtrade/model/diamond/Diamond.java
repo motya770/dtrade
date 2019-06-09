@@ -43,21 +43,26 @@ public class Diamond implements Serializable {
     @NotNull
     private BigDecimal price;
 
+    @JsonIgnore
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private DiamondType diamondType;
 
+    @JsonIgnore
     @NotNull
     private BigDecimal carats;
 
+    @JsonIgnore
     @NotNull
     @Enumerated(EnumType.STRING)
     private Cut cut;
 
+    @JsonIgnore
     @NotNull
     @Enumerated(EnumType.STRING)
     private Color color;
 
+    @JsonIgnore
     @NotNull
     @Enumerated(EnumType.STRING)
     private Clarity clarity;
