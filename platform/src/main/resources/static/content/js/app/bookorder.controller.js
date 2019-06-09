@@ -1,7 +1,7 @@
 diamondApp.controller("BookOrderController", function BookOrderController($scope, $http, $rootScope, $timeout, $interval, DiamondService, BookOrderService) {
 
     var self = this;
-    self.firstTimeOut = true;
+    //self.firstTimeOut = true;
     self.spread = 0.00;
 
     var callBookOrderService = function() {
@@ -34,12 +34,20 @@ diamondApp.controller("BookOrderController", function BookOrderController($scope
 
            // console.log("spd: " + (self.bookOrder.sellOrders[self.bookOrder.sellOrders.length - 1].price - self.bookOrder.buyOrders[0].price) + " " + self.spread);
 
-            if(self.firstTimeOut) {
-                self.firstTimeOut = false;
-                window.setInterval(callBookOrderService, 1000);
-            }
+            // if(self.firstTimeOut) {
+            //     self.firstTimeOut = false;
+            //     window.setInterval(callBookOrderService, 1000);
+            // }
         });
     }
 
-    callBookOrderService();
+
+    var promise = $interval(callBookOrderService, 1000);
+
+    $scope.$on('$destroy', function(){
+        if (angular.isDefined(promise)) {
+            $interval.cancel(promise);
+            promise = undefined;
+        }
+    });
 });

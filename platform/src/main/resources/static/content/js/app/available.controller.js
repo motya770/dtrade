@@ -69,6 +69,15 @@ diamondApp.controller('AvailableController', function AvailableController($scope
         });
     }
 
+    var promise = $interval(getDiamondsSpreads, 1000);
+
+    $scope.$on('$destroy', function(){
+        if (angular.isDefined(promise)) {
+            $interval.cancel(promise);
+            promise = undefined;
+        }
+    });
+
     getAvailable("");//all
-    window.setInterval(getDiamondsSpreads, 1000);
+    //window.setInterval(getDiamondsSpreads, 1000);
 });
