@@ -409,6 +409,6 @@ diamondApp.controller('ChartController', function ($scope, $timeout, $http, $int
 
 
 
-   $timeout(getDepthGraph, 4500, false);
-   $timeout(getGraphData, 3000, false);
+   $timeout(getDepthGraph, 2500, false);
+   $timeout(getGraphData, 1000, false);
 });

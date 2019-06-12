@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" type="text/css"/>
 
 
-<!--
+
 <script src="/bower_components/jquery/dist/jquery.js"></script>
 <script src="/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
@@ -67,10 +67,11 @@
 <script src="/content/js/app/forgotpassword.controller.js"></script>
 <script src="/content/js/app/recoverypassword.controller.js"></script>
 <script src="/bower_components/highcharts/highstock.js" type="text/javascript"></script>
--->
 
+
+<!--
 <script src="/dist.min/js/app.js"></script>
-
+-->
 
 <!--
 <script>var scr = {"scripts":[
