@@ -6,10 +6,7 @@ import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
-import com.dtrade.model.tradeorder.TradeOrder;
-import com.dtrade.model.tradeorder.TradeOrderDirection;
-import com.dtrade.model.tradeorder.TradeOrderType;
-import com.dtrade.model.tradeorder.TraderOrderStatus;
+import com.dtrade.model.tradeorder.*;
 import com.dtrade.repository.tradeorder.TradeOrderRepository;
 import com.dtrade.service.*;
 import com.dtrade.service.core.ITradeEngine;
@@ -27,6 +24,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.PreDestroy;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -162,38 +161,68 @@ public class TradeEngine implements ITradeEngine {
 
             long start1 = System.currentTimeMillis();
             int exitCounter = 0;
+
+            final List<Pair<TradeOrder, TradeOrder>> futureQuotes = new ArrayList<>();
+            final List<Pair<TradeOrder, TradeOrder>> futureTrades = new ArrayList<>();
+
             while (true) {
-               // logger.debug("STRAT WHILE " + entry.getKey());
-               long start = System.currentTimeMillis();
-                Pair<TradeOrder, TradeOrder> buySell = bookOrderService.findClosest(entry.getKey());
-                //System.out.println("t1: " + (System.currentTimeMillis() - start));
-                if(checkIfCanExecute(buySell)){
-
-                    Runnable quoteRunnable = () -> quotesService.issueQuote(buySell);
-                    executor.execute(quoteRunnable);
-
-                    logger.info("CAN EXECUTE " + entry.getKey());
-
-                    transactionTemplate.execute(status -> {
-                        return executeTradeOrders(buySell);
-                    });
-
-                }else {
+                if(exitCounter>=7){
                     break;
-                }
-
-                logger.debug("inside " + exitCounter);
-                if(exitCounter>=6){
-                    break;
-                }
-                try {
-                    //Thread.yield();
-                }catch (Exception e){
-                    logger.error("{}", e);
                 }
                 exitCounter++;
+
+               long start = System.currentTimeMillis();
+
+                List<Pair<TradeOrder, TradeOrder>> buySells = bookOrderService.findClosestList(entry.getKey());
+                for(Pair<TradeOrder, TradeOrder> buySell: buySells){
+                    if(checkIfCanExecute(buySell)){
+                        buySell.getFirst().setTradeEngineState(TradeEngineState.IN_PROGRESS);
+                        buySell.getSecond().setTradeEngineState(TradeEngineState.IN_PROGRESS);
+                        futureTrades.add(buySell);
+                        logger.info("CAN EXECUTE " + entry.getKey());
+                    }else {
+                        break;
+                    }
+                    logger.debug("inside " + exitCounter);
+                }
+
+                /*
+                if(buySell.getFirst().getTradeEngineState()!=null || buySell.getSecond().getTradeEngineState()!=null){
+                    logger.info("continue: " + buySell.getFirst().getDiamond().getName() + " " + buySell.getFirst().getPrice());
+                    continue;
+                }*/
+                //System.out.println("t1: " + (System.currentTimeMillis() - start));
+
             }
 
+            if(futureTrades.size()>0) {
+                Runnable tradeRunnable = () -> {
+                    logger.debug("DEALS: " + futureTrades.size());
+                    for (Pair<TradeOrder, TradeOrder> buySell : futureTrades) {
+                        transactionTemplate.execute(status -> {
+
+                            executeTradeOrders(buySell);
+                            quotesService.issueQuote(buySell);
+
+                            return null;
+                        });
+                    }
+                };
+                executor.execute(tradeRunnable);
+            }
+
+            /*
+            if(futureQuotes.size()>0) {
+                Runnable quoteRunnable = () -> {
+                    transactionTemplate.execute(status -> {
+                        for (Pair<TradeOrder, TradeOrder> buySell : futureQuotes) {
+                            return quotesService.issueQuote(buySell);
+                        }
+                        return null;
+                    });
+                };
+                executor.execute(quoteRunnable);
+            }*/
         });
     }
 
@@ -248,13 +277,13 @@ public class TradeEngine implements ITradeEngine {
 //            return false;
 //        }
 
-        if (buyOrder.getInitialAmount().compareTo(BigDecimal.ZERO) == 0){
+        if (buyOrder.getInitialAmount().compareTo(BigDecimal.ZERO) <= 0){
             logger.error("trade order amount is null " + buyOrder.getId());
             logger.info("wtf amount");
             return false;
         }
 
-        if (sellOrder.getInitialAmount().compareTo(BigDecimal.ZERO) == 0){
+        if (sellOrder.getInitialAmount().compareTo(BigDecimal.ZERO) <= 0){
             logger.error("trade order amount is null " + sellOrder.getId());
             logger.info("wtf amount 2");
             return false;
@@ -271,11 +300,11 @@ public class TradeEngine implements ITradeEngine {
             return false;
         }*/
 
-        if(buyOrder.getTradeOrderType().equals(TradeOrderType.MARKET)){
+        if(buyOrder.getTradeOrderType()==(TradeOrderType.MARKET)){
             return true;
         }
 
-        if(sellOrder.getTradeOrderType().equals(TradeOrderType.MARKET)){
+        if(sellOrder.getTradeOrderType()==(TradeOrderType.MARKET)){
             return true;
         }
 

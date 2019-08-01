@@ -345,11 +345,10 @@ public class QuotesService implements IQuotesService {
         if(diamond==null){
             return null;
         }
+
         //TODO potential bug
-
-
-        List<Quote> quotes = quoteRepository.getRangeQuotes(diamond.getId(), start, end, QuoteType.ACTION_QUOTE, new PageRequest(0, pageSize));
-        //QuoteDTO[] quoteDTOS = new QuoteDTO[quotes.size()];
+        List<Quote> quotes = quoteRepository.getRangeQuotes(diamond.getId(), start, end,
+                QuoteType.ACTION_QUOTE, PageRequest.of(0, pageSize));
 
         if(quotes.size()==0){
             return "[]";
@@ -375,10 +374,6 @@ public class QuotesService implements IQuotesService {
             if(i > 0){
                 builder.append(",");
             }
-//            QuoteDTO dto = new QuoteDTO();
-//            dto.setAvg(quote.getAvg());
-//            dto.setTime(quote.getTime());
-            //quoteDTOS[quotes.size() - 1 - i]= dto;
         }
 
         builder.append("]");

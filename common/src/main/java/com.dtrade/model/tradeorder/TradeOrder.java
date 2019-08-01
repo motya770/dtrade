@@ -74,6 +74,10 @@ public class TradeOrder implements Serializable {
     @NotNull
     private TraderOrderStatusIndex traderOrderStatusIndex;
 
+    @Transient
+    @Enumerated(EnumType.STRING)
+    private TradeEngineState tradeEngineState;
+
     public void setTraderOrderStatus(TraderOrderStatus status){
         this.traderOrderStatus = status;
 

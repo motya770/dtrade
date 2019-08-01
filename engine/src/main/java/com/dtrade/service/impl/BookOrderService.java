@@ -5,6 +5,7 @@ import com.dtrade.model.bookorder.BookOrder;
 import com.dtrade.model.bookorder.BookOrderView;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.quote.SimpleQuote;
+import com.dtrade.model.tradeorder.TradeEngineState;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDTO;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
@@ -141,11 +142,6 @@ public class BookOrderService implements IBookOrderService {
         if(newBookOrder) {
             bookOrders.put(order.getDiamond().getId(), bookOrder);
         }
-
-        //if(!initialize) {
-           // tradeEngine.execute(order);
-        //}
-
     }
 
     @Transactional
@@ -238,6 +234,28 @@ public class BookOrderService implements IBookOrderService {
         }
 
         return result;*/
+    }
+
+
+    public List<Pair<TradeOrder, TradeOrder>> findClosestList(Long diamondId) {
+
+        BookOrder bookOrder = checkDiamondInBook(diamondId);
+        if(bookOrder==null){
+            return null;
+        }
+
+        List<TradeOrder> buyOrders = bookOrder.getBuyOrders().stream().filter(tradeOrder -> tradeOrder.getTradeEngineState()==null).limit(10).collect(Collectors.toList());
+        List<TradeOrder> sellOrders = bookOrder.getSellOrders().stream().filter(tradeOrder -> tradeOrder.getTradeEngineState()==null).limit(10).collect(Collectors.toList());
+
+        int maxSize = buyOrders.size() > sellOrders.size() ? sellOrders.size() : buyOrders.size();
+
+        List<Pair<TradeOrder, TradeOrder>> pairs = new ArrayList<>();
+        for(int i=0; i<maxSize; i++){
+            TradeOrder buy = buyOrders.get(i);
+            TradeOrder sell = sellOrders.get(i);
+            pairs.add(Pair.of(buy, sell));
+        }
+        return pairs;
     }
 
     @Override

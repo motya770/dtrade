@@ -16,6 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public interface IBookOrderService {
 
+     List<Pair<TradeOrder, TradeOrder>> findClosestList(Long diamondId);
+
      BookOrderView getBookOrderView(Long diamondId);
 
      ConcurrentHashMap<Long, BookOrder> getBookOrders();

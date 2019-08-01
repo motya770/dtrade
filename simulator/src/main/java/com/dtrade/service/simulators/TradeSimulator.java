@@ -53,13 +53,7 @@ public class TradeSimulator {
     private IDiamondService diamondService;
 
     @Autowired
-    private IQuotesService quotesService;
-
-    @Autowired
     private IBalanceService balanceService;
-
-    @Autowired
-    private IStockService stockService;
 
 
     private TransactionTemplate transactionTemplate;
@@ -265,12 +259,9 @@ public class TradeSimulator {
         });
     }
 
-
     private void login(String userName){
-
         UserDetails userDetails = userDetailsService.loadUserByUsername (userName);
         Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword (),userDetails.getAuthorities ());
         SecurityContextHolder.getContext().setAuthentication(auth);
-
     }
 }
