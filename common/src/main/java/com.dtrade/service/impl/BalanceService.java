@@ -292,7 +292,6 @@ public class BalanceService  implements IBalanceService{
         return balance.getDTO().getBalance();
     }
 
-
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
     @Override
     public Balance getBalance(Currency currency, Account account){

@@ -107,7 +107,7 @@ public class TradeEngine implements ITradeEngine {
                logger.error("{}", e);
            }
 
-       }, 60_000,  40, TimeUnit.MILLISECONDS);
+       }, 20_000,  40, TimeUnit.MILLISECONDS);
     }
 
     //private Executor ex = MoreExecutors.newSequentialExecutor(Executors.newFixedThreadPool(20));
@@ -165,14 +165,13 @@ public class TradeEngine implements ITradeEngine {
             final List<Pair<TradeOrder, TradeOrder>> futureQuotes = new ArrayList<>();
             final List<Pair<TradeOrder, TradeOrder>> futureTrades = new ArrayList<>();
 
-            while (true) {
+            //while (true) {
                 if(exitCounter>=7){
-                    break;
+                    //break;
                 }
                 exitCounter++;
 
-               long start = System.currentTimeMillis();
-
+                long start = System.currentTimeMillis();
                 List<Pair<TradeOrder, TradeOrder>> buySells = bookOrderService.findClosestList(entry.getKey());
                 for(Pair<TradeOrder, TradeOrder> buySell: buySells){
                     if(checkIfCanExecute(buySell)){
@@ -193,7 +192,7 @@ public class TradeEngine implements ITradeEngine {
                 }*/
                 //System.out.println("t1: " + (System.currentTimeMillis() - start));
 
-            }
+           // }
 
             if(futureTrades.size()>0) {
                 Runnable tradeRunnable = () -> {
@@ -318,7 +317,7 @@ public class TradeEngine implements ITradeEngine {
 
     private boolean checkIfExecuted(TradeOrder order){
         // logger.info("checking if executed " + order.getAmount().setScale(8));
-        if (order.getAmount().compareTo(ITradeOrderService.ZERO_VALUE)==0) {
+        if (order.getAmount().compareTo(ITradeOrderService.ZERO_VALUE) <=0 ) {
             logger.info("EXECUTED: " + order.getId());
             order.setTraderOrderStatus(TraderOrderStatus.EXECUTED);
             setExecutionDate(order);
@@ -326,6 +325,7 @@ public class TradeEngine implements ITradeEngine {
             rabbitService.tradeOrderExecuted(tradeOrderService.convert(order));
             return true;
         } else {
+            order.setTradeEngineState(null);
             order.setTraderOrderStatus(TraderOrderStatus.IN_MARKET);
             bookOrderService.update(order);
             return false;
@@ -354,18 +354,22 @@ public class TradeEngine implements ITradeEngine {
 
             logger.info("1.1");
 
-
             TradeOrder buyOrder = tradeOrderRepository.findById(pair.getFirst().getId()).orElse(null);
             TradeOrder sellOrder = tradeOrderRepository.findById(pair.getSecond().getId()).orElse(null);
+
             logger.info("1.2 " + " " + pair.getFirst().getId() + " " + pair.getSecond().getId());
             if (sellOrder==null){
                 //TODO this patch - you have a deadlock
                 bookOrderService.remove(pair.getSecond());
+                removeTradeStateEngine(pair);
+                return null;
             }
 
             if (buyOrder==null){
                 //throw new TradeException("This should not be true");
                 bookOrderService.remove(pair.getFirst());
+                removeTradeStateEngine(pair);
+                return null;
             }
 
             logger.info("1.3");
@@ -397,6 +401,7 @@ public class TradeEngine implements ITradeEngine {
             logger.info("1.6" );
 
             if (!checkIfCanExecute(pair)) {
+                removeTradeStateEngine(pair);
                 return Pair.of(false, false);
             }
 
@@ -431,6 +436,7 @@ public class TradeEngine implements ITradeEngine {
                 //TODO notify user
                 logger.error("Not enough coins at {} {}", buyBalance, buyAccount);
                 buyOrder = rejectTradeOrder(buyOrder);
+                removeTradeStateEngine(pair);
                 return Pair.of(true, false);
             }
 
@@ -438,6 +444,7 @@ public class TradeEngine implements ITradeEngine {
                 //TODO notify user
                 logger.error("Not enough coins at {} {}", sellBalance, sellAccount);
                 sellOrder = rejectTradeOrder(sellOrder);
+                removeTradeStateEngine(pair);
                 return Pair.of(true, false);
             }
 
@@ -454,6 +461,7 @@ public class TradeEngine implements ITradeEngine {
                 //TODO notify user
                 logger.error("Rejecting {} because of exception {}", buyOrder, e);
                 buyOrder = rejectTradeOrder(buyOrder);
+                removeTradeStateEngine(pair);
                 return Pair.of(false, true);
             }
 
@@ -495,11 +503,17 @@ public class TradeEngine implements ITradeEngine {
             logger.info("SUC EXEC TIME1 : " + end);
             return Pair.of(!buyResult, !sellResult);
         }catch (Exception e){
+            removeTradeStateEngine(pair);
             logger.error("{}", e);
             e.printStackTrace();
         }
         logger.info("SUC EXEC TIME: " + (System.currentTimeMillis() - start));
         return Pair.of(false, false);
+    }
+
+    private void removeTradeStateEngine(Pair<TradeOrder, TradeOrder> pair){
+        pair.getFirst().setTradeEngineState(null);
+        pair.getSecond().setTradeEngineState(null);
     }
 
     @PreDestroy
