@@ -21,7 +21,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -42,6 +45,14 @@ public class BalanceActivityService implements IBalanceActivityService {
 
     @Autowired
     private BalanceService balanceService;
+
+    private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    public void setTransactionManager(PlatformTransactionManager transactionManager){
+        transactionTemplate = new TransactionTemplate(transactionManager);
+        transactionTemplate.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+    }
 
     /*
     private ScheduledExecutorService executor;
@@ -179,67 +190,83 @@ public class BalanceActivityService implements IBalanceActivityService {
                                                                           TradeOrder buyOrder,
                                                                           TradeOrder sellOrder,
                                                                           BigDecimal realAmount, BigDecimal price) {
+
         long start = System.currentTimeMillis();
-       // BTC/USD - transfer USD
         Diamond diamond = sellOrder.getDiamond();
         Currency currency = diamond.getCurrency();
         Currency baseCurrency = diamond.getBaseCurrency();
-
         BigDecimal sum = realAmount.multiply(price);
-
-        Balance baseSellerBalance =  balanceService.getBalance(baseCurrency, seller);
-
-        createBaseSellerBalanceActivity(seller, sellOrder, realAmount, price, baseCurrency, sum, baseSellerBalance);
-
-        log.debug("ba1: " + (System.currentTimeMillis()-start));
-
-        baseSellerBalance.setAmount(baseSellerBalance.getAmount().add(sum));
-        //addUpdater(baseSellerBalance);
-        balanceService.updateBalance(baseSellerBalance);
-
-        Balance baseBuyerBalance = balanceService.getBalance(baseCurrency, buyer);
-
-        log.debug("ba2: " + (System.currentTimeMillis()-start));
-
         BigDecimal minusSum = sum.multiply(new BigDecimal("-1"));
 
-        createBaseBuyerBalanceActivity(buyer, buyOrder, realAmount, price, baseCurrency, baseBuyerBalance, minusSum);
+        transactionTemplate.execute((status)->{
+           // BTC/USD - transfer USD
+            Balance baseSellerBalance =  balanceService.getBalance(baseCurrency, seller);
+            createBaseSellerBalanceActivity(seller, sellOrder, realAmount, price, baseCurrency, sum, baseSellerBalance);
 
-        log.debug("ba3: " + (System.currentTimeMillis()-start));
+            log.debug("ba1: " + (System.currentTimeMillis()-start));
 
-        baseBuyerBalance.setAmount(baseBuyerBalance.getAmount().add(minusSum));
-        //addUpdater(baseBuyerBalance);
+            baseSellerBalance.setAmount(baseSellerBalance.getAmount().add(sum));
+            //addUpdater(baseSellerBalance);
+            balanceService.updateBalance(baseSellerBalance);
+            return null;
+        });
 
-        balanceService.updateBalance(baseBuyerBalance);
+        transactionTemplate.execute((status)->{
+
+            Balance baseBuyerBalance = balanceService.getBalance(baseCurrency, buyer);
+
+            log.debug("ba2: " + (System.currentTimeMillis()-start));
+
+            createBaseBuyerBalanceActivity(buyer, buyOrder, realAmount, price, baseCurrency, baseBuyerBalance, minusSum);
+
+            log.debug("ba3: " + (System.currentTimeMillis()-start));
+
+            baseBuyerBalance.setAmount(baseBuyerBalance.getAmount().add(minusSum));
+            //addUpdater(baseBuyerBalance);
+
+            balanceService.updateBalance(baseBuyerBalance);
+            return null;
+        });
 
         //log.debug("ba4: " + (System.currentTimeMillis()-start));
         // BTC/USD transfer BTC
 
-        Balance sellerBalance = balanceService.getBalance(currency, seller);
+        transactionTemplate.execute((status)-> {
+                    Balance sellerBalance = balanceService.getBalance(currency, seller);
 
-        createSellerBalanceActivity(seller, sellOrder, realAmount, price, currency, sum, sellerBalance);
+                    createSellerBalanceActivity(seller, sellOrder, realAmount, price, currency, sum, sellerBalance);
 
-         log.debug("ba5: " + (System.currentTimeMillis()-start));
+                    log.debug("ba5: " + (System.currentTimeMillis() - start));
 
-        sellerBalance.setAmount(sellerBalance.getAmount().subtract(realAmount));
-        //addUpdater(sellerBalance);
-        balanceService.updateBalance(sellerBalance);
+                    sellerBalance.setAmount(sellerBalance.getAmount().subtract(realAmount));
+                    //addUpdater(sellerBalance);
+                    balanceService.updateBalance(sellerBalance);
 
-        log.debug("ba6: " + (System.currentTimeMillis()-start));
+                    log.debug("ba6: " + (System.currentTimeMillis() - start));
+                    return null;
+        });
 
-        Balance buyerBalance = balanceService.getBalance(currency, buyer);
 
-        createBuyerBalanceActivity(buyer, buyOrder, realAmount, price, currency, sum, buyerBalance);
+        transactionTemplate.execute((status)-> {
+            Balance buyerBalance = balanceService.getBalance(currency, buyer);
 
-        buyerBalance.setAmount(buyerBalance.getAmount().add(realAmount));
-       // addUpdater(buyerBalance);
+            createBuyerBalanceActivity(buyer, buyOrder, realAmount, price, currency, sum, buyerBalance);
 
-        balanceService.updateBalance(buyerBalance);
+            buyerBalance.setAmount(buyerBalance.getAmount().add(realAmount));
+            // addUpdater(buyerBalance);
 
-        balanceService.updateOpenSum(sellOrder, seller, minusSum, realAmount.multiply(new BigDecimal("-1")));
-        balanceService.updateOpenSum(buyOrder, buyer, minusSum, realAmount.multiply(new BigDecimal("-1")));
+            balanceService.updateBalance(buyerBalance);
 
-        log.debug("ba7: " + (System.currentTimeMillis()-start));
+            return null;
+        });
+
+        transactionTemplate.execute((status)-> {
+            balanceService.updateOpenSum(sellOrder, seller, minusSum, realAmount.multiply(new BigDecimal("-1")));
+            balanceService.updateOpenSum(buyOrder, buyer, minusSum, realAmount.multiply(new BigDecimal("-1")));
+            return null;
+         });
+            log.debug("ba7: " + (System.currentTimeMillis() - start));
+
 
     }
 

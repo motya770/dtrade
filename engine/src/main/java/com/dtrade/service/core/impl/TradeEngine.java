@@ -173,6 +173,9 @@ public class TradeEngine implements ITradeEngine {
 
                 long start = System.currentTimeMillis();
                 List<Pair<TradeOrder, TradeOrder>> buySells = bookOrderService.findClosestList(entry.getKey());
+                if(buySells==null){
+                    return;
+                }
                 for(Pair<TradeOrder, TradeOrder> buySell: buySells){
                     if(checkIfCanExecute(buySell)){
                         buySell.getFirst().setTradeEngineState(TradeEngineState.IN_PROGRESS);
@@ -410,11 +413,6 @@ public class TradeEngine implements ITradeEngine {
             Account buyAccount = buyOrder.getAccount();
             Account sellAccount = sellOrder.getAccount();
 
-            //Decided that buyer and seller can be the same
-//                    if (buyAccount.getId().equals(sellAccount.getId())) {
-//                        return;
-//                    }
-
             logger.info("1.8");
 
             //Decided to buy side to prevail on sell side
@@ -452,23 +450,6 @@ public class TradeEngine implements ITradeEngine {
 
             BigDecimal cash = realAmount.multiply(orderPrice);
 
-            long startActivity = System.currentTimeMillis();
-            try {
-                logger.info("1.10.1 " + Thread.currentThread().getName());
-                balanceActivityService.createBalanceActivities(buyAccount, sellAccount, buyOrder,
-                        sellOrder, realAmount, orderPrice);
-            }catch (TradeException e){
-                //TODO notify user
-                logger.error("Rejecting {} because of exception {}", buyOrder, e);
-                buyOrder = rejectTradeOrder(buyOrder);
-                removeTradeStateEngine(pair);
-                return Pair.of(false, true);
-            }
-
-            logger.info("1.11 " + + (System.currentTimeMillis() - start));
-
-            logger.debug(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
-
             logger.info("1.12");
 
             buyOrder.setAmount(buyOrder.getAmount().subtract(realAmount));
@@ -491,8 +472,6 @@ public class TradeEngine implements ITradeEngine {
             logger.info("1.15 ");
             long end = System.currentTimeMillis() - start;
 
-
-
             logger.info("exec1: "
                     + sellOrder.getId() + " "
                     + sellOrder.getTraderOrderStatus() + ", "
@@ -501,6 +480,27 @@ public class TradeEngine implements ITradeEngine {
             logger.info("exec2:  " + sellOrder.getDiamond().getName() +  " " + realAmount + " " + orderPrice);
 
             logger.info("SUC EXEC TIME1 : " + end);
+
+
+            final TradeOrder buyOrderConst = buyOrder;
+            final TradeOrder sellOrderConst = buyOrder;
+
+            Runnable runnable = ()->{
+                long startActivity = System.currentTimeMillis();
+                try {
+                    logger.info("1.10.1 " + Thread.currentThread().getName());
+                    balanceActivityService.createBalanceActivities(buyAccount, sellAccount, buyOrderConst,
+                            sellOrderConst, realAmount, orderPrice);
+                }catch (TradeException e){
+                    //TODO notify user
+                    logger.error("Exception {}", e);
+                }
+
+                logger.info("1.11 " + + (System.currentTimeMillis() - start));
+                logger.debug(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
+            };
+            executor.execute(runnable);
+
             return Pair.of(!buyResult, !sellResult);
         }catch (Exception e){
             removeTradeStateEngine(pair);
