@@ -1,5 +1,6 @@
 package com.dtrade.service.core;
 
+import com.dtrade.model.balanceactivity.BalanceActivityCreator;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.util.Pair;
 
@@ -8,7 +9,7 @@ import org.springframework.data.util.Pair;
  */
 public interface ITradeEngine {
 
-    Pair<Boolean, Boolean> executeTradeOrders(Pair<TradeOrder, TradeOrder> pair);
+    BalanceActivityCreator executeTradeOrders(Pair<TradeOrder, TradeOrder> pair);
 
     void prepareAndLaunch();
 

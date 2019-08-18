@@ -6,6 +6,7 @@ import com.dtrade.model.Const;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balanceactivity.BalanceActivity;
+import com.dtrade.model.balanceactivity.BalanceActivityCreator;
 import com.dtrade.model.balanceactivity.BalanceActivityType;
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.currency.Currency;
@@ -183,13 +184,19 @@ public class BalanceActivityService implements IBalanceActivityService {
         return balanceActivityRepository.save(ba);
     }
 
+
+
+
     @Override
     @Transactional(noRollbackFor = NotEnoughMoney.class)
-    public  void createBalanceActivities(Account buyer,
-                                                                          Account seller,
-                                                                          TradeOrder buyOrder,
-                                                                          TradeOrder sellOrder,
-                                                                          BigDecimal realAmount, BigDecimal price) {
+    public  void createBalanceActivities(BalanceActivityCreator balanceActivityCreator) {
+
+        Account buyer = balanceActivityCreator.getBuyer();
+        Account seller = balanceActivityCreator.getSeller();
+        TradeOrder buyOrder = balanceActivityCreator.getBuyOrder();
+        TradeOrder sellOrder = balanceActivityCreator.getSellOrder();
+        BigDecimal realAmount = balanceActivityCreator.getRealAmount();
+        BigDecimal price = balanceActivityCreator.getPrice();
 
         long start = System.currentTimeMillis();
         Diamond diamond = sellOrder.getDiamond();
@@ -233,7 +240,6 @@ public class BalanceActivityService implements IBalanceActivityService {
 
         transactionTemplate.execute((status)-> {
                     Balance sellerBalance = balanceService.getBalance(currency, seller);
-
                     createSellerBalanceActivity(seller, sellOrder, realAmount, price, currency, sum, sellerBalance);
 
                     log.debug("ba5: " + (System.currentTimeMillis() - start));
@@ -266,8 +272,6 @@ public class BalanceActivityService implements IBalanceActivityService {
             return null;
          });
             log.debug("ba7: " + (System.currentTimeMillis() - start));
-
-
     }
 
     private void createBuyerBalanceActivity(Account buyer, TradeOrder buyOrder, BigDecimal realAmount, BigDecimal price, Currency currency, BigDecimal sum, Balance buyerBalance) {

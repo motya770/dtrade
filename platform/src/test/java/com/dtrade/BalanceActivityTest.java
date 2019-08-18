@@ -3,6 +3,7 @@ package com.dtrade;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balanceactivity.BalanceActivity;
+import com.dtrade.model.balanceactivity.BalanceActivityCreator;
 import com.dtrade.model.balanceactivity.BalanceActivityType;
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.coinpayment.DepositRequest;
@@ -71,8 +72,9 @@ public class BalanceActivityTest extends BaseTest {
         TradeOrder buyOrder = createTestBuyTradeOrder();
         TradeOrder sellOrder = createTestSellTradeOrder();
 
-        balanceActivityService.createBalanceActivities(buyer, seller, buyOrder,
+        BalanceActivityCreator balanceActivityCreator = new BalanceActivityCreator(buyer, seller, buyOrder,
                 sellOrder,  sellOrder.getAmount(), sellOrder.getPrice());
+        balanceActivityService.createBalanceActivities(balanceActivityCreator);
 
         return Pair.of(buyOrder, sellOrder);
     }

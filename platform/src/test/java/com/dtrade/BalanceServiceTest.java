@@ -8,6 +8,7 @@ import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import com.dtrade.model.tradeorder.TradeOrderDirection;
+import com.dtrade.repository.balance.BalanceRepository;
 import com.dtrade.service.IAccountService;
 import com.dtrade.service.IBalanceService;
 import com.dtrade.service.IDiamondService;
@@ -157,21 +158,31 @@ public class BalanceServiceTest extends BaseTest {
         // Assert.assertTrue(rereadBalance.getOpen().compareTo(open.add(amount))==0);
     }
 
+    @Autowired
+    private BalanceRepository balanceRepository;
+
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)
     @Test
     public void testUpdateBalance(){
-
         Account account = accountService.getStrictlyLoggedAccount();
 
         Balance balance = balanceService.getBalance(Currency.BTC, account);
         BigDecimal saved = balance.getAmount();
         BigDecimal amount = new BigDecimal("0.2342342");
         balanceService.updateBalance(Currency.BTC, account, amount);
+        /*
+        Account account1 = accountService.findByMail(F_DEFAULT_TEST_ACCOUNT);
+        account1.setPhone("05289163872");
+        accountService.save(account1);*/
 
         balance.setAmount(balance.getAmount().add(amount));
         balanceService.updateBalance(balance);
-        Balance rereadBalance = balanceService.getBalance(Currency.BTC, account);
-        Assert.assertTrue(rereadBalance.getAmount().compareTo(saved.add(amount).add(amount))==0);
+
+        long start = System.currentTimeMillis();
+        //Balance rereadBalance = account.getBalances().stream().filter(balance2 -> balance2.getCurrency()==Currency.BTC).findFirst().get();
+        Balance rereadBalance = balanceRepository.findById(40398L).get(); // balanceService.getBalance(Currency.BTC, account);
+        //Assert.assertTrue(rereadBalance.getAmount().compareTo(saved.add(amount).add(amount))==0);
+        System.out.println(System.currentTimeMillis() - start);
     }
 
     @WithUserDetails(value = F_DEFAULT_TEST_ACCOUNT)

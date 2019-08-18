@@ -4,6 +4,7 @@ import com.dtrade.exception.NotEnoughMoney;
 import com.dtrade.exception.TradeException;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
+import com.dtrade.model.balanceactivity.BalanceActivityCreator;
 import com.dtrade.model.currency.Currency;
 import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.*;
@@ -26,6 +27,7 @@ import javax.annotation.PreDestroy;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -197,13 +199,19 @@ public class TradeEngine implements ITradeEngine {
 
            // }
 
+
+            ConcurrentLinkedQueue<BalanceActivityCreator> balanceActivityCreators = new ConcurrentLinkedQueue<>();
             if(futureTrades.size()>0) {
                 Runnable tradeRunnable = () -> {
                     logger.debug("DEALS: " + futureTrades.size());
                     for (Pair<TradeOrder, TradeOrder> buySell : futureTrades) {
                         transactionTemplate.execute(status -> {
 
-                            executeTradeOrders(buySell);
+                            BalanceActivityCreator balanceActivityCreator = executeTradeOrders(buySell);
+                            if(balanceActivityCreator!=null) {
+                                balanceActivityCreators.add(balanceActivityCreator);
+                            }
+
                             quotesService.issueQuote(buySell);
 
                             return null;
@@ -212,6 +220,16 @@ public class TradeEngine implements ITradeEngine {
                 };
                 executor.execute(tradeRunnable);
             }
+
+            Runnable balanceActivitiesRunnable = ()-> {
+                for (BalanceActivityCreator balanceActivityCreator : balanceActivityCreators) {
+                    transactionTemplate.execute(status -> {
+                        balanceActivityService.createBalanceActivities(balanceActivityCreator);
+                        return null;
+                    });
+                }
+            };
+            executor.execute(balanceActivitiesRunnable);
 
             /*
             if(futureQuotes.size()>0) {
@@ -342,7 +360,7 @@ public class TradeEngine implements ITradeEngine {
     //buy - sell
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = NotEnoughMoney.class)
-    public Pair<Boolean, Boolean> executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
+    public BalanceActivityCreator executeTradeOrders(Pair<TradeOrder, TradeOrder> pair) {
 
         long start = System.currentTimeMillis();
         try {
@@ -390,7 +408,7 @@ public class TradeEngine implements ITradeEngine {
             if (!(buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                     || buyOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
                 bookOrderService.remove(buyOrder);
-                return Pair.of(false, true);
+                return null;
             }
 
             logger.info("1.5" +  (System.currentTimeMillis() - start));
@@ -398,14 +416,14 @@ public class TradeEngine implements ITradeEngine {
             if (!(sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.IN_MARKET)
                     || sellOrder.getTraderOrderStatus().equals(TraderOrderStatus.CREATED))) {
                 bookOrderService.remove(sellOrder);
-                return Pair.of(true, false);
+                return null;
             }
 
             logger.info("1.6" );
 
             if (!checkIfCanExecute(pair)) {
                 removeTradeStateEngine(pair);
-                return Pair.of(false, false);
+                return null;
             }
 
             logger.info("1.7");
@@ -435,7 +453,7 @@ public class TradeEngine implements ITradeEngine {
                 logger.error("Not enough coins at {} {}", buyBalance, buyAccount);
                 buyOrder = rejectTradeOrder(buyOrder);
                 removeTradeStateEngine(pair);
-                return Pair.of(true, false);
+                return null;
             }
 
             if (sellBalance.getAmount().compareTo(realAmount) < 0) {
@@ -443,7 +461,7 @@ public class TradeEngine implements ITradeEngine {
                 logger.error("Not enough coins at {} {}", sellBalance, sellAccount);
                 sellOrder = rejectTradeOrder(sellOrder);
                 removeTradeStateEngine(pair);
-                return Pair.of(true, false);
+                return null;
             }
 
             logger.info("1.10 " + (System.currentTimeMillis() - start));
@@ -485,12 +503,16 @@ public class TradeEngine implements ITradeEngine {
             final TradeOrder buyOrderConst = buyOrder;
             final TradeOrder sellOrderConst = buyOrder;
 
+            BalanceActivityCreator balanceActivityCreator = new BalanceActivityCreator(buyAccount, sellAccount, buyOrderConst,
+                    sellOrderConst, realAmount, orderPrice);
+
+            return balanceActivityCreator;
+            /*
             Runnable runnable = ()->{
                 long startActivity = System.currentTimeMillis();
                 try {
                     logger.info("1.10.1 " + Thread.currentThread().getName());
-                    balanceActivityService.createBalanceActivities(buyAccount, sellAccount, buyOrderConst,
-                            sellOrderConst, realAmount, orderPrice);
+                    balanceActivityService.createBalanceActivities();
                 }catch (TradeException e){
                     //TODO notify user
                     logger.error("Exception {}", e);
@@ -500,15 +522,14 @@ public class TradeEngine implements ITradeEngine {
                 logger.debug(" BALANCE ACTIVITY TIME: " + (System.currentTimeMillis() - startActivity));
             };
             executor.execute(runnable);
-
-            return Pair.of(!buyResult, !sellResult);
+             */
         }catch (Exception e){
             removeTradeStateEngine(pair);
             logger.error("{}", e);
             e.printStackTrace();
         }
         logger.info("SUC EXEC TIME: " + (System.currentTimeMillis() - start));
-        return Pair.of(false, false);
+        return null;
     }
 
     private void removeTradeStateEngine(Pair<TradeOrder, TradeOrder> pair){

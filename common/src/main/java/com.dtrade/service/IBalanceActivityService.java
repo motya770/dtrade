@@ -3,6 +3,7 @@ package com.dtrade.service;
 import com.dtrade.model.account.Account;
 import com.dtrade.model.balance.Balance;
 import com.dtrade.model.balanceactivity.BalanceActivity;
+import com.dtrade.model.balanceactivity.BalanceActivityCreator;
 import com.dtrade.model.coinpayment.CoinPayment;
 import com.dtrade.model.tradeorder.TradeOrder;
 import org.springframework.data.domain.Page;
@@ -15,9 +16,7 @@ import java.util.List;
  */
 public interface IBalanceActivityService {
 
-    void createBalanceActivities(Account buyer, Account seller,
-                                                                   TradeOrder buyOrder,
-                                                                   TradeOrder sellOrder, BigDecimal amount, BigDecimal price);
+    void createBalanceActivities(BalanceActivityCreator balanceActivityCreator);
 
     BalanceActivity createDepositBalanceActivity(CoinPayment coinPayment);
 
