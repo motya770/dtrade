@@ -130,10 +130,10 @@ public class BookOrderService implements IBookOrderService {
         }
 
         if(TradeOrderDirection.BUY.equals(order.getTradeOrderDirection())){
-            logger.debug("adding buy " + order.getId());
+            //logger.debug("adding buy " + order.getId());
             bookOrder.getBuyOrders().add(order);
         }else if(TradeOrderDirection.SELL.equals(order.getTradeOrderDirection())){
-            logger.debug("adding sell " + order.getId());
+            //logger.debug("adding sell " + order.getId());
             bookOrder.getSellOrders().add(order);
         }else{
             throw new TradeException("Type of the order is not defined!");
