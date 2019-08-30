@@ -20,8 +20,8 @@ public interface BalanceRepository extends JpaRepository<Balance, Long> {
 //        //@Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' and to.diamond.id = :#{#diamond.id} order by to.executionDate desc ")
 //    List<TradeOrder> getHistoryTradeOrders(Long diamondId, Long time);
 
-    @Query(nativeQuery = true, value = "select * from balance b where b.account_id  = 1 and b.currency = 'BTC'")
-    //@Query("select b from Balance b where b.account.id  = :#{#account.id} and b.currency = :#{#currency}")
+    //@Query(nativeQuery = true, value = "select * from balance b where b.account_id  = 1 and b.currency = 'BTC'")
+    @Query("select b from Balance b where b.account.id  = :#{#account.id} and b.currency = :#{#currency}")
     Balance getBalance(@Param("account") Account account, @Param("currency") Currency currency);
 
     @Query("select b from Balance b where b.account.id  = :#{#account.id} and b.currency in :currencies")
