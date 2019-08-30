@@ -305,8 +305,10 @@ public class BalanceService  implements IBalanceService{
             }
 
             Balance balance = balanceRepository.getBalance(account, currency);
+            logger.info("getBalance1.0: " + balance);
             if (balance == null) {
                 balance = createBalance(account, currency);
+                logger.info("getBalance1.1: " + balance);
             }
             return balance;
         }catch (Throwable e){

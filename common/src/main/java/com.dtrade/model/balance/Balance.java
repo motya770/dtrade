@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
-
 @ToString
 @Cacheable
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -64,9 +63,5 @@ public class Balance {
         BalanceDTO dto = new BalanceDTO();
         dto.setBalance(getActualBalance());
         return dto;
-    }
-
-    public String toString(){
-        return "{id:  " + getId() + "}";
     }
 }
