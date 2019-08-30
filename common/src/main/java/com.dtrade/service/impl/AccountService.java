@@ -39,7 +39,7 @@ import java.util.UUID;
 @Transactional
 public class AccountService implements IAccountService, UserDetailsService {
 
-    private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
+    private static final Logger log = LoggerFactory.getLogger(AccountService.class);
 
     @Autowired
     private ITradeOrderService tradeOrderService;
@@ -114,8 +114,10 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public AccountDTO createReferalAccount(String mail, String ref) {
+        log.info("CR: 1");
         Account account = createRealAccount(mail, "demo1345", null, null);
 
+        log.info("CR: 2");
         //adding to referral account
         if(!StringUtils.isEmpty(ref)) {
             Account referalAccount = accountRepository.findByReferral(ref);
@@ -125,10 +127,16 @@ public class AccountService implements IAccountService, UserDetailsService {
             }
         }
 
+        log.info("CR: 3");
         mailService.sendReferralMail(account);
+
+        log.info("CR: 4");
         account = accountRepository.save(account);
+
+        log.info("CR: 5");
         balanceService.updateBalance(Currency.USD, account, new BigDecimal("10000.0"));
 
+        log.info("CR: 6");
         //login(account);
         return getAccountDTO(account);
     }
@@ -246,6 +254,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public Account createRealAccount(String login, String pwd, String phone, String currency) throws TradeException {
+        log.info("CR: 1.1");
         Account account = buildAccount(login, pwd, phone, currency);
         //TODO remove after smpt
         account.setConfirmed(true);
@@ -254,13 +263,14 @@ public class AccountService implements IAccountService, UserDetailsService {
         String ref = generateReferral();
         account.setReferral(ref);
 
+        log.info("CR: 1.2");
         Account checkAccount =  accountRepository.findByMail(account.getMail());
         if(checkAccount!=null){
             throw new TradeException("Account with mail: " + account.getMail() + " already exists.");
         }
-
+        log.info("CR: 1.3");
         Account saved =  accountRepository.save(account);
-
+        log.info("CR: 1.4");
         balanceService.getBaseCurrencies().forEach(c -> {
             Balance balance = new Balance();
             balance.setAmount(new BigDecimal("0.0"));
@@ -272,9 +282,11 @@ public class AccountService implements IAccountService, UserDetailsService {
             balanceService.updateBalance(balance);
         });
 
+        log.info("CR: 1.5");
         //TODO enable after restart
         //mailService.sendRegistrationMail(account);
         login(saved);
+        log.info("CR: 1.6");
         return saved;
     }
 
