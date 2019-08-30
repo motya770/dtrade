@@ -127,7 +127,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         mailService.sendReferralMail(account);
         account = accountRepository.save(account);
-        balanceService.updateBalance(Currency.USD, account, new BigDecimal("10000"));
+        balanceService.updateBalance(Currency.USD, account, new BigDecimal("10000.0"));
 
         //login(account);
         return getAccountDTO(account);
@@ -263,9 +263,9 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         balanceService.getBaseCurrencies().forEach(c -> {
             Balance balance = new Balance();
-            balance.setAmount(BigDecimal.ZERO);
-            balance.setFrozen(BigDecimal.ZERO);
-            balance.setOpen(BigDecimal.ZERO);
+            balance.setAmount(new BigDecimal("0.0"));
+            balance.setFrozen(new BigDecimal("0.0"));
+            balance.setOpen(new BigDecimal("0.0"));
             balance.setCurrency(c);
             balance.setAccount(saved);
             balance.setBaseBalance(true);
