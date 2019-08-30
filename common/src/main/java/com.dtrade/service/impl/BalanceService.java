@@ -217,6 +217,7 @@ public class BalanceService  implements IBalanceService{
     @Transactional
     public Balance updateBalance(Balance balance) {
 
+        logger.info("Saving balance: " + balance);
         Balance savedBalance = balanceRepository.save(balance);
         return savedBalance;
 

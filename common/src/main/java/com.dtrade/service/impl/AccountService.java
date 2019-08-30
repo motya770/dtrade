@@ -280,6 +280,8 @@ public class AccountService implements IAccountService, UserDetailsService {
             balance.setCurrency(c);
             balance.setAccount(saved);
             balance.setBaseBalance(true);
+
+            log.info("Before saving " + balance);
             balanceService.updateBalance(balance);
         });
 
