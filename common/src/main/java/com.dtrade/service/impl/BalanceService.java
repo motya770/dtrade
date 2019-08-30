@@ -251,7 +251,9 @@ public class BalanceService  implements IBalanceService{
     @Transactional
     public Balance updateBalance(Currency currency, Account account, BigDecimal addedValue) {
         Balance balance = getBalance(currency, account);
+        logger.info("b1 : " + balance);
         balance.setAmount(balance.getAmount().add(addedValue));
+        logger.info("b2 : " + balance);
         return updateBalance(balance);
     }
 

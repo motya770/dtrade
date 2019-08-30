@@ -134,8 +134,9 @@ public class AccountService implements IAccountService, UserDetailsService {
         account = accountRepository.save(account);
 
         log.info("CR: 5");
-        balanceService.updateBalance(Currency.USD, account, new BigDecimal("10000.0"));
+        Balance b = balanceService.updateBalance(Currency.USD, account, new BigDecimal("10000.0"));
 
+        log.info("CR: 5.1 " + b);
         log.info("CR: 6");
         //login(account);
         return getAccountDTO(account);
