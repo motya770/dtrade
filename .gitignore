@@ -14,5 +14,9 @@ platform/src/main/resources/static/bower_components/
 platform/src/main/resources/static/bower_components/
 platform/src/main/resources/static/bower_components_old/
 platform/src/main/resources/static/bower_components_old/
+platform/src/main/resources/static/node_modules/
+.settings/
+.vscode/
+logs/
 all.log
 .gitlab-ci.yml
