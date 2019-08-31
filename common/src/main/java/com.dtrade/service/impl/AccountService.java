@@ -211,6 +211,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+        log.info("loadUserByUsername {}", mail);
         UserDetails account = accountRepository.findByMail(mail);
         if(account==null){
             throw new UsernameNotFoundException("Not registered");
@@ -266,6 +267,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         log.info("CR: 1.2");
         Account checkAccount =  accountRepository.findByMail(account.getMail());
+        log.info("loadUserByUsername {}", account.getMail());
         if(checkAccount!=null){
             throw new TradeException("Account with mail: " + account.getMail() + " already exists.");
         }
@@ -319,6 +321,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public Account buildAccount(String mail, String pwd, String phone, String curr) throws TradeException {
+        log.info("buildAccount {}", mail);
         Account anotherAccount = accountRepository.findByMail(mail);
         if (anotherAccount != null) {
             throw new TradeException("Can't create account with this mail!");
@@ -347,6 +350,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
     @Override
     public Account findByMail(String login) {
+        log.info("findByMail {}", login);
         return accountRepository.findByMail(login);
     }
 

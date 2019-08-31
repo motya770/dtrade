@@ -11,6 +11,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 @Slf4j
 @Service
@@ -24,7 +25,11 @@ public class RoboAccountService implements IRoboAccountService {
 
     @EventListener(ContextRefreshedEvent.class)
     public void init(){
-        createRoboAccounts();
+        Runnable runnable = ()-> {
+            createRoboAccounts();
+        };
+
+        Executors.newSingleThreadScheduledExecutor().execute(runnable);
     }
 
     //TODO hardcoded - change
@@ -49,7 +54,8 @@ public class RoboAccountService implements IRoboAccountService {
                     }catch (Exception e){
                         log.error("{}", e);
                     }
-
+                }else {
+                    break;
                 }
             }
         });
