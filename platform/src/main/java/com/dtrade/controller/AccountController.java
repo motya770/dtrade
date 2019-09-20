@@ -49,6 +49,14 @@ public class AccountController {
         return "{\"success\":1}";
     }
 
+    @RequestMapping(value = "/referral-login", method = RequestMethod.GET)
+    public String demoReferralLogin(@RequestParam String ref)
+
+    {
+        accountService.loginByRef(ref);
+        return "redirect:/referral";
+    }
+
     @RequestMapping(value = "/demo-login", method = RequestMethod.GET)
     public String demoLogin(@RequestParam String ref)
 
