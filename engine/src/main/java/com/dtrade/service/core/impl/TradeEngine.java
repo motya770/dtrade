@@ -200,36 +200,33 @@ public class TradeEngine implements ITradeEngine {
            // }
 
 
-            ConcurrentLinkedQueue<BalanceActivityCreator> balanceActivityCreators = new ConcurrentLinkedQueue<>();
             if(futureTrades.size()>0) {
                 Runnable tradeRunnable = () -> {
+                    ConcurrentLinkedQueue<BalanceActivityCreator> balanceActivityCreators = new ConcurrentLinkedQueue<>();
                     logger.debug("DEALS: " + futureTrades.size());
                     for (Pair<TradeOrder, TradeOrder> buySell : futureTrades) {
                         transactionTemplate.execute(status -> {
-
                             BalanceActivityCreator balanceActivityCreator = executeTradeOrders(buySell);
                             if(balanceActivityCreator!=null) {
                                 balanceActivityCreators.add(balanceActivityCreator);
                             }
-
                             quotesService.issueQuote(buySell);
-
                             return null;
                         });
                     }
+
+                    Runnable balanceActivitiesRunnable = ()-> {
+                        for (BalanceActivityCreator balanceActivityCreator : balanceActivityCreators) {
+                            transactionTemplate.execute(status -> {
+                                balanceActivityService.createBalanceActivities(balanceActivityCreator);
+                                return null;
+                            });
+                        }
+                    };
+                    executor.execute(balanceActivitiesRunnable);
                 };
                 executor.execute(tradeRunnable);
             }
-
-            Runnable balanceActivitiesRunnable = ()-> {
-                for (BalanceActivityCreator balanceActivityCreator : balanceActivityCreators) {
-                    transactionTemplate.execute(status -> {
-                        balanceActivityService.createBalanceActivities(balanceActivityCreator);
-                        return null;
-                    });
-                }
-            };
-            executor.execute(balanceActivitiesRunnable);
 
             /*
             if(futureQuotes.size()>0) {
