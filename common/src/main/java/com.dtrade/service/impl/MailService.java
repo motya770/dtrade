@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Created by matvei on 6/7/15.
@@ -36,93 +39,83 @@ public class MailService implements IMailService {
     @Autowired
     private Configuration freemarkerConfig;
 
+    private ExecutorService executor = Executors.newFixedThreadPool(10);
 
     @Override
     public void sendForgotPasswordMail(Account account) {
+        Runnable runnable = ()-> {
+            try {
+                Template t = freemarkerConfig.getTemplate("recovery-password.ftl");
+                Map<String, Object> map = new HashMap<>();
+                map.put("account", account);
 
-        try {
+                String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
 
-            Template t = freemarkerConfig.getTemplate("recovery-password.ftl");
-            Map<String, Object> map= new HashMap<>();
-            map.put("account", account);
+                Email from = new Email("support@korono.io");
+                String subject = "KORONO: Password recovery.";
 
-            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
-
-            Email from = new Email("support@korono.io");
-            String subject = "KORONO: Password recovery.";
-
-            //mail for tests
-            String toMail = account.getMail();
-            String sendMail;
-            if(toMail.contains("test123")){
-                sendMail = "matvei.kudelin@gmail.com";
-            }else {
-                sendMail = toMail;
+                //mail for tests
+                sendMail(account, html, from, subject);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
-
-            Email to = new Email(sendMail);
-            Content content = new Content("text/html", html);
-
-            Mail mail = new Mail(from, subject, to, content);
-
-            SendGrid sg = new SendGrid(sendGridApiKey);
-            Request request = new Request();
-
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-            Response response = sg.api(request);
-            System.out.println(response.getStatusCode());
-            System.out.println(response.getBody());
-            System.out.println(response.getHeaders());
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
+        };
+        executor.execute(runnable);
     }
 
     @Override
     public void sendReferralMail(Account account) {
 
-        try {
+        Runnable runnable = () -> {
+            try {
+                Template t = freemarkerConfig.getTemplate("mail.ftl");
+                Map<String, Object> map = new HashMap<>();
+                map.put("accountLink", "x.korono.io/referral?myRef=" + account.getReferral());
+                map.put("referralLink", "www.korono.io/?ref=" + account.getReferral());
+                map.put("account", account);
 
-            Template t = freemarkerConfig.getTemplate("mail.ftl");
-            Map<String, Object> map= new HashMap<>();
-            map.put("accountLink", "x.korono.io/referral?myRef=" + account.getReferral());
-            map.put("referralLink", "www.korono.io/?ref="+account.getReferral());
-            map.put("account", account);
+                String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
 
-            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
+                Email from = new Email("support@korono.io");
+                String subject = "Successfully added to the waiting list";
 
-            Email from = new Email("support@korono.io");
-            String subject = "Successfully added to the waiting list";
-
-            //mail for tests
-            String toMail = account.getMail();
-            String sendMail;
-            if(toMail.contains("test123")){
-                sendMail = "matvei.kudelin@gmail.com";
-            }else {
-                sendMail = toMail;
+                //mail for tests
+                sendMail(account, html, from, subject);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
             }
+        };
 
-            Email to = new Email(sendMail);
-            Content content = new Content("text/html", html);
+        executor.execute(runnable);
+    }
 
-            Mail mail = new Mail(from, subject, to, content);
-
-            SendGrid sg = new SendGrid(sendGridApiKey);
-            Request request = new Request();
-
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-            Response response = sg.api(request);
-            System.out.println(response.getStatusCode());
-            System.out.println(response.getBody());
-            System.out.println(response.getHeaders());
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+    private void sendMail(Account account, String html, Email from, String subject) throws IOException {
+        String toMail = account.getMail();
+        String sendMail;
+        if (toMail.contains("test123")) {
+            sendMail = "matvei.kudelin@gmail.com";
+        } else {
+            sendMail = toMail;
         }
+
+        Email to = new Email(sendMail);
+        Content content = new Content("text/html", html);
+
+        Mail mail = new Mail(from, subject, to, content);
+
+        SendGrid sg = new SendGrid(sendGridApiKey);
+        Request request = new Request();
+        sendRequest(mail, sg, request);
+    }
+
+    private static void sendRequest(Mail mail, SendGrid sg, Request request) throws IOException {
+        request.setMethod(Method.POST);
+        request.setEndpoint("mail/send");
+        request.setBody(mail.build());
+        Response response = sg.api(request);
+        System.out.println(response.getStatusCode());
+        System.out.println(response.getBody());
+        System.out.println(response.getHeaders());
     }
 
     @Override
@@ -140,13 +133,7 @@ public class MailService implements IMailService {
         SendGrid sg = new SendGrid("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");
         Request request = new Request();
         try {
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-            Response response = sg.api(request);
-            System.out.println(response.getStatusCode());
-            System.out.println(response.getBody());
-            System.out.println(response.getHeaders());
+            sendRequest(mail, sg, request);
         } catch (IOException ex) {
             throw ex;
         }
