@@ -34,13 +34,10 @@
     <orderEntry type="library" name="Maven: org.redisson:redisson-hibernate-52:3.10.6" level="project" />
     <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.redisson:redisson:3.10.6" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-resolver-dns:4.1.31.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec-dns:4.1.31.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.reactivex.rxjava2:rxjava:2.2.5" level="project" />
     <orderEntry type="library" name="Maven: de.ruedigermoeller:fst:2.57" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.8" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-bean:5.0.10" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-core:5.0.10" level="project" />
+    <orderEntry type="library" name="Maven: org.objenesis:objenesis:2.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-webflux:2.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.1.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.1.2.RELEASE" level="project" />
