@@ -198,8 +198,8 @@ public class TradeOrderService  implements ITradeOrderService{
   //      List<TradeOrder> buy = tradeOrderRepository.getLiveTradeOrdersByDiamondDirection(diamond, TradeOrderDirection.BUY, PageRequest.of(0, 20));
 //        List<TradeOrder> sell = tradeOrderRepository.getLiveTradeOrdersByDiamondDirection(diamond, TradeOrderDirection.SELL, PageRequest.of(0, 20));
 
-        List<TradeOrder> buy = tradeOrderRepository.getLiveTradeOrdersByDiamondDirection(diamond, TradeOrderDirection.BUY);
-        List<TradeOrder> sell = tradeOrderRepository.getLiveTradeOrdersByDiamondDirection(diamond, TradeOrderDirection.SELL);
+        List<TradeOrder> buy = tradeOrderRepository.getLiveTradeOrdersByDiamondDirection(diamond.getId(), TradeOrderDirection.BUY.name());
+        List<TradeOrder> sell = tradeOrderRepository.getLiveTradeOrdersByDiamondDirection(diamond.getId(), TradeOrderDirection.SELL.name());
         buy.addAll(sell);
         return buy;
     }
