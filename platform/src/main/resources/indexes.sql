@@ -11,4 +11,6 @@ CREATE INDEX diamond_quotes_index ON quote (diamond_id, time);
 CREATE INDEX diamond_trade_order_status_time on trade_order (diamond_id, trader_order_status_index, execution_date);
 CREATE INDEX account_trade_order_status_time on trade_order (account_id, trader_order_status_index, creation_date);
 ALTER TABLE balance_activity
-  ADD INDEX balance_activity_account_date_index (account_id, create_date DESC)
+  ADD INDEX balance_activity_account_date_index (account_id, create_date DESC);
+ALTER TABLE dtrade1.trade_order
+    ADD INDEX live_load_index (diamond_id, trader_order_status_index, trade_order_direction);
