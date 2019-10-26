@@ -45,6 +45,8 @@
 
         <Logger name="org.springframework.boot.web.filter" level="INFO"/>
 
+        <Logger name="com.zaxxer.hikari" level="DEBUG"/>
+
         <Root level="INFO">
             <AppenderRef ref="ConsoleAppender" />
             <AppenderRef ref="RandomAccessFile"/>
