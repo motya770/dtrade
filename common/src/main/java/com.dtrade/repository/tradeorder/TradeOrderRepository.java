@@ -26,9 +26,11 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 
     @Query(nativeQuery = true,
             value = "select * from trade_order as tradeOrder where tradeOrder.trader_order_status_index = 'LIVE'" +
-                    " and tradeOrder.trade_order_direction = ?2 and tradeOrder.diamond_id = ?1 order by tradeOrder.creation_date desc limit 100")
+                    " and tradeOrder.trade_order_direction = ?2 and tradeOrder.diamond_id = ?1" +
+                    " and tradeOrder.creation_date >?3 " +
+                    " order by tradeOrder.creation_date desc limit 100")
     //@Query("select to from TradeOrder to where to.traderOrderStatusIndex = 'LIVE' and to.tradeOrderDirection = :#{#direction} and diamond.id =  :#{#diamond.id} order by to.creationDate desc")
-    List<TradeOrder> getLiveTradeOrdersByDiamondDirection(Long diamondId, String direction);
+    List<TradeOrder> getLiveTradeOrdersByDiamondDirection(Long diamondId, String direction, Long time);
 
     @Query("select to from TradeOrder to where to.account.id =  :#{#account.id} and (to.traderOrderStatusIndex =  'LIVE') " +
             " order by to.creationDate desc")
