@@ -23,7 +23,8 @@ import java.math.BigDecimal;
 @Data
 public class BalanceActivity {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     @Id
     private Long id;
 

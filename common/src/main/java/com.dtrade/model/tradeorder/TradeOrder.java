@@ -23,6 +23,7 @@ public class TradeOrder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)

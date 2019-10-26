@@ -26,7 +26,8 @@ import java.util.List;
 public class Balance {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

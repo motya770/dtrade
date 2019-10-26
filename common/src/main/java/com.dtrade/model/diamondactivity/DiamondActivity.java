@@ -17,7 +17,8 @@ import java.math.BigDecimal;
 public class DiamondActivity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

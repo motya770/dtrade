@@ -39,7 +39,8 @@ public class Account implements UserDetails {
     public static final String F_AUTHORITY = "authority";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
 
     @JsonIgnore

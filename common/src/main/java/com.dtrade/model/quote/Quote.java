@@ -1,5 +1,6 @@
 package com.dtrade.model.quote;
 
+import com.dtrade.model.MyEntity;
 import com.dtrade.model.diamond.Diamond;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -22,7 +23,8 @@ public class Quote implements Serializable {
     public static final String F_VALUE = "value";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
 
     @JsonIgnore

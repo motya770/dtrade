@@ -2,9 +2,7 @@ package com.dtrade.model.categorytick;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -16,7 +14,8 @@ import java.math.BigDecimal;
 public class CategoryTick {
 
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     @Id
     private Long id;
 

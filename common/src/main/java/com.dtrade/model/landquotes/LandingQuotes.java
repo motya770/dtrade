@@ -15,7 +15,8 @@ import javax.persistence.*;
 public class LandingQuotes {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
 
     private Long time;

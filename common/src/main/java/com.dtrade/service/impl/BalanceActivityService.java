@@ -248,7 +248,7 @@ public class BalanceActivityService implements IBalanceActivityService {
                     //addUpdater(sellerBalance);
                     balanceService.updateBalance(sellerBalance);
 
-                    log.debug("ba6: " + (System.currentTimeMillis() - start));
+                    //log.debug("ba6: " + (System.currentTimeMillis() - start));
                     return null;
         });
 

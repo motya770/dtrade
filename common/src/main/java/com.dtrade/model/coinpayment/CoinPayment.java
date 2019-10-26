@@ -15,7 +15,8 @@ import javax.validation.constraints.NotNull;
 @Table
 public class CoinPayment {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     @Id
     private Long id;
 

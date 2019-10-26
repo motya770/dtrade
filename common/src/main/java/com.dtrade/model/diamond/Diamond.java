@@ -28,7 +28,8 @@ import java.util.Objects;
 public class Diamond implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
 
     @NotNull

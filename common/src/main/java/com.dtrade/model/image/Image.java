@@ -20,7 +20,8 @@ public class Image implements Serializable {
     //TODO get GUID for ui
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "serial")
     private Long id;
 
     @NotEmpty

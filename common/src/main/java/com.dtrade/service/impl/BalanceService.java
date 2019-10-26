@@ -217,7 +217,7 @@ public class BalanceService  implements IBalanceService{
     @Transactional
     public Balance updateBalance(Balance balance) {
 
-        logger.info("Saving balance: " + balance);
+        //logger.info("Saving balance: " + balance);
         Balance savedBalance = balanceRepository.save(balance);
         return savedBalance;
 
@@ -306,7 +306,7 @@ public class BalanceService  implements IBalanceService{
             }
 
             Balance balance = balanceRepository.getBalance(account, currency);
-            logger.info("getBalance1.0: " + balance);
+            //logger.info("getBalance1.0: " + balance);
             if (balance == null) {
                 balance = createBalance(account, currency);
                 logger.info("getBalance1.1: " + balance);
