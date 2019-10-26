@@ -83,11 +83,11 @@ public class TradeEngine implements ITradeEngine {
 
         Runnable runnable = () -> {
 
-            diamondService.getAvailable().parallelStream().forEach(diamond -> {
+            diamondService.getAvailable().stream().forEach(diamond -> {
                 long start = System.currentTimeMillis();
                 List<TradeOrder> tradeOrders = tradeOrderService.getLiveTradeOrdersByDiamond(diamond);
                 logger.info("getLiveTradeOrdersByDiamond: time: " + (System.currentTimeMillis() - start));
-                tradeOrders.forEach(tradeOrder -> bookOrderService.addNew(tradeOrder, true));
+                tradeOrders.parallelStream().forEach(tradeOrder -> bookOrderService.addNew(tradeOrder, true));
             });
 
             logger.info("Starting trade engine");
