@@ -158,7 +158,7 @@ public class TradeEngine implements ITradeEngine {
     @Override
     public void calculateTradeOrders(){
 
-        //logger.debug("CALCULATING TRADE ORDERS");
+        logger.info("CALCULATING TRADE ORDERS");
 
         bookOrderService.getBookOrders().entrySet().parallelStream().forEach((entry)->{
 
