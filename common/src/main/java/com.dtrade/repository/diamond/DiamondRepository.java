@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional
 public interface DiamondRepository extends JpaRepository<Diamond, Long> {
 
-    @Query("select d from Diamond d where diamondStatus = 'ENLISTED' and d.name like %:name%")
+    @Query("select d from Diamond d where diamondStatus = 'ENLISTED' and d.name like %:name% order by d.name")
     List<Diamond> getAllAvailableByName(@Param("name") String name);
 
     @Query("select d from Diamond d where diamondStatus = 'ENLISTED' or diamondStatus = 'ROBO_HIDDEN'")
