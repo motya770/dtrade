@@ -118,6 +118,7 @@ public class TradeEngine implements ITradeEngine {
     //private Executor ex = MoreExecutors.newSequentialExecutor(Executors.newFixedThreadPool(20));
 
 
+    /*
     @Override
     public void execute(TradeOrder tradeOrder) {
 
@@ -152,9 +153,9 @@ public class TradeEngine implements ITradeEngine {
         }catch (Exception e){
             logger.error("{}", e);
         }
-    }
+    }*/
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public void calculateTradeOrders(){
 

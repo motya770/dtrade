@@ -25,7 +25,7 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
 //            nativeQuery = true)
 
     @Query(nativeQuery = true,
-            value = "select * from trade_order as tradeOrder where tradeOrder.trader_order_status_index = 'LIVE'" +
+            value = "select * from dtrade1.trade_order as tradeOrder where tradeOrder.trader_order_status_index = 'LIVE'" +
                     " and tradeOrder.trade_order_direction = ?2 and tradeOrder.diamond_id = ?1" +
                     " and tradeOrder.creation_date >?3 " +
                     " order by tradeOrder.creation_date desc limit 100")
@@ -41,7 +41,7 @@ public interface TradeOrderRepository extends JpaRepository<TradeOrder, Long> {
             " order by to.creationDate desc ")
     Page<TradeOrder> getHistoryTradeOrdersForAccount(@Param("account") Account account, Long startTime, Long endTime, Pageable pageable);
 
-    @Query(value = "select * from trade_order where trader_order_status = 'EXECUTED' and diamond_id = ?1 and execution_date > ?2 order by execution_date desc limit 23",
+    @Query(value = "select * from dtrade1.trade_order where trader_order_status = 'EXECUTED' and diamond_id = ?1 and execution_date > ?2 order by execution_date desc limit 23",
             nativeQuery = true)
     //@Query("select to from TradeOrder to where to.traderOrderStatus = 'EXECUTED' and to.diamond.id = :#{#diamond.id} order by to.executionDate desc ")
     List<TradeOrder> getHistoryTradeOrders(Long diamondId, Long time);

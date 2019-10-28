@@ -205,7 +205,7 @@ public class BalanceActivityService implements IBalanceActivityService {
         BigDecimal sum = realAmount.multiply(price);
         BigDecimal minusSum = sum.multiply(new BigDecimal("-1"));
 
-        transactionTemplate.execute((status)->{
+       // transactionTemplate.execute((status)->{
            // BTC/USD - transfer USD
             Balance baseSellerBalance =  balanceService.getBalance(baseCurrency, seller);
             createBaseSellerBalanceActivity(seller, sellOrder, realAmount, price, baseCurrency, sum, baseSellerBalance);
@@ -215,10 +215,10 @@ public class BalanceActivityService implements IBalanceActivityService {
             baseSellerBalance.setAmount(baseSellerBalance.getAmount().add(sum));
             //addUpdater(baseSellerBalance);
             balanceService.updateBalance(baseSellerBalance);
-            return null;
-        });
+        //    return null;
+        //});
 
-        transactionTemplate.execute((status)->{
+        //transactionTemplate.execute((status)->{
 
             Balance baseBuyerBalance = balanceService.getBalance(baseCurrency, buyer);
 
@@ -232,13 +232,13 @@ public class BalanceActivityService implements IBalanceActivityService {
             //addUpdater(baseBuyerBalance);
 
             balanceService.updateBalance(baseBuyerBalance);
-            return null;
-        });
+         //   return null;
+        //});
 
         //log.debug("ba4: " + (System.currentTimeMillis()-start));
         // BTC/USD transfer BTC
 
-        transactionTemplate.execute((status)-> {
+        //transactionTemplate.execute((status)-> {
                     Balance sellerBalance = balanceService.getBalance(currency, seller);
                     createSellerBalanceActivity(seller, sellOrder, realAmount, price, currency, sum, sellerBalance);
 
@@ -249,11 +249,11 @@ public class BalanceActivityService implements IBalanceActivityService {
                     balanceService.updateBalance(sellerBalance);
 
                     //log.debug("ba6: " + (System.currentTimeMillis() - start));
-                    return null;
-        });
+          //          return null;
+        //});
 
 
-        transactionTemplate.execute((status)-> {
+        //transactionTemplate.execute((status)-> {
             Balance buyerBalance = balanceService.getBalance(currency, buyer);
 
             createBuyerBalanceActivity(buyer, buyOrder, realAmount, price, currency, sum, buyerBalance);
@@ -263,14 +263,14 @@ public class BalanceActivityService implements IBalanceActivityService {
 
             balanceService.updateBalance(buyerBalance);
 
-            return null;
-        });
+        //    return null;
+       // });
 
-        transactionTemplate.execute((status)-> {
+       // transactionTemplate.execute((status)-> {
             balanceService.updateOpenSum(sellOrder, seller, minusSum, realAmount.multiply(new BigDecimal("-1")));
             balanceService.updateOpenSum(buyOrder, buyer, minusSum, realAmount.multiply(new BigDecimal("-1")));
-            return null;
-         });
+         //   return null;
+         //});
             log.debug("ba7: " + (System.currentTimeMillis() - start));
     }
 

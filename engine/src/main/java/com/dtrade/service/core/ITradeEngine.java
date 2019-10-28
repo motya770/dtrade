@@ -17,7 +17,7 @@ public interface ITradeEngine {
 
     void calculateTradeOrders();
 
-    void execute(TradeOrder tradeOrder);
+   // void execute(TradeOrder tradeOrder);
 
     boolean checkIfCanExecute(Pair<TradeOrder, TradeOrder> pair);
 
