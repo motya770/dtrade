@@ -77,6 +77,7 @@
                     <configuration>
                         <executable>bower</executable>
                         <arguments>
+                            <argument>--allow-root</argument>
                             <argument>install</argument>
                         </arguments>
                         <workingDirectory>${basedir}/src/main/resources/static</workingDirectory>
