@@ -83,8 +83,8 @@ public class TradeSimulator {
             ScheduledExecutorService executorService = Executors.newScheduledThreadPool(30);
             executorService.scheduleAtFixedRate(r1, 15_000, 15_000, TimeUnit.MILLISECONDS);
 
-            Runnable r2 = getRunnable();  // "test@test.com"
-            executorService.scheduleAtFixedRate(r2, 40_000, 10_000, TimeUnit.MILLISECONDS);
+            //Runnable r2 = getRunnable();  // "test@test.com"
+            //executorService.scheduleAtFixedRate(r2, 40_000, 10_000, TimeUnit.MILLISECONDS);
 
          }else{
              logger.info("Simulation is disabled");
@@ -109,7 +109,7 @@ public class TradeSimulator {
     }
 
     private void startTrade(){
-        createTradeOrderSimulated();
+        //createTradeOrderSimulated();
         createMarketMakerTrades();
     }
 

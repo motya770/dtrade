@@ -41,7 +41,7 @@ public class ClientsManager {
     @Autowired
     private KrakenClient krakenClient;
 
-    private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(5);
+    private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(10);
 
     //test1
     @PostConstruct
