@@ -30,8 +30,8 @@
         <docker.image.prefix>wallawalla</docker.image.prefix>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>10</java.version>
-        <hibernate.version>5.2.17.Final</hibernate.version>
+        <java.version>11</java.version>
+        <hibernate.version>5.4.10.Final</hibernate.version>
     </properties>
 
     <dependencies>
