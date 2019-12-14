@@ -42,13 +42,17 @@
             <artifactId>json</artifactId>
             <version>20180813</version>
         </dependency>
-
-
-
-
     </dependencies>
-
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/static/</directory>
+                <excludes>
+                    <exclude>node_modules/**</exclude>
+                    <exclude>ico_build/**</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
