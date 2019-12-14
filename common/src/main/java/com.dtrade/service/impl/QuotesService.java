@@ -321,9 +321,9 @@ public class QuotesService implements IQuotesService {
     @Override
     public Page<Quote> getPagedQuotes(Integer pageNumber, Integer pageSize, Sort sorting) throws TradeException {
         if(sorting == null) {
-            return quoteRepository.findAll(new PageRequest(pageNumber, pageSize));
+            return quoteRepository.findAll(PageRequest.of(pageNumber, pageSize));
         }else{
-            return quoteRepository.findAll(new PageRequest(pageNumber, pageSize, sorting));
+            return quoteRepository.findAll(PageRequest.of(pageNumber, pageSize, sorting));
         }
     }
 

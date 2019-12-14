@@ -167,7 +167,7 @@ public class DiamondService implements IDiamondService {
 
     @Override
     public Page<Diamond> getAllDiamonds() {
-        return diamondRepository.findAll(new PageRequest(0, 100));
+        return diamondRepository.findAll(PageRequest.of(0, 100));
     }
 
     @Override

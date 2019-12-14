@@ -395,7 +395,7 @@ public class CoinPaymentService implements ICoinPaymentService {
 
     @Override
     public Page<CoinPayment> getAllByAccount(Account account) {
-        return coinPaymentRepository.findByAccount(account, new PageRequest(0, 10, new Sort(
+        return coinPaymentRepository.findByAccount(account, PageRequest.of(0, 10, Sort.by(
                 new Sort.Order(Sort.Direction.DESC, "creationDate"))));
     }
 

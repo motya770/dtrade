@@ -7,7 +7,9 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -25,6 +27,20 @@ public class WebConfig implements WebMvcConfigurer {
         return factory;
     }
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/dist.min/**").addResourceLocations("classpath:/static/dist.min/");
+        registry.addResourceHandler("/bower_components/**").addResourceLocations("classpath:/static/bower_components/");
+        registry.addResourceHandler("/theme/**").addResourceLocations("classpath:/static/theme/");
+        registry.addResourceHandler("/content/**").addResourceLocations("classpath:/static/content/");
+    }
+
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        registry.freeMarker();
+    }
+
+    @Override
    public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/diamonds").setViewName("diamonds");
         registry.addViewController("/crypto").setViewName("diamonds");

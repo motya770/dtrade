@@ -206,7 +206,7 @@ public class AccountService implements IAccountService, UserDetailsService {
         if(pageNumber==null){
             pageNumber = 0;
         }
-        return accountRepository.findAll(new PageRequest(pageNumber, 20,   Sort.Direction.DESC, "id"));
+        return accountRepository.findAll(PageRequest.of(pageNumber, 20,   Sort.Direction.DESC, "id"));
     }
 
     @Override
