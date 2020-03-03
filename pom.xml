@@ -239,7 +239,7 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>3.2.0</version>
+            <version>3.4.1</version>
         </dependency>
 
 
@@ -288,7 +288,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.8</version>
+            <version>42.2.9</version>
         </dependency>
 
 
@@ -372,7 +372,7 @@
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
-            <version>3.23.1-GA</version>
+            <version>3.26.0-GA</version>
         </dependency>
 
         <!--
@@ -392,6 +392,18 @@
         </repository>
     </repositories>
 
+    <!--
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>3.1.12.2</version>
+
+            </plugin>
+        </plugins>
+    </build>
+-->
 
     <dependencyManagement>
         <dependencies>
