@@ -94,11 +94,13 @@
             <artifactId>hazelcast-all</artifactId>
             <version>3.9.4</version>
         </dependency>-->
+        <!--
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-all</artifactId>
             <version>2.2.0.RELEASE</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>com.rabbitmq</groupId>

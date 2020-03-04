@@ -30,6 +30,8 @@ public class RoboAccountService implements IRoboAccountService {
         };
 
         Executors.newSingleThreadScheduledExecutor().execute(runnable);
+        
+
     }
 
     //TODO hardcoded - change

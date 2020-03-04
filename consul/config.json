@@ -1,0 +1,27 @@
+{
+    "advertise_addr": "64.225.79.161",
+    "bind_addr": "0.0.0.0",
+    "bootstrap_expect": 1,
+    "client_addr": "0.0.0.0",
+    "datacenter": "KE-DC",
+    "data_dir": "/var/lib/consul",
+    "domain": "consul",
+    "enable_script_checks": true,
+    "dns_config": {
+        "enable_truncate": true,
+        "only_passing": true
+    },
+    "enable_syslog": true,
+    "encrypt": "B3B6ZzqbnLHRJIXHUUioU73vgxd/Q0LNs6WSc8nE/VI=",
+    "leave_on_terminate": true,
+    "log_level": "INFO",
+    "rejoin_after_leave": true,
+    "retry_join": [
+        "64.225.79.161"
+    ],
+    "server": true,
+    "start_join": [
+        "64.225.79.161"
+    ],
+    "ui": true
+}
