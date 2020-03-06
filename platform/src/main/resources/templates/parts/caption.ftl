@@ -1,9 +1,11 @@
 <header class="header header--page" style="background-image: linear-gradient(#0861E4, #0453DD);">
     <div class="header__inner">
         <div class="header__logo">
+            <!--
             <a href="http://korono.io">
                 <img style="height: 39px; width: 131px;" src="/theme/app/img/logo_korono.png"></img>
             </a>
+            -->
         </div>
         <!--
         <div class="header__logo">
