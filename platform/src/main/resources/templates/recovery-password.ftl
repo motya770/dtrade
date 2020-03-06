@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-    <title> Registration: Korono </title>
+    <title> Registration: ResistApp </title>
     <!--[if !mso]><!-- -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--<![endif]-->
@@ -137,7 +137,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                             <tr>
                                 <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                    <div style="font-family:Montserrat, Helvetica, Arial, sans-serif;font-size:11px;font-weight:400;line-height:24px;text-align:center;color:#9B9B9B;"> Korono: invest in stocks and crypto for free </div>
+                                    <div style="font-family:Montserrat, Helvetica, Arial, sans-serif;font-size:11px;font-weight:400;line-height:24px;text-align:center;color:#9B9B9B;"> ResistApp: invest in stocks and crypto for free </div>
                                 </td>
                             </tr>
                         </table>
@@ -183,7 +183,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                             <tr>
                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                    <div style="font-family:Montserrat, Helvetica, Arial, sans-serif;font-size:20px;font-weight:500;line-height:24px;text-align:left;color:#000000;"> // KORONO </div>
+                                    <div style="font-family:Montserrat, Helvetica, Arial, sans-serif;font-size:20px;font-weight:500;line-height:24px;text-align:left;color:#000000;"> // ResistApp </div>
                                 </td>
                             </tr>
                         </table>
@@ -233,7 +233,7 @@
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                             <tr>
                                 <td align="center" style="font-size:0px;padding:30px 40px 10px 40px;word-break:break-word;">
-                                    <div style="font-family:Montserrat, Helvetica, Arial, sans-serif;font-size:32px;font-weight:300;line-height:40x;text-align:center;color:#5FA91D;"> Korono: Invest for free & share with friends. </div>
+                                    <div style="font-family:Montserrat, Helvetica, Arial, sans-serif;font-size:32px;font-weight:300;line-height:40x;text-align:center;color:#5FA91D;"> ResistApp: Invest for free & share with friends. </div>
                                 </td>
                             </tr>
                         </table>
@@ -409,7 +409,7 @@
                                         <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
                                             <tr>
                                                 <td align="center" bgcolor="#5FA91D" role="presentation" style="border:none;border-radius:2px;cursor:auto;padding:15px 30px;background:#5FA91D;" valign="middle">
-                                                    <a href="https://x.korono.io/trade#!/recovery-password?recovery-guid=${account.recoveryGuid}" style="background:#5FA91D;color:#FFFFFF;font-family:Montserrat, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;" target="_blank"> START RECOVERY </a>
+                                                    <a href="https://x.ResistApp.io/trade#!/recovery-password?recovery-guid=${account.recoveryGuid}" style="background:#5FA91D;color:#FFFFFF;font-family:Montserrat, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;Margin:0;text-decoration:none;text-transform:none;" target="_blank"> START RECOVERY </a>
                                                 </td>
                                             </tr>
                                         </table>

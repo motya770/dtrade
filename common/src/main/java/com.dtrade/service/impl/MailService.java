@@ -52,7 +52,7 @@ public class MailService implements IMailService {
                 String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);
 
                 Email from = new Email("support@korono.io");
-                String subject = "KORONO: Password recovery.";
+                String subject = "ResistApp: Password recovery.";
 
                 //mail for tests
                 sendMail(account, html, from, subject);
@@ -70,8 +70,8 @@ public class MailService implements IMailService {
             try {
                 Template t = freemarkerConfig.getTemplate("mail.ftl");
                 Map<String, Object> map = new HashMap<>();
-                map.put("accountLink", "x.korono.io/referral?myRef=" + account.getReferral());
-                map.put("referralLink", "www.korono.io/?ref=" + account.getReferral());
+                map.put("accountLink", "x.resistapp.io/referral?myRef=" + account.getReferral());
+                map.put("referralLink", "www.resistapp.io/?ref=" + account.getReferral());
                 map.put("account", account);
 
                 String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, map);

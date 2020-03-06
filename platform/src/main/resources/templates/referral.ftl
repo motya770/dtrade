@@ -117,8 +117,8 @@
     <header class="header header--page" style="background-image: linear-gradient(#0861E4, #0453DD);">
         <div class="header__inner">
             <div class="header__logo">
-                <a href="http://korono.io">
-                    <img style="height: 39px; width: 131px;" src="/theme/app/img/logo_korono.png"></img>
+                <a href="http://ResistApp.io">
+                    <img style="height: 39px; width: 131px;" src="/theme/app/img/logo_ResistApp.png"></img>
                 </a>
             </div>
         </div>
@@ -156,25 +156,25 @@
                             <div class="lk-main-tab__table" style="margin-left: 20px;" >
                                 Share this link with your friends to get free stock*
                                  <#if account.referral??>
-                                    <div>Link www.korono.io/?ref=${account.referral}</div>
+                                    <div>Link www.ResistApp.io/?ref=${account.referral}</div>
                                     <div>Referred count ${account.referredCount}</div>
                                     <div>We also created demo account for you with password <b>demo1345</b>.<br/>
-                                        <a href="https://x.korono.io/accounts/demo-login/?ref=${account.referral}">Trade</a> with demo account.
+                                        <a href="https://x.ResistApp.io/accounts/demo-login/?ref=${account.referral}">Trade</a> with demo account.
                                     </div>
 
-                                     <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">Hi friends! This startup decided to disrupt an industry and created a trading application that doesn't take commissions (it’s free). Currently, they give Google and Test stocks for free to those who bring friends,  so the more people join using my link, the more stock I’ll get. Stocks will be available after the official launch of the broker.  Please go to my link (www.korono.io/?ref=${account.referral}) and register.
+                                     <div id="refText" style="margin-top: 10px; margin-bottom: 10px;">Hi friends! This startup decided to disrupt an industry and created a trading application that doesn't take commissions (it’s free). Currently, they give Google and Test stocks for free to those who bring friends,  so the more people join using my link, the more stock I’ll get. Stocks will be available after the official launch of the broker.  Please go to my link (www.ResistApp.io/?ref=${account.referral}) and register.
                                      </div>
 
                                     <a href="#" onclick="copyText();return false;">Copy text</a>
                                         <!-- Go to www.addthis.com/dashboard to customize your tools -->
-                                        <div class="addthis_inline_share_toolbox" data-url="www.korono.io/?ref=${account.referral}"
+                                        <div class="addthis_inline_share_toolbox" data-url="www.ResistApp.io/?ref=${account.referral}"
                                              data-title="This is unique invitation. Access your free stocks and trade for free stocks and crypto." data-description="Free stocks and crypto trading"
-                                             data-media="/theme/app/img/logo_korono.png"></div>
+                                             data-media="/theme/app/img/logo_ResistApp.png"></div>
 
                                  <#else>
-                                  <div class="addthis_inline_share_toolbox" data-url="www.korono.io/"
+                                  <div class="addthis_inline_share_toolbox" data-url="www.ResistApp.io/"
                                        data-title="This is unique invitation. Access your free tokens and trade for free stocks and crypto." data-description="Free stocks and crypto trading"
-                                       data-media="/theme/app/img/logo_korono.png"></div>
+                                       data-media="/theme/app/img/logo_ResistApp.png"></div>
                                  </#if>
 
                             </div>

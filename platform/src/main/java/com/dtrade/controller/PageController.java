@@ -65,7 +65,7 @@ public class PageController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String mainProd(){
-        return "redirect:https://www.korono.io/"; //"ico/index";
+        return "redirect:https://www.resistapp.io/"; //"ico/index";
     }
 
 
