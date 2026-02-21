@@ -20,7 +20,7 @@ public class ConfigController {
 
     @GetMapping(value = "/get")
     public Config getActiveConfig(@CookieValue(value = "config", required = false) String config){
-        if(StringUtils.isEmpty(config)) {
+        if(!StringUtils.hasLength(config)) {
             return configService.getActiveConfig();
         }else {
             return configService.findByAssetType(AssetType.valueOf(config));

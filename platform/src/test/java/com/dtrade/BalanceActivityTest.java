@@ -191,9 +191,9 @@ public class BalanceActivityTest extends BaseTest {
 
         Assert.assertTrue(saved.subtract(amount).compareTo(balance.getAmount())==0);
 
-//        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=currency, rootBeanClass=class com.dtrade.model.balanceactivity.BalanceActivity, messageTemplate='{javax.validation.constraints.NotNull.message}'}
-//        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=sum, rootBeanClass=class com.dtrade.model.balanceactivity.BalanceActivity, messageTemplate='{javax.validation.constraints.NotNull.message}'}
-//        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=price, rootBeanClass=class com.dtrade.model.balanceactivity.BalanceActivity, messageTemplate='{javax.validation.constraints.NotNull.message}'}
+//        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=currency, rootBeanClass=class com.dtrade.model.balanceactivity.BalanceActivity, messageTemplate='{jakarta.validation.constraints.NotNull.message}'}
+//        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=sum, rootBeanClass=class com.dtrade.model.balanceactivity.BalanceActivity, messageTemplate='{jakarta.validation.constraints.NotNull.message}'}
+//        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=price, rootBeanClass=class com.dtrade.model.balanceactivity.BalanceActivity, messageTemplate='{jakarta.validation.constraints.NotNull.message}'}
 //        ConstraintViolationImpl{interpolatedMessage='must not be null', propertyPath=balanceSnapshot,
 
     }

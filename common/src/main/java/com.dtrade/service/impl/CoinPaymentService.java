@@ -376,7 +376,7 @@ public class CoinPaymentService implements ICoinPaymentService {
 
     @Override
     public void checkHmac(String hmac, String body) {
-        if(StringUtils.isEmpty(hmac) || StringUtils.isEmpty(body)){
+        if(!StringUtils.hasLength(hmac) || !StringUtils.hasLength(body)){
             throw new TradeException("Hmac or body is empty");
         }
 
@@ -428,7 +428,7 @@ public class CoinPaymentService implements ICoinPaymentService {
     @Override
     public CoinPayment createDeposit(DepositRequest depositRequest) {
 
-        if(StringUtils.isEmpty(depositRequest.getIpnId())){
+        if(!StringUtils.hasLength(depositRequest.getIpnId())){
             throw new TradeException("IpnId is empty");
         }
 

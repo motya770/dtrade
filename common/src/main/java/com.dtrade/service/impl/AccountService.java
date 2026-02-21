@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -99,7 +99,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         //TODO add length pwd check
         String pwd = recoveryPassword.getPwd();
-        if(StringUtils.isEmpty(pwd)){
+        if(!StringUtils.hasLength(pwd)){
             throw new TradeException("New password is empty");
         }
 
@@ -119,7 +119,7 @@ public class AccountService implements IAccountService, UserDetailsService {
 
         log.info("CR: 2");
         //adding to referral account
-        if(!StringUtils.isEmpty(ref)) {
+        if(StringUtils.hasLength(ref)) {
             Account referalAccount = accountRepository.findByReferral(ref);
             if(referalAccount!=null){
                 referalAccount.setReferredCount(referalAccount.getReferredCount() + 1);

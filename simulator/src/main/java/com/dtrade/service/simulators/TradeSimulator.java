@@ -23,7 +23,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -70,7 +70,7 @@ public class TradeSimulator {
     private void init(){
 
          String simulateTrade = environment.getProperty("trade.simulateTrade");
-         if(StringUtils.isEmpty(simulateTrade)){
+         if(!StringUtils.hasLength(simulateTrade)){
              logger.info("Simulation is disabled");
              return;
          }

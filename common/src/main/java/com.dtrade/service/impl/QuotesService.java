@@ -30,7 +30,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.*;
@@ -137,7 +137,7 @@ public class QuotesService implements IQuotesService {
 //        landingQuote.setTime(System.currentTimeMillis());
 //        landingQuote.setValue(price);
 //
-//        if(StringUtils.isEmpty(price)){
+//        if(!StringUtils.hasLength(price)){
 //            logger.info("Landing price is null for {}", name);
 //            return;
 //        }
@@ -208,7 +208,7 @@ public class QuotesService implements IQuotesService {
 
                 logger.info("price: " + price);
 
-                if(!StringUtils.isEmpty(price)) {
+                if(StringUtils.hasLength(price)) {
                     return new MyPair<>(price, price);
                 }else{
                     return new MyPair<>(bid, ask);

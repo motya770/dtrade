@@ -4,8 +4,8 @@ import com.dtrade.model.diamond.Diamond;
 import com.dtrade.model.tradeorder.TradeOrder;
 import lombok.Data;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**

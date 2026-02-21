@@ -48,7 +48,7 @@ public class PageController {
     @RequestMapping(value = "/referral", method = RequestMethod.GET)
     public String referral(@RequestParam(required = false) String myRef, Model model){
         Account account = null;
-        if(!StringUtils.isEmpty(myRef)) {
+        if(StringUtils.hasLength(myRef)) {
              account = accountService.findByReferral(myRef);
         }else{
              account = accountService.getStrictlyLoggedAccount();

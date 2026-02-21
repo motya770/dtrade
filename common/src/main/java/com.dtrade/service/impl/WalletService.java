@@ -3,7 +3,7 @@ package com.dtrade.service.impl;
 import com.dtrade.service.IWalletService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.math.BigDecimal;
 
 @Service

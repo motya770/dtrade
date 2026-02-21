@@ -89,7 +89,7 @@ public class BitfinexClient extends WebSocketClient {
             JSONObject obj = new JSONObject(message);
 
             String code =  obj.getString("code");
-            if(!StringUtils.isEmpty(code)){
+            if(StringUtils.hasLength(code)){
                 if (code.equals("10000")){
 
                 }else if (code.equals("10001")){
