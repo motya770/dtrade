@@ -7,8 +7,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 //TODO remove in prod
@@ -39,7 +39,7 @@ public class RefLoginFilter  implements Filter {
     {
         HttpServletRequest req = (HttpServletRequest) request;
         String ref =  req.getParameter("l-ref");
-        if(!StringUtils.isEmpty(ref)){
+        if(StringUtils.hasLength(ref)){
             accountService.loginByRef(ref);
         }
 

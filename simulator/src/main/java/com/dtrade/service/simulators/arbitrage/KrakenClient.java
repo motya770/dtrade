@@ -47,7 +47,7 @@ public class KrakenClient {
         }
 
         String pairs =  builder.toString();
-        if(StringUtils.isEmpty(pairs)){
+        if(!StringUtils.hasLength(pairs)){
             log.info("Kraken pairs is empty.");
             return;
         }

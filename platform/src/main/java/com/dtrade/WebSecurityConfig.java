@@ -2,12 +2,15 @@ package com.dtrade;
 
 import com.dtrade.service.impl.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 /**
@@ -15,66 +18,70 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
  */
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-//        http.requiresChannel()
-//                .antMatchers("/login").requiresSecure();
-       // http.authorizeRequests().antMatchers("/**").permitAll();
-
-
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/accounts/register").permitAll()
-                .antMatchers("/bower_components/**").permitAll()
-                .antMatchers("/content/**").permitAll()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/account/**").authenticated()
-                .antMatchers("/balance-activity/**").authenticated()
-                .antMatchers("/customer/**").authenticated()//remove?
-                .antMatchers("/diamond/available").permitAll()
-                .antMatchers("/diamond/by-id").permitAll()
-                .antMatchers("/diamond/**").denyAll()//remove?
-                .antMatchers("/quote/**").permitAll()
-                .antMatchers("/graph/**").permitAll()
-                .antMatchers("/book-order/**").permitAll()
-                .antMatchers("/stock/**").authenticated()
-                .antMatchers("/trade-order/get-quotes").permitAll()
-                .antMatchers("/trade-order/history-orders").permitAll()
-                .antMatchers("/trade-order/**").authenticated()
-                .antMatchers("/trade-order/").authenticated()
-                .antMatchers("/coin-payment/notify").permitAll()
-                .antMatchers("/coin-payment/**").authenticated()
-                .antMatchers("/ico/**").permitAll()
-                .antMatchers("/theme/**").permitAll()
-                .antMatchers("/trade").permitAll()
-                .antMatchers("/diamonds").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/**").permitAll()
-                .and().formLogin().defaultSuccessUrl("/trade#!/basic")
-                .loginPage("/trade#!/login-form").permitAll()
-                .loginProcessingUrl("/login")
-                //.failureUrl("/trade#!/login-form")
-                .failureHandler(new SimpleUrlAuthenticationFailureHandler("/trade#!/login-form"))
-                //.failureForwardUrl("/trade#!/login-form")
-                .and().logout().permitAll().logoutSuccessUrl("/trade");
-
-
-        http.headers()
-                .frameOptions().disable();
-
-
-    }
+public class WebSecurityConfig {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public void configureGlobal(AccountService accountService, AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(accountService).passwordEncoder(passwordEncoder);
+    private AccountService accountService;
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/accounts/register").permitAll()
+                        .requestMatchers("/bower_components/**").permitAll()
+                        .requestMatchers("/content/**").permitAll()
+                        .requestMatchers("/resources/**").permitAll()
+                        .requestMatchers("/account/**").authenticated()
+                        .requestMatchers("/balance-activity/**").authenticated()
+                        .requestMatchers("/customer/**").authenticated()
+                        .requestMatchers("/diamond/available").permitAll()
+                        .requestMatchers("/diamond/by-id").permitAll()
+                        .requestMatchers("/diamond/**").denyAll()
+                        .requestMatchers("/quote/**").permitAll()
+                        .requestMatchers("/graph/**").permitAll()
+                        .requestMatchers("/book-order/**").permitAll()
+                        .requestMatchers("/stock/**").authenticated()
+                        .requestMatchers("/trade-order/get-quotes").permitAll()
+                        .requestMatchers("/trade-order/history-orders").permitAll()
+                        .requestMatchers("/trade-order/**").authenticated()
+                        .requestMatchers("/trade-order/").authenticated()
+                        .requestMatchers("/coin-payment/notify").permitAll()
+                        .requestMatchers("/coin-payment/**").authenticated()
+                        .requestMatchers("/ico/**").permitAll()
+                        .requestMatchers("/theme/**").permitAll()
+                        .requestMatchers("/trade").permitAll()
+                        .requestMatchers("/diamonds").permitAll()
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/**").permitAll()
+                )
+                .formLogin(form -> form
+                        .defaultSuccessUrl("/trade#!/basic")
+                        .loginPage("/trade#!/login-form").permitAll()
+                        .loginProcessingUrl("/login")
+                        .failureHandler(new SimpleUrlAuthenticationFailureHandler("/trade#!/login-form"))
+                )
+                .logout(logout -> logout.permitAll().logoutSuccessUrl("/trade"))
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()));
+
+        return http.build();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(accountService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return provider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 }

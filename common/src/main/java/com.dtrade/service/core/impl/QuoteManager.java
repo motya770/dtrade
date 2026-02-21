@@ -6,7 +6,7 @@ import com.dtrade.service.core.IQuoteManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 /**
  * Created by kudelin on 12/13/16.

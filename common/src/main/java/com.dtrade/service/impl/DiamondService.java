@@ -196,7 +196,7 @@ public class DiamondService implements IDiamondService {
 
     @Override
     public List<Diamond> getAllAvailable(String name) {
-        if(StringUtils.isEmpty(name)){
+        if(!StringUtils.hasLength(name)){
             name = ""; //all enlisted diamonds
         }
 

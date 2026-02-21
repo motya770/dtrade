@@ -10,7 +10,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.io.StringWriter;
 
 /**
@@ -30,7 +30,7 @@ public class TemplateService implements ITemplateService {
     private void init() {
 
         ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-        resolver.setTemplateMode("XHTML");
+        resolver.setTemplateMode("HTML");
         resolver.setSuffix(".html");
         TemplateEngine engine = new TemplateEngine();
         engine.setTemplateResolver(resolver);

@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.annotation.PreDestroy;
+import jakarta.annotation.PreDestroy;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

@@ -5,19 +5,17 @@ import com.dtrade.service.IAccountService;
 import com.dtrade.service.IMailService;
 import com.dtrade.service.ITemplateService;
 import com.sendgrid.*;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import org.hibernate.id.GUIDGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-
-import javax.annotation.PostConstruct;
-import javax.mail.*;
-import javax.mail.internet.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -130,7 +128,7 @@ public class MailService implements IMailService {
         Mail mail = new Mail(from, subject, to, content);
 
 
-        SendGrid sg = new SendGrid("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");
+        SendGrid sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
         Request request = new Request();
         try {
             sendRequest(mail, sg, request);

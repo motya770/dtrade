@@ -18,7 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Controller
@@ -95,7 +95,7 @@ public class AccountController {
     @RequestMapping(value = "/confirm-registration", method = RequestMethod.POST)
     @ResponseBody
     public Account confirmRegistration(@RequestParam String guid) throws TradeException {
-        if (StringUtils.isEmpty(guid)) {
+        if (!StringUtils.hasLength(guid)) {
             throw new TradeException("Guid can't be empty");
         }
 
@@ -105,7 +105,7 @@ public class AccountController {
     @RequestMapping(value = "/cancel-registration", method = RequestMethod.POST)
     @ResponseBody
     public Account cancelRegistration(@RequestParam String guid) throws TradeException {
-        if (StringUtils.isEmpty(guid)) {
+        if (!StringUtils.hasLength(guid)) {
             throw new TradeException("Guid can't be empty");
         }
 

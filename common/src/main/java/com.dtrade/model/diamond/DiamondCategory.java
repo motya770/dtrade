@@ -2,7 +2,7 @@ package com.dtrade.model.diamond;
 
 import lombok.Data;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.Embeddable;
 
 /**
  * Created by kudelin on 3/4/17.
